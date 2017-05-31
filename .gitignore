@@ -17,3 +17,11 @@ tests/coverage_html/
 tests/.coverage
 build/
 tests/report/
+
+
+# Exclude virtualenv files at project base
+.Python
+lib
+bin
+include
+pip-selfcheck.json
