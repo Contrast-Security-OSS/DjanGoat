@@ -1,5 +1,10 @@
 # Pygoat #
 
+### DB-Setup ###
+
+For developers create a local_settings.py file in the pygoat folder
+that mocks production_setting.py.
+
 ### How do I get set up? ###
 
 First, install virtual-env
