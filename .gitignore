@@ -25,3 +25,6 @@ lib
 bin
 include
 pip-selfcheck.json
+
+# Exclude IntelliJ stuff
+.idea
