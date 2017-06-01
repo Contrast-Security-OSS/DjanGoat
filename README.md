@@ -23,3 +23,11 @@ Finally run on localhost:8000
     python manage.py runserver
 ```
 
+
+
+
+### Testing ###
+To run tests, simply run:
+```
+  python manage.py test app
+```
