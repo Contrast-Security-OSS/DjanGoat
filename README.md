@@ -2,6 +2,10 @@
 
 ### How do I get set up? ###
 
+First, install virtual-env
+```
+    pip install virtualenv
+```
 
 Begin by creating a virtual-env
 ```
