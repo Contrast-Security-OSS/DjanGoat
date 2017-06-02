@@ -32,3 +32,6 @@ env/
 
 # Exclude Mac Stuff
 .DS_Store
+
+#Exclude settings stuff
+local_settings.py

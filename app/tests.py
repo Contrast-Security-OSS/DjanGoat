@@ -5,12 +5,16 @@ from django.test import TestCase, RequestFactory, Client
 
 from django.urls import reverse
 
+from models import *
+
+from django.utils import timezone
+
 import views as v
+
 
 # Create your tests here.
 class HttpMethodTests(TestCase):
-
-    #setup for all test cases
+    # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -98,3 +102,13 @@ class DashboardTests(TestCase):
         request = self.factory.trace('/dashboard')
         response = v.dashboard_home(request)
         self.assertEqual(response.status_code, 405)
+
+# Models Test
+class ModelsTests(TestCase):
+    def test_can_create_note(self):
+        note = Note(note_name="Hey!", pub_date=timezone.now())
+
+        self.assertEquals(
+            str(note),
+            'Hey!',
+        )
