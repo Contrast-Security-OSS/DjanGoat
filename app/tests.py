@@ -24,37 +24,37 @@ class HttpMethodTests(TestCase):
     # Ensure get works
     def test_index_get(self):
         request = self.factory.get('/')
-        response = v.index(request)
+        response = v.app_index(request)
         self.assertEqual(response.status_code, 200)
 
     def test_index_post(self):
         request = self.factory.post('/')
-        response = v.index(request)
+        response = v.app_index(request)
         self.assertEqual(response.status_code, 200)
 
     def test_index_put(self):
         request = self.factory.put('/')
-        response = v.index(request)
+        response = v.app_index(request)
         self.assertEqual(response.status_code, 200)
 
     def test_index_delete(self):
         request = self.factory.delete('/')
-        response = v.index(request)
+        response = v.app_index(request)
         self.assertEqual(response.status_code, 200)
 
     def test_index_head(self):
         request = self.factory.head('/')
-        response = v.index(request)
+        response = v.app_index(request)
         self.assertEqual(response.status_code, 200)
 
     def test_index_options(self):
         request = self.factory.options('/')
-        response = v.index(request)
+        response = v.app_index(request)
         self.assertEqual(response.status_code, 200)
 
     def test_index_trace(self):
         request = self.factory.trace('/')
-        response = v.index(request)
+        response = v.app_index(request)
         self.assertEqual(response.status_code, 200)
 
 class DashboardTests(TestCase):
@@ -66,10 +66,35 @@ class DashboardTests(TestCase):
 
     def test_dashboard_get(self):
         request = self.factory.get('/dashboard')
-        response = v.home(request)
+        response = v.dashboard_home(request)
         self.assertEqual(response.status_code, 200)
 
     def test_dashboard_post(self):
         request = self.factory.post('/dashboard')
-        response = v.home(request)
+        response = v.dashboard_home(request)
         self.assertEqual(response.status_code, 200)
+
+    def test_dashboard_put(self):
+        request = self.factory.put('/dashboard')
+        response = v.dashboard_home(request)
+        self.assertEqual(response.status_code, 405)
+
+    def test_dashboard_delete(self):
+        request = self.factory.delete('/dashboard')
+        response = v.dashboard_home(request)
+        self.assertEqual(response.status_code, 405)
+
+    def test_dashboard_head(self):
+        request = self.factory.head('/dashboard')
+        response = v.dashboard_home(request)
+        self.assertEqual(response.status_code, 405)
+
+    def test_dashboard_options(self):
+        request = self.factory.options('/dashboard')
+        response = v.dashboard_home(request)
+        self.assertEqual(response.status_code, 405)
+
+    def test_dashboard_trace(self):
+        request = self.factory.trace('/dashboard')
+        response = v.dashboard_home(request)
+        self.assertEqual(response.status_code, 405)
