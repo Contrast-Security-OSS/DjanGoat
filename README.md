@@ -24,10 +24,22 @@ Then install using pip
 
 Now we need to setup our database
 
-1. Go to production_settings.py and fill out the given information
+1. Make sure you have mysql installed and run the following to
+setup the database
+
+```
+mysql -u root -p
+CREATE DATABASE 'db_name';
+CREATE USER 'username'@'localhost' IDENTIFIED BY 'your_password';
+GRANT ALL PRIVILEGES ON 'db_name'.* TO 'username'@'localhost';
+FLUSH PRIVILEGES;
+quit
+```
+
+2. Go to production_settings.py and fill out the given information
    for your database.
 
-2. ```
+3. ```
     python manage.py makemigrations
     python manage.py migrate
    ```
