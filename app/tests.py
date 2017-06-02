@@ -56,3 +56,20 @@ class HttpMethodTests(TestCase):
         request = self.factory.trace('/')
         response = v.index(request)
         self.assertEqual(response.status_code, 200)
+
+class DashboardTests(TestCase):
+
+    #setup for all test cases
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.client = Client()
+
+    def test_dashboard_get(self):
+        request = self.factory.get('/dashboard')
+        response = v.home(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_dashboard_post(self):
+        request = self.factory.post('/dashboard')
+        response = v.home(request)
+        self.assertEqual(response.status_code, 200)
