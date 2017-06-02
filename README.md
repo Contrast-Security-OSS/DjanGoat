@@ -29,17 +29,19 @@ setup the database
 
 ```
 mysql -u root -p
-CREATE DATABASE 'db_name';
+CREATE DATABASE `db_name`;
 CREATE USER 'username'@'localhost' IDENTIFIED BY 'your_password';
-GRANT ALL PRIVILEGES ON 'db_name'.* TO 'username'@'localhost';
+GRANT ALL PRIVILEGES ON `db_name`.* TO 'username'@'localhost';
 FLUSH PRIVILEGES;
 quit
 ```
 
-2. Go to production_settings.py and fill out the given information
+2. Go to production_settings.py in the inner pygoat folder and fill out the given information
    for your database.
 
-3. ```
+3. Migrate the models and associated database data
+
+```
     python manage.py makemigrations
     python manage.py migrate
    ```
