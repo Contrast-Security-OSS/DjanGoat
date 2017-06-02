@@ -1,29 +1,33 @@
-# README #
-
-This README would normally document whatever steps are necessary to get your application up and running.
-
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+# Pygoat #
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+First, install virtual-env
+```
+    pip install virtualenv
+```
 
-### Contribution guidelines ###
+Begin by creating a virtual-env
+```
+    virutalenv env
+    source env/bin/activate
+```
 
-* Writing tests
-* Code review
-* Other guidelines
+Then install using pip
+```
+    pip install -r requirements.txt
+```
 
-### Who do I talk to? ###
+Finally run on localhost:8000
+```
+    python manage.py runserver
+```
 
-* Repo owner or admin
-* Other community or team contact
+
+
+
+### Testing ###
+To run tests, simply run:
+```
+  python manage.py test app
+```

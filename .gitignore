@@ -25,3 +25,10 @@ lib
 bin
 include
 pip-selfcheck.json
+env/
+
+# Exclude IntelliJ stuff
+.idea
+
+# Exclude Mac Stuff
+.DS_Store
