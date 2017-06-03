@@ -29,6 +29,6 @@ def tutorials_id(request, id_number):
 
 
 # -tutorials#edit
-@require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
+@require_http_methods(["GET"])
 def tutorials_id_edit(request, id_number):
     return HttpResponse("Come edit your tutorial person " + id_number)
