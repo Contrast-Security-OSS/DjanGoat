@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.test import TestCase, RequestFactory, Client
+from django.test import TestCase
+from django.utils import timezone
 
 from app.models import Note
-
-from django.utils import timezone
 
 
 # Models Test
