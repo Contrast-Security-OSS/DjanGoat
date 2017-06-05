@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.test import TestCase, RequestFactory, Client
 
-from app.models import *
+from app.models import Note
 
 from django.utils import timezone
 
