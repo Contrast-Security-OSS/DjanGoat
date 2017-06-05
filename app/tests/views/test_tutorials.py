@@ -5,17 +5,22 @@ from django.test import TestCase, RequestFactory, Client
 
 from django.urls import reverse
 
-
 import app.views as views
+
 tutorials = views.tutorials_views
 
 
 class TutorialTestsIndex(TestCase):
-
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
+
+    # Verifies the route exists by getting the dashboard index
+    # and ensuring the response code is 200 (OK)
+    def test_dashboard_index_route_exists(self):
+        response = self.client.get(reverse('app:tutorials_index'))
+        self.assertEqual(response.status_code, 200)
 
     def test_get(self):
         request = self.factory.get('/tutorials')
@@ -54,10 +59,13 @@ class TutorialTestsIndex(TestCase):
 
 
 class TutorialsCredentialsTests(TestCase):
-
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
+
+    def test_dashboard_index_route_exists(self):
+        response = self.client.get(reverse('app:tutorials_credentials'))
+        self.assertEqual(response.status_code, 200)
 
     def test_credentials_get(self):
         request = self.factory.get('/tutorials/credentials')
@@ -100,6 +108,10 @@ class TutorialsIdTests(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
+
+    def test_dashboard_index_route_exists(self):
+        response = self.client.get(reverse('app:tutorials_id', kwargs={'id_number': 22}))
+        self.assertEqual(response.status_code, 200)
 
     def test_id_get(self):
         request = self.factory.get('/tutorials/100')
@@ -148,6 +160,10 @@ class TutorialsIdEditsTests(TestCase):
         self.factory = RequestFactory()
         self.client = Client()
 
+    def test_dashboard_index_route_exists(self):
+        response = self.client.get(reverse('app:tutorials_id_edit', kwargs={'id_number': 22}))
+        self.assertEqual(response.status_code, 200)
+
     def test_edit_id_get(self):
         request = self.factory.get('/tutorials/100/edit')
         response = tutorials.id_edit(request, "100")
@@ -194,6 +210,10 @@ class TutorialsNewTests(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
+
+    def test_dashboard_index_route_exists(self):
+        response = self.client.get(reverse('app:tutorials_new'))
+        self.assertEqual(response.status_code, 200)
 
     def test_edit_id_get(self):
         request = self.factory.get('/tutorials/new')

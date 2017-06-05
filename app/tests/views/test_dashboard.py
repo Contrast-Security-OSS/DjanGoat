@@ -5,14 +5,14 @@ from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse
 
 import app.views as views
+
 dashboard = views.dashboard_views
 
 
-#Tests checking that that '/dashboard' properly handles HttpRequests
-#Accepts Both GET and POST requests and refuses all others with an error code 405 (Method not allowed)
+# Tests checking that that '/dashboard' properly handles HttpRequests
+# Accepts Both GET and POST requests and refuses all others with an error code 405 (Method not allowed)
 class DashboardIndexHttpRequestMethodTests(TestCase):
-
-    #setup for all test cases
+    # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -63,11 +63,11 @@ class DashboardIndexHttpRequestMethodTests(TestCase):
         response = dashboard.index(request)
         self.assertEqual(response.status_code, 405)
 
-#Tests checking that that '/dashboard/home' properly handles HttpRequests
-#Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class DashboardHomeHttpRequestMethodTests(TestCase):
 
-    #setup for all test cases
+# Tests checking that that '/dashboard/home' properly handles HttpRequests
+# Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
+class DashboardHomeHttpRequestMethodTests(TestCase):
+    # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -118,11 +118,11 @@ class DashboardHomeHttpRequestMethodTests(TestCase):
         response = dashboard.home(request)
         self.assertEqual(response.status_code, 405)
 
-#Tests checking that that '/dashboard/change_graph' properly handles HttpRequests
-#Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class DashboardChangeGraphHttpRequestMethodTests(TestCase):
 
-    #setup for all test cases
+# Tests checking that that '/dashboard/change_graph' properly handles HttpRequests
+# Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
+class DashboardChangeGraphHttpRequestMethodTests(TestCase):
+    # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -173,11 +173,11 @@ class DashboardChangeGraphHttpRequestMethodTests(TestCase):
         response = dashboard.change_graph(request)
         self.assertEqual(response.status_code, 405)
 
-#Tests checking that that '/dashboard/doc' properly handles HttpRequests
-#Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class DashboardDocHttpRequestMethodTests(TestCase):
 
-    #setup for all test cases
+# Tests checking that that '/dashboard/doc' properly handles HttpRequests
+# Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
+class DashboardDocHttpRequestMethodTests(TestCase):
+    # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -228,11 +228,11 @@ class DashboardDocHttpRequestMethodTests(TestCase):
         response = dashboard.doc(request)
         self.assertEqual(response.status_code, 405)
 
-#Tests checking that that '/dashboard/new' properly handles HttpRequests
-#Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class DashboardNewHttpRequestMethodTests(TestCase):
 
-    #setup for all test cases
+# Tests checking that that '/dashboard/new' properly handles HttpRequests
+# Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
+class DashboardNewHttpRequestMethodTests(TestCase):
+    # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -283,12 +283,12 @@ class DashboardNewHttpRequestMethodTests(TestCase):
         response = dashboard.new_dashboard(request)
         self.assertEqual(response.status_code, 405)
 
-#Tests checking that that '/dashboard/:id/edit' properly handles HttpRequests
-#Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-#Tested on id #55
-class DashboardEditHttpRequestMethodTests(TestCase):
 
-    #setup for all test cases
+# Tests checking that that '/dashboard/:id/edit' properly handles HttpRequests
+# Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
+# Tested on id #55
+class DashboardEditHttpRequestMethodTests(TestCase):
+    # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -296,7 +296,7 @@ class DashboardEditHttpRequestMethodTests(TestCase):
     # Verifies the route exists by getting the dashboard/55/edit
     # and ensuring the response code is 200 (OK)
     def test_dashboard_edit_route_exists(self):
-        response = self.client.get(reverse('app:dashboard_edit', kwargs={'dashboard_id':55}))
+        response = self.client.get(reverse('app:dashboard_edit', kwargs={'dashboard_id': 55}))
         self.assertEqual(response.status_code, 200)
 
     def test_dashboard_edit_get(self):
@@ -340,12 +340,11 @@ class DashboardEditHttpRequestMethodTests(TestCase):
         self.assertEqual(response.status_code, 405)
 
 
-#Tests checking that that '/dashboard/:id' properly handles HttpRequests
-#Accepts GET, PATCH, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)
-#Tested on id #55
+# Tests checking that that '/dashboard/:id' properly handles HttpRequests
+# Accepts GET, PATCH, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)
+# Tested on id #55
 class DashboardViewHttpRequestMethodTests(TestCase):
-
-    #setup for all test cases
+    # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -353,7 +352,7 @@ class DashboardViewHttpRequestMethodTests(TestCase):
     # Verifies the route exists by getting the dashboard/55/
     # and ensuring the response code is 200 (OK)
     def test_dashboard_view_route_exists(self):
-        response = self.client.get(reverse('app:dashboard_view', kwargs={'dashboard_id':55}))
+        response = self.client.get(reverse('app:dashboard_view', kwargs={'dashboard_id': 55}))
         self.assertEqual(response.status_code, 200)
 
     def test_dashboard_view_get(self):
