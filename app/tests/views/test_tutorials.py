@@ -4,14 +4,15 @@ from __future__ import unicode_literals
 from django.test import TestCase, RequestFactory, Client
 
 from django.urls import reverse
-from .. import mixins
+from app.tests.Mixins import RouteTestingMixin
+
 
 import app.views as views
 
 tutorials = views.tutorials_views
 
 
-class TutorialTestsIndex(TestCase, mixins.RouteTestingMixin):
+class TutorialTestsIndex(TestCase, RouteTestingMixin):
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -21,7 +22,7 @@ class TutorialTestsIndex(TestCase, mixins.RouteTestingMixin):
         self.responses = [200, 200, 405, 405, 405, 405, 405, 405]
 
 
-class TutorialsCredentialsTests(TestCase, mixins.RouteTestingMixin):
+class TutorialsCredentialsTests(TestCase, RouteTestingMixin):
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -133,7 +134,7 @@ class TutorialsIdEditsTests(TestCase):
         self.assertEqual(response.status_code, 405)
 
 
-class TutorialsNewTests(TestCase):
+class TutorialsNewTests(TestCase, RouteTestingMixin):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -141,4 +142,4 @@ class TutorialsNewTests(TestCase):
         self.route_name = 'app:tutorials_new'
         self.route = '/tutorials/new'
         self.view = tutorials.new
-        self.responses = [200, 200, 405, 405, 405, 405, 405, 405]
+        self.responses = [200, 405, 405, 405, 405, 405, 405, 405]

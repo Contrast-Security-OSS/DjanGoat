@@ -1,5 +1,3 @@
-from django.test import TestCase, RequestFactory, Client
-
 from django.urls import reverse
 
 
@@ -7,6 +5,7 @@ from django.urls import reverse
 # HTTP request objects should be in the form [GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS, TRACE]
 
 class RouteTestingMixin(object):
+    # Verifies a route exists
     def test_route_exists(self):
         response = self.client.get(reverse(self.route_name))
         self.assertEqual(response.status_code, 200)
