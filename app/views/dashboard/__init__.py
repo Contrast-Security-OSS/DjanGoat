@@ -6,4 +6,4 @@
 # from dashboard import edit_dashboard as dashboard_edit
 # from dashboard import dashboard as dashboard
 import urls as u
-import views as v
+import views

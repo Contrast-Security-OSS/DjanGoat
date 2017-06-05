@@ -8,7 +8,6 @@ from . import views
 # print(all_functions)
 
 app_name = "app"
-print(views.dashboard)
 
 
 urlpatterns = [
