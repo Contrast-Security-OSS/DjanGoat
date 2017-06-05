@@ -15,7 +15,9 @@ class NoteModelTests(TestCase):
 
     def test_can_read_note(self):
         note = Note(note_name="Hey!", pub_date=timezone.now())
+        self.assertEquals(note.id, None)
         note.save()
+        self.assertNotEquals(note.id, None)
         retrieved = Note.objects.get(note_name="Hey!")
         self.assertEquals("Hey!", retrieved.note_name)
 
