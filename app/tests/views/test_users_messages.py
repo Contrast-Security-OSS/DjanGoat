@@ -6,7 +6,8 @@ from django.urls import reverse
 
 import app.views as views
 
-users = views.users_views
+# print(views.users_views)
+messages = views.user_messages_views
 
 # Tests checking that that '/users/:id/messages' properly handles HttpRequests and routing
 # Accepts GET and POST requests and refuses all others with an error code 405 (Method not allowed)
@@ -25,27 +26,27 @@ class UserMessagesRoutingAndHttpTests(TestCase):
 
     def test_user_messages_get(self):
         request = self.factory.get('/users/55/messages')
-        response = users.user_messages(request, 55)
+        response = messages.user_messages(request, 55)
         self.assertEqual(response.status_code, 200)
 
     def test_user_messages_post(self):
         request = self.factory.post('/users/55/messages')
-        response = users.user_messages(request, 55)
+        response = messages.user_messages(request, 55)
         self.assertEqual(response.status_code, 200)
 
     def test_user_messages_put(self):
         request = self.factory.put('/users/55/messages')
-        response = users.user_messages(request, 55)
+        response = messages.user_messages(request, 55)
         self.assertEqual(response.status_code, 405)
 
     def test_user_messages_delete(self):
         request = self.factory.delete('/users/55/messages')
-        response = users.user_messages(request, 55)
+        response = messages.user_messages(request, 55)
         self.assertEqual(response.status_code, 405)
 
     def test_user_messages_patch(self):
         request = self.factory.patch('/users/55/messages')
-        response = users.user_messages(request, 55)
+        response = messages.user_messages(request, 55)
         self.assertEqual(response.status_code, 405)
 
 
@@ -66,27 +67,27 @@ class UserNewMessageRoutingAndHttpTests(TestCase):
 
     def test_user_new_message_get(self):
         request = self.factory.get('/users/55/messages/new')
-        response = users.new_user_message(request, 55)
+        response = messages.new_user_message(request, 55)
         self.assertEqual(response.status_code, 200)
 
     def test_user_new_message_post(self):
         request = self.factory.post('/users/55/messages/new')
-        response = users.new_user_message(request, 55)
+        response = messages.new_user_message(request, 55)
         self.assertEqual(response.status_code, 405)
 
     def test_user_new_message_put(self):
         request = self.factory.put('/users/55/messages/new')
-        response = users.new_user_message(request, 55)
+        response = messages.new_user_message(request, 55)
         self.assertEqual(response.status_code, 405)
 
     def test_user_new_message_delete(self):
         request = self.factory.delete('/users/55/messages/new')
-        response = users.new_user_message(request, 55)
+        response = messages.new_user_message(request, 55)
         self.assertEqual(response.status_code, 405)
 
     def test_user_new_message_patch(self):
         request = self.factory.patch('/users/55/messages/new')
-        response = users.new_user_message(request, 55)
+        response = messages.new_user_message(request, 55)
         self.assertEqual(response.status_code, 405)
 
 # Tests checking that that '/users/:user_id/messages/message_id/edit' properly handles HttpRequests and routing
@@ -106,27 +107,27 @@ class UserEditMessageRoutingAndHttpTests(TestCase):
 
     def test_user_edit_message_get(self):
         request = self.factory.get('/users/55/messages/22/edit')
-        response = users.edit_user_message(request, 55, 22)
+        response = messages.edit_user_message(request, 55, 22)
         self.assertEqual(response.status_code, 200)
 
     def test_user_edit_message_post(self):
         request = self.factory.post('/users/55/messages/22/edit')
-        response = users.edit_user_message(request, 55, 22)
+        response = messages.edit_user_message(request, 55, 22)
         self.assertEqual(response.status_code, 405)
 
     def test_user_edit_message_put(self):
         request = self.factory.put('/users/55/messages/22/edit')
-        response = users.edit_user_message(request, 55, 22)
+        response = messages.edit_user_message(request, 55, 22)
         self.assertEqual(response.status_code, 405)
 
     def test_user_edit_message_delete(self):
         request = self.factory.delete('/users/55/messages/22/edit')
-        response = users.edit_user_message(request, 55, 22)
+        response = messages.edit_user_message(request, 55, 22)
         self.assertEqual(response.status_code, 405)
 
     def test_user_edit_message_patch(self):
         request = self.factory.patch('/users/55/messages/22/edit')
-        response = users.edit_user_message(request, 55, 22)
+        response = messages.edit_user_message(request, 55, 22)
         self.assertEqual(response.status_code, 405)
 
 # Tests checking that that '/users/:user_id/messages/message_id' properly handles HttpRequests and routing
@@ -146,25 +147,25 @@ class UserShowMessageRoutingAndHttpTests(TestCase):
 
     def test_user_message_get(self):
         request = self.factory.get('/users/55/messages/22')
-        response = users.user_message(request, 55, 22)
+        response = messages.user_message(request, 55, 22)
         self.assertEqual(response.status_code, 200)
 
     def test_user_message_post(self):
         request = self.factory.post('/users/55/messages/22')
-        response = users.user_message(request, 55, 22)
+        response = messages.user_message(request, 55, 22)
         self.assertEqual(response.status_code, 405)
 
     def test_user_message_put(self):
         request = self.factory.put('/users/55/messages/22')
-        response = users.user_message(request, 55, 22)
+        response = messages.user_message(request, 55, 22)
         self.assertEqual(response.status_code, 200)
 
     def test_user_message_delete(self):
         request = self.factory.delete('/users/55/messages/22')
-        response = users.user_message(request, 55, 22)
+        response = messages.user_message(request, 55, 22)
         self.assertEqual(response.status_code, 200)
 
     def test_user_message_patch(self):
         request = self.factory.patch('/users/55/messages/22')
-        response = users.user_message(request, 55, 22)
+        response = messages.user_message(request, 55, 22)
         self.assertEqual(response.status_code, 200)
