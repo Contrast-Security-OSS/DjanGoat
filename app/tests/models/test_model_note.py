@@ -7,8 +7,7 @@ from django.utils import timezone
 from app.models import Note
 
 
-# Models Test
-class ModelsTests(TestCase):
+class NoteModelTests(TestCase):
     def test_can_create_note(self):
         note = Note(note_name="Hey!", pub_date=timezone.now())
 
