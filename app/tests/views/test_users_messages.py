@@ -128,3 +128,43 @@ class UserEditMessageRoutingAndHttpTests(TestCase):
         request = self.factory.patch('/users/55/messages/22/edit')
         response = users.edit_user_message(request, 55, 22)
         self.assertEqual(response.status_code, 405)
+
+# Tests checking that that '/users/:user_id/messages/message_id' properly handles HttpRequests and routing
+# Accepts GET, PATCH, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)
+# Tested on user_id 55 and message_id 22
+class UserShowMessageRoutingAndHttpTests(TestCase):
+    # setup for all test cases
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.client = Client()
+
+    # Verifies the route exists by getting the users/55/messages/22
+    # and ensuring the response code is 200 (OK)
+    def test_user_message_route_exists(self):
+        response = self.client.get(reverse('app:user_message', kwargs={'user_id': 55, 'message_id': 22}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_message_get(self):
+        request = self.factory.get('/users/55/messages/22')
+        response = users.user_message(request, 55, 22)
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_message_post(self):
+        request = self.factory.post('/users/55/messages/22')
+        response = users.user_message(request, 55, 22)
+        self.assertEqual(response.status_code, 405)
+
+    def test_user_message_put(self):
+        request = self.factory.put('/users/55/messages/22')
+        response = users.user_message(request, 55, 22)
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_message_delete(self):
+        request = self.factory.delete('/users/55/messages/22')
+        response = users.user_message(request, 55, 22)
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_message_patch(self):
+        request = self.factory.patch('/users/55/messages/22')
+        response = users.user_message(request, 55, 22)
+        self.assertEqual(response.status_code, 200)
