@@ -3,10 +3,10 @@ from settings import *
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'testDb',
+        'NAME': 'INSERT_NAME',
         'USER': '',
         'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
+        'HOST': '', # can leave blank (sets to default)
+        'PORT': '', # can leave blank (sets to default)
     }
 }
