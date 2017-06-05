@@ -5,3 +5,5 @@
 # from dashboard import new_dashboard as dashboard_new
 # from dashboard import edit_dashboard as dashboard_edit
 # from dashboard import dashboard as dashboard
+import urls as u
+import views as v

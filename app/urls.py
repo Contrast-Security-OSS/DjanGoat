@@ -8,9 +8,10 @@ from . import views
 # print(all_functions)
 
 app_name = "app"
+print(views.dashboard)
 
 
 urlpatterns = [
     url(r'^$', views.app_index, name='index'),
-    # url(r'^dashboard/', dashboard.urls),
+    url(r'^dashboard/', include(views.dashboard.urls)),
 ]
