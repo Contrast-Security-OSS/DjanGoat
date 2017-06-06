@@ -169,3 +169,43 @@ class UserShowBenefitFormRoutingAndHttpTests(TestCase):
         request = self.factory.patch('/users/55/benefit_forms/22')
         response = benefit_forms.user_benefit_form(request, 55, 22)
         self.assertEqual(response.status_code, 200)
+
+
+# Tests checking that that '/upload' properly handles HttpRequests and routing
+# Accepts POST requests and refuses all others with an error code 405 (Method not allowed)
+class UploadRoutingAndHttpTests(TestCase):
+    # setup for all test cases
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.client = Client()
+
+    # Verifies the route exists by getting the /upload
+    # and ensuring the response code is 200 (OK)
+    def test_upload_route_exists(self):
+        response = self.client.post(reverse('app:upload'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_upload_get(self):
+        request = self.factory.get('/upload')
+        response = benefit_forms.upload(request)
+        self.assertEqual(response.status_code, 405)
+
+    def test_upload_post(self):
+        request = self.factory.post('/upload')
+        response = benefit_forms.upload(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_upload_put(self):
+        request = self.factory.put('/upload')
+        response = benefit_forms.upload(request)
+        self.assertEqual(response.status_code, 405)
+
+    def test_upload_delete(self):
+        request = self.factory.delete('/upload')
+        response = benefit_forms.upload(request)
+        self.assertEqual(response.status_code, 405)
+
+    def test_upload_patch(self):
+        request = self.factory.patch('/upload')
+        response = benefit_forms.upload(request)
+        self.assertEqual(response.status_code, 405)

@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^tutorials/', include(views.tutorials.urls)),
     url(r'^users/', include(views.users.urls)),
     url(r'^signup/', views.users_views.signup, name='user_signup'),
+    url(r'^upload/', views.user_benefit_forms_views.upload, name='upload'),
 ]
