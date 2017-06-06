@@ -3,7 +3,8 @@ from __future__ import unicode_literals
 
 from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse
-from app.tests.Mixins import RouteTestingMixin
+from app.tests.mixins import RouteTestingMixin
+from app.tests.mixins import RouteTestingWithKwargs
 
 import app.views as views
 
@@ -78,110 +79,30 @@ class DashboardNewHttpRequestMethodTests(TestCase, RouteTestingMixin):
 # Tests checking that that '/dashboard/:id/edit' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
-class DashboardEditHttpRequestMethodTests(TestCase):
+class DashboardEditHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
-
-    # Verifies the route exists by getting the dashboard/55/edit
-    # and ensuring the response code is 200 (OK)
-    def test_dashboard_edit_route_exists(self):
-        response = self.client.get(reverse('app:dashboard_edit', kwargs={'dashboard_id': 55}))
-        self.assertEqual(response.status_code, 200)
-
-    def test_dashboard_edit_get(self):
-        request = self.factory.get('/dashboard/55/edit')
-        response = dashboard.edit_dashboard(request, 55)
-        self.assertEqual(response.status_code, 200)
-
-    def test_dashboard_edit_post(self):
-        request = self.factory.post('/dashboard/55/edit')
-        response = dashboard.edit_dashboard(request, 55)
-        self.assertEqual(response.status_code, 405)
-
-    def test_dashboard_edit_put(self):
-        request = self.factory.put('/dashboard/55/edit')
-        response = dashboard.edit_dashboard(request, 55)
-        self.assertEqual(response.status_code, 405)
-
-    def test_dashboard_edit_delete(self):
-        request = self.factory.delete('/dashboard/55/edit')
-        response = dashboard.edit_dashboard(request, 55)
-        self.assertEqual(response.status_code, 405)
-
-    def test_dashboard_edit_head(self):
-        request = self.factory.head('/dashboard/55/edit')
-        response = dashboard.edit_dashboard(request, 55)
-        self.assertEqual(response.status_code, 405)
-
-    def test_dashboard_edit_options(self):
-        request = self.factory.options('/dashboard/55/edit')
-        response = dashboard.edit_dashboard(request, 55)
-        self.assertEqual(response.status_code, 405)
-
-    def test_dashboard_edit_trace(self):
-        request = self.factory.trace('/dashboard/55/edit')
-        response = dashboard.edit_dashboard(request, 55)
-        self.assertEqual(response.status_code, 405)
-
-    def test_dashboard_edit_patch(self):
-        request = self.factory.patch('/dashboard/55/edit')
-        response = dashboard.edit_dashboard(request, 55)
-        self.assertEqual(response.status_code, 405)
+        self.route_name = 'app:dashboard_edit'
+        self.route = '/dashboard/55/edit'
+        self.view = dashboard.edit_dashboard
+        self.responses = [200, 405, 405, 405, 405, 405, 405, 405]
+        self.kwargs = {'dashboard_id': 55}
+        self.parameter = 55
 
 
 # Tests checking that that '/dashboard/:id' properly handles HttpRequests
 # Accepts GET, PATCH, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
-class DashboardViewHttpRequestMethodTests(TestCase):
+class DashboardViewHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
-
-    # Verifies the route exists by getting the dashboard/55/
-    # and ensuring the response code is 200 (OK)
-    def test_dashboard_view_route_exists(self):
-        response = self.client.get(reverse('app:dashboard_view', kwargs={'dashboard_id': 55}))
-        self.assertEqual(response.status_code, 200)
-
-    def test_dashboard_view_get(self):
-        request = self.factory.get('/dashboard/55')
-        response = dashboard.dashboard_view(request, 55)
-        self.assertEqual(response.status_code, 200)
-
-    def test_dashboard_view_post(self):
-        request = self.factory.post('/dashboard/55')
-        response = dashboard.dashboard_view(request, 55)
-        self.assertEqual(response.status_code, 405)
-
-    def test_dashboard_view_put(self):
-        request = self.factory.put('/dashboard/55')
-        response = dashboard.dashboard_view(request, 55)
-        self.assertEqual(response.status_code, 200)
-
-    def test_dashboard_view_delete(self):
-        request = self.factory.delete('/dashboard/55')
-        response = dashboard.dashboard_view(request, 55)
-        self.assertEqual(response.status_code, 200)
-
-    def test_dashboard_view_head(self):
-        request = self.factory.head('/dashboard/55')
-        response = dashboard.dashboard_view(request, 55)
-        self.assertEqual(response.status_code, 405)
-
-    def test_dashboard_view_options(self):
-        request = self.factory.options('/dashboard/55')
-        response = dashboard.dashboard_view(request, 55)
-        self.assertEqual(response.status_code, 405)
-
-    def test_dashboard_view_trace(self):
-        request = self.factory.trace('/dashboard/55')
-        response = dashboard.dashboard_view(request, 55)
-        self.assertEqual(response.status_code, 405)
-
-    def test_dashboard_view_patch(self):
-        request = self.factory.patch('/dashboard/55')
-        response = dashboard.dashboard_view(request, 55)
-        self.assertEqual(response.status_code, 200)
+        self.route_name = 'app:dashboard_view'
+        self.route = '/dashboard/55'
+        self.view = dashboard.dashboard_view
+        self.responses = [200, 405, 200, 200, 200, 405, 405, 405]
+        self.kwargs = {'dashboard_id': 55}
+        self.parameter = 55
