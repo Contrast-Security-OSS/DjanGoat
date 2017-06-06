@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^signup/', views.users_views.signup, name='user_signup'),
     url(r'^upload/', views.user_benefit_forms_views.upload, name='upload_benefit_form'),
     url(r'^download/', views.user_benefit_forms_views.download, name='download_benefit_form'),
+    url(r'^schedule/', include(views.schedule.urls)),
 ]
