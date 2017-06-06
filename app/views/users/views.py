@@ -26,7 +26,6 @@ def edit_user(request, user_id):
 def account_settings(request, user_id):
     return HttpResponse("Account settings for user #" + str(user_id))
 
-
 @require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
 def user_view(request, user_id):
     return HttpResponse("User " + str(user_id) + " " + str(request.method))
