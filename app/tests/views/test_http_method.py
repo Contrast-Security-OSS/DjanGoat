@@ -16,4 +16,16 @@ class HttpMethodTests(TestCase, RouteTestingMixin):
         self.route_name = 'app:index'
         self.route = '/'
         self.view = v.app_index
-        self.responses = [200, 200, 200, 200, 200, 200, 200, 200]
+        self.responses = {
+            'exists': 200,
+            'GET': 200,
+            'POST': 200,
+            'PUT': 200,
+            'PATCH': 200,
+            'DELETE': 200,
+            'HEAD': 200,
+            'OPTIONS': 200,
+            'TRACE': 200
+        }
+
+

@@ -9,6 +9,7 @@ import app.views as views
 # print(views.users_views)
 retirement = views.user_retirement_views
 
+
 # Tests checking that that '/users/:user_id/retirement' properly handles HttpRequests and routing
 # Accepts GET and POST requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
@@ -90,6 +91,7 @@ class UserNewMessageRoutingAndHttpTests(TestCase):
         response = retirement.new_user_retirement(request, 55)
         self.assertEqual(response.status_code, 405)
 
+
 # Tests checking that that '/users/:user_id/retirement/:retirement_id/edit' properly handles HttpRequests and routing
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on user_id 55 and retirement_id 22
@@ -129,6 +131,7 @@ class UserEditRetirementRoutingAndHttpTests(TestCase):
         request = self.factory.patch('/users/55/retirement/22/edit')
         response = retirement.edit_user_retirement(request, 55, 22)
         self.assertEqual(response.status_code, 405)
+
 
 # Tests checking that that '/users/:user_id/retirement/:retirement_id' properly handles HttpRequests and routing
 # Accepts GET, PATCH, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)

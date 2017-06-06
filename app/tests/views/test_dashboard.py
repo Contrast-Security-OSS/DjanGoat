@@ -21,7 +21,17 @@ class DashboardIndexHttpRequestMethodTests(TestCase, RouteTestingMixin):
         self.route_name = 'app:dashboard_index'
         self.route = '/dashboard'
         self.view = dashboard.index
-        self.responses = [200, 200, 405, 405, 405, 405, 405, 405]
+        self.responses = {
+            'exists': 200,
+            'GET': 200,
+            'POST': 200,
+            'PUT': 405,
+            'PATCH': 405,
+            'DELETE': 405,
+            'HEAD': 405,
+            'OPTIONS': 405,
+            'TRACE': 405
+        }
 
 
 # Tests checking that that '/dashboard/home' properly handles HttpRequests
@@ -34,7 +44,17 @@ class DashboardHomeHttpRequestMethodTests(TestCase, RouteTestingMixin):
         self.route_name = 'app:dashboard_home'
         self.route = '/dashboard/home'
         self.view = dashboard.home
-        self.responses = [200, 405, 405, 405, 405, 405, 405, 405]
+        self.responses = {
+            'exists': 200,
+            'GET': 200,
+            'POST': 405,
+            'PUT': 405,
+            'PATCH': 405,
+            'DELETE': 405,
+            'HEAD': 405,
+            'OPTIONS': 405,
+            'TRACE': 405
+        }
 
 
 # Tests checking that that '/dashboard/change_graph' properly handles HttpRequests
@@ -47,7 +67,17 @@ class DashboardChangeGraphHttpRequestMethodTests(TestCase, RouteTestingMixin):
         self.route_name = 'app:dashboard_change_graph'
         self.route = '/dashboard/change_graph'
         self.view = dashboard.change_graph
-        self.responses = [200, 405, 405, 405, 405, 405, 405, 405]
+        self.responses = {
+            'exists': 200,
+            'GET': 200,
+            'POST': 405,
+            'PUT': 405,
+            'PATCH': 405,
+            'DELETE': 405,
+            'HEAD': 405,
+            'OPTIONS': 405,
+            'TRACE': 405
+        }
 
 
 # Tests checking that that '/dashboard/doc' properly handles HttpRequests
@@ -60,7 +90,17 @@ class DashboardDocHttpRequestMethodTests(TestCase, RouteTestingMixin):
         self.route_name = 'app:dashboard_doc'
         self.route = '/dashboard/doc'
         self.view = dashboard.doc
-        self.responses = [200, 405, 405, 405, 405, 405, 405, 405]
+        self.responses = {
+            'exists': 200,
+            'GET': 200,
+            'POST': 405,
+            'PUT': 405,
+            'PATCH': 405,
+            'DELETE': 405,
+            'HEAD': 405,
+            'OPTIONS': 405,
+            'TRACE': 405
+        }
 
 
 # Tests checking that that '/dashboard/new' properly handles HttpRequests
@@ -73,7 +113,17 @@ class DashboardNewHttpRequestMethodTests(TestCase, RouteTestingMixin):
         self.route_name = 'app:dashboard_new'
         self.route = '/dashboard/new'
         self.view = dashboard.new_dashboard
-        self.responses = [200, 405, 405, 405, 405, 405, 405, 405]
+        self.responses = {
+            'exists': 200,
+            'GET': 200,
+            'POST': 405,
+            'PUT': 405,
+            'PATCH': 405,
+            'DELETE': 405,
+            'HEAD': 405,
+            'OPTIONS': 405,
+            'TRACE': 405
+        }
 
 
 # Tests checking that that '/dashboard/:id/edit' properly handles HttpRequests
@@ -87,7 +137,17 @@ class DashboardEditHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
         self.route_name = 'app:dashboard_edit'
         self.route = '/dashboard/55/edit'
         self.view = dashboard.edit_dashboard
-        self.responses = [200, 405, 405, 405, 405, 405, 405, 405]
+        self.responses = {
+            'exists': 200,
+            'GET': 200,
+            'POST': 405,
+            'PUT': 405,
+            'PATCH': 405,
+            'DELETE': 405,
+            'HEAD': 405,
+            'OPTIONS': 405,
+            'TRACE': 405
+        }
         self.kwargs = {'dashboard_id': 55}
         self.parameter = 55
 
@@ -103,6 +163,16 @@ class DashboardViewHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
         self.route_name = 'app:dashboard_view'
         self.route = '/dashboard/55'
         self.view = dashboard.dashboard_view
-        self.responses = [200, 405, 200, 200, 200, 405, 405, 405]
+        self.responses = {
+            'exists': 200,
+            'GET': 200,
+            'POST': 405,
+            'PUT': 200,
+            'PATCH': 200,
+            'DELETE': 200,
+            'HEAD': 405,
+            'OPTIONS': 405,
+            'TRACE': 405
+        }
         self.kwargs = {'dashboard_id': 55}
         self.parameter = 55

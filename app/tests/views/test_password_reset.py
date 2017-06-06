@@ -19,12 +19,17 @@ class ForgotPassword(TestCase, RouteTestingMixin):
         self.route_name = 'app:forgot_password'
         self.route = '/forgot_password'
         self.view = password_reset.forgot_password
-        self.responses = [405, 200, 405, 405, 405, 405, 405, 405]
-
-    # override
-    def test_route_exists(self):
-        response = self.client.get(reverse(self.route_name))
-        self.assertEqual(response.status_code, 405)
+        self.responses = {
+            'exists': 405,
+            'GET': 405,
+            'POST': 200,
+            'PUT': 405,
+            'PATCH': 405,
+            'DELETE': 405,
+            'HEAD': 405,
+            'OPTIONS': 405,
+            'TRACE': 405
+        }
 
 
 class PasswordViewHandler(TestCase):
@@ -72,7 +77,17 @@ class ConfirmTokens(TestCase, RouteTestingMixin):
         self.route_name = 'app:password_resets'
         self.route = '/password_resets'
         self.view = password_reset.confirm_token
-        self.responses = [200, 405, 405, 405, 405, 405, 405, 405]
+        self.responses = {
+            'exists': 200,
+            'GET': 200,
+            'POST': 405,
+            'PUT': 405,
+            'PATCH': 405,
+            'DELETE': 405,
+            'HEAD': 405,
+            'OPTIONS': 405,
+            'TRACE': 405
+        }
 
 
 class ResetPassword(TestCase, RouteTestingMixin):
@@ -83,4 +98,14 @@ class ResetPassword(TestCase, RouteTestingMixin):
         self.route_name = 'app:password_resets'
         self.route = '/password_resets'
         self.view = password_reset.reset_password
-        self.responses = [405, 200, 405, 405, 405, 405, 405, 405]
+        self.responses = {
+            'exists': 200,
+            'GET': 405,
+            'POST': 200,
+            'PUT': 405,
+            'PATCH': 405,
+            'DELETE': 405,
+            'HEAD': 405,
+            'OPTIONS': 405,
+            'TRACE': 405
+        }
