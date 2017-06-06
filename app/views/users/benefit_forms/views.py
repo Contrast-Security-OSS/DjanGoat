@@ -8,9 +8,9 @@ from django.views.decorators.http import require_http_methods
 def user_benefit_forms(request, user_id):
     return HttpResponse("Benefit forms for user " + str(user_id))
 
-# @require_http_methods(["GET"])
-# def new_user_message(request, user_id):
-#     return HttpResponse("New message for user " + str(user_id))
+@require_http_methods(["GET"])
+def new_user_benefit_form(request, user_id):
+    return HttpResponse("New benefit forms for user " + str(user_id))
 #
 # @require_http_methods(["GET"])
 # def edit_user_message(request, user_id, message_id):
