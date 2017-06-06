@@ -6,45 +6,24 @@ from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse
 
 import app.views as views
+from app.tests.mixins import RouteTestingMixin
 
 password_reset = views.password_reset_views
 
 
-class ForgotPassword(TestCase):
+class ForgotPassword(TestCase, RouteTestingMixin):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
+        self.route_name = 'app:forgot_password'
+        self.route = '/forgot_password'
+        self.view = password_reset.forgot_password
+        self.responses = [405, 200, 405, 405, 405, 405, 405, 405]
 
-    # Verifies the route exists by getting the dashboard index
-    # and ensuring the response code is 200 (OK)
-    def test_forgot_password_route_exists(self):
-        response = self.client.post(reverse('app:forgot_password'))
-        self.assertEqual(response.status_code, 200)
-
-    def test_forgot_get(self):
-        request = self.factory.get('/forgot_password')
-        response = password_reset.forgot_password(request)
-        self.assertEqual(response.status_code, 405)
-
-    def test_forgot_post(self):
-        request = self.factory.post('/forgot_password')
-        response = password_reset.forgot_password(request)
-        self.assertEqual(response.status_code, 200)
-
-    def test_forgot_put(self):
-        request = self.factory.put('/forgot_password')
-        response = password_reset.forgot_password(request)
-        self.assertEqual(response.status_code, 405)
-
-    def test_forgot_delete(self):
-        request = self.factory.delete('/forgot_password')
-        response = password_reset.forgot_password(request)
-        self.assertEqual(response.status_code, 405)
-
-    def test_forgot_patch(self):
-        request = self.factory.patch('/forgot_password')
-        response = password_reset.forgot_password(request)
+    # override
+    def test_route_exists(self):
+        response = self.client.get(reverse(self.route_name))
         self.assertEqual(response.status_code, 405)
 
 
@@ -85,77 +64,23 @@ class PasswordViewHandler(TestCase):
         self.assertEqual(response.status_code, 405)
 
 
-class ConfirmTokens(TestCase):
+class ConfirmTokens(TestCase, RouteTestingMixin):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
-
-    # Verifies the route exists by getting the dashboard index
-    # and ensuring the response code is 200 (OK)
-    def test_password_resets_exists(self):
-        response = self.client.get(reverse('app:password_resets'))
-        self.assertEqual(response.status_code, 200)
-
-    def test_confirm_token_get(self):
-        request = self.factory.get('/password_resets')
-        response = password_reset.confirm_token(request)
-        self.assertEqual(response.status_code, 200)
-
-    def test_confirm_token_post(self):
-        request = self.factory.post('/password_resets')
-        response = password_reset.confirm_token(request)
-        self.assertEqual(response.status_code, 405)
-
-    def test_confirm_token_put(self):
-        request = self.factory.put('/password_resets')
-        response = password_reset.confirm_token(request)
-        self.assertEqual(response.status_code, 405)
-
-    def test_confirm_token_delete(self):
-        request = self.factory.delete('/password_resets')
-        response = password_reset.confirm_token(request)
-        self.assertEqual(response.status_code, 405)
-
-    def test_confirm_token_patch(self):
-        request = self.factory.patch('/password_resets')
-        response = password_reset.confirm_token(request)
-        self.assertEqual(response.status_code, 405)
+        self.route_name = 'app:password_resets'
+        self.route = '/password_resets'
+        self.view = password_reset.confirm_token
+        self.responses = [200, 405, 405, 405, 405, 405, 405, 405]
 
 
-class ResetPassword(TestCase):
+class ResetPassword(TestCase, RouteTestingMixin):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
-
-    # Verifies the route exists by getting the dashboard index
-    # and ensuring the response code is 200 (OK)
-    def test_password_resets_exists_post(self):
-        response = self.client.post(reverse('app:password_resets'))
-        self.assertEqual(response.status_code, 200)
-
-    def test_confirm_token_get(self):
-        request = self.factory.get('/password_resets')
-        response = password_reset.reset_password(request)
-        self.assertEqual(response.status_code, 405)
-
-    def test_reset_password_post(self):
-        request = self.factory.post('/password_resets')
-        response = password_reset.reset_password(request)
-        self.assertEqual(response.status_code, 200)
-
-    def test_reset_password_put(self):
-        request = self.factory.put('/password_resets')
-        response = password_reset.reset_password(request)
-        self.assertEqual(response.status_code, 405)
-
-    def test_reset_password_delete(self):
-        request = self.factory.delete('/password_resets')
-        response = password_reset.reset_password(request)
-        self.assertEqual(response.status_code, 405)
-
-    def test_reset_password_patch(self):
-        request = self.factory.patch('/password_resets')
-        response = password_reset.reset_password(request)
-        self.assertEqual(response.status_code, 405)
+        self.route_name = 'app:password_resets'
+        self.route = '/password_resets'
+        self.view = password_reset.reset_password
+        self.responses = [405, 200, 405, 405, 405, 405, 405, 405]
