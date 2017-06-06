@@ -14,4 +14,8 @@ urlpatterns = [
     url(r'^signup/', views.users_views.signup, name='user_signup'),
     url(r'^upload/', views.user_benefit_forms_views.upload, name='upload_benefit_form'),
     url(r'^download/', views.user_benefit_forms_views.download, name='download_benefit_form'),
+    url(r'^login/', views.sessions_views.login, name='login'),
+    url(r'^logout/', views.sessions_views.logout, name='logout'),
+    url(r'^sessions/', include(views.sessions.urls)),
+
 ]
