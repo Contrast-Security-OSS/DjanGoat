@@ -7,3 +7,4 @@ from tutorials import views as tutorials_views
 from users import views as users_views
 from users.messages import views as user_messages_views
 from users.benefit_forms import views as user_benefit_forms_views
+from users.retirement import views as user_retirement_views
