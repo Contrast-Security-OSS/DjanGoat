@@ -3,15 +3,13 @@ from __future__ import unicode_literals
 
 from django.test import TestCase, RequestFactory, Client
 
-from django.urls import reverse
-
 import app.views as views
-from app.tests.mixins import RouteTestingMixin
+from app.tests.mixins import RouteTestingWithKwargs
 
 password_reset = views.password_reset_views
 
 
-class ForgotPassword(TestCase, RouteTestingMixin):
+class ForgotPassword(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -30,6 +28,7 @@ class ForgotPassword(TestCase, RouteTestingMixin):
             'OPTIONS': 405,
             'TRACE': 405
         }
+        self.kwargs = {}
 
 
 class PasswordViewHandler(TestCase):
@@ -69,7 +68,7 @@ class PasswordViewHandler(TestCase):
         self.assertEqual(response.status_code, 405)
 
 
-class ConfirmTokens(TestCase, RouteTestingMixin):
+class ConfirmTokens(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -88,9 +87,10 @@ class ConfirmTokens(TestCase, RouteTestingMixin):
             'OPTIONS': 405,
             'TRACE': 405
         }
+        self.kwargs = {}
 
 
-class ResetPassword(TestCase, RouteTestingMixin):
+class ResetPassword(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -109,3 +109,4 @@ class ResetPassword(TestCase, RouteTestingMixin):
             'OPTIONS': 405,
             'TRACE': 405
         }
+        self.kwargs = {}

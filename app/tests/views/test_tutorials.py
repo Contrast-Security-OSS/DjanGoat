@@ -3,16 +3,14 @@ from __future__ import unicode_literals
 
 from django.test import TestCase, RequestFactory, Client
 
-from app.tests.mixins import RouteTestingMixin
 from app.tests.mixins import RouteTestingWithKwargs
-
 
 import app.views as views
 
 tutorials = views.tutorials_views
 
 
-class TutorialTestsIndex(TestCase, RouteTestingMixin):
+class TutorialTestsIndex(TestCase, RouteTestingWithKwargs):
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -30,9 +28,10 @@ class TutorialTestsIndex(TestCase, RouteTestingMixin):
             'OPTIONS': 405,
             'TRACE': 405
         }
+        self.kwargs = {}
 
 
-class TutorialsCredentialsTests(TestCase, RouteTestingMixin):
+class TutorialsCredentialsTests(TestCase, RouteTestingWithKwargs):
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -50,6 +49,7 @@ class TutorialsCredentialsTests(TestCase, RouteTestingMixin):
             'OPTIONS': 405,
             'TRACE': 405
         }
+        self.kwargs = {}
 
 
 class TutorialsIdTests(TestCase, RouteTestingWithKwargs):
@@ -72,7 +72,6 @@ class TutorialsIdTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'id_number': 22}
-        self.parameter = "100"
 
 
 class TutorialsIdEditsTests(TestCase, RouteTestingWithKwargs):
@@ -95,10 +94,9 @@ class TutorialsIdEditsTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'id_number': 22}
-        self.parameter = "100"
 
 
-class TutorialsNewTests(TestCase, RouteTestingMixin):
+class TutorialsNewTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -117,3 +115,4 @@ class TutorialsNewTests(TestCase, RouteTestingMixin):
             'OPTIONS': 405,
             'TRACE': 405
         }
+        self.kwargs = {}

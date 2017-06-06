@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse
 
-from app.tests.mixins import RouteTestingMixin
 from app.tests.mixins import RouteTestingWithKwargs
 
 import app.views as views

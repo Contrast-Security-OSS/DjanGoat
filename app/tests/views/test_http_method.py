@@ -2,13 +2,12 @@ from __future__ import unicode_literals
 
 from django.test import TestCase, RequestFactory, Client
 
-from django.urls import reverse
-from app.tests.mixins import RouteTestingMixin
+from app.tests.mixins import RouteTestingWithKwargs
 
 import app.views as v
 
 
-class HttpMethodTests(TestCase, RouteTestingMixin):
+class HttpMethodTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -27,5 +26,6 @@ class HttpMethodTests(TestCase, RouteTestingMixin):
             'OPTIONS': 200,
             'TRACE': 200
         }
+        self.kwargs = {}
 
 

@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from django.test import TestCase, RequestFactory, Client
-from app.tests.mixins import RouteTestingMixin
 from app.tests.mixins import RouteTestingWithKwargs
 
 import app.views as views
@@ -12,7 +11,7 @@ users = views.users_views
 
 # Tests checking that that '/users' properly handles HttpRequests
 # Accepts Both GET and POST requests and refuses all others with an error code 405 (Method not allowed)
-class UsersIndexRoutingAndHttpTests(TestCase, RouteTestingMixin):
+class UsersIndexRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -31,11 +30,12 @@ class UsersIndexRoutingAndHttpTests(TestCase, RouteTestingMixin):
             'OPTIONS': 405,
             'TRACE': 405
         }
+        self.kwargs = {}
 
 
 # Tests checking that that '/users/new' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class UsersNewRoutingAndHttpTests(TestCase, RouteTestingMixin):
+class UsersNewRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -54,11 +54,12 @@ class UsersNewRoutingAndHttpTests(TestCase, RouteTestingMixin):
             'OPTIONS': 405,
             'TRACE': 405
         }
+        self.kwargs = {}
 
 
 # Tests checking that that '/signup' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class UserSignupRoutingAndHttpTests(TestCase, RouteTestingMixin):
+class UserSignupRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -77,6 +78,7 @@ class UserSignupRoutingAndHttpTests(TestCase, RouteTestingMixin):
             'OPTIONS': 405,
             'TRACE': 405
         }
+        self.kwargs = {}
 
 
 # Tests checking that that '/users/:id/edit' properly handles HttpRequests
@@ -102,7 +104,6 @@ class UserEditRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55}
-        self.parameter = 55
 
 
 # Tests checking that that '/users/:id/account_settings' properly handles HttpRequests
@@ -128,7 +129,6 @@ class UserAccountSettingsRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55}
-        self.parameter = 55
 
 
 # Tests checking that that '/users/:id' properly handles HttpRequests
@@ -154,4 +154,3 @@ class UserViewRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55}
-        self.parameter = 55

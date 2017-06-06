@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse
-from app.tests.mixins import RouteTestingMixin
 from app.tests.mixins import RouteTestingWithKwargs
 
 import app.views as views
@@ -13,7 +12,7 @@ dashboard = views.dashboard_views
 
 # Tests checking that that '/dashboard' properly handles HttpRequests
 # Accepts Both GET and POST requests and refuses all others with an error code 405 (Method not allowed)
-class DashboardIndexHttpRequestMethodTests(TestCase, RouteTestingMixin):
+class DashboardIndexHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -32,11 +31,12 @@ class DashboardIndexHttpRequestMethodTests(TestCase, RouteTestingMixin):
             'OPTIONS': 405,
             'TRACE': 405
         }
+        self.kwargs = {}
 
 
 # Tests checking that that '/dashboard/home' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class DashboardHomeHttpRequestMethodTests(TestCase, RouteTestingMixin):
+class DashboardHomeHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -55,11 +55,12 @@ class DashboardHomeHttpRequestMethodTests(TestCase, RouteTestingMixin):
             'OPTIONS': 405,
             'TRACE': 405
         }
+        self.kwargs = {}
 
 
 # Tests checking that that '/dashboard/change_graph' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class DashboardChangeGraphHttpRequestMethodTests(TestCase, RouteTestingMixin):
+class DashboardChangeGraphHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -78,11 +79,12 @@ class DashboardChangeGraphHttpRequestMethodTests(TestCase, RouteTestingMixin):
             'OPTIONS': 405,
             'TRACE': 405
         }
+        self.kwargs = {}
 
 
 # Tests checking that that '/dashboard/doc' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class DashboardDocHttpRequestMethodTests(TestCase, RouteTestingMixin):
+class DashboardDocHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -101,11 +103,12 @@ class DashboardDocHttpRequestMethodTests(TestCase, RouteTestingMixin):
             'OPTIONS': 405,
             'TRACE': 405
         }
+        self.kwargs = {}
 
 
 # Tests checking that that '/dashboard/new' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class DashboardNewHttpRequestMethodTests(TestCase, RouteTestingMixin):
+class DashboardNewHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -124,6 +127,7 @@ class DashboardNewHttpRequestMethodTests(TestCase, RouteTestingMixin):
             'OPTIONS': 405,
             'TRACE': 405
         }
+        self.kwargs = {}
 
 
 # Tests checking that that '/dashboard/:id/edit' properly handles HttpRequests
@@ -149,7 +153,6 @@ class DashboardEditHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'dashboard_id': 55}
-        self.parameter = 55
 
 
 # Tests checking that that '/dashboard/:id' properly handles HttpRequests
@@ -175,4 +178,3 @@ class DashboardViewHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'dashboard_id': 55}
-        self.parameter = 55
