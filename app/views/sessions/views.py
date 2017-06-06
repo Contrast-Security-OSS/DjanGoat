@@ -31,4 +31,4 @@ def edit_session(request, id_number):
 
 @require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
 def session_id(request, id_number):
-    return HttpResponse(id_number + ' edited a session')
+    return HttpResponse(id_number + ' is at a session')
