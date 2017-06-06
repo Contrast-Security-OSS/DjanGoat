@@ -182,7 +182,7 @@ class UploadRoutingAndHttpTests(TestCase):
     # Verifies the route exists by getting the /upload
     # and ensuring the response code is 200 (OK)
     def test_upload_route_exists(self):
-        response = self.client.post(reverse('app:upload'))
+        response = self.client.post(reverse('app:upload_benefit_form'))
         self.assertEqual(response.status_code, 200)
 
     def test_upload_get(self):
@@ -208,4 +208,44 @@ class UploadRoutingAndHttpTests(TestCase):
     def test_upload_patch(self):
         request = self.factory.patch('/upload')
         response = benefit_forms.upload(request)
+        self.assertEqual(response.status_code, 405)
+
+# Tests checking that that '/download' properly handles HttpRequests and routing
+# Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
+# Tested on id #55
+class DonwloadBenefitFormsRoutingAndHttpTests(TestCase):
+    # setup for all test cases
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.client = Client()
+
+    # Verifies the route exists by getting the /download
+    # and ensuring the response code is 200 (OK)
+    def test_download_benefit_form_route_exists(self):
+        response = self.client.get(reverse('app:download_benefit_form'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_download_benefit_form_get(self):
+        request = self.factory.get('/download')
+        response = benefit_forms.download(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_download_benefit_form_post(self):
+        request = self.factory.post('/download')
+        response = benefit_forms.download(request)
+        self.assertEqual(response.status_code, 405)
+
+    def test_download_benefit_form_put(self):
+        request = self.factory.put('/download')
+        response = benefit_forms.download(request)
+        self.assertEqual(response.status_code, 405)
+
+    def test_download_benefit_form_delete(self):
+        request = self.factory.delete('/download')
+        response = benefit_forms.download(request)
+        self.assertEqual(response.status_code, 405)
+
+    def test_download_benefit_form_patch(self):
+        request = self.factory.patch('/download')
+        response = benefit_forms.download(request)
         self.assertEqual(response.status_code, 405)
