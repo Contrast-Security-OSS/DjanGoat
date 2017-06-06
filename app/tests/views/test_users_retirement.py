@@ -90,49 +90,49 @@ class UserNewMessageRoutingAndHttpTests(TestCase):
         response = retirement.new_user_retirement(request, 55)
         self.assertEqual(response.status_code, 405)
 
-# # Tests checking that that '/users/:user_id/retirement/:message_id/edit' properly handles HttpRequests and routing
-# # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-# # Tested on user_id 55 and message_id 22
-# class UserEditMessageRoutingAndHttpTests(TestCase):
-#     # setup for all test cases
-#     def setUp(self):
-#         self.factory = RequestFactory()
-#         self.client = Client()
-#
-#     # Verifies the route exists by getting the users/55/retirement/22/edit
-#     # and ensuring the response code is 200 (OK)
-#     def test_user_edit_message_route_exists(self):
-#         response = self.client.get(reverse('app:edit_user_message', kwargs={'user_id': 55, 'message_id': 22}))
-#         self.assertEqual(response.status_code, 200)
-#
-#     def test_user_edit_message_get(self):
-#         request = self.factory.get('/users/55/retirement/22/edit')
-#         response = retirement.edit_user_message(request, 55, 22)
-#         self.assertEqual(response.status_code, 200)
-#
-#     def test_user_edit_message_post(self):
-#         request = self.factory.post('/users/55/retirement/22/edit')
-#         response = retirement.edit_user_message(request, 55, 22)
-#         self.assertEqual(response.status_code, 405)
-#
-#     def test_user_edit_message_put(self):
-#         request = self.factory.put('/users/55/retirement/22/edit')
-#         response = retirement.edit_user_message(request, 55, 22)
-#         self.assertEqual(response.status_code, 405)
-#
-#     def test_user_edit_message_delete(self):
-#         request = self.factory.delete('/users/55/retirement/22/edit')
-#         response = retirement.edit_user_message(request, 55, 22)
-#         self.assertEqual(response.status_code, 405)
-#
-#     def test_user_edit_message_patch(self):
-#         request = self.factory.patch('/users/55/retirement/22/edit')
-#         response = retirement.edit_user_message(request, 55, 22)
-#         self.assertEqual(response.status_code, 405)
-#
-# # Tests checking that that '/users/:user_id/retirement/message_id' properly handles HttpRequests and routing
+# Tests checking that that '/users/:user_id/retirement/:retirement_id/edit' properly handles HttpRequests and routing
+# Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
+# Tested on user_id 55 and retirement_id 22
+class UserEditRetirementRoutingAndHttpTests(TestCase):
+    # setup for all test cases
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.client = Client()
+
+    # Verifies the route exists by getting the users/55/retirement/22/edit
+    # and ensuring the response code is 200 (OK)
+    def test_edit_user_retirement_route_exists(self):
+        response = self.client.get(reverse('app:edit_user_retirement', kwargs={'user_id': 55, 'retirement_id': 22}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_edit_user_retirement_get(self):
+        request = self.factory.get('/users/55/retirement/22/edit')
+        response = retirement.edit_user_retirement(request, 55, 22)
+        self.assertEqual(response.status_code, 200)
+
+    def test_edit_user_retirement_post(self):
+        request = self.factory.post('/users/55/retirement/22/edit')
+        response = retirement.edit_user_retirement(request, 55, 22)
+        self.assertEqual(response.status_code, 405)
+
+    def test_edit_user_retirement_put(self):
+        request = self.factory.put('/users/55/retirement/22/edit')
+        response = retirement.edit_user_retirement(request, 55, 22)
+        self.assertEqual(response.status_code, 405)
+
+    def test_edit_user_retirement_delete(self):
+        request = self.factory.delete('/users/55/retirement/22/edit')
+        response = retirement.edit_user_retirement(request, 55, 22)
+        self.assertEqual(response.status_code, 405)
+
+    def test_edit_user_retirement_patch(self):
+        request = self.factory.patch('/users/55/retirement/22/edit')
+        response = retirement.edit_user_retirement(request, 55, 22)
+        self.assertEqual(response.status_code, 405)
+
+# # Tests checking that that '/users/:user_id/retirement/retirement_id' properly handles HttpRequests and routing
 # # Accepts GET, PATCH, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)
-# # Tested on user_id 55 and message_id 22
+# # Tested on user_id 55 and retirement_id 22
 # class UserShowMessageRoutingAndHttpTests(TestCase):
 #     # setup for all test cases
 #     def setUp(self):
@@ -141,31 +141,31 @@ class UserNewMessageRoutingAndHttpTests(TestCase):
 #
 #     # Verifies the route exists by getting the users/55/retirement/22
 #     # and ensuring the response code is 200 (OK)
-#     def test_user_message_route_exists(self):
-#         response = self.client.get(reverse('app:user_message', kwargs={'user_id': 55, 'message_id': 22}))
+#     def test_user_retirement_route_exists(self):
+#         response = self.client.get(reverse('app:user_retirement', kwargs={'user_id': 55, 'retirement_id': 22}))
 #         self.assertEqual(response.status_code, 200)
 #
-#     def test_user_message_get(self):
+#     def test_user_retirement_get(self):
 #         request = self.factory.get('/users/55/retirement/22')
-#         response = retirement.user_message(request, 55, 22)
+#         response = retirement.user_retirement(request, 55, 22)
 #         self.assertEqual(response.status_code, 200)
 #
-#     def test_user_message_post(self):
+#     def test_user_retirement_post(self):
 #         request = self.factory.post('/users/55/retirement/22')
-#         response = retirement.user_message(request, 55, 22)
+#         response = retirement.user_retirement(request, 55, 22)
 #         self.assertEqual(response.status_code, 405)
 #
-#     def test_user_message_put(self):
+#     def test_user_retirement_put(self):
 #         request = self.factory.put('/users/55/retirement/22')
-#         response = retirement.user_message(request, 55, 22)
+#         response = retirement.user_retirement(request, 55, 22)
 #         self.assertEqual(response.status_code, 200)
 #
-#     def test_user_message_delete(self):
+#     def test_user_retirement_delete(self):
 #         request = self.factory.delete('/users/55/retirement/22')
-#         response = retirement.user_message(request, 55, 22)
+#         response = retirement.user_retirement(request, 55, 22)
 #         self.assertEqual(response.status_code, 200)
 #
-#     def test_user_message_patch(self):
+#     def test_user_retirement_patch(self):
 #         request = self.factory.patch('/users/55/retirement/22')
-#         response = retirement.user_message(request, 55, 22)
+#         response = retirement.user_retirement(request, 55, 22)
 #         self.assertEqual(response.status_code, 200)

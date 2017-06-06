@@ -12,10 +12,10 @@ def user_retirement_index(request, user_id):
 def new_user_retirement(request, user_id):
     return HttpResponse("New user retirement for user " + str(user_id))
 
-# @require_http_methods(["GET"])
-# def edit_user_retirement(request, user_id, message_id):
-#     return HttpResponse("Edit message " + str(message_id) + " for user " + str(user_id))
-#
+@require_http_methods(["GET"])
+def edit_user_retirement(request, user_id, retirement_id):
+    return HttpResponse("Edit retirement " + str(retirement_id) + " for user " + str(user_id))
+
 # @require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
-# def user_retirement(request, user_id, message_id):
-#     return HttpResponse("View message " + str(message_id) + " for user " + str(user_id))
+# def user_retirement(request, user_id, retirement_id):
+#     return HttpResponse("View retirement " + str(retirement_id) + " for user " + str(user_id))
