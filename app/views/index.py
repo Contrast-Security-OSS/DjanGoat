@@ -1,7 +1,8 @@
-from __future__ import unicode_literals
-
 from django.http import HttpResponse
+from django.template.loader import get_template
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the app index.")
+    t = get_template('index.html')
+    html = t.render()
+    return HttpResponse(html)

@@ -18,5 +18,4 @@ urlpatterns = [
     url(r'^logout/', views.sessions_views.logout, name='logout'),
     url(r'^sessions/', include(views.sessions.urls)),
     url(r'^schedule/', include(views.schedule.urls)),
-    url(r'^bootstrap/', views.bootstrap_view.index),
 ]
