@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+import pep8
 from django.test import TestCase, RequestFactory, Client
 from app.tests.mixins import RouteTestingWithKwargs
 
 import app.views as views
-
-import pep8
 
 messages = views.user_messages_views
 
