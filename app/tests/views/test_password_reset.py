@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.test import TestCase, RequestFactory, Client
 
 import app.views as views
 from app.tests.mixins import RouteTestingWithKwargs
+from app.tests.mixins import Pep8ViewsTests
 
 password_reset = views.password_reset_views
+
+
+class PasswordResetPep8Tests(TestCase, Pep8ViewsTests):
+
+    def setUp(self):
+        self.path = 'app/views/password_resets/'
 
 
 class ForgotPassword(TestCase, RouteTestingWithKwargs):

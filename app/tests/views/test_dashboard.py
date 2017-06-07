@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.test import TestCase, RequestFactory, Client
-from django.urls import reverse
 from app.tests.mixins import RouteTestingWithKwargs
+from app.tests.mixins import Pep8ViewsTests
 
 import app.views as views
 
 dashboard = views.dashboard_views
+
+
+class DashboardPep8Tests(TestCase, Pep8ViewsTests):
+    def setUp(self):
+        self.path = 'app/views/dashboard/'
 
 
 # Tests checking that that '/dashboard' properly handles HttpRequests

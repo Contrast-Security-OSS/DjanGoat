@@ -5,11 +5,18 @@ from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse
 
 from app.tests.mixins import RouteTestingWithKwargs
+from app.tests.mixins import Pep8ViewsTests
+
 
 import app.views as views
 
-# print(views.users_views)
 benefit_forms = views.user_benefit_forms_views
+
+
+class UserBenefitFormsPep8Tests(TestCase, Pep8ViewsTests):
+
+    def setUp(self):
+        self.path = 'app/views/users/benefit_forms/'
 
 
 # Tests checking that that '/users/:user_id/benefit_forms' properly handles HttpRequests and routing

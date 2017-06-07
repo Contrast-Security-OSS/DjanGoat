@@ -3,11 +3,16 @@ from __future__ import unicode_literals
 
 from django.test import TestCase, RequestFactory, Client
 from app.tests.mixins import RouteTestingWithKwargs
-
+from app.tests.mixins import Pep8ViewsTests
 import app.views as views
 
-# print(views.users_views)
 retirement = views.user_retirement_views
+
+
+class PasswordResetPep8Tests(TestCase, Pep8ViewsTests):
+
+    def setUp(self):
+        self.path = 'app/views/users/retirement/'
 
 
 # Tests checking that that '/users/:user_id/retirement' properly handles HttpRequests and routing
