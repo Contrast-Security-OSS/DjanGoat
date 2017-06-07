@@ -1,6 +1,7 @@
 import pep8
 
 
+# Helper method to validate whether or not there are pep8 errors in the code specified by the path
 def validate(self, result, path):
     error_message = ""
     if result.total_errors != 0:
