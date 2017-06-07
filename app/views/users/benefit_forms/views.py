@@ -17,12 +17,14 @@ def new_user_benefit_form(request, user_id):
 
 @require_http_methods(["GET"])
 def edit_user_benefit_form(request, user_id, benefit_form_id):
-    return HttpResponse("Edit benefit form " + str(benefit_form_id) + " for user " + str(user_id))
+    return HttpResponse("Edit benefit form " +
+                        str(benefit_form_id) + " for user " + str(user_id))
 
 
 @require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
 def user_benefit_form(request, user_id, benefit_form_id):
-    return HttpResponse("View benefit form " + str(benefit_form_id) + " for user " + str(user_id))
+    return HttpResponse("View benefit form " +
+                        str(benefit_form_id) + " for user " + str(user_id))
 
 
 @require_http_methods(["GET"])

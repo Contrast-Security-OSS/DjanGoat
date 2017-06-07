@@ -1,12 +1,27 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+import pep8
 from django.test import TestCase, RequestFactory, Client
 from app.tests.mixins import RouteTestingWithKwargs
 
 import app.views as views
 
 schedule = views.schedule_views
+
+
+class SchedulePep8Tests(TestCase):
+
+    def test_pep8_conformance(self):
+        """Test that we conform to PEP8."""
+        path = 'app/views/schedule/'
+        pep8style = pep8.StyleGuide(quiet=True)
+        result = pep8style.check_files([path + 'views.py',
+                                        path + 'urls.py',
+                                        path + '__init__.py'])
+        error_message = ""
+        if result.total_errors != 0:
+            error_message = "Style errors in: " + path + "\n" + "\n".join(result.get_statistics())
+        self.assertEqual(result.total_errors, 0, error_message)
 
 
 # Tests checking that that '/schedule' properly handles HttpRequests and routing
