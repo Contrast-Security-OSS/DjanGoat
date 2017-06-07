@@ -36,4 +36,5 @@ def edit_dashboard(request, dashboard_id):
 
 @require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
 def dashboard_view(request, dashboard_id):
-    return HttpResponse("Dashboard " + str(dashboard_id) + " " + str(request.method))
+    return HttpResponse("Dashboard " + str(dashboard_id) + " " +
+                        str(request.method))

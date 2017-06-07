@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.test import TestCase, RequestFactory, Client
 from app.tests.mixins import RouteTestingWithKwargs
+from app.tests.mixins import Pep8ViewsTests
 
 import app.views as views
 
 schedule = views.schedule_views
+
+
+class SchedulePep8Tests(TestCase, Pep8ViewsTests):
+
+    def setUp(self):
+        self.path = 'app/views/schedule/'
 
 
 # Tests checking that that '/schedule' properly handles HttpRequests and routing
