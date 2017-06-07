@@ -3,28 +3,16 @@ from __future__ import unicode_literals
 
 from django.test import TestCase, RequestFactory, Client
 from app.tests.mixins import RouteTestingWithKwargs
-
+from app.tests.mixins import Pep8ViewsTests
 import app.views as views
-
-import pep8
 
 users = views.users_views
 
 
-class UsersPep8Tests(TestCase):
+class UsersPep8Tests(TestCase, Pep8ViewsTests):
 
-    def test_pep8_conformance(self):
-        """Test that we conform to PEP8."""
-        path = 'app/views/users/'
-        pep8style = pep8.StyleGuide(quiet=True)
-        result = pep8style.check_files([path + 'views.py',
-                                        path + 'urls.py',
-                                        path + '__init__.py'])
-        error_message = ""
-        if result.total_errors != 0:
-            error_message = "Style errors in: " + path + "\n" + "\n".join(result.get_statistics())
-        self.assertEqual(result.total_errors, 0, error_message)
-
+    def setUp(self):
+        self.path = 'app/views/users/'
 
 
 # Tests checking that that '/users' properly handles HttpRequests

@@ -1,27 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import pep8
+
 from django.test import TestCase, RequestFactory, Client
 from app.tests.mixins import RouteTestingWithKwargs
+from app.tests.mixins import Pep8ViewsTests
 
 import app.views as views
 
 messages = views.user_messages_views
 
 
-class PasswordResetPep8Tests(TestCase):
+class PasswordResetPep8Tests(TestCase, Pep8ViewsTests):
 
-    def test_pep8_conformance(self):
-        """Test that we conform to PEP8."""
-        path = 'app/views/users/messages/'
-        pep8style = pep8.StyleGuide(quiet=True)
-        result = pep8style.check_files([path + 'views.py',
-                                        path + 'urls.py',
-                                        path + '__init__.py'])
-        error_message = ""
-        if result.total_errors != 0:
-            error_message = "Style errors in: " + path + "\n" + "\n".join(result.get_statistics())
-        self.assertEqual(result.total_errors, 0, error_message)
+    def setUp(self):
+        self.path = 'app/views/users/messages/'
 
 
 # Tests checking that that '/users/:id/messages' properly handles HttpRequests and routing
