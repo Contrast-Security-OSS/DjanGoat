@@ -6,7 +6,6 @@ from app.tests.mixins import RouteTestingWithKwargs
 
 import app.views as views
 
-# print(views.users_views)
 messages = views.user_messages_views
 
 
