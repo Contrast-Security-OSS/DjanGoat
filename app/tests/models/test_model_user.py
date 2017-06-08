@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.test import TestCase
 import datetime
-from django.utils import timezone
+import pytz
 from app.models import User
 
 
@@ -25,50 +25,39 @@ class UserModelTests(TestCase):
         self.input_admin = True
         self.input_first_name = "Ryan"
         self.input_last_name = "Dens"
-        self.input_create_date = datetime.date(2017, 6, 1)
-        self.input_update_date = datetime.date(2017, 6, 3)
+        self.input_create_date = datetime.datetime(2017, 6, 1, 0, 0)
+        self.input_create_date = pytz.utc.localize(self.input_create_date)
+        self.input_update_date = datetime.datetime(2017, 6, 3, 0, 0)
+        self.input_update_date = pytz.utc.localize(self.input_update_date)
         self.input_auth_token = "test"
         self.user = User.objects.create(
+            user_id=1,
             email=self.input_email, password=self.input_password,
             is_admin=self.input_admin, first_name=self.input_first_name,
             last_name=self.input_last_name, created_at=self.input_create_date,
             updated_at=self.input_update_date, auth_token=self.input_auth_token)
         self.user.save()
+        self.db_user = User.objects.filter(user_id=1).first()
 
     def test_create_user(self):
-        self.assertNotEqual(self.user, None)
+        self.assertNotEqual(self.db_user, None)
 
     def test_read_user(self):
-        self.assertEqual(self.user.email, self.input_email)
-        self.assertEqual(self.user.password, self.input_password)
-        self.assertEqual(self.user.is_admin, self.input_admin)
-        self.assertEqual(self.user.first_name, self.input_first_name)
-        self.assertEqual(self.user.last_name, self.input_last_name)
-        self.assertEqual(self.user.created_at, self.input_create_date)
-        self.assertEqual(self.user.updated_at, self.input_update_date)
-        self.assertEqual(self.user.auth_token, self.input_auth_token)
+        self.assertEqual(self.db_user, self.user)
 
     def test_update_user(self):
-        # self.user.first_name = "Better Ryan"
-        # self.user.last_name = "Dens2"
-        # self.user.is_admin = False
-        # self.user.email = "ryan.dens2@contrastsecurity.com"
-        # self.user.password = "12345"
-        # self.user.created_at = datetime.date(2017, 6, 4)
-        # self.user.updated_at = datetime.date(2017, 6, 8)
-        # self.user.auth_token = "test2"
-        # self.user.save()
-        # self.assertEqual(self.user.email, "ryan.dens2@contrastsecurity.com")
-        # self.assertEqual(self.user.password, "12345")
-        # self.assertEqual(self.user.is_admin, False)
-        # self.assertEqual(self.user.first_name, "Better Ryan")
-        # self.assertEqual(self.user.last_name, "Dens2")
-        # self.assertEqual(self.user.created_at, datetime.date(2017, 6, 4))
-        # self.assertEqual(self.user.updated_at, datetime.date(2017, 6, 8))
-        # self.assertEqual(self.user.auth_token, "test2")
-        obj = User.objects.filter(first_name="Ryan")
-        print(obj.first())
+        self.user.first_name = "Vinai"
+        self.user.save()
+        self.db_user = User.objects.filter(user_id=1).first()
+        self.assertEqual(self.user, self.db_user)
 
     def test_delete_user(self):
         response = self.user.delete()
-        # self.assertEqual()
+        numObjectsDeleted = response[0]
+        '''1 object deleted from database'''
+        self.assertEqual(numObjectsDeleted, 1)
+
+        self.db_user = User.objects.filter(user_id=1).first()
+        '''User with user_id=1 no longer in database'''
+        self.assertEqual(self.db_user, None)
+

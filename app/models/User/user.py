@@ -23,4 +23,3 @@ class User(models.Model):
     created_at = models.DateTimeField('date created')
     updated_at = models.DateTimeField('date updated')
     auth_token = models.CharField(max_length=255)
-
