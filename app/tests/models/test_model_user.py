@@ -52,7 +52,7 @@ class UserModelTests(TestCase, Pep8ModelTests):
         self.user.first_name = "Vinai"
         self.user.save()
         self.db_user = User.objects.filter(user_id=1).first()
-        self.assertEqual(self.user, self.db_user)
+        self.assertEqual(self.user.first_name, self.db_user.first_name)
 
     def test_delete_user(self):
         response = self.user.delete()
