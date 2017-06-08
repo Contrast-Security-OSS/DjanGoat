@@ -6,6 +6,9 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.core.validators import MaxValueValidator
 
 
+thirty_two_bit_int_max = 2**32-1
+
+
 @python_2_unicode_compatible
 class User(models.Model):
     """
@@ -19,7 +22,7 @@ class User(models.Model):
     is_admin = models.BooleanField()
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    user_id = models.PositiveIntegerField(validators=[MaxValueValidator(4294967295)])
+    user_id = models.PositiveIntegerField(validators=[MaxValueValidator(thirty_two_bit_int_max)])
     created_at = models.DateTimeField('date created')
     updated_at = models.DateTimeField('date updated')
     auth_token = models.CharField(max_length=255)
