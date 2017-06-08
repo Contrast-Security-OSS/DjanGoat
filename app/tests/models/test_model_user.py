@@ -53,9 +53,9 @@ class UserModelTests(TestCase):
 
     def test_delete_user(self):
         response = self.user.delete()
-        numObjectsDeleted = response[0]
+        num_objects_deleted = response[0]
         '''1 object deleted from database'''
-        self.assertEqual(numObjectsDeleted, 1)
+        self.assertEqual(num_objects_deleted, 1)
 
         self.db_user = User.objects.filter(user_id=1).first()
         '''User with user_id=1 no longer in database'''
