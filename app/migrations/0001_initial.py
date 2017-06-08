@@ -16,15 +16,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='KeyManagement',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('iv', models.CharField(max_length=255)),
-                ('created_at', models.DateTimeField(verbose_name='date created')),
-                ('updated_at', models.DateTimeField(verbose_name='date updated')),
-            ],
-        ),
-        migrations.CreateModel(
             name='Note',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -46,10 +37,5 @@ class Migration(migrations.Migration):
                 ('updated_at', models.DateTimeField(verbose_name='date updated')),
                 ('auth_token', models.CharField(max_length=255)),
             ],
-        ),
-        migrations.AddField(
-            model_name='keymanagement',
-            name='user_id',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.User'),
         ),
     ]

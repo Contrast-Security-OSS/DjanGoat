@@ -66,13 +66,27 @@ class UserModelTests(TestCase):
         self.db_key_management = KeyManagement.objects.filter(pk=self.key_management.pk).first()
         self.assertEqual(self.key_management.iv, self.db_key_management.iv)
 
-    def test_delete_user(self):
+    def test_delete_key_management(self):
         response = self.key_management.delete()
         num_objects_deleted = response[0]
         '''1 object deleted from database'''
         self.assertEqual(num_objects_deleted, 1)
 
         self.db_key_management = KeyManagement.objects.filter(pk=self.key_management.pk).first()
-        '''User with primary key matching the deleted key management no longer in database'''
+        '''Key management with primary key matching the deleted key management's primary key no longer in database'''
         self.assertEqual(self.db_key_management, None)
+
+    def test_delete_user_and_key_management(self):
+        """Test to ensure key management is deleted when its user is deleted.
+        """
+        response = self.user.delete()
+        num_objects_deleted = response[0]
+        '''2 objects deleted from database'''
+        self.assertEqual(num_objects_deleted, 2)
+
+        self.db_key_management = KeyManagement.objects.filter(pk=self.key_management.pk).first()
+        db_user = User.objects.filter(pk=self.user.pk).first()
+        self.assertIsNone(self.db_key_management, "Key Management not deleted from database")
+        self.assertIsNone(db_user, "User not deleted from the database")
+
 
