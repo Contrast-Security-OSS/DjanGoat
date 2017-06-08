@@ -11,4 +11,3 @@ from users.benefit_forms import views as user_benefit_forms_views
 from users.retirement import views as user_retirement_views
 from sessions import views as sessions_views
 from schedule import views as schedule_views
-from bootstrap import bootstrap_view
