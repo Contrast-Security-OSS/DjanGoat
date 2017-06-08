@@ -5,9 +5,9 @@ from django.test import TestCase
 import datetime
 import pytz
 from app.models import User
+from app.tests.mixins import Pep8ModelTests
 
-
-class UserModelTests(TestCase):
+class UserModelTests(TestCase, Pep8ModelTests):
 
     user = None
     input_email = None
@@ -20,6 +20,9 @@ class UserModelTests(TestCase):
     input_auth_token = None
 
     def setUp(self):
+        # Path to file of model
+        self.path = "app/models/User/user.py"
+
         self.input_email = "ryan.dens@contrastsecurity.com"
         self.input_password = "12345"
         self.input_admin = True
