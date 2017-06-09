@@ -13,4 +13,6 @@ from users.retirement import views as user_retirement_views
 from sessions import views as sessions_views
 from schedule import views as schedule_views
 from api import views as api_views
+from users.pay import views as user_messages_pay
 from users.paid_time_off import views as pto_views
+

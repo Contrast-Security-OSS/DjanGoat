@@ -17,3 +17,4 @@ from app.tests.views import test_user_benefit_forms
 from app.tests.views import test_users_messages
 from app.tests.views import test_users_retirement
 from app.tests.views import test_tutorials
+from app.tests.views import test_users_pay
