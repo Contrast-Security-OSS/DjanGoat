@@ -8,7 +8,7 @@ from app.tests.mixins import Pep8ModelTests, ModelCrudTests
 from app.models import Benefits
 
 
-class AnalyticsModelTests(TestCase, Pep8ModelTests, ModelCrudTests):
+class BenefitsModelTests(TestCase, Pep8ModelTests, ModelCrudTests):
     def setUp(self):
         # Path to file of model
         self.path = "app/models/Benefits/benefits.py"
