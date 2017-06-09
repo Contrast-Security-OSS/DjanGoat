@@ -1,7 +1,7 @@
 node('docker') {
     stage('build') {
         checkout scm
-        sh 'docker-compose run'
+        sh 'docker-compose run python'
     }
     stage ('lint') {
         docker.image('python').inside {
