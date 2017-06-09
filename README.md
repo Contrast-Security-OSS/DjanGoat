@@ -58,3 +58,7 @@ To run tests, simply run:
 ```
   python manage.py test app
 ```
+
+### Docker ###
+For Docker whn you're testing locally make sure you give executable
+permissions to build.sh by running -> chmod +x build.sh
