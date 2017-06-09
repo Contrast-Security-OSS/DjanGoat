@@ -11,6 +11,3 @@ while [ $SECONDS -lt $end ]; do
     fi
 done
 pip install -r requirements.txt
-python manage.py test app --settings=pygoat.docker_settings
-pylint app -f json > pylint_app.json
-pylint pygoat -f json > pylint_pygoat.jso
