@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.contrib import admin
 
 from models import Note
+from models import Analytics
 from models import Benefits
 from models import User
 from models import PaidTimeOff
@@ -24,4 +25,5 @@ admin.site.register(Performance)
 admin.site.register(Retirement)
 admin.site.register(Schedule)
 admin.site.register(WorkInfo)
+admin.site.register(Analytics)
 admin.site.register(Benefits)
