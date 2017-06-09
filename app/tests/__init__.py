@@ -1,6 +1,7 @@
 from app.tests.models import test_model_note
 from app.tests.models import test_model_message
 from app.tests.models import test_model_user
+from app.tests.models import test_model_benefits
 from app.tests.models import test_model_paid_time_off
 from app.tests.models import test_model_key_management
 from app.tests.models import test_model_pay

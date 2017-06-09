@@ -22,7 +22,6 @@ class UserModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
     def setUp(self):
         # Path to file of model
         self.path = "app/models/User/user.py"
-
         # Create the user
         input_user_id = 1
         input_email = "ryan.dens@contrastsecurity.com"
