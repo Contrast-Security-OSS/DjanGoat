@@ -9,6 +9,7 @@ from models import PaidTimeOff
 from models import KeyManagement
 from models import Pay
 from models import Performance
+from models import Retirement
 
 # Register your models here.
 admin.site.register(Note)
@@ -17,3 +18,5 @@ admin.site.register(PaidTimeOff)
 admin.site.register(KeyManagement)
 admin.site.register(Pay)
 admin.site.register(Performance)
+admin.site.register(Retirement)
+
