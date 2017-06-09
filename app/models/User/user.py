@@ -24,6 +24,9 @@ class User(models.Model):
     user_id = models.PositiveIntegerField(
         validators=[MaxValueValidator(MAX_USER_ID_VALUE)]
     )
-    created_at = models.DateTimeField('date created')
-    updated_at = models.DateTimeField('date updated')
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
     auth_token = models.CharField(max_length=255)
+
+    class Meta:
+        db_table = "app_users"

@@ -29,8 +29,8 @@ class Retirement(models.Model):
     total = models.CharField(max_length=255)
     employee_contrib = models.CharField(max_length=255)
     employer_contrib = models.CharField(max_length=255)
-    created_at = models.DateTimeField('date created')
-    updated_at = models.DateTimeField('date updated')
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         db_table = "app_retirements"

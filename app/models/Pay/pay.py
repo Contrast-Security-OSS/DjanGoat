@@ -30,8 +30,8 @@ class Pay(models.Model):
     bank_account_num = models.CharField(max_length=255)
     bank_routing_num = models.CharField(max_length=255)
     percent_of_deposit = models.PositiveIntegerField(validators=[MaxValueValidator(MAX_INT_VALUE)])
-    created_at = models.DateTimeField('date created')
-    updated_at = models.DateTimeField('date updated')
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         db_table = "app_pays"

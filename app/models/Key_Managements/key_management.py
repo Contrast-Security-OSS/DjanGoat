@@ -14,8 +14,8 @@ class KeyManagement(models.Model):
 
     iv = models.CharField(max_length=255)
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
-    created_at = models.DateTimeField('date created')
-    updated_at = models.DateTimeField('date updated')
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         db_table = "app_key_managements"

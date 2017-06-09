@@ -37,8 +37,8 @@ class WorkInfo(models.Model):
     years_worked = models.PositiveIntegerField(validators=[MaxValueValidator(MAX_INT_VALUE)])
     SSN = models.CharField(max_length=255)
     DoB = models.DateField('DoB')
-    created_at = models.DateTimeField('date created')
-    updated_at = models.DateTimeField('date updated')
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
     encrypted_ssn = models.BinaryField()
 
     class Meta:

@@ -27,13 +27,13 @@ class Schedule(models.Model):
                + "\nEmployer Contribution: " + str(self.employer_contrib)
 
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
-    date_begin = models.DateField('date begin')
-    date_end = models.DateField('date end')
+    date_begin = models.DateField()
+    date_end = models.DateField()
     event_name = models.CharField(max_length=255)
     event_type = models.CharField(max_length=255)
     event_desc = models.CharField(max_length=255)
-    created_at = models.DateTimeField('date created')
-    updated_at = models.DateTimeField('date updated')
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         db_table = "app_schedules"

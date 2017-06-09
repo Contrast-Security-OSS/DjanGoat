@@ -32,8 +32,8 @@ class Performance(models.Model):
     date_submitted = models.DateField('date submitted')
     score = models.PositiveIntegerField(validators=[MaxValueValidator(MAX_INT_VALUE)])
     comments = models.CharField(max_length=255)
-    created_at = models.DateTimeField('date created')
-    updated_at = models.DateTimeField('date updated')
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         db_table = "app_performances"
