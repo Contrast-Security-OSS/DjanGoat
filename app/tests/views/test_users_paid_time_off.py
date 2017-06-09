@@ -10,16 +10,17 @@ pto = views.pto_views
 
 
 class PasswordResetPep8Tests(TestCase, Pep8ViewsTests):
-
     def setUp(self):
         self.path = 'app/views/users/paid_time_off/'
 
 
-# Tests checking that that '/users/:user_id/paid_time_off' properly handles HttpRequests and routing
-# Accepts GET and POST requests and refuses all others with an error code 405 (Method not allowed)
-# Tested on id #55
 class UserPTOIndexRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
-    # setup for all test cases
+    """
+    Tests checking that that '/users/:user_id/paid_time_off' properly handles HttpRequests and routing
+    Accepts GET and POST requests and refuses all others with an error code 405 (Method not allowed)
+    Tested on id #55
+    """
+
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -40,11 +41,13 @@ class UserPTOIndexRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
         self.kwargs = {'user_id': 55}
 
 
-# Tests checking that that '/users/:user_id/retirement/new' properly handles HttpRequests and routing
-# Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-# Tested on id #55
 class PTONewRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
-    # setup for all test cases
+    """
+    Tests checking that that '/users/:user_id/retirement/new' properly handles HttpRequests and routing
+    Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
+    Tested on id #55
+    """
+
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -65,11 +68,13 @@ class PTONewRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
         self.kwargs = {'user_id': 55}
 
 
-# Tests checking that that '/users/:user_id/retirement/:retirement_id/edit' properly handles HttpRequests and routing
-# Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-# Tested on user_id 55 and retirement_id 22
 class PTOEditRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
-    # setup for all test cases
+    """
+    Tests checking that that '/users/:user_id/retirement/:retirement_id/edit' properly handles HttpRequests and routing
+    Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
+    Tested on user_id 55 and retirement_id 22
+    """
+
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -90,11 +95,13 @@ class PTOEditRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
         self.kwargs = {'user_id': 55, 'id': 22}
 
 
-# Tests checking that that '/users/:user_id/retirement/:retirement_id' properly handles HttpRequests and routing
-# Accepts GET, PATCH, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)
-# Tested on user_id 55 and retirement_id 22
 class UserShowRetirementRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
-    # setup for all test cases
+    """
+    Tests checking that that '/users/:user_id/retirement/:retirement_id' properly handles HttpRequests and routing
+    Accepts GET, PATCH, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)
+    Tested on user_id 55 and retirement_id 22
+    """
+
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
