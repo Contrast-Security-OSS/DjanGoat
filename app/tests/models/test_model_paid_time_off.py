@@ -10,9 +10,7 @@ from app.tests.mixins import ModelCrudTests
 
 
 class UserModelTests(TestCase, ModelCrudTests):
-
     def setUp(self):
-
         # Create the user
         input_user_id = 1
         input_email = "ryan.dens@contrastsecurity.com"
@@ -53,6 +51,9 @@ class UserModelTests(TestCase, ModelCrudTests):
         )
         self.model.save()
 
-        # Model attribute to be updated
-        self.model_update_attribute = "sick_days_taken"
+        # Model attributes to be updated
+        self.attributes = ["user_id", "sick_days_earned", "sick_days_taken",
+                           "pto_earned", "pto_taken", "created_at",
+                           "updated_at"]
+        self.model_update_index = 4
         self.model_update_input = 5

@@ -1,15 +1,14 @@
+from app.models import Performance
 
 
 class ModelCrudTests(object):
     """Mixin for testing CRUD functionality of models.
         self.model is the model created locally and saved to the database
-        self.model_update_attribute is the string name of the attribute of the model being tested for update
+        self.attributes is a string array of the names of the attributes of the model
         self.model_update_input is the new value that model_update_attribute is being set to
         self.parent is the model's parent object, to which it has a foreign key and a cascade on delete
             self.parent is None if the object has no parent
     """
-    def setUp(self):
-        print("\nI ran!\n")
 
     def test_create_model(self):
         """
@@ -19,23 +18,29 @@ class ModelCrudTests(object):
 
     def test_read_model(self):
         """
-            Makes sure that the model can be read from the database by comparing the two objects primary keys
+            Makes sure that the model can be read from the database
         """
-        self.assertEqual(self._get_from_db(self.model), self.model)
+
+        for attribute in self.attributes:
+            db_value = getattr(self._get_from_db(self.model), attribute)
+            local_value = getattr(self.model, attribute)
+            self.assertEqual(db_value, local_value)
 
     def test_update_model(self):
         """
             Makes sure the model can be updated in the database by doing the following steps:
             1. Sets the attribute of the local model
             2. Saves the change to the database
-            3. Updates the db_model from the database
-            4. Asserts that the changed attribute is the same in the local model and the database model
+            3. Asserts that the changed attribute is the same in the local model and the updated database model
         """
-        setattr(self.model, self.model_update_attribute, self.model_update_input)
+        update_attribute = self.attributes[self.model_update_index]
+
+        setattr(self.model, update_attribute, self.model_update_input)
         self.model.save()
+
         self.assertEqual(
-            getattr(self.model, self.model_update_attribute),
-            getattr(self._get_from_db(self.model), self.model_update_attribute)
+            getattr(self.model, update_attribute),
+            getattr(self._get_from_db(self.model), update_attribute)
         )
 
     def test_delete_model(self):

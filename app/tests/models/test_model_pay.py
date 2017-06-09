@@ -9,7 +9,7 @@ from app.models import Pay
 from app.tests.mixins import ModelCrudTests
 
 
-class UserModelTests(TestCase, ModelCrudTests):
+class PayModelTests(TestCase, ModelCrudTests):
     def setUp(self):
         # Create the user
         input_user_id = 1
@@ -48,6 +48,8 @@ class UserModelTests(TestCase, ModelCrudTests):
         )
         self.model.save()
 
-        # Model attribute to be updated
-        self.model_update_attribute = "bank_account_num"
+        # Model attributes to be updated
+        self.attributes = ["user_id", "bank_account_num", "bank_routing_num",
+                           "percent_of_deposit", "created_at", "updated_at"]
+        self.model_update_index = 1
         self.model_update_input = "123454321"

@@ -45,7 +45,9 @@ class KeyManagementModelTests(TestCase, ModelCrudTests):
         )
         self.model.save()
 
-        self.model_update_attribute = "iv"
+        # Model attributes to be updated
+        self.attributes = ["user_id", "iv", "created_at", "updated_at"]
+        self.model_update_index = 1
         self.model_update_input = "iv2"
 
 

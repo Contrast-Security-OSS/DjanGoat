@@ -9,7 +9,7 @@ from app.models import Performance
 from app.tests.mixins import ModelCrudTests
 
 
-class UserModelTests(TestCase, ModelCrudTests):
+class PerformanceModelTests(TestCase, ModelCrudTests):
     def setUp(self):
 
         # Create the user
@@ -80,6 +80,8 @@ class UserModelTests(TestCase, ModelCrudTests):
         )
         self.model.save()
 
-        # Model attribute to be updated
-        self.model_update_attribute = "score"
+        # Model attributes to be updated
+        self.attributes = ["user_id", "reviewer", "date_submitted", "score",
+                           "comments", "created_at", "updated_at"]
+        self.model_update_index = 3
         self.model_update_input = 10
