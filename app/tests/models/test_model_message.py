@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.test import TestCase
 from app.models import Message
-import datetime
+from django.utils import timezone
 
 # Create your tests here.
 
@@ -10,11 +10,9 @@ class MessageModelTests(TestCase):
     # Setting up 2 testcases
     def setUp(self):
         Message.objects.create(creator_id = 1, receiver_id = 2, message = "hello", read = False,
-                               created_at = datetime.datetime(2017, 6, 8, 0, 0),
-                               updated_at = datetime.datetime(2017, 6, 8, 0, 0))
+                               created_at = timezone.now(), updated_at = timezone.now())
         Message.objects.create(creator_id = 3, receiver_id = 4, message = "hi", read = True,
-                               created_at = datetime.datetime(2016, 6, 8, 0, 0),
-                               updated_at = datetime.datetime(2017, 6, 8, 0, 0))
+                               created_at=timezone.now(), updated_at=timezone.now())
 
 
     # Testing create models
