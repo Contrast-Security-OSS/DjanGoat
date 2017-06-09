@@ -16,6 +16,7 @@ class MessageModelTests(TestCase):
                                created_at = datetime.datetime(2016, 6, 8, 0, 0),
                                updated_at = datetime.datetime(2017, 6, 8, 0, 0))
 
+
     # Testing create models
     def test_create(self):
         M1 = Message.objects.get(creator_id = 1)
