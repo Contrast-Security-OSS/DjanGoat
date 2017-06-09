@@ -5,9 +5,10 @@ from django.test import TestCase
 import datetime
 import pytz
 from app.models import User
-from app.tests.mixins import Pep8ModelTests
+from app.tests.mixins import ModelCrudTests, Pep8ModelTests
 
-class UserModelTests(TestCase, Pep8ModelTests):
+
+class UserModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
 
     user = None
     input_email = None
@@ -23,44 +24,31 @@ class UserModelTests(TestCase, Pep8ModelTests):
         # Path to file of model
         self.path = "app/models/User/user.py"
 
-        self.input_email = "ryan.dens@contrastsecurity.com"
-        self.input_password = "12345"
-        self.input_admin = True
-        self.input_first_name = "Ryan"
-        self.input_last_name = "Dens"
-        self.input_create_date = datetime.datetime(2017, 6, 1, 0, 0)
-        self.input_create_date = pytz.utc.localize(self.input_create_date)
-        self.input_update_date = datetime.datetime(2017, 6, 3, 0, 0)
-        self.input_update_date = pytz.utc.localize(self.input_update_date)
-        self.input_auth_token = "test"
-        self.user = User.objects.create(
-            user_id=1,
-            email=self.input_email, password=self.input_password,
-            is_admin=self.input_admin, first_name=self.input_first_name,
-            last_name=self.input_last_name, created_at=self.input_create_date,
-            updated_at=self.input_update_date, auth_token=self.input_auth_token)
-        self.user.save()
-        self.db_user = User.objects.filter(user_id=1).first()
+        # Create the user
+        input_user_id = 1
+        input_email = "ryan.dens@contrastsecurity.com"
+        input_password = "12345"
+        input_admin = True
+        input_first_name = "Ryan"
+        input_last_name = "Dens"
+        u_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0))
+        u_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 3, 0, 0))
+        input_auth_token = "test"
 
-    def test_create_user(self):
-        self.assertNotEqual(self.db_user, None)
+        self.model = User.objects.create(
+            user_id=input_user_id,
+            email=input_email, password=input_password,
+            is_admin=input_admin, first_name=input_first_name,
+            last_name=input_last_name, created_at=u_input_create_date,
+            updated_at=u_input_update_date, auth_token=input_auth_token
+        )
+        self.model.save()
 
-    def test_read_user(self):
-        self.assertEqual(self.db_user, self.user)
+        self.parent = None
 
-    def test_update_user(self):
-        self.user.first_name = "Vinai"
-        self.user.save()
-        self.db_user = User.objects.filter(user_id=1).first()
-        self.assertEqual(self.user.first_name, self.db_user.first_name)
-
-    def test_delete_user(self):
-        response = self.user.delete()
-        num_objects_deleted = response[0]
-        '''1 object deleted from database'''
-        self.assertEqual(num_objects_deleted, 1)
-
-        self.db_user = User.objects.filter(user_id=1).first()
-        '''User with user_id=1 no longer in database'''
-        self.assertEqual(self.db_user, None)
-
+        # Model attributes
+        self.attributes = ["user_id", "email", "password",
+                           "is_admin", "first_name", "last_name",
+                           "created_at", "updated_at", "auth_token"]
+        self.model_update_index = 4
+        self.model_update_input = "Vinai"

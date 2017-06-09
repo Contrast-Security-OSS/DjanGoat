@@ -6,10 +6,10 @@ import datetime
 import pytz
 from app.models import User
 from app.models import Schedule
-from app.tests.mixins import ModelCrudTests
+from app.tests.mixins import ModelCrudTests, Pep8ModelTests
 
 
-class ScheduleModelTests(TestCase, ModelCrudTests):
+class ScheduleModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
     def setUp(self):
 
         # Create the user
@@ -59,3 +59,6 @@ class ScheduleModelTests(TestCase, ModelCrudTests):
                            "created_at", "updated_at"]
         self.model_update_index = 1
         self.model_update_input = "102544"
+
+        # Path to file for pep8 tests
+        self.path = "app/models/Schedule/schedule.py"

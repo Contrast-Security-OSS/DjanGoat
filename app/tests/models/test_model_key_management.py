@@ -6,10 +6,10 @@ import datetime
 import pytz
 from app.models import User
 from app.models import KeyManagement
-from app.tests.mixins import ModelCrudTests
+from app.tests.mixins import ModelCrudTests, Pep8ModelTests
 
 
-class KeyManagementModelTests(TestCase, ModelCrudTests):
+class KeyManagementModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
 
     def setUp(self):
 
@@ -49,6 +49,9 @@ class KeyManagementModelTests(TestCase, ModelCrudTests):
         self.attributes = ["user_id", "iv", "created_at", "updated_at"]
         self.model_update_index = 1
         self.model_update_input = "iv2"
+
+        # Path for pep8 tests
+        self.path = "app/models/Key_Managements/key_management.py"
 
 
 

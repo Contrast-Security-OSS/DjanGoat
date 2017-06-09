@@ -6,10 +6,10 @@ import datetime
 import pytz
 from app.models import User
 from app.models import PaidTimeOff
-from app.tests.mixins import ModelCrudTests
+from app.tests.mixins import ModelCrudTests, Pep8ModelTests
 
 
-class UserModelTests(TestCase, ModelCrudTests):
+class UserModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
     def setUp(self):
         # Create the user
         input_user_id = 1
@@ -57,3 +57,6 @@ class UserModelTests(TestCase, ModelCrudTests):
                            "updated_at"]
         self.model_update_index = 4
         self.model_update_input = 5
+
+        # Path for pep8 tests
+        self.path = "app/models/PaidTimeOff/paid_time_off.py"

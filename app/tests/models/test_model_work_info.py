@@ -6,10 +6,11 @@ import datetime
 import pytz
 from app.models import User
 from app.models import WorkInfo
-from app.tests.mixins import ModelCrudTests
+from app.tests.mixins import ModelCrudTests, Pep8ModelTests
 
 
-class WorkInfoModelTests(TestCase, ModelCrudTests):
+
+class WorkInfoModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
     def setUp(self):
 
         # Create the user
@@ -61,3 +62,6 @@ class WorkInfoModelTests(TestCase, ModelCrudTests):
                            "DoB", "created_at", "updated_at"]
         self.model_update_index = 1
         self.model_update_input = "102544"
+
+        # File path for pep8 tests
+        self.path = "app/models/WorkInfo/work_info.py"

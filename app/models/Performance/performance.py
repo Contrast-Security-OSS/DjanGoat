@@ -27,10 +27,13 @@ class Performance(models.Model):
                + "\nDate Submitted: " + str(self.date_submitted) \
                + "\nScore: " + str(self.score) + "\nComments: " + self.comments
 
-    user_id = models.ForeignKey('User', related_name="u_id", on_delete=models.CASCADE)
+    user_id = models.ForeignKey('User', related_name="u_id",
+                                on_delete=models.CASCADE)
     reviewer = models.ForeignKey('User', related_name="r_id")
     date_submitted = models.DateField('date submitted')
-    score = models.PositiveIntegerField(validators=[MaxValueValidator(MAX_INT_VALUE)])
+    score = models.PositiveIntegerField(
+        validators=[MaxValueValidator(MAX_INT_VALUE)]
+    )
     comments = models.CharField(max_length=255)
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()

@@ -27,6 +27,3 @@ class User(models.Model):
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
     auth_token = models.CharField(max_length=255)
-
-    class Meta:
-        db_table = "app_users"

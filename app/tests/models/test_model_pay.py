@@ -6,10 +6,10 @@ import datetime
 import pytz
 from app.models import User
 from app.models import Pay
-from app.tests.mixins import ModelCrudTests
+from app.tests.mixins import ModelCrudTests, Pep8ModelTests
 
 
-class PayModelTests(TestCase, ModelCrudTests):
+class PayModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
     def setUp(self):
         # Create the user
         input_user_id = 1
@@ -53,3 +53,6 @@ class PayModelTests(TestCase, ModelCrudTests):
                            "percent_of_deposit", "created_at", "updated_at"]
         self.model_update_index = 1
         self.model_update_input = "123454321"
+
+        # Path for pep8 tests
+        self.path = "app/models/Performance/performance.py"

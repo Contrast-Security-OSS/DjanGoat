@@ -6,7 +6,6 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.core.validators import MaxValueValidator
 
 
-
 @python_2_unicode_compatible
 class PaidTimeOff(models.Model):
     """
@@ -21,10 +20,18 @@ class PaidTimeOff(models.Model):
                + "\nPTO Taken: " + str(self.pto_taken) \
                + "\n PTO Earned: " + self.pto_earned
 
-    sick_days_taken = models.PositiveIntegerField(validators=[MaxValueValidator(MAX_INT_VALUE)])
-    sick_days_earned = models.PositiveIntegerField(validators=[MaxValueValidator(MAX_INT_VALUE)])
-    pto_taken = models.PositiveIntegerField(validators=[MaxValueValidator(MAX_INT_VALUE)])
-    pto_earned = models.PositiveIntegerField(validators=[MaxValueValidator(MAX_INT_VALUE)])
+    sick_days_taken = models.PositiveIntegerField(
+        validators=[MaxValueValidator(MAX_INT_VALUE)]
+    )
+    sick_days_earned = models.PositiveIntegerField(
+        validators=[MaxValueValidator(MAX_INT_VALUE)]
+    )
+    pto_taken = models.PositiveIntegerField(
+        validators=[MaxValueValidator(MAX_INT_VALUE)]
+    )
+    pto_earned = models.PositiveIntegerField(
+        validators=[MaxValueValidator(MAX_INT_VALUE)]
+    )
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()

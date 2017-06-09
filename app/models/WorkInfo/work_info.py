@@ -34,7 +34,9 @@ class WorkInfo(models.Model):
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
     income = models.CharField(max_length=255)
     bonuses = models.CharField(max_length=255)
-    years_worked = models.PositiveIntegerField(validators=[MaxValueValidator(MAX_INT_VALUE)])
+    years_worked = models.PositiveIntegerField(
+        validators=[MaxValueValidator(MAX_INT_VALUE)]
+    )
     SSN = models.CharField(max_length=255)
     DoB = models.DateField('DoB')
     created_at = models.DateTimeField()

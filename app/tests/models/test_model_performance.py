@@ -6,10 +6,10 @@ import datetime
 import pytz
 from app.models import User
 from app.models import Performance
-from app.tests.mixins import ModelCrudTests
+from app.tests.mixins import ModelCrudTests, Pep8ModelTests
 
 
-class PerformanceModelTests(TestCase, ModelCrudTests):
+class PerformanceModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
     def setUp(self):
 
         # Create the user
@@ -85,3 +85,6 @@ class PerformanceModelTests(TestCase, ModelCrudTests):
                            "comments", "created_at", "updated_at"]
         self.model_update_index = 3
         self.model_update_input = 10
+
+        # Path for pep8 tests
+        self.path = "app/models/WorkInfo/work_info.py"
