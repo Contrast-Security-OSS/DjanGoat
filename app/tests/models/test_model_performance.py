@@ -52,16 +52,6 @@ class PerformanceModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         )
         user_reviewer.save()
 
-        """
-        t.integer  "user_id",        limit: 4
-        t.date     "date_submitted"
-        t.integer  "score",          limit: 4
-        t.string   "comments",       limit: 255
-        t.integer  "reviewer",       limit: 4
-        t.datetime "created_at"
-        t.datetime "updated_at"
-        """
-
         # Create Performance Model
         input_date_submitted = datetime.date(2017, 4, 6)
         input_score = 9
