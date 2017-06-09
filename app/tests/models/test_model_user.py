@@ -5,9 +5,9 @@ from django.test import TestCase
 import datetime
 import pytz
 from app.models import User
+from app.tests.mixins import Pep8ModelTests
 
-
-class UserModelTests(TestCase):
+class UserModelTests(TestCase, Pep8ModelTests):
 
     user = None
     input_email = None
@@ -20,6 +20,9 @@ class UserModelTests(TestCase):
     input_auth_token = None
 
     def setUp(self):
+        # Path to file of model
+        self.path = "app/models/User/user.py"
+
         self.input_email = "ryan.dens@contrastsecurity.com"
         self.input_password = "12345"
         self.input_admin = True
@@ -49,7 +52,7 @@ class UserModelTests(TestCase):
         self.user.first_name = "Vinai"
         self.user.save()
         self.db_user = User.objects.filter(user_id=1).first()
-        self.assertEqual(self.user, self.db_user)
+        self.assertEqual(self.user.first_name, self.db_user.first_name)
 
     def test_delete_user(self):
         response = self.user.delete()
