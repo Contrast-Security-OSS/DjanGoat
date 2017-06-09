@@ -13,3 +13,6 @@ class Benefits(models.Model):
 
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
+
+    class Meta:
+        db_table = "app_benefits"
