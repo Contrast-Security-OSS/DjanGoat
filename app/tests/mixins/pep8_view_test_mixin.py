@@ -1,7 +1,7 @@
 import pep8
 
 
-# Mixin for testing the pep8 style rules
+# Mixin for testing the pep8 style rules.
 class Pep8ViewsTests(object):
 
     def test_pep8_conformance_views(self):
