@@ -26,11 +26,11 @@ def new_user_pay(request, user_id):
 
 @require_http_methods(["GET"])
 def edit_user_pay(request, user_id, id):
-    return HttpResponse("Edit pay for user " + user_id + " for person with id " + id)
+    return HttpResponse("Edit pay for user " + user_id +
+                        " for person with id " + id)
 
 
 @require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
 def user_pay(request, user_id, id):
-    return HttpResponse("Pay for user " + user_id + " for person with id " + id)
-
-
+    return HttpResponse("Pay for user " + user_id +
+                        " for person with id " + id)
