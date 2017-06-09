@@ -20,7 +20,6 @@ def edit_user_message(request, user_id, message_id):
                         str(user_id))
 
 
-
 @require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
 def user_message(request, user_id, message_id):
     return HttpResponse("View message " + str(message_id) + " for user " +
