@@ -15,4 +15,4 @@ class Note(models.Model):
         return self.note_name
 
     note_name = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField()
