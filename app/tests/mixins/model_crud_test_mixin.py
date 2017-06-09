@@ -1,4 +1,3 @@
-
 class ModelCrudTests(object):
     """Mixin for testing CRUD functionality of models.
         self.model is the model created locally and saved to the database

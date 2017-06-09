@@ -19,3 +19,6 @@ class Analytics(models.Model):
     user_agent = models.CharField(max_length=255)
     created_at = models.DateTimeField('date created')
     updated_at = models.DateTimeField('date updated')
+
+    class Meta:
+        db_table = "app_analytics"
