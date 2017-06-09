@@ -3,7 +3,7 @@ import views as users_views
 import messages.views
 import benefit_forms.views
 import retirement.views
-
+import paid_time_off.views
 
 urlpatterns = [
     url(r'^$', users_views.index, name='users_index'),
@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^(?P<user_id>[0-9]+)/messages/', include(messages.urls)),
     url(r'^(?P<user_id>[0-9]+)/benefit_forms/', include(benefit_forms.urls)),
     url(r'^(?P<user_id>[0-9]+)/retirement/', include(retirement.urls)),
+    url(r'^(?P<user_id>[0-9]+)/paid_time_off/', include(paid_time_off.urls)),
 ]

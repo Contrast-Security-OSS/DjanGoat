@@ -9,7 +9,6 @@ from app.tests.mixins import ModelCrudTests, Pep8ModelTests
 
 
 class UserModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
-
     user = None
     input_email = None
     input_password = None
