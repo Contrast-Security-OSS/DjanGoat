@@ -20,7 +20,6 @@ class Pay(models.Model):
     """
     MAX_INT_VALUE = 2**32-1
 
-
     def __str__(self):
         return self.user_id.__str__() + " Pay Summary: \n" \
                + "\nBank Account Number: " + self.bank_account_num \
