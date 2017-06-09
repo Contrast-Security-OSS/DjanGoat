@@ -1,5 +1,7 @@
-from django.http import HttpResponse
+from __future__ import unicode_literals
+
 from django.template.loader import get_template
+from django.http import HttpResponse
 
 
 def index(request):
