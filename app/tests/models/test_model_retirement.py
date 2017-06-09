@@ -32,15 +32,6 @@ class RetirementModelTests(TestCase, ModelCrudTests):
         )
         self.parent.save()
 
-        """
-            t.string   "total",            limit: 255
-            t.string   "employee_contrib", limit: 255
-            t.string   "employer_contrib", limit: 255
-            t.integer  "user_id",          limit: 4
-            t.datetime "created_at"
-            t.datetime "updated_at"
-        """
-
         # Create Retirement Model
         input_total = "102543"
         input_employer_contrib = "2543"
