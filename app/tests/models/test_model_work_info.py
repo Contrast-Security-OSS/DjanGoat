@@ -5,11 +5,11 @@ from django.test import TestCase
 import datetime
 import pytz
 from app.models import User
-from app.models import Schedule
+from app.models import WorkInfo
 from app.tests.mixins import ModelCrudTests
 
 
-class ScheduleModelTests(TestCase, ModelCrudTests):
+class WorkInfoModelTests(TestCase, ModelCrudTests):
     def setUp(self):
 
         # Create the user
@@ -32,21 +32,23 @@ class ScheduleModelTests(TestCase, ModelCrudTests):
         )
         self.parent.save()
 
-        # Create Schedule Model
-        input_event_type = "fun"
-        input_event_name = "birthday"
-        input_event_desc = "12345"
-        input_date_begin = datetime.date(2017, 7, 31)
-        input_date_end = datetime.date(2017, 8, 1)
+        # Create WorkInfo Model
+        input_income = "fun"
+        input_bonuses = "birthday"
+        input_years_worked = 10
+        input_ssn = "12345"
+        input_encrypted_ssn = "random_chars".encode("utf-8")
+        input_dob = datetime.date(1996, 7, 31)
         perf_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 4, 0, 0))
         perf_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 5, 0, 0))
 
-        self.model = Schedule.objects.create(
-            event_type=input_event_type,
-            event_name=input_event_name,
-            event_desc=input_event_desc,
-            date_begin = input_date_begin,
-            date_end = input_date_end,
+        self.model = WorkInfo.objects.create(
+            income=input_income,
+            bonuses=input_bonuses,
+            years_worked=input_years_worked,
+            SSN=input_ssn,
+            encrypted_ssn=input_encrypted_ssn,
+            DoB=input_dob,
             created_at=perf_input_create_date,
             updated_at=perf_input_update_date,
             user_id=self.parent,
@@ -54,8 +56,8 @@ class ScheduleModelTests(TestCase, ModelCrudTests):
         self.model.save()
 
         # Model attributes to be updated
-        self.attributes = ["user_id", "event_type", "event_name",
-                           "event_desc", "date_begin", "date_end",
-                           "created_at", "updated_at"]
+        self.attributes = ["user_id", "income", "bonuses",
+                           "years_worked", "SSN", "encrypted_ssn",
+                           "DoB", "created_at", "updated_at"]
         self.model_update_index = 1
         self.model_update_input = "102544"

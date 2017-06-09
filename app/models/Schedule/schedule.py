@@ -21,7 +21,7 @@ class Schedule(models.Model):
     """
 
     def __str__(self):
-        return self.user_id.__str__() + " Retirement Summary: \n" \
+        return self.user_id.__str__() + " Schedule Summary: \n" \
                + "\nTotal: " + str(self.total) \
                + "\nEmployee Contribution: " + str(self.employee_contrib) \
                + "\nEmployer Contribution: " + str(self.employer_contrib)

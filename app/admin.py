@@ -11,6 +11,7 @@ from models import Pay
 from models import Performance
 from models import Retirement
 from models import Schedule
+from models import WorkInfo
 
 # Register your models here.
 admin.site.register(Note)
@@ -21,5 +22,7 @@ admin.site.register(Pay)
 admin.site.register(Performance)
 admin.site.register(Retirement)
 admin.site.register(Schedule)
+admin.site.register(WorkInfo)
+
 
 
