@@ -6,7 +6,6 @@ node('docker') {
         sh 'pylint pygoat -f json > pylint_pygoat.json'
         sh 'docker-compose down'
         }
-    }
     stage('test') {
         sh 'docker-compose run python'
         sh 'python manage.py test app --settings=pygoat.docker_settings'
