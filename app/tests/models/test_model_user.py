@@ -7,8 +7,8 @@ import pytz
 from app.models import User
 from app.tests.mixins import Pep8ModelTests
 
-class UserModelTests(TestCase, Pep8ModelTests):
 
+class UserModelTests(TestCase, Pep8ModelTests):
     user = None
     input_email = None
     input_password = None
@@ -63,4 +63,3 @@ class UserModelTests(TestCase, Pep8ModelTests):
         self.db_user = User.objects.filter(user_id=1).first()
         '''User with user_id=1 no longer in database'''
         self.assertEqual(self.db_user, None)
-
