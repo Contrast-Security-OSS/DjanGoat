@@ -1,16 +1,10 @@
 node('docker') {
     stage ('lint') {
         checkout scm
-        sh 'docker-compose run python'
-        sh 'pip install pylint'
-        sh 'pylint app -f json > pylint_app.json'
-        sh 'pylint pygoat -f json > pylint_pygoat.json'
-        sh 'docker-compose down'
+        sh 'docker-compose run -rm python-lint'
         }
     stage('test') {
-        sh 'docker-compose run python'
-        sh 'python manage.py test app --settings=pygoat.docker_settings'
-
+        sh 'docker-compose run -rm python-build'
     }
     stage ('cleanup') {
          sh 'docker-compose down'

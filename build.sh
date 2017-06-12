@@ -11,3 +11,4 @@ while [ $SECONDS -lt $end ]; do
     fi
 done
 pip install -r requirements.txt
+python manage.py test app --settings=pygoat.docker_settings

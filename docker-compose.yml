@@ -2,9 +2,14 @@ db:
   image: mysql
   environment:
     MYSQL_ROOT_PASSWORD: password
-python:
+python-build:
   image: python:2.7
   links: [db]
   command: ["./build.sh"]
+  volumes: [".:/code"]
+  working_dir: "/code"
+python-lint:
+  image: python:2.7
+  command: ["./lint.sh"]
   volumes: [".:/code"]
   working_dir: "/code"
