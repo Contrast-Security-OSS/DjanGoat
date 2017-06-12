@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash -eu
 
 pip install pylint
 pylint app -f json
