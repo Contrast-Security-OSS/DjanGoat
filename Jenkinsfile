@@ -2,7 +2,7 @@ node('docker') {
     stage ('lint') {
         checkout scm
         sh 'docker-compose run python'
-        sh 'sudo apt-get install pylint'
+        sh 'pip install pylint'
         sh 'pylint app -f json > pylint_app.json'
         sh 'pylint pygoat -f json > pylint_pygoat.json'
         sh 'docker-compose down'
