@@ -26,24 +26,24 @@ class AnalyticsModelTests(TestCase, Pep8ModelTests, ModelCrudTests):
         self.model_update_input = "Ryan"
         self.parent = None
         self.ip_address2 = "127.94.0.3"
-        self.model2 = Analytics.objects.create(ip_address=self.ip_address, referrer="Ryan",
-                                               user_agent=self.user_agent, created_at=self.created_at,
-                                               updated_at=self.updated_at)
-        self.model3 = Analytics.objects.create(ip_address=self.ip_address2, referrer="Ryan",
-                                               user_agent=self.user_agent, created_at=self.created_at,
-                                               updated_at=self.updated_at)
+        self.model_second = Analytics.objects.create(ip_address=self.ip_address, referrer="Ryan",
+                                                     user_agent=self.user_agent, created_at=self.created_at,
+                                                     updated_at=self.updated_at)
+        self.model_third = Analytics.objects.create(ip_address=self.ip_address2, referrer="Ryan",
+                                                    user_agent=self.user_agent, created_at=self.created_at,
+                                                    updated_at=self.updated_at)
 
     def test_hits_by_ip(self):
         # testing search
         models = list(Analytics.hits_by_ip(self.ip_address))
         self.assertEqual(len(models), 2)
-        M1, M2 = models[0], models[1]
+        model_first, model_second = models[0], models[1]
         # testing desc
-        self.assertEqual(M1, self.model2)
-        self.assertEqual(M2, self.model)
+        self.assertEqual(model_first, self.model_second)
+        self.assertEqual(model_second, self.model)
         # testing search with different ip
-        M3 = Analytics.hits_by_ip(self.ip_address2)[0]
-        self.assertEqual(M3, self.model3)
+        model_third = Analytics.hits_by_ip(self.ip_address2)[0]
+        self.assertEqual(model_third, self.model_third)
         # testing with col specified
         models2 = list(Analytics.hits_by_ip(self.ip_address, 'referrer'))
         self.assertEqual(len(models2), 2)
