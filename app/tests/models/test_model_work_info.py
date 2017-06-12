@@ -9,10 +9,8 @@ from app.models import WorkInfo
 from app.tests.mixins import ModelCrudTests, Pep8ModelTests
 
 
-
 class WorkInfoModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
     def setUp(self):
-
         # Create the user
         input_user_id = 1
         input_email = "ryan.dens@contrastsecurity.com"
@@ -65,3 +63,7 @@ class WorkInfoModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
 
         # File path for pep8 tests
         self.path = "app/models/WorkInfo/work_info.py"
+
+    def test_encrypt_decrypt(self):
+        self.model.encrypt_ssn()
+        self.assertEquals("12345", self.model.decrypt_ssn())
