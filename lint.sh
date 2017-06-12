@@ -1,4 +1,4 @@
 #!/bin/bash -eu
 
 pip install pylint
-pylint app -f json || exit 0
+pylint app -f json > pylint_app.json && pylint pygoat -f json > pylint_pygoat.json || exit 0
