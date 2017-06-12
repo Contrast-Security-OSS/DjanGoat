@@ -48,6 +48,12 @@ quit
 For developers create a local_settings.py file in the pygoat folder
 that mocks production_setting.py.
 
+If Django doesn't recognize MySQL after the setup above, try install mysql-python and migrate again
+
+```
+pip install mysql-python
+```
+
 Finally run on localhost:8000
 ```
     python manage.py runserver

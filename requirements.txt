@@ -4,4 +4,3 @@ pytz==2017.2
 virtualenv==15.1.0
 pep8==1.7.0
 django-bootstrap4==0.0.1
-mysql-python==1.2.5
