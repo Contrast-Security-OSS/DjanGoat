@@ -60,3 +60,15 @@ class UserModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
 
         # Path for pep8 tests
         self.path = "app/models/PaidTimeOff/paid_time_off.py"
+
+    def test_sick_days_remaining(self):
+        pto = PaidTimeOff.objects.get(user_id=self.parent)
+        self.assertEqual(pto.sick_days_remaining(), 18)
+
+    def test_pto_days_remaining(self):
+        pto = PaidTimeOff.objects.get(user_id=self.parent)
+        self.assertEqual(pto.pto_days_remaining(), 6)
+
+    def test_sick_days_taken_percentage(self):
+        pto = PaidTimeOff.objects.get(user_id=self.parent)
+        self.assertEqual(pto.sick_days_taken_percentage(), 10.0)

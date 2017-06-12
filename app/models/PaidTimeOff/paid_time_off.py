@@ -38,3 +38,12 @@ class PaidTimeOff(models.Model):
 
     class Meta:
         db_table = "app_paid_time_offs"
+
+    def sick_days_remaining(self):
+        return self.sick_days_earned - self.sick_days_taken
+
+    def pto_days_remaining(self):
+        return self.pto_earned - self.pto_taken
+
+    def sick_days_taken_percentage(self):
+        return float(self.sick_days_taken)/float(self.sick_days_earned)*100.0
