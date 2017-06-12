@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.test import TestCase
-from app.models import Message
+from app.models import User, Message
 from django.utils import timezone
 
 # Create your tests here.
@@ -9,11 +9,23 @@ from django.utils import timezone
 class MessageModelTests(TestCase):
     # Setting up 2 testcases
     def setUp(self):
+        User.objects.create(email = "ziyang.wang@contrastsecurity.com",
+                            password = "12345",
+                            is_admin = True, first_name = "Ziyang",
+                            last_name = "Wang", user_id = 1,
+                            created_at = timezone.now(), updated_at = timezone.now(),
+                            auth_token = "")
         Message.objects.create(creator_id = 1, receiver_id = 2, message = "hello", read = False,
                                created_at = timezone.now(), updated_at = timezone.now())
         Message.objects.create(creator_id = 3, receiver_id = 4, message = "hi", read = True,
                                created_at=timezone.now(), updated_at=timezone.now())
 
+    #Testing creator_name method
+    def test_creator_name(self):
+        M1 = Message.objects.get(creator_id = 1)
+        self.assertEqual(M1.creator_name(), "Ziyang Wang")
+        M2 = Message.objects.get(creator_id = 3)
+        self.assertEqual(M2.creator_name(), "<b>Name unavailable</b>")
 
     # Testing create models
     def test_create(self):
