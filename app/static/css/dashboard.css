@@ -1,0 +1,13 @@
+p {
+    font-weight: bold;
+}
+
+.stats {
+    width: 20%
+}
+
+.container {
+    background-color: #f2f2f2;
+    margin-top: 60px;
+    max-height: 250px;
+}

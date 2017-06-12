@@ -2,11 +2,14 @@ from __future__ import unicode_literals
 
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
+from django.template.loader import get_template
 
 
 @require_http_methods(["GET", "POST"])
 def schedule_index(request):
-    return HttpResponse("Schedule index")
+    t = get_template('schedule/index.html')
+    html = t.render()
+    return HttpResponse(html)
 
 
 @require_http_methods(["GET"])
@@ -16,7 +19,7 @@ def get_pto_schedule_schedule_index(request):
 
 @require_http_methods(["GET"])
 def new_schedule(request):
-    return HttpResponse("New shcedule")
+    return HttpResponse("New schedule")
 
 
 @require_http_methods(["GET"])
