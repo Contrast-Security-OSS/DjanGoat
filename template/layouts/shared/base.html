@@ -1,0 +1,100 @@
+<html>
+    <head>
+        {% load bootstrap4 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/Style.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}" />
+    </head>
+
+    <body>
+        <nav id="horizontalNav" class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+
+            <button class="navbar-toggler navbar-toggler-right" type="button"
+                    data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <a class="navbar-brand" href="#">PyGoat</a>
+
+            <div id="navItems" class="collapse navbar-collapse">
+
+                <ul id="testTest" class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <!--<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
+                        <button type="button" class="btn btn-info">Visit Tutorial</button>
+                    </li>
+                    <li class="nav-item">
+                        <a class="test nav-link" href="#">Welcome, Ryan</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="test-dropdown">
+                            <button class="test-dropbtn"></button>
+                            <div class="test-dropdown-content">
+                                <a href="#"></a>
+                                <a href="#">Link 2</a>
+                                <a href="#">Link 3</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div id="verticalNav" class="container-fluid">
+            <div class="row">
+                <div class="col-3 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+                    <nav class="nav navbar-inverse bg-inverse navbar-toggleable-sm">
+                        <button class="navbar-toggler navbar-toggler-right"
+                                type="button" data-toggle="collapse" data-target="#navbarWEX"
+                                aria-controls="navbarSupportedContent" aria-expanded="false"
+                                aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse flex-column mt-md-0 mt-4 pt-md-0 pt-4" id="navbarWEX">
+                            <a class="nav-link">
+                                <i class="fa fa-tachometer icon" aria-hidden="true"></i>
+                                <br/>Dashboard
+                            </a>
+                            <a class="nav-link">
+                                <i class="fa fa-archive icon" aria-hidden="true"></i>
+                                <br/>Benefit Forms
+                            </a>
+                            <a class="nav-link">
+                                <i class="fa fa-line-chart icon" aria-hidden="true"></i>
+                                <br/>401k Info
+                            </a>
+                            <a class="nav-link">
+                                <i class="fa fa-heart icon" aria-hidden="true"></i>
+                                <br/>PTO
+                            </a>
+                            <a class="nav-link">
+                                <i class="fa fa-briefcase icon" aria-hidden="true"></i>
+                                <br/>Work Info
+                            </a>
+                            <a class="nav-link">
+                                <i class="fa fa-calendar icon" aria-hidden="true"></i>
+                                <br/>Performance
+                            </a>
+                            <a class="nav-link">
+                                <i class="fa fa-envelope icon" aria-hidden="true"></i>
+                                <br/>Messages
+                            </a>
+                            <a class="nav-link">
+                                <i class="fa fa-money icon" aria-hidden="true"></i>
+                                <br/>Pay
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+
+            {% block content %}
+            {% endblock %}
+            </div>
+        </div>
+    </body>
+
+</html>
