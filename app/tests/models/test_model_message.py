@@ -22,58 +22,58 @@ class MessageModelTests(TestCase):
 
     #Testing creator_name method
     def test_creator_name(self):
-        M1 = Message.objects.get(creator_id = 1)
-        self.assertEqual(M1.creator_name(), "Ziyang Wang")
-        M2 = Message.objects.get(creator_id = 3)
-        self.assertEqual(M2.creator_name(), "<b>Name unavailable</b>")
+        message_first = Message.objects.get(creator_id = 1)
+        self.assertEqual(message_first.creator_name(), "Ziyang Wang")
+        message_second = Message.objects.get(creator_id = 3)
+        self.assertEqual(message_second.creator_name(), "<b>Name unavailable</b>")
 
     # Testing create models
     def test_create(self):
-        M1 = Message.objects.get(creator_id = 1)
-        self.assertNotEqual(M1, None)
-        M2 = Message.objects.get(creator_id = 3)
-        self.assertNotEqual(M2, None)
+        message_first = Message.objects.get(creator_id = 1)
+        self.assertNotEqual(message_first, None)
+        message_second = Message.objects.get(creator_id = 3)
+        self.assertNotEqual(message_second, None)
 
     # Testing read models
     def test_read(self):
         #Testing type, value of first message
-        M1 = Message.objects.get(creator_id = 1)
-        self.assertEqual(M1.creator_id, 1)
-        self.assertEqual(M1.receiver_id, 2)
-        self.assertEqual(M1.message, "hello")
-        self.assertEqual(M1.read, False)
+        message_first = Message.objects.get(creator_id = 1)
+        self.assertEqual(message_first.creator_id, 1)
+        self.assertEqual(message_first.receiver_id, 2)
+        self.assertEqual(message_first.message, "hello")
+        self.assertEqual(message_first.read, False)
 
-        M2 = Message.objects.get(creator_id = 3)
-        self.assertEqual(M2.creator_id, 3)
-        self.assertEqual(M2.receiver_id, 4)
-        self.assertEqual(M2.message, "hi")
-        self.assertEqual(M2.read, True)
+        message_second = Message.objects.get(creator_id = 3)
+        self.assertEqual(message_second.creator_id, 3)
+        self.assertEqual(message_second.receiver_id, 4)
+        self.assertEqual(message_second.message, "hi")
+        self.assertEqual(message_second.read, True)
 
     # Testing update models
     def test_update(self):
-        M1 = Message.objects.get(creator_id = 1)
-        M1.receiver_id = 5
-        M1.save()
-        R1 = Message.objects.get(creator_id = 1)
-        self.assertEqual(R1.receiver_id, 5)
+        message_first = Message.objects.get(creator_id = 1)
+        message_first.receiver_id = 5
+        message_first.save()
+        receiver_first = Message.objects.get(creator_id = 1)
+        self.assertEqual(receiver_first.receiver_id, 5)
 
-        M2 = Message.objects.get(creator_id = 3)
-        M2.message = "changed"
-        M2.save()
-        R2 = Message.objects.get(creator_id = 3)
-        self.assertEqual(R2.message, "changed")
+        message_second = Message.objects.get(creator_id = 3)
+        message_second.message = "changed"
+        message_second.save()
+        receiver_second = Message.objects.get(creator_id = 3)
+        self.assertEqual(receiver_second.message, "changed")
 
     # Testing delete models
     def test_delete(self):
-        M = Message.objects.all()
-        self.assertEqual(len(M), 2)
+        messages = Message.objects.all()
+        self.assertEqual(len(messages), 2)
 
-        M1 = Message.objects.get(creator_id = 1)
-        M1.delete()
-        M = Message.objects.all()
-        self.assertEqual(len(M), 1)
+        message_first = Message.objects.get(creator_id = 1)
+        message_first.delete()
+        messages = Message.objects.all()
+        self.assertEqual(len(messages), 1)
 
-        M2 = Message.objects.get(creator_id = 3)
-        M2.delete()
-        M = Message.objects.all()
-        self.assertEqual(len(M), 0)
+        message_second = Message.objects.get(creator_id = 3)
+        message_second.delete()
+        messages = Message.objects.all()
+        self.assertEqual(len(messages), 0)
