@@ -21,7 +21,7 @@ class Message(models.Model):
 
     def creator_name(self):
         creator = User.objects.filter(user_id=self.creator_id).first()
-        if creator != None:
-            return creator.first_name + " " + creator.last_name
+        if creator is not None:
+            return creator.full_name()
         else:
             return mark_safe("<b>Name unavailable</b>")

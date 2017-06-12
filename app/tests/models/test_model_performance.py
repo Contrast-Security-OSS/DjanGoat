@@ -78,3 +78,10 @@ class PerformanceModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
 
         # Path for pep8 tests
         self.path = "app/models/WorkInfo/work_info.py"
+
+    def test_reviewer_name(self):
+        reviewer = User.objects.get(user_id=2)
+        P1 = Performance.objects.get(reviewer = reviewer)
+        self.assertEqual(P1.reviewer_name(), "Contrast Security")
+        reviewer.delete()
+        self.assertEqual(P1.reviewer_name(), None)

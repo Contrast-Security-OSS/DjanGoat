@@ -50,3 +50,7 @@ class UserModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
                            "created_at", "updated_at", "auth_token"]
         self.model_update_index = 4
         self.model_update_input = "Vinai"
+
+    def test_full_name(self):
+        user = User.objects.get(user_id=1)
+        self.assertEqual(user.full_name(), "Ryan Dens")

@@ -43,4 +43,8 @@ class Performance(models.Model):
         db_table = "app_performances"
 
     def reviewer_name(self):
-        pass
+        reviewer = User.objects.filter(user_id=self.reviewer.user_id).first()
+        if reviewer is not None:
+            return reviewer.full_name()
+        else:
+            return None
