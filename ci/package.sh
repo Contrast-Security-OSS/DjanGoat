@@ -1,6 +1,6 @@
 #!/bin/bash -eu
 
+docker cp $(pwd) ruby-builder:/tmp/workspace
 apt-get update
 apt-get install zip unzip
-ls
 zip ../pygoat_artifact.zip .*
