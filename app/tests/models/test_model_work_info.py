@@ -5,8 +5,11 @@ from django.test import TestCase
 import datetime
 import pytz
 from app.models import User
+from app.models import KeyManagement
 from app.models import WorkInfo
 from app.tests.mixins import ModelCrudTests, Pep8ModelTests
+from Crypto import Random
+import binascii
 
 
 class WorkInfoModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
@@ -53,6 +56,16 @@ class WorkInfoModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             user_id=self.parent,
         )
         self.model.save()
+        input_iv = binascii.hexlify(Random.new().read(8))
+        km_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 4, 0, 0))
+        km_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 5, 0, 0))
+
+        self.key_model = KeyManagement.objects.create(
+            iv=input_iv, user_id=self.parent,
+            created_at=km_input_create_date,
+            updated_at=km_input_update_date
+        )
+        self.key_model.save()
 
         # Model attributes to be updated
         self.attributes = ["user_id", "income", "bonuses",
@@ -67,3 +80,18 @@ class WorkInfoModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
     def test_encrypt_decrypt(self):
         self.model.encrypt_ssn()
         self.assertEquals("12345", self.model.decrypt_ssn())
+
+    # Override
+    def test_delete_user_and_pto(self):
+        """Test to ensure Model is deleted when its parent is deleted.
+        """
+        if self.parent is not None:
+            response = self.parent.delete()
+            num_objects_deleted = response[0]
+            '''2 objects deleted from database'''
+            self.assertEqual(num_objects_deleted, 3)
+
+            self.assertIsNone(self._get_from_db(self.parent), "Parent not deleted from the database")
+            self.assertIsNone(self._get_from_db(self.model), "Model not deleted from database with cascade")
+        else:
+            pass

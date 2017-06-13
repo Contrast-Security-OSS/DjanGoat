@@ -5,19 +5,10 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.core.validators import MaxValueValidator
 from Crypto.Cipher import AES
-from Crypto import Random
 from django.conf import settings
+from app.models import KeyManagement
 
 KEY = settings.KEY
-
-
-def pad(s):
-    bs = 16
-    return s + (bs - len(s) % bs) * chr(bs - len(s) % bs)
-
-
-def unpad(s):
-    return s[:-ord(s[len(s) - 1:])]
 
 
 @python_2_unicode_compatible
@@ -56,18 +47,41 @@ class WorkInfo(models.Model):
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
     encrypted_ssn = models.BinaryField()
-    iv = Random.new().read(AES.block_size)
+
+    def key_management(self):
+        return KeyManagement.objects.get(user_id=self.user_id)
+
+    def get_iv(self):
+        if self.key_management().iv is None:
+            raise Exception('A iv value was not specified')
+        else:
+            return self.key_management().iv
+
+    @staticmethod
+    def get_key():
+        if KEY is None:
+            raise Exception('Key not specified in settings.py file')
+        else:
+            return KEY
+
+    @staticmethod
+    def pad(s):
+        bs = 16
+        return s + (bs - len(s) % bs) * chr(bs - len(s) % bs)
+
+    @staticmethod
+    def unpad(s):
+        return s[:-ord(s[len(s) - 1:])]
 
     def encrypt_ssn(self):
-
-        aes = AES.new(KEY, AES.MODE_CBC, self.iv)
-        self.encrypted_ssn = aes.encrypt(pad(self.SSN))
+        aes = AES.new(self.get_key(), AES.MODE_CBC, self.get_iv())
+        self.encrypted_ssn = aes.encrypt(self.pad(self.SSN))
         self.SSN = None
 
     def decrypt_ssn(self):
-        aes = AES.new(KEY, AES.MODE_CBC, self.iv)
+        aes = AES.new(self.get_key(), AES.MODE_CBC, self.get_iv())
 
-        return unpad(aes.decrypt(self.encrypted_ssn))
+        return self.unpad(aes.decrypt(self.encrypted_ssn))
 
     class Meta:
         db_table = "app_work_infos"
