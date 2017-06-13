@@ -71,5 +71,5 @@ To run tests, simply run:
 To run the `pylint` before running on Jenkins, run:
 
 ```
-    pylint app pygoat --load-plugins pylint_django
+    pylint app pygoat
 ```
