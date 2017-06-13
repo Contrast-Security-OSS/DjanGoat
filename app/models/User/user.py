@@ -13,9 +13,6 @@ class User(models.Model):
     """
     MAX_USER_ID_VALUE = 2 ** 32 - 1
 
-    def __str__(self):
-        return self.first_name + " " + self.last_name
-
     email = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
     is_admin = models.BooleanField()
@@ -27,3 +24,28 @@ class User(models.Model):
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
     auth_token = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.first_name + " " + self.last_name
+
+    @staticmethod
+    def __authenticate(input_email, input_password):
+        auth = None
+        user = find_by_email(input_email)
+
+        if user.password == input_password:
+            auth = user
+        else:
+            print("Incorrect Password!")
+
+        return auth
+
+
+def find_by_email(input_email):
+    """
+    Finds a user by email.
+    :param input_email: The email of the user being searched for
+    :return: the user with an email matching input_email
+    """
+    return User.objects.filter(email=input_email).first()
+
