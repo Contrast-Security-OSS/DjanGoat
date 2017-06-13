@@ -4,7 +4,42 @@ p {
 
 #statsContainer {
     background-color: #f2f2f2;
+    border: 2px solid gray;
+
 }
+
+#statsHeader {
+    padding: 5px;
+    border-bottom: 1px solid gray;
+}
+
+#statsHeader #graphButtons {
+    float: right;
+}
+
+#statsHeader #graphButtons button {
+    padding: 1px 10px;
+}
+
+/*
+#statsHeader #graphButtons {
+    float: right;
+    background-color: #fff;
+    border: 1px solid gray;
+}
+
+#statsHeader #graphButtons a {
+    padding: 3px;
+}
+
+#statsHeader #graphButtons > a {
+    border-right: 1px solid gray;
+    padding-right: 8px;
+    padding-left: 8px;
+}
+
+*/
+
 
 #statsContents {
     padding: 0 15px;
@@ -13,4 +48,3 @@ p {
 #statsContents .stats {
     width: 20%;
 }
-

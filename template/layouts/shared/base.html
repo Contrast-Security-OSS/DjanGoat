@@ -3,9 +3,11 @@
         {% load bootstrap4 %}
         {% bootstrap_css %}
         {% bootstrap_javascript %}
+
         {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'css/Style.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}" />
+
         {% block head %}{% endblock %}
     </head>
 
@@ -23,7 +25,7 @@
 
             <div id="navItems" class="collapse navbar-collapse">
 
-                <ul id="testTest" class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
                         <!--<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
                         <button type="button" class="btn btn-info">Visit Tutorial</button>
@@ -55,7 +57,7 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="navbar-collapse collapse flex-column mt-md-0 mt-4 pt-md-0 pt-4" id="navbarWEX">
-                            <a href="/dashboard" class="nav-link">
+                            <a href="/dashboard/home" class="nav-link">
                                 <i class="fa fa-tachometer icon" aria-hidden="true"></i>
                                 <br/>Dashboard
                             </a>
@@ -75,7 +77,7 @@
                                 <i class="fa fa-briefcase icon" aria-hidden="true"></i>
                                 <br/>Work Info
                             </a>
-                            <a class="nav-link">
+                            <a href="/schedule" class="nav-link">
                                 <i class="fa fa-calendar icon" aria-hidden="true"></i>
                                 <br/>Performance
                             </a>
