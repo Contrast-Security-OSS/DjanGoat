@@ -8,7 +8,8 @@ node('docker') {
         sh 'docker-compose run --rm python-build'
     }
     stage('package'){
-        sh '/bin/bash ./ci/package.sh'
+        checkout scm
+        sh 'docker-compose run --rm package'
         archiveArtifacts artifacts: '*zip'
     }
     stage ('cleanup') {

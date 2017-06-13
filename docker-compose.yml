@@ -13,3 +13,8 @@ python-lint:
   command: ["./ci/lint.sh"]
   volumes: [".:/code"]
   working_dir: "/code"
+package:
+  image: ubuntu:latest
+  command: ["./ci/package.sh"]
+  volumes: [".:/code"]
+  working_dir: "/code"
