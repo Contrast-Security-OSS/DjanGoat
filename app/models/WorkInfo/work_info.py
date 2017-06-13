@@ -49,7 +49,12 @@ class WorkInfo(models.Model):
     encrypted_ssn = models.BinaryField()
 
     def key_management(self):
-        return KeyManagement.objects.get(user_id=self.user_id)
+        try:
+            return KeyManagement.objects.get(user_id=self.user_id)
+        except KeyManagement.DoesNotExist:
+            raise Exception("User id is not present")
+        except KeyManagement.MultipleObjectsReturned:
+            raise Exception("Users are sharing the same user_id")
 
     def get_iv(self):
         if self.key_management().iv is None:
