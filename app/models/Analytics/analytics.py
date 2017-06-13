@@ -36,8 +36,8 @@ class Analytics(models.Model):
         return cls.objects.values(col).count()
 
     # expects field type to be string
-    @classmethod
-    def parse_field(cls, field):
+    @staticmethod
+    def parse_field(field):
         valid_fields = ["ip_address", "referrer", "user_agent"]
         if field in valid_fields:
             return field
