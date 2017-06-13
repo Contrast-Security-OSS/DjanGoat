@@ -1,4 +1,4 @@
 #!/bin/bash -eu
 
-apt-get install zip
+yum install zip
 zip ../pygoat_artifact.zip ../*
