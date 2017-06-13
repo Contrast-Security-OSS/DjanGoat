@@ -20,7 +20,6 @@ def edit_user_retirement(request, user_id, retirement_id):
                         " for user " + str(user_id))
 
 
-
 @require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
 def user_retirement(request, user_id, retirement_id):
     return HttpResponse("View retirement " + str(retirement_id) +

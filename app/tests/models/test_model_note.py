@@ -5,9 +5,13 @@ from django.test import TestCase
 from django.utils import timezone
 
 from app.models import Note
+from app.tests.mixins import Pep8ModelTests
 
 
-class NoteModelTests(TestCase):
+class NoteModelTests(TestCase, Pep8ModelTests):
+    def setUp(self):
+        self.path = "app/models/Note/note.py"
+
     def test_can_create_note(self):
         note = Note(note_name="Hey!", pub_date=timezone.now())
 

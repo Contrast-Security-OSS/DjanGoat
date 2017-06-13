@@ -1,2 +1,5 @@
 from route_test_mixin import RouteTestingWithKwargs
-from pep8_test_mixin import Pep8ViewsTests
+from model_crud_test_mixin import ModelCrudTests
+from pep8_view_test_mixin import Pep8ViewsTests
+from pep8_model_test_mixin import Pep8ModelTests
+from model_crud_test_mixin import ModelCrudTests
