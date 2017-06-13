@@ -36,8 +36,8 @@ class User(models.Model):
         if user.password == input_password:
             auth = user
         else:
+            raise User.PermissionDenied
             print("Incorrect Password!")
-
         return auth
 
 
@@ -47,5 +47,8 @@ def find_by_email(input_email):
     :param input_email: The email of the user being searched for
     :return: the user with an email matching input_email
     """
-    return User.objects.filter(email=input_email).first()
+    try:
+        return User.objects.filter(email=input_email).first()
+    except User.DoesNotExist:
+        print("User does not exist!")
 
