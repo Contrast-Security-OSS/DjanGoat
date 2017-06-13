@@ -28,12 +28,12 @@ Now we need to setup our database
 setup the database
 
 ```
-mysql -u root -p
-CREATE DATABASE `db_name`;
-CREATE USER 'username'@'localhost' IDENTIFIED BY 'your_password';
-GRANT ALL PRIVILEGES ON `db_name`.* TO 'username'@'localhost';
-FLUSH PRIVILEGES;
-quit
+    mysql -u root -p
+    CREATE DATABASE `db_name`;
+    CREATE USER 'username'@'localhost' IDENTIFIED BY 'your_password';
+    GRANT ALL PRIVILEGES ON `db_name`.* TO 'username'@'localhost';
+    FLUSH PRIVILEGES;
+    quit
 ```
 
 2. Go to production_settings.py in the inner pygoat folder and fill out the given information
@@ -44,14 +44,15 @@ quit
 ```
     python manage.py makemigrations
     python manage.py migrate
-   ```
+```
+
 For developers create a local_settings.py file in the pygoat folder
 that mocks production_setting.py.
 
-If Django doesn't recognize MySQL after the setup above, try install mysql-python and migrate again
+If Django does not recognize MySQL after the setup above, try install mysql-python and migrate again
 
 ```
-pip install mysql-python
+    pip install mysql-python
 ```
 
 Finally run on localhost:8000
@@ -62,5 +63,13 @@ Finally run on localhost:8000
 ### Testing ###
 To run tests, simply run:
 ```
-  python manage.py test app
+    python manage.py test app
+```
+
+### Linting ###
+
+To run the `pylint` before running on Jenkins, run:
+
+```
+    pylint app pygoat --load-plugins pylint_django
 ```
