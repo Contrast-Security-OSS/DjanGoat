@@ -71,7 +71,7 @@
             },
             'titlePosition': 'none',
             'backgroundColor': 'transparent',
-            'pieHole': 0.9,
+            'pieHole': 0.85,
             'pieSliceText': 'value',
             'pieSliceTextStyle' : {
                 color: 'black',
@@ -97,30 +97,39 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="stats">
-                <div id="chart_div"></div>
-                <p style="text-align: center">Available PTO</p>
-            </div>
-            <div class="stats">
-                <div id="chart_div2"></div>
-                <p style="text-align: center">Sick Days Taken</p>
-            </div>
-            <div class="stats">
-                <div id="chart_div3"></div>
-                <p style="text-align: center">Income</p>
-            </div>
-            <div class="stats">
-                <div id="chart_div4"></div>
-                <p style="text-align: center">Performance Score</p>
-            </div>
-            <div class="stats">
-                <div id="chart_div5"></div>
-                <p style="text-align: center">401k</p>
-            </div>
+    <div id="statsContainer">
+
+
+        <div id="statsHeader">
+            Current Statistics Test
         </div>
 
+        <div id="statsContents">
+            <div class="row">
+                <div class="stats">
+                    <div id="chart_div"></div>
+                    <p style="text-align: center">Available PTO</p>
+                </div>
+                <div class="stats">
+                    <div id="chart_div2"></div>
+                    <p style="text-align: center">Sick Days Taken</p>
+                </div>
+                <div class="stats">
+                    <div id="chart_div3"></div>
+                    <p style="text-align: center">Income</p>
+                </div>
+                <div class="stats">
+                    <div id="chart_div4"></div>
+                    <p style="text-align: center">Performance Score</p>
+                </div>
+                <div class="stats">
+                    <div id="chart_div5"></div>
+                    <p style="text-align: center">401k</p>
+                </div>
+            </div>
+
+        </div>
     </div>
+
 
 {% endblock %}
