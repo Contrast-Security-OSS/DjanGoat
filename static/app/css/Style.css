@@ -53,10 +53,24 @@
     border-color: red;
 }
 
-/* Vertical Nav */
-#verticalNav > .row > div {
+
+
+#content {
     padding-left: 0;
-    min-width: 200px;
+    height: 94%;
+
+}
+
+#content > .row {
+    height: 100%;
+}
+
+#verticalNav {
+    padding: 0;
+}
+
+#verticalNav nav {
+    height: 100%;
 }
 
 #verticalNav .icon {
@@ -64,10 +78,14 @@
     align: center;
 }
 
-#verticalNav nav {
-    height: 94vh;
+#verticalNav .nav-link:hover {
+    color: gray;
 }
 
 #horizontalNav nav {
-    height 7vh;
+    height 6%;
+}
+
+#pageContent {
+    margin-top: 5%;
 }

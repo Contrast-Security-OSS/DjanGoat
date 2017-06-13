@@ -2,12 +2,15 @@ p {
     font-weight: bold;
 }
 
-.stats {
-    width: 20%
+#statsContainer {
+    background-color: #f2f2f2;
 }
 
-.container {
-    background-color: #f2f2f2;
-    margin-top: 60px;
-    max-height: 250px;
+#statsContents {
+    padding: 0 15px;
 }
+
+#statsContents .stats {
+    width: 20%;
+}
+

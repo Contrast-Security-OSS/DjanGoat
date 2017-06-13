@@ -44,9 +44,9 @@
             </div>
         </nav>
 
-        <div id="verticalNav" class="container-fluid">
+        <div id="content" class="container-fluid">
             <div class="row">
-                <div class="col-3 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+                <div id="verticalNav" class="col-4 col-sm-3 col-md-3 col-lg-2 col-xl-2">
                     <nav class="nav navbar-inverse bg-inverse navbar-toggleable-sm">
                         <button class="navbar-toggler navbar-toggler-right"
                                 type="button" data-toggle="collapse" data-target="#navbarWEX"
@@ -90,9 +90,10 @@
                         </div>
                     </nav>
                 </div>
-
-            {% block content %}
-            {% endblock %}
+                <div id="pageContent" class="col-8 col-sm-9 col-md-9 col-lg-10 col-xl-10">
+                    {% block content %}
+                    {% endblock %}
+                </div>
             </div>
         </div>
     </body>
