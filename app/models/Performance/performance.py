@@ -24,9 +24,9 @@ class Performance(models.Model):
 
     def __str__(self):
         return self.user_id.__str__() + " Performance Summary: \n" \
-               + "\nReviewer: " + str(self.reviewer) \
-               + "\nDate Submitted: " + str(self.date_submitted) \
-               + "\nScore: " + str(self.score) + "\nComments: " + self.comments
+            + "\nReviewer: " + str(self.reviewer) \
+            + "\nDate Submitted: " + str(self.date_submitted) \
+            + "\nScore: " + str(self.score) + "\nComments: " + self.comments
 
     user_id = models.ForeignKey('User', related_name="u_id",
                                 on_delete=models.CASCADE)

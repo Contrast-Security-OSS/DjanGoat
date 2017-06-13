@@ -10,6 +10,7 @@ from app.tests.mixins import ModelCrudTests, Pep8ModelTests
 
 
 class PerformanceModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
+
     def setUp(self):
 
         # Create the user
@@ -19,8 +20,10 @@ class PerformanceModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         input_admin = True
         input_first_name = "Ryan"
         input_last_name = "Dens"
-        u_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0))
-        u_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 3, 0, 0))
+        u_input_create_date = pytz.utc.localize(
+            datetime.datetime(2017, 6, 1, 0, 0))
+        u_input_update_date = pytz.utc.localize(
+            datetime.datetime(2017, 6, 3, 0, 0))
         input_auth_token = "test"
 
         self.parent = User.objects.create(
@@ -39,8 +42,10 @@ class PerformanceModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         input_admin_reviewer = True
         input_first_name_reviewer = "Contrast"
         input_last_name_reviewer = "Security"
-        u_input_create_date_reviewer = pytz.utc.localize(datetime.datetime(2017, 4, 1, 0, 0))
-        u_input_update_date_reviewer = pytz.utc.localize(datetime.datetime(2017, 5, 3, 0, 0))
+        u_input_create_date_reviewer = pytz.utc.localize(
+            datetime.datetime(2017, 4, 1, 0, 0))
+        u_input_update_date_reviewer = pytz.utc.localize(
+            datetime.datetime(2017, 5, 3, 0, 0))
         input_auth_token_reviewer = "r_test"
 
         user_reviewer = User.objects.create(
@@ -56,8 +61,10 @@ class PerformanceModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         input_date_submitted = datetime.date(2017, 4, 6)
         input_score = 9
         input_comments = "123456789"
-        perf_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 4, 0, 0))
-        perf_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 5, 0, 0))
+        perf_input_create_date = pytz.utc.localize(
+            datetime.datetime(2017, 6, 4, 0, 0))
+        perf_input_update_date = pytz.utc.localize(
+            datetime.datetime(2017, 6, 5, 0, 0))
 
         self.model = Performance.objects.create(
             date_submitted=input_date_submitted,
@@ -81,7 +88,8 @@ class PerformanceModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
 
     def test_reviewer_name(self):
         reviewer = User.objects.get(user_id=2)
-        P1 = Performance.objects.get(reviewer = reviewer)
-        self.assertEqual(P1.reviewer_name(), "Contrast Security")
+        performance_first = Performance.objects.get(reviewer=reviewer)
+        self.assertEqual(performance_first.reviewer_name(),
+                         "Contrast Security")
         reviewer.delete()
-        self.assertEqual(P1.reviewer_name(), None)
+        self.assertEqual(performance_first.reviewer_name(), None)

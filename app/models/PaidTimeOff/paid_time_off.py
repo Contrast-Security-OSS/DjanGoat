@@ -15,10 +15,10 @@ class PaidTimeOff(models.Model):
 
     def __str__(self):
         return self.user_id.__str__() + " PTO Summary: \n" \
-               + "\nSick Days Taken: " + str(self.sick_days_taken) \
-               + "\nSick Days Earned: " + str(self.sick_days_earned) \
-               + "\nPTO Taken: " + str(self.pto_taken) \
-               + "\n PTO Earned: " + self.pto_earned
+            + "\nSick Days Taken: " + str(self.sick_days_taken) \
+            + "\nSick Days Earned: " + str(self.sick_days_earned) \
+            + "\nPTO Taken: " + str(self.pto_taken) \
+            + "\n PTO Earned: " + self.pto_earned
 
     sick_days_taken = models.PositiveIntegerField(
         validators=[MaxValueValidator(MAX_INT_VALUE)]
