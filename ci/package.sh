@@ -2,4 +2,4 @@
 
 apt-get update
 apt-get install zip unzip
-zip pygoat_artifact.zip .*
+zip pygoat_artifact.zip *
