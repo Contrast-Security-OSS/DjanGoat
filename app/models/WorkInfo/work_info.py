@@ -62,8 +62,7 @@ class WorkInfo(models.Model):
         else:
             return self.key_management().iv
 
-    @staticmethod
-    def get_key():
+    def get_key(self):
         if KEY is None:
             raise Exception('Key not specified in settings.py file')
         else:
