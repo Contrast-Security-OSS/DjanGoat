@@ -58,7 +58,7 @@ class User(models.Model):
             updated_at=user_data.date_three
         )
 
-        # # ("event_type", "event_desc", "event_name")
+        # ("event_type", "event_desc", "event_name")
         schedule = Schedule.objects.create(
             date_begin=user_data.date_three,
             date_end=user_data.date_four,
@@ -70,26 +70,36 @@ class User(models.Model):
         )
 
         # ("income", "bonuses", years_worked, "SSN", "DoB")
-        # work_info = WorkInfo.objects.create(
-        #     income=user_data.work_info_data[index][0],
-        #     bonuses=user_data.work_info_data[index][1],
-        #     years_worked=user_data.work_info_data[index][2],
-        #     SSN=user_data.work_info_data[index][3],
-        #     DoB=user_data.work_info_data[index][4],
-        #     user_id=self, created_at=user_data.date_two,
-        #     updated_at=user_data.date_two
-        # )
+        work_info = WorkInfo.objects.create(
+            income=user_data.work_info_data[index][0],
+            bonuses=user_data.work_info_data[index][1],
+            years_worked=user_data.work_info_data[index][2],
+            SSN=user_data.work_info_data[index][3],
+            DoB=user_data.work_info_data[index][4],
+            user_id=self, created_at=user_data.date_two,
+            updated_at=user_data.date_two
+        )
+
+        reviewer = User.objects.create(
+            user_id=user_data.reviewer_data[0],
+            email=user_data.reviewer_data[1],
+            password=user_data.reviewer_data[2],
+            is_admin=user_data.reviewer_data[3],
+            first_name=user_data.reviewer_data[4],
+            last_name=user_data.reviewer_data[5],
+            created_at=user_data.reviewer_data[6],
+            updated_at=user_data.reviewer_data[7],
+            auth_token=user_data.reviewer_data[8]
+        )
 
         # ("reviewer", "comments", date_submitted, score)
-        # performance = Performance(
-        #     reviewer=user_data.reviewer,
-        #     comments=user_data.performance_data[index][0],
-        #     date_submitted=user_data.performance_data[index][1],
-        #     score=user_data.pto_data[index][2],
-        #     user_id=self, created_at=user_data.date_three,
-        #     updated_at=user_data.date_four)
-
-        # print(retirement, pto, schedule, work_info)
+        performance = Performance.objects.create(
+            reviewer=reviewer,
+            comments=user_data.performance_data[index][0],
+            date_submitted=user_data.performance_data[index][1],
+            score=user_data.pto_data[index][2],
+            user_id=self, created_at=user_data.date_three,
+            updated_at=user_data.date_four)
 
     @staticmethod
     def authenticate(input_email, input_password):

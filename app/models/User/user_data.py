@@ -1,6 +1,5 @@
 import datetime
 import pytz
-# from app.models.User.user import User
 
 # Array of tuples for retirement data where the tuple is of the form
 # ("employee_contrib", "employer_contrib", "total")
@@ -26,10 +25,10 @@ schedule_data = [("pto", "france vacation", "vacation"),
 
 # Array of tuples for work_info data where the tuple is of the form
 # ("income", "bonuses", years_worked, "SSN", "DoB")
-work_info_data = [("$50,000", "$10,000", 2, "666-66-6666", "01-01-1980"),
-                  ("$40,000", "$10,000", 1, "777-77-7777", "01-01-1979"),
-                  ("$60,000", "$12,000", 3, "888-888-8888", "01-04-1982"),
-                  ("$30,000", "$7,000", 1, "999-99-9999", "02-03-1981")]
+work_info_data = [("$50,000", "$10,000", 2, "666-66-6666", "1980-01-01"),
+                  ("$40,000", "$10,000", 1, "777-77-7777", "1979-01-01"),
+                  ("$60,000", "$12,000", 3, "888-888-8888", "1982-01-04"),
+                  ("$30,000", "$7,000", 1, "999-99-9999", "1981-01-02")]
 
 # Array of tuples for performance data where the tuple is of the form
 # ("comments", date_submitted, score)
@@ -38,4 +37,6 @@ performance_data = [("Great job! You are my hero", date_one, 5),
                     ("Ehh, you are okay, we will let you stay..... barely", date_one, 2),
                     ("Good enough", date_one, 3)]
 
-# reviewer = User(user_id=112, email="reviewer@contrastsecurity.com", password="12321", is_admin=True, first_name="Reviewer", last_name="Guy", created_at=date_one, updated_at=date_one, auth_token="auth_token")
+
+reviewer_data = (112, "reviewer@contrastsecurity.com", "12321", True, "Reviewer",
+                 "Guy", date_one, date_one, "auth_token")
