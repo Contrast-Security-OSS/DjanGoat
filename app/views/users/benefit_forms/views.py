@@ -7,30 +7,24 @@ from django.template.loader import get_template
 
 @require_http_methods(["GET", "POST"])
 def user_benefit_forms(request, user_id):
-    t = get_template('users/benefit_forms/index.html')
-    c = {'user_id': user_id}
-    return HttpResponse(t.render(c, request))
+    return HttpResponse("Benefit forms index" + str(user_id))
 
 
 @require_http_methods(["GET"])
 def new_user_benefit_form(request, user_id):
-    t = get_template('users/benefit_forms/new.html')
-    c = {'user_id': user_id}
-    return HttpResponse(t.render(c, request))
+    return HttpResponse("New benefit form" + str(user_id))
 
 
 @require_http_methods(["GET"])
 def edit_user_benefit_form(request, user_id, benefit_form_id):
-    t = get_template('users/benefit_forms/edit.html')
-    c = {'user_id': user_id, 'benefit_form_id': benefit_form_id}
-    return HttpResponse(t.render(c, request))
+    return HttpResponse("edit benefit form" + str(user_id) +
+                        str(benefit_form_id))
 
 
 @require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
 def user_benefit_form(request, user_id, benefit_form_id):
-    t = get_template('users/benefit_forms/show.html')
-    c = {'user_id': user_id, 'benefit_form_id': benefit_form_id}
-    return HttpResponse(t.render(c, request))
+    return HttpResponse("show benefit form" + str(user_id) +
+                        str(benefit_form_id))
 
 
 @require_http_methods(["GET"])
