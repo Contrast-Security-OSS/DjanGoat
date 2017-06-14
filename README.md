@@ -11,7 +11,7 @@ First, install virtual-env
 
 Begin by creating a virtual-env
 ```
-    virutalenv env
+    virtualenv env
     source env/bin/activate
 ```
 
