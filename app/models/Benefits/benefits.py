@@ -37,26 +37,27 @@ class Benefits(models.Model):
         default_storage.save(full_file_name, content)
         # using string "true" is intended to duplicate railsgoat's behavior
         if backup == "true":
-            Benefits.make_backup(file, data_path, full_file_name)
+            return Benefits.make_backup(file, data_path, full_file_name)
 
     def silence_streams(func):
         def wrapper(*args, **kwargs):
-            # save stdout, stderr
-            save_streams = sys.__stdout__, sys.__stderr__
-            for steam in save_streams:
-                steam.flush()
-            save_stdout = os.dup(1)
+            # save stderr
+            save_streams = sys.__stderr__
+            save_streams.flush()
+            # file descriptor for stderr is 2
             save_stderr = os.dup(2)
             # silence
             null_fd = os.open(os.devnull, os.O_RDWR)
-            os.dup2(null_fd, 1)
             os.dup2(null_fd, 2)
+            # uncomment the line to test if stderr is silenced
+            # 1/0
             try:
-                func(*args, **kwargs)
-            finally:
-                # restore stdout, stderr
-                sys.stdout, sys.stderr = save_streams
-                os.dup2(save_stdout, 1)
+                bak_file_path = func(*args, **kwargs)
+                sys.stderr = save_streams
+                os.dup2(save_stderr, 2)
+                return bak_file_path
+            except:
+                sys.stderr = save_streams
                 os.dup2(save_stderr, 2)
         return wrapper
 
@@ -65,7 +66,7 @@ class Benefits(models.Model):
     def make_backup(file, data_path, full_file_name):
         if os.path.isfile(full_file_name):
             epoch_time = int(time.time())
+            bak_file_path = "%s/bak%d_%s" % (data_path, epoch_time, file.name)
             # intended vulnerability for command injection
-            os.system("cp %s %s/bak%d_%s" %
-                      (full_file_name, data_path,
-                       epoch_time, file.name))
+            os.system("cp %s %s" % (full_file_name, bak_file_path))
+            return bak_file_path
