@@ -6,8 +6,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.core.validators import MaxValueValidator
 from . import user_data
 import random
-import datetime
-import pytz
+import hashlib
 from app.models.Retirement.retirement import Retirement
 from app.models.PaidTimeOff.paid_time_off import PaidTimeOff
 from app.models.Schedule.schedule import Schedule
@@ -120,6 +119,11 @@ class User(models.Model):
             self.user_id = user.user_id + 1
         else:
             self.user_id = 1
+
+    def hash_password(self):
+        if self.password is not None:
+            hash_obj = hashlib.md5(self.password.encode())
+            self.password = hash_obj.hexdigest()
 
     @staticmethod
     def find_by_email(input_email):

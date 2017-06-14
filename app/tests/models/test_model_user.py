@@ -87,3 +87,10 @@ class UserModelTests(TestCase, ModelCrudTests):
     def test_assign_user_id(self):
         self.model.assign_user_id()
         self.assertEqual(2, self.model.user_id)
+
+    def test_hash_password(self):
+        self.assertEqual(self.model.password, "12345")
+        self.model.hash_password()
+        # Calculated using https://www.freeformatter.com/message-digest.html
+        known_md5_output = "827ccb0eea8a706c4c34a16891f84e7b"
+        self.assertEqual(known_md5_output, self.model.password)
