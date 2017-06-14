@@ -1,5 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
+from app.models import User
+from app.models import Analytics
 
 
 @require_http_methods(["GET", "POST"])
@@ -23,30 +25,56 @@ def admin(request, id):
 
 
 @require_http_methods(["GET"])
-def admin_dashboard(request, admin_id):
-    return HttpResponse("Admin dashboard with admin_id " + admin_id)
+def admin_dashboard(request, selected_id):
+    return HttpResponse("Admin dashboard with selected_id " + selected_id)
 
 
 @require_http_methods(["GET"])
-def admin_get_user(request, admin_id):
-    return HttpResponse("Admin get user with " + admin_id)
+def admin_get_user(request, selected_id):
+    success = True
+    try:
+        user = User.objects.get(user_id=selected_id)
+    except User.DoesNotExist:
+        success = False
+
+    return HttpResponse("Admin get user with " + selected_id)
 
 
 @require_http_methods(["POST"])
-def admin_delete_user(request, admin_id):
-    return HttpResponse("Admin delete with number " + admin_id)
+def admin_delete_user(request, selected_id):
+    success = True
+    try:
+        user = User.objects.get(user_id=selected_id)
+        user.delete()
+    except User.DoesNotExist:
+        success = False
+
+    msg = "success" if success else "failure"
+    return JsonResponse({'msg': msg})
 
 
 @require_http_methods(["PATCH"])
-def admin_update_user(request, admin_id):
-    return HttpResponse("Admin update user with number " + admin_id)
+def admin_update_user(request, selected_id):
+    return HttpResponse("Admin update user with number " + selected_id)
 
 
 @require_http_methods(["GET"])
-def admin_get_all_users(request, admin_id):
-    return HttpResponse("Admin number " + admin_id + " wants to get all users")
+def admin_get_all_users(request, selected_id):
+    users = User.objects.all()
+    # render appropriately
+    return HttpResponse("Admin number " + selected_id + " wants to get all users")
 
 
 @require_http_methods(["GET"])
-def admin_analytics(request, admin_id):
-    return HttpResponse("Admin analytics " + admin_id)
+def admin_analytics(request, selected_id):
+    if request.GET.get('field', '') == '':
+        fields = "*"
+    else:
+        fields = ', '.join("%s" % (key) for (key, val) in request.GET.dict().iteritems())
+
+    if request.GET.get('ip', '') != '':
+        analytics = Analytics.hits_by_ip(request.GET['ip'], fields)
+    else:
+        analytics = Analytics.objects.all()
+
+    return HttpResponse("Admin analytics " + selected_id)

@@ -16,7 +16,7 @@ class RouteTestingWithKwargs(object):
                          "your get method for route: " + self.route + " returned a different status code")
 
     def test_route_post(self):
-        request = self.factory.post(self.route)
+        request = self.factory.repost(self.route)
         response = self.view(request, *self.kwargs)
         self.assertEqual(response.status_code, self.responses['POST'],
                          "your post method for route: " + self.route + "returned a different status code")
