@@ -27,3 +27,6 @@ class User(models.Model):
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
     auth_token = models.CharField(max_length=255)
+
+    def full_name(self):
+        return self.first_name + ' ' + self.last_name

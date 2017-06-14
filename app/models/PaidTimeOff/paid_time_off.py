@@ -15,10 +15,10 @@ class PaidTimeOff(models.Model):
 
     def __str__(self):
         return self.user_id.__str__() + " PTO Summary: \n" \
-               + "\nSick Days Taken: " + str(self.sick_days_taken) \
-               + "\nSick Days Earned: " + str(self.sick_days_earned) \
-               + "\nPTO Taken: " + str(self.pto_taken) \
-               + "\n PTO Earned: " + self.pto_earned
+            + "\nSick Days Taken: " + str(self.sick_days_taken) \
+            + "\nSick Days Earned: " + str(self.sick_days_earned) \
+            + "\nPTO Taken: " + str(self.pto_taken) \
+            + "\n PTO Earned: " + self.pto_earned
 
     sick_days_taken = models.PositiveIntegerField(
         validators=[MaxValueValidator(MAX_INT_VALUE)]
@@ -38,3 +38,12 @@ class PaidTimeOff(models.Model):
 
     class Meta:
         db_table = "app_paid_time_offs"
+
+    def sick_days_remaining(self):
+        return self.sick_days_earned - self.sick_days_taken
+
+    def pto_days_remaining(self):
+        return self.pto_earned - self.pto_taken
+
+    def sick_days_taken_percentage(self):
+        return float(self.sick_days_taken)/float(self.sick_days_earned)*100.0
