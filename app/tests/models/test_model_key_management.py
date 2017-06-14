@@ -7,12 +7,12 @@ import pytz
 from app.models import User
 from app.models import KeyManagement
 from app.tests.mixins import ModelCrudTests, Pep8ModelTests
+from Crypto import Random
+import binascii
 
 
 class KeyManagementModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
-
     def setUp(self):
-
         # Create the user
         input_user_id = 1
         input_email = "ryan.dens@contrastsecurity.com"
@@ -34,12 +34,12 @@ class KeyManagementModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         self.parent.save()
 
         # Create KeyManagement Model
-        input_iv = "my_iv"
+        input_iv = binascii.hexlify(Random.new().read(8))
         km_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 4, 0, 0))
         km_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 5, 0, 0))
 
         self.model = KeyManagement.objects.create(
-            iv=input_iv, user_id = self.parent,
+            iv=input_iv, user_id=self.parent,
             created_at=km_input_create_date,
             updated_at=km_input_update_date
         )
@@ -52,6 +52,3 @@ class KeyManagementModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
 
         # Path for pep8 tests
         self.path = "app/models/KeyManagement/key_management.py"
-
-
-
