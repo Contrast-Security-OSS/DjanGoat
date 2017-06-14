@@ -1,6 +1,8 @@
 node('docker') {
-    stage ('lint') {
+    stage ('checkout') {
         checkout scm
+    }
+    stage ('lint') {
         sh 'docker-compose run --rm python-lint'
     }
     stage('test') {
