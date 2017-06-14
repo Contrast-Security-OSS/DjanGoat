@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from app.models.User.user import User
+from django.utils import safestring
 
 
 class Message(models.Model):
@@ -16,3 +18,10 @@ class Message(models.Model):
 
     class Meta:
         db_table = "app_messages"
+
+    def creator_name(self):
+        creator = User.objects.filter(user_id=self.creator_id).first()
+        if creator is not None:
+            return creator.full_name()
+        else:
+            return safestring.mark_safe("<b>Name unavailable</b>")
