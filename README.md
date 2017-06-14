@@ -78,5 +78,12 @@ To run tests, simply run:
 To run the `pylint` before running on Jenkins, run:
 
 ```
-    pylint app pygoat
+pylint app pygoat
+```
+
+### Docker ###
+For Docker when you're testing locally make sure you give executable
+permissions to build.sh by running
+```
+chmod +x build.sh
 ```
