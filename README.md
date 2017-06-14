@@ -4,7 +4,14 @@ On a mac, first install python.
 
 ### How do I get set up? ###
 
-First, install virtual-env
+First, install python and pip. On a mac the easiest solution is to use [Homebrew](https://brew.sh/).
+
+```
+    brew install python
+```
+
+
+Next, install virtual-env
 ```
     pip install virtualenv
 ```
