@@ -16,29 +16,28 @@ def new_admin(request):
 
 @require_http_methods(["GET"])
 def edit_admin(request, id):
-    return HttpResponse("Admin edit with user " + id)
+    return HttpResponse("Admin edit with user " + str(id))
 
 
 @require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
 def admin(request, id):
-    return HttpResponse("Admin with user " + id)
+    return HttpResponse("Admin with user " + str(id))
 
 
 @require_http_methods(["GET"])
 def admin_dashboard(request, selected_id):
-    return HttpResponse("Admin dashboard with selected_id " + selected_id)
+    return HttpResponse("Admin dashboard with selected_id " + str(selected_id))
 
 
 @require_http_methods(["GET"])
 def admin_get_user(request, selected_id):
-    print("The selected is " + selected_id)
     success = True
     try:
         user = User.objects.get(user_id=int(selected_id))
     except User.DoesNotExist:
         success = False
 
-    return HttpResponse("Admin get user with " + selected_id)
+    return HttpResponse("Admin get user with " + str(selected_id))
 
 
 @require_http_methods(["POST"])
@@ -78,7 +77,7 @@ def admin_update_user(request, selected_id):
 def admin_get_all_users(request, selected_id):
     users = User.objects.all()
     # render appropriately
-    return HttpResponse("Admin number " + selected_id + " wants to get all users")
+    return HttpResponse("Admin number " + str(selected_id) + " wants to get all users")
 
 
 @require_http_methods(["GET"])
@@ -93,4 +92,4 @@ def admin_analytics(request, selected_id):
     else:
         analytics = Analytics.objects.all()
 
-    return HttpResponse("Admin analytics " + selected_id)
+    return HttpResponse("Admin analytics " + str(selected_id))
