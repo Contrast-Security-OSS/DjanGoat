@@ -6,7 +6,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.core.validators import MaxValueValidator
 from . import user_data
 import random
-from app.models import Retirement
+from app.models import Retirement, PaidTimeOff, Schedule, WorkInfo, Performance
 
 
 @python_2_unicode_compatible
@@ -40,6 +40,39 @@ class User(models.Model):
                                 total=user_data.retirement_data[index][2],
                                 user_id=self, created_at=user_data.date_one,
                                 updated_at=user_data.date_three)
+
+        # ("sick_days_taken", "sick_days_earned", "pto_taken", "pto_earned")
+        pto = PaidTimeOff(sick_days_taken=user_data.pto_data[index][0],
+                          sick_days_earned=user_data.pto_data[index][1],
+                          pto_taken=user_data.pto_data[index][2],
+                          pto_earned=user_data.pto_data[index][3],
+                          user_id=self, created_at=user_data.date_two,
+                          updated_at=user_data.date_three)
+
+        # ("event_type", "event_desc", "event_name")
+        schedule = Schedule(date_begin=user_data.date_three,
+                            date_end=user_data.date_four,
+                            event_type=user_data.schedule_data[index][0],
+                            event_desc=user_data.schedule_data[index][1],
+                            pto_taken=user_data.schedule_data[index][2],
+                            user_id=self, created_at=user_data.date_one,
+                            updated_at=user_data.date_two)
+
+        # ("income", "bonuses", years_worked, "SSN", "DoB")
+        work_info = WorkInfo(income=user_data.work_info_data[index][0],
+                             bonuses=user_data.work_info_data[index][1],
+                             years_worked=user_data.work_info_data[index][2],
+                             SSN=user_data.work_info_data[index][3],
+                             DoB=user_data.work_info_data[index][4],
+                             user_id=self, created_at=user_data.date_two,
+                             updated_at=user_data.date_four)
+        # ("reviewer", "comments", date_submitted, score)
+        performance = Performance(reviewer=user_data.reviewer,
+                                  comments=user_data.performance_data[index][0],
+                                  date_submitted=user_data.performance_data[index][1],
+                                  score=user_data.pto_data[index][2],
+                                  user_id=self, created_at=user_data.date_three,
+                                  updated_at=user_data.date_four)
 
     @staticmethod
     def authenticate(input_email, input_password):

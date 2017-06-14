@@ -1,5 +1,6 @@
 import datetime
 import pytz
+from app.models import User
 
 # Array of tuples for retirement data where the tuple is of the form
 # ("employee_contrib", "employer_contrib", "total")
@@ -14,13 +15,14 @@ pto_data = [("2", "5", "5", "30"), ("3", "6", "3", "20"),
 date_one = pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0))
 date_two = pytz.utc.localize(datetime.datetime(2017, 6, 2, 0, 0))
 date_three = pytz.utc.localize(datetime.datetime(2017, 6, 3, 0, 0))
+date_four = pytz.utc.localize(datetime.datetime(2017, 6, 4, 0, 0))
 
 # Array of tuples for schedule data where the tuple is of the form
 # ("date_begin", "date_end", "event_type", "event_desc", "event_name")
-schedule_data = [(date_one, date_two, "pto", "france vacation", "vacation"),
-                 (date_one, date_three, "pto", "going home", "Visit Parents"),
-                 (date_two, date_three, "pto", "Grand Canyon Trip", "AZ Trip"),
-                 (date_one, date_one, "pto", "Xmas break", "Christmas Leave")]
+schedule_data = [("pto", "france vacation", "vacation"),
+                 ("pto", "going home", "Visit Parents"),
+                 ("pto", "Grand Canyon Trip", "AZ Trip"),
+                 ("pto", "Xmas break", "Christmas Leave")]
 
 # Array of tuples for work_info data where the tuple is of the form
 # ("income", "bonuses", years_worked, "SSN", "DoB")
@@ -30,8 +32,16 @@ work_info_data = [("$50,000", "$10,000", 2, "666-66-6666", "01-01-1980"),
                   ("$30,000", "$7,000", 1, "999-99-9999", "02-03-1981")]
 
 # Array of tuples for performance data where the tuple is of the form
-# ("reviewer", "comments", date_submitted, score)
-performance_data = [("1", "Great job! You are my hero", date_one, 5),
-                    ("1", "Once again, you've done a great job this year.", date_two, 5),
-                    ("1", "Ehh, you are okay, we will let you stay..... barely", date_one, 2),
-                    ("1", "Good enough", date_one, 3)]
+# ("comments", date_submitted, score)
+performance_data = [("Great job! You are my hero", date_one, 5),
+                    ("Once again, you've done a great job this year.", date_two, 5),
+                    ("Ehh, you are okay, we will let you stay..... barely", date_one, 2),
+                    ("Good enough", date_one, 3)]
+
+reviewer = User.objects.create(
+    user_id=112,
+    email="reviewer@contrastsecurity.com", password="12321",
+    is_admin=True, first_name="Reviewer",
+    last_name="Guy", created_at=date_one,
+    updated_at=date_one, auth_token="auth_token"
+)
