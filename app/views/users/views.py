@@ -2,11 +2,44 @@ from __future__ import unicode_literals
 
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from app.models import User
+from django.contrib import messages
+from django.utils import timezone
 
 
 @require_http_methods(["GET", "POST"])
 def index(request):
-    return HttpResponse("Users index")
+    if request.method == "POST":
+        form = request.POST
+        email = form["email"]
+        first_name = form["first_name"]
+        last_name = form["last_name"]
+        password = form["password"]
+        confirm = form["confirm"]
+        err_list = []
+        if password != confirm:
+            err_list.append("Password and Confirm Password does not match")
+        if User.objects.filter(email=email):
+            err_list.append("Email has already been taken")
+        err_msg = " and ".join(err_list)
+        if len(err_msg) > 0:
+            messages.add_message(request, messages.INFO, err_msg)
+            return redirect("/signup/", permanent=True)
+        else:
+            user_id = User.assign_user_id()
+            auth_token = User.generate_token()
+            User.objects.create(user_id=user_id, email=email,
+                                password=password, is_admin=False,
+                                first_name=first_name, last_name=last_name,
+                                created_at=timezone.now(),
+                                updated_at=timezone.now(),
+                                auth_token=auth_token
+                                )
+            return redirect("/dashboard/home", permanent=True)
+    else:
+        return HttpResponse("Users index")
 
 
 @require_http_methods(["GET"])
@@ -16,7 +49,8 @@ def new_user(request):
 
 @require_http_methods(["GET"])
 def signup(request):
-    return HttpResponse("Signup user")
+    print(request.GET)
+    return render(request, "users/signup.html")
 
 
 @require_http_methods(["GET"])

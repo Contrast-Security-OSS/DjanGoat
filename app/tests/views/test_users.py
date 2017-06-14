@@ -160,3 +160,7 @@ class UserViewRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55}
+
+class UserViewSignUpUserTests(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
