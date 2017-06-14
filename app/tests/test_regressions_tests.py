@@ -31,4 +31,4 @@ class PassingWrongArgumentRegressionTests(TestCase, RouteTestingWithKwargs):
         return type(user_id) is int
 
     def test_kwarg_type_is_correct(self):
-        self.assertTrue(self.dummy_function(**self.kwargs))
+        self.assertTrue(self.dummy_function_that_represents_a_view(**self.kwargs))
