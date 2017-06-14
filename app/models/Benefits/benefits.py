@@ -27,7 +27,7 @@ class Benefits(models.Model):
     # file expects to be a UploadedFile object from request.FILES in Django
     # this way of saving data leaves intended vulnerability
     @staticmethod
-    def save_data(file, backup=False):
+    def save_data(file, backup=None):
         data_path = os.path.join(settings.MEDIA_ROOT, "data")
         full_file_name = os.path.join(data_path, file.name)
         # the uploaded file is read at once, as duplicated in railsgoat
