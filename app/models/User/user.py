@@ -111,6 +111,16 @@ class User(models.Model):
             raise Exception("Incorrect Password!")
         return auth
 
+    def assign_user_id(self):
+        # User with highest id
+        user = User.objects.order_by("-user_id").first()
+
+        if user is not None:
+            # Set the new user's id to be one higher
+            self.user_id = user.user_id + 1
+        else:
+            self.user_id = 1
+
     @staticmethod
     def find_by_email(input_email):
         """

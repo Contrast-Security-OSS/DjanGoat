@@ -82,4 +82,8 @@ class UserModelTests(TestCase, ModelCrudTests):
                          self.model, "Benefit not in database")
         self.assertEqual(Performance.objects.filter(user_id=self.model).first().user_id,
                          self.model, "Benefit not in database")
+        user = User.objects.order_by("-user_id").first()
 
+    def test_assign_user_id(self):
+        self.model.assign_user_id()
+        self.assertEqual(2, self.model.user_id)
