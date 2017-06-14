@@ -1,6 +1,6 @@
 # Pygoat #
 
-
+On a mac, first install python.
 
 ### How do I get set up? ###
 
