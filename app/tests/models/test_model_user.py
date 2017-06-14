@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.test import TestCase
 import datetime
 import pytz
-from app.models import User
+from app.models import User, Retirement, PaidTimeOff, Schedule, WorkInfo, Performance
 from app.tests.mixins import ModelCrudTests, Pep8ModelTests
 
 
@@ -64,5 +64,22 @@ class UserModelTests(TestCase, ModelCrudTests):
                          User.authenticate("ryan.dens@contrastsecurity.com",
                                            "12345").pk)
 
-    def test_populate_user_data(self):
+    def test_build_benefits_data(self):
+        self.assertIsNone(Retirement.objects.filter(user_id=self.model).first(), "Benefit already in database")
+        self.assertIsNone(PaidTimeOff.objects.filter(user_id=self.model).first(), "Benefit already in database")
+        self.assertIsNone(Schedule.objects.filter(user_id=self.model).first(), "Benefit already in database")
+        self.assertIsNone(WorkInfo.objects.filter(user_id=self.model).first(), "Benefit already in database")
+        self.assertIsNone(Performance.objects.filter(user_id=self.model).first(), "Benefit already in database")
+
         self.model.build_benefits_data()
+        self.assertEqual(Retirement.objects.filter(user_id=self.model).first().user_id,
+                         self.model, "Benefit not in database")
+        self.assertEqual(PaidTimeOff.objects.filter(user_id=self.model).first().user_id,
+                         self.model, "Benefit not in database")
+        self.assertEqual(Schedule.objects.filter(user_id=self.model).first().user_id,
+                         self.model, "Benefit not in database")
+        self.assertEqual(WorkInfo.objects.filter(user_id=self.model).first().user_id,
+                         self.model, "Benefit not in database")
+        self.assertEqual(Performance.objects.filter(user_id=self.model).first().user_id,
+                         self.model, "Benefit not in database")
+
