@@ -50,3 +50,16 @@ class UserModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
                            "created_at", "updated_at", "auth_token"]
         self.model_update_index = 4
         self.model_update_input = "Vinai"
+
+    def test_user_authenticate(self):
+        with self.assertRaises(Exception) as context:
+            User.authenticate("ryan.dens@contrastsecurity.com", "1234")
+        self.assertTrue("Incorrect Password!" in context.exception)
+
+        # User should not be found in database
+        with self.assertRaises(AttributeError):
+            User.authenticate("ryand.ens@contrastsecurity.com", "12345")
+
+        self.assertEqual(self.model.pk,
+                         User.authenticate("ryan.dens@contrastsecurity.com",
+                                           "12345").pk)
