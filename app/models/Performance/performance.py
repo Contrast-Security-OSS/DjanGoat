@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.core.validators import MaxValueValidator
+from app.models.User.user import User
 
 
 @python_2_unicode_compatible
@@ -23,9 +24,9 @@ class Performance(models.Model):
 
     def __str__(self):
         return self.user_id.__str__() + " Performance Summary: \n" \
-               + "\nReviewer: " + str(self.reviewer) \
-               + "\nDate Submitted: " + str(self.date_submitted) \
-               + "\nScore: " + str(self.score) + "\nComments: " + self.comments
+            + "\nReviewer: " + str(self.reviewer) \
+            + "\nDate Submitted: " + str(self.date_submitted) \
+            + "\nScore: " + str(self.score) + "\nComments: " + self.comments
 
     user_id = models.ForeignKey('User', related_name="u_id",
                                 on_delete=models.CASCADE)
@@ -40,3 +41,10 @@ class Performance(models.Model):
 
     class Meta:
         db_table = "app_performances"
+
+    def reviewer_name(self):
+        reviewer = User.objects.filter(user_id=self.reviewer.user_id).first()
+        if reviewer is not None:
+            return reviewer.full_name()
+        else:
+            return None
