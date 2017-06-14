@@ -1,6 +1,6 @@
 import datetime
 import pytz
-from app.models import User
+# from app.models.User.user import User
 
 # Array of tuples for retirement data where the tuple is of the form
 # ("employee_contrib", "employer_contrib", "total")
@@ -38,10 +38,4 @@ performance_data = [("Great job! You are my hero", date_one, 5),
                     ("Ehh, you are okay, we will let you stay..... barely", date_one, 2),
                     ("Good enough", date_one, 3)]
 
-# reviewer = User(
-#     user_id=112,
-#     email="reviewer@contrastsecurity.com", password="12321",
-#     is_admin=True, first_name="Reviewer",
-#     last_name="Guy", created_at=date_one,
-#     updated_at=date_one, auth_token="auth_token"
-# )
+# reviewer = User(user_id=112, email="reviewer@contrastsecurity.com", password="12321", is_admin=True, first_name="Reviewer", last_name="Guy", created_at=date_one, updated_at=date_one, auth_token="auth_token")

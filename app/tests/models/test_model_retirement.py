@@ -57,6 +57,3 @@ class RetirementModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
 
         # Path for pep8 tests
         self.path = "app/models/Retirement/retirement.py"
-
-    def test_populate_user_data(self):
-        self.model.build_benefits_data()

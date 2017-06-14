@@ -33,9 +33,5 @@ class Retirement(models.Model):
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
 
-    def build_benefits_data(self):
-        print("hi")
-
-
     class Meta:
         db_table = "app_retirements"
