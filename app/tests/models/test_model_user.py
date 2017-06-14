@@ -63,3 +63,6 @@ class UserModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         self.assertEqual(self.model.pk,
                          User.authenticate("ryan.dens@contrastsecurity.com",
                                            "12345").pk)
+
+    def test_populate_user_data(self):
+        User.build_benefits_data()
