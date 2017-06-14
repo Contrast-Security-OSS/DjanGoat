@@ -5,7 +5,7 @@ from django.test import TestCase, RequestFactory
 import pytz
 import datetime
 from app.tests.mixins import Pep8ModelTests, ModelCrudTests
-from app.models import Benefits, User
+from app.models import Benefits
 from django.conf import settings
 import filecmp
 import os

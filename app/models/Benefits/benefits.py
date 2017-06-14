@@ -3,7 +3,6 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
-from django.utils import timezone
 import os
 import sys
 import time
