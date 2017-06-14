@@ -118,6 +118,9 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+KEY = b'12345678910111212345678910111212'
+
+
 # local_settings take priority over production settings
 try:
     from local_settings import *
