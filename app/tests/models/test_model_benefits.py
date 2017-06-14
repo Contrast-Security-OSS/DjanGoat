@@ -9,7 +9,6 @@ from app.models import Benefits
 from django.conf import settings
 import filecmp
 import os
-import time
 
 
 class BenefitsModelTests(TestCase, Pep8ModelTests, ModelCrudTests):
@@ -55,7 +54,6 @@ class BenefitsModelTests(TestCase, Pep8ModelTests, ModelCrudTests):
         self.assertEqual(filecmp.cmp(origin_file, full_file_name), True)
         os.remove(full_file_name)
         # Testing make_backup
-        epoch_time = int(time.time())
         bak_file_path = Benefits.save_data(uploaded_file, backup="true")
         self.assertNotEqual(bak_file_path, None)
         self.assertEqual(os.path.isfile(bak_file_path), True)
