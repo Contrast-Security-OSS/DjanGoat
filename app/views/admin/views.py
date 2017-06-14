@@ -31,9 +31,10 @@ def admin_dashboard(request, selected_id):
 
 @require_http_methods(["GET"])
 def admin_get_user(request, selected_id):
+    print("The selected is " + selected_id)
     success = True
     try:
-        user = User.objects.get(user_id=selected_id)
+        user = User.objects.get(user_id=int(selected_id))
     except User.DoesNotExist:
         success = False
 
@@ -44,7 +45,7 @@ def admin_get_user(request, selected_id):
 def admin_delete_user(request, selected_id):
     success = True
     try:
-        user = User.objects.get(user_id=selected_id)
+        user = User.objects.get(user_id=int(selected_id))
         user.delete()
     except User.DoesNotExist:
         success = False
@@ -55,7 +56,22 @@ def admin_delete_user(request, selected_id):
 
 @require_http_methods(["PATCH"])
 def admin_update_user(request, selected_id):
-    return HttpResponse("Admin update user with number " + selected_id)
+    success = True
+    try:
+        user = User.objects.get(user_id=int(selected_id))
+        data = request.GET.get('field').dict().copy()
+        password = data['password']
+        data.pop('password')
+        data.pop('password_confirmation')
+        user.update(**data)
+        if password != '':
+            user.password = password
+        user.save()
+    except User.DoesNotExist:
+        success = False
+
+    msg = "success" if success else "failure"
+    return JsonResponse({'msg': msg})
 
 
 @require_http_methods(["GET"])

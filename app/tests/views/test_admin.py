@@ -2,7 +2,10 @@ from __future__ import unicode_literals
 from django.test import TestCase, RequestFactory, Client
 from app.tests.mixins import RouteTestingWithKwargs
 from django.urls import reverse
+from app.models import User
 import app.views.admin.views as admin_views
+import datetime
+import pytz
 
 
 class AdminIndexTest(TestCase, RouteTestingWithKwargs):
@@ -117,7 +120,7 @@ class AdminDashboardTest(TestCase, RouteTestingWithKwargs):
             'OPTIONS': 405,
             'TRACE': 405
         }
-        self.kwargs = {'admin_id': 5}
+        self.kwargs = {'selected_id': 5}
 
 
 class AdminGetUserTest(TestCase, RouteTestingWithKwargs):
@@ -140,7 +143,7 @@ class AdminGetUserTest(TestCase, RouteTestingWithKwargs):
             'OPTIONS': 405,
             'TRACE': 405
         }
-        self.kwargs = {'admin_id': 5}
+        self.kwargs = {'selected_id': 5}
 
 
 class AdminDeleteUserTest(TestCase, RouteTestingWithKwargs):
@@ -163,12 +166,34 @@ class AdminDeleteUserTest(TestCase, RouteTestingWithKwargs):
             'OPTIONS': 405,
             'TRACE': 405
         }
-        self.kwargs = {'admin_id': 5}
+        self.kwargs = {'selected_id': 5}
 
     # Verifies a route exists
     def test_route_exists(self):
         response = self.client.post(reverse(self.route_name, kwargs=self.kwargs))
         self.assertEqual(response.status_code, self.responses['exists'])
+
+    def test_can_delete_a_user(self):
+        input_user_id = 1
+        input_email = "ryan.dens@contrastsecurity.com"
+        input_password = "12345"
+        input_admin = True
+        input_first_name = "Ryan"
+        input_last_name = "Dens"
+        u_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0))
+        u_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 3, 0, 0))
+        input_auth_token = "test"
+
+        self.model = User.objects.create(
+            user_id=input_user_id,
+            email=input_email, password=input_password,
+            is_admin=input_admin, first_name=input_first_name,
+            last_name=input_last_name, created_at=u_input_create_date,
+            updated_at=u_input_update_date, auth_token=input_auth_token
+        )
+        self.model.save()
+        response = self.client.post("/admin/1/delete_user")
+        self.assertEquals(0, len(User.objects.all()))
 
 
 class AdminUpdateUserTest(TestCase, RouteTestingWithKwargs):
@@ -191,7 +216,7 @@ class AdminUpdateUserTest(TestCase, RouteTestingWithKwargs):
             'OPTIONS': 405,
             'TRACE': 405
         }
-        self.kwargs = {'admin_id': 5}
+        self.kwargs = {'selected_id': 5}
 
     # Verifies a route exists
     def test_route_exists(self):
@@ -219,7 +244,7 @@ class AdminGetAllUsersTest(TestCase, RouteTestingWithKwargs):
             'OPTIONS': 405,
             'TRACE': 405
         }
-        self.kwargs = {'admin_id': 5}
+        self.kwargs = {'selected_id': 5}
 
 
 class AdminAnalyticsUsersTest(TestCase, RouteTestingWithKwargs):
@@ -242,4 +267,4 @@ class AdminAnalyticsUsersTest(TestCase, RouteTestingWithKwargs):
             'OPTIONS': 405,
             'TRACE': 405
         }
-        self.kwargs = {'admin_id': 5}
+        self.kwargs = {'selected_id': 5}
