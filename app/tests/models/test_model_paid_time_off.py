@@ -10,6 +10,7 @@ from app.tests.mixins import ModelCrudTests, Pep8ModelTests
 
 
 class UserModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
+
     def setUp(self):
         # Create the user
         input_user_id = 1
@@ -18,8 +19,10 @@ class UserModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         input_admin = True
         input_first_name = "Ryan"
         input_last_name = "Dens"
-        u_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0))
-        u_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 3, 0, 0))
+        u_input_create_date = pytz.utc.localize(
+            datetime.datetime(2017, 6, 1, 0, 0))
+        u_input_update_date = pytz.utc.localize(
+            datetime.datetime(2017, 6, 3, 0, 0))
         input_auth_token = "test"
 
         self.parent = User.objects.create(
@@ -36,8 +39,10 @@ class UserModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         input_sick_days_taken = 2
         input_pto_days_earned = 10
         input_pto_days_taken = 4
-        pto_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 4, 0, 0))
-        pto_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 5, 0, 0))
+        pto_input_create_date = pytz.utc.localize(
+            datetime.datetime(2017, 6, 4, 0, 0))
+        pto_input_update_date = pytz.utc.localize(
+            datetime.datetime(2017, 6, 5, 0, 0))
 
         # Model being tested
         self.model = PaidTimeOff.objects.create(
@@ -60,3 +65,15 @@ class UserModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
 
         # Path for pep8 tests
         self.path = "app/models/PaidTimeOff/paid_time_off.py"
+
+    def test_sick_days_remaining(self):
+        pto = PaidTimeOff.objects.get(user_id=self.parent)
+        self.assertEqual(pto.sick_days_remaining(), 18)
+
+    def test_pto_days_remaining(self):
+        pto = PaidTimeOff.objects.get(user_id=self.parent)
+        self.assertEqual(pto.pto_days_remaining(), 6)
+
+    def test_sick_days_taken_percentage(self):
+        pto = PaidTimeOff.objects.get(user_id=self.parent)
+        self.assertEqual(pto.sick_days_taken_percentage(), 10.0)
