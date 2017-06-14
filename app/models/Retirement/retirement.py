@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+from app.models import User
 
 
 @python_2_unicode_compatible
@@ -31,6 +32,10 @@ class Retirement(models.Model):
     employer_contrib = models.CharField(max_length=255)
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
+
+    def build_benefits_data(self):
+        print("hi")
+
 
     class Meta:
         db_table = "app_retirements"

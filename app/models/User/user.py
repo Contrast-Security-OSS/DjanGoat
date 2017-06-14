@@ -6,6 +6,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.core.validators import MaxValueValidator
 from . import user_data
 import random
+import datetime
 from app.models import Retirement, PaidTimeOff, Schedule, WorkInfo, Performance
 
 
@@ -32,66 +33,76 @@ class User(models.Model):
         return self.first_name + " " + self.last_name
 
     def build_benefits_data(self):
+        print("hi")
         # index of the data being chosen
-        index = random.randint(0,3)
+        # index = random.randint(0, 3)
         # Tuple of form ("employee_contrib", "employer_contrib", "total")
-        retirement = Retirement(employee_contrib=user_data.retirement_data[index][0],
-                                employer_contrib=user_data.retirement_data[index][1],
-                                total=user_data.retirement_data[index][2],
-                                user_id=self, created_at=user_data.date_one,
-                                updated_at=user_data.date_three)
+        # r_data = user_data.retirement_data[index]
+        # retirement = Retirement(employee_contrib=r_data[0], employer_contrib=r_data[1], total=r_data[2], user_id=self, created_at=user_data.date_one, updated_at=user_data.date_three)
 
-        # ("sick_days_taken", "sick_days_earned", "pto_taken", "pto_earned")
-        pto = PaidTimeOff(sick_days_taken=user_data.pto_data[index][0],
-                          sick_days_earned=user_data.pto_data[index][1],
-                          pto_taken=user_data.pto_data[index][2],
-                          pto_earned=user_data.pto_data[index][3],
-                          user_id=self, created_at=user_data.date_two,
-                          updated_at=user_data.date_three)
+        # retirement = Retirement(employee_contrib="a", employer_contrib="b", total="c", user_id=self, created_at=datetime.date(2017, 7, 31), updated_at=datetime.date(2017, 8, 1))
+        # test = Retirement()
+        # # ("sick_days_taken", "sick_days_earned", "pto_taken", "pto_earned")
+        # pto = PaidTimeOff.object.create(
+        #     sick_days_taken=user_data.pto_data[index][0],
+        #     sick_days_earned=user_data.pto_data[index][1],
+        #     pto_taken=user_data.pto_data[index][2],
+        #     pto_earned=user_data.pto_data[index][3],
+        #     user_id=self, created_at=user_data.date_two,
+        #     updated_at=user_data.date_three
+        # )
+        #
+        # # # ("event_type", "event_desc", "event_name")
+        # schedule = Schedule(
+        #     date_begin=user_data.date_three,
+        #     date_end=user_data.date_four,
+        #     event_type=user_data.schedule_data[index][0],
+        #     event_desc=user_data.schedule_data[index][1],
+        #     pto_taken=user_data.schedule_data[index][2],
+        #     user_id=self, created_at=user_data.date_one,
+        #     updated_at=user_data.date_two
+        # )
+        #
+        # # ("income", "bonuses", years_worked, "SSN", "DoB")
+        # work_info = WorkInfo(
+        #     income=user_data.work_info_data[index][0],
+        #     bonuses=user_data.work_info_data[index][1],
+        #     years_worked=user_data.work_info_data[index][2],
+        #     SSN=user_data.work_info_data[index][3],
+        #     DoB=user_data.work_info_data[index][4],
+        #     user_id=self, created_at=user_data.date_two,
+        #     updated_at=user_data.date_four
+        # )
+        #
+        # # ("reviewer", "comments", date_submitted, score)
+        # performance = Performance(
+        #     reviewer=user_data.reviewer,
+        #     comments=user_data.performance_data[index][0],
+        #     date_submitted=user_data.performance_data[index][1],
+        #     score=user_data.pto_data[index][2],
+        #     user_id=self, created_at=user_data.date_three,
+        #     updated_at=user_data.date_four)
+        #
+        # print(retirement, pto, schedule, work_info, performance)
 
-        # ("event_type", "event_desc", "event_name")
-        schedule = Schedule(date_begin=user_data.date_three,
-                            date_end=user_data.date_four,
-                            event_type=user_data.schedule_data[index][0],
-                            event_desc=user_data.schedule_data[index][1],
-                            pto_taken=user_data.schedule_data[index][2],
-                            user_id=self, created_at=user_data.date_one,
-                            updated_at=user_data.date_two)
-
-        # ("income", "bonuses", years_worked, "SSN", "DoB")
-        work_info = WorkInfo(income=user_data.work_info_data[index][0],
-                             bonuses=user_data.work_info_data[index][1],
-                             years_worked=user_data.work_info_data[index][2],
-                             SSN=user_data.work_info_data[index][3],
-                             DoB=user_data.work_info_data[index][4],
-                             user_id=self, created_at=user_data.date_two,
-                             updated_at=user_data.date_four)
-        # ("reviewer", "comments", date_submitted, score)
-        performance = Performance(reviewer=user_data.reviewer,
-                                  comments=user_data.performance_data[index][0],
-                                  date_submitted=user_data.performance_data[index][1],
-                                  score=user_data.pto_data[index][2],
-                                  user_id=self, created_at=user_data.date_three,
-                                  updated_at=user_data.date_four)
-
-    @staticmethod
-    def authenticate(input_email, input_password):
-        user = find_by_email(input_email)
-
-        if user.password == input_password:
-            auth = user
-        else:
-            raise Exception("Incorrect Password!")
-        return auth
-
-
-def find_by_email(input_email):
-    """
-    Finds a user by email.
-    :param input_email: The email of the user being searched for
-    :return: the user with an email matching input_email
-    """
-    try:
-        return User.objects.filter(email=input_email).first()
-    except User.DoesNotExist:
-        print("User does not exist!")
+        #     @staticmethod
+        #     def authenticate(input_email, input_password):
+        #         user = find_by_email(input_email)
+        #
+        #         if user.password == input_password:
+        #             auth = user
+        #         else:
+        #             raise Exception("Incorrect Password!")
+        #         return auth
+        #
+        #
+        # def find_by_email(input_email):
+        #     """
+        #     Finds a user by email.
+        #     :param input_email: The email of the user being searched for
+        #     :return: the user with an email matching input_email
+        #     """
+        #     try:
+        #         return User.objects.filter(email=input_email).first()
+        #     except User.DoesNotExist:
+        #         print("User does not exist!")
