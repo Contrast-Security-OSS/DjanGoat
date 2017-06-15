@@ -49,11 +49,10 @@ class PerformanceModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         input_auth_token_reviewer = "r_test"
 
         user_reviewer = User.objects.create(
-            user_id=input_user_id_reviewer,
             email=input_email_reviewer, password=input_password_reviewer,
             is_admin=input_admin_reviewer, first_name=input_first_name_reviewer,
             last_name=input_last_name_reviewer, created_at=u_input_create_date_reviewer,
-            updated_at=u_input_update_date_reviewer, auth_token=input_auth_token_reviewer
+            updated_at=u_input_update_date_reviewer
         )
         user_reviewer.save()
 
@@ -87,7 +86,7 @@ class PerformanceModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         self.path = "app/models/WorkInfo/work_info.py"
 
     def test_reviewer_name(self):
-        reviewer = User.objects.get(user_id=2)
+        reviewer = User.objects.get(user_id=self.model.reviewer.user_id)
         performance_first = Performance.objects.get(reviewer=reviewer)
         self.assertEqual(performance_first.reviewer_name(),
                          "Contrast Security")

@@ -113,7 +113,6 @@ class User(models.Model):
     def assign_user_id(self):
         # User with highest id
         user = User.objects.order_by("-user_id").first()
-
         if user is not None:
             # Set the new user's id to be one higher
             self.user_id = user.user_id + 1
@@ -124,7 +123,6 @@ class User(models.Model):
         if self.password is not None:
             hash_obj = hashlib.md5(self.password.encode())
             self.password = hash_obj.hexdigest()
-            self.save()
 
     def generate_token(self):
         """
@@ -132,7 +130,6 @@ class User(models.Model):
         :return: None
         """
         self.auth_token = hashlib.md5(self.email.encode().encode()).hexdigest()
-        self.save()
 
     @staticmethod
     def find_by_email(input_email):
