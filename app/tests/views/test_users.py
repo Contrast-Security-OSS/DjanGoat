@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.test import TestCase, RequestFactory, Client
 from app.tests.mixins import RouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
+from django_webtest import WebTest
 import app.views as views
 
 users = views.users_views
@@ -16,9 +17,11 @@ class UsersPep8Tests(TestCase, Pep8ViewsTests):
 
 
 # Tests checking that that '/users' properly handles HttpRequests
-# Accepts Both GET and POST requests and refuses all others with an error code 405 (Method not allowed)
+# Accepts Both GET and POST requests and refuses all others with an error
+# code 405 (Method not allowed)
 class UsersIndexRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
+
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -40,9 +43,11 @@ class UsersIndexRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
 
 
 # Tests checking that that '/users/new' properly handles HttpRequests
-# Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
+# Accepts GET requests and refuses all others with an error code 405
+# (Method not allowed)
 class UsersNewRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
+
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -64,9 +69,11 @@ class UsersNewRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
 
 
 # Tests checking that that '/signup' properly handles HttpRequests
-# Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
+# Accepts GET requests and refuses all others with an error code 405
+# (Method not allowed)
 class UserSignupRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
+
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -92,6 +99,7 @@ class UserSignupRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
 # Tested on id #55
 class UserEditRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
+
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -117,6 +125,7 @@ class UserEditRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
 # Tested on id #55
 class UserAccountSettingsRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
+
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -142,6 +151,7 @@ class UserAccountSettingsRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
 # Tested on id #55
 class UserViewRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
+
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -161,6 +171,58 @@ class UserViewRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
         }
         self.kwargs = {'user_id': 55}
 
-class UserViewSignUpUserTests(TestCase):
+
+class UserViewSignUpUserFormTests(TestCase):
+
+    def setUp(self):
+        pass
+
+class UserViewsSignUpUserFormTests(WebTest):
+
+    def test_view_page(self):
+        page = self.app.get('/signup/')
+        print(page.forms)
+
+
+class UserViewSignUpUserLogicTests(TestCase):
+
     def setUp(self):
         self.factory = RequestFactory()
+        self.client = Client()
+        self.param = {'email': 'ziyang@contrast.com', 'first_name': 'ziyang',
+                      'last_name': 'wang', 'password': '123456',
+                      'confirm': '123456'}
+
+    def test_redirect_on_form_submit(self):
+        """
+        response_signup = self.client.get('/signup/')
+        form = response_signup.context
+        self.assertIsNotNone(form)
+        print(form)
+        data = form.initial()
+        print(data)
+        """
+
+    def test_redirct_on_signup_fail(self):
+        pass
+
+    def test_redirect_on_signup_success(self):
+        pass
+
+    def test_invalid_password_length(self):
+        pass
+
+    def test_not_matched_password_confirm(self):
+        pass
+
+    def test_bad_email_format(self):
+        pass
+
+    def test_email_already_exist(self):
+        pass
+
+    def test_error_sql_create_user(self):
+        pass
+
+    def test_login_on_signup_success(self):
+        pass
