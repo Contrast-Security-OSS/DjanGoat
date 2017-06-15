@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
+from django.template.loader import get_template
 
 
 @require_http_methods(["GET", "POST"])
@@ -11,7 +12,9 @@ def index(request):
 
 @require_http_methods(["GET"])
 def home(request):
-    return HttpResponse("dashboard home index")
+    t = get_template('dashboard/home.html')
+    html = t.render()
+    return HttpResponse(html)
 
 
 @require_http_methods(["GET"])
