@@ -54,9 +54,8 @@ class UserModelTests(TestCase, ModelCrudTests):
         self.assertTrue("Incorrect Password!" in incorrectPassword.exception)
 
         # User should not be found in database
-        with self.assertRaises(Exception) as userDNE:
+        with self.assertRaises(User.DoesNotExist):
             User.authenticate("ryand.ens@contrastsecurity.com", "12345")
-        self.assertTrue("User does not exist!" in userDNE.exception)
 
         # Correct email with corresponding password
         self.assertEqual(self.model.pk,

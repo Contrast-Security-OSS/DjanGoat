@@ -5,8 +5,11 @@ from app.tests.mixins import RouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
 
 import app.views as views
-
+import pytz
+import datetime
+from app.models.User.user import User
 dashboard = views.dashboard_views
+sessions = views.sessions_views
 
 
 class DashboardPep8Tests(TestCase, Pep8ViewsTests):
@@ -14,7 +17,7 @@ class DashboardPep8Tests(TestCase, Pep8ViewsTests):
         self.path = 'app/views/dashboard/'
 
 
-# Tests checking that that '/dashboard' properly handles HttpRequests
+# Tests checking that that '/dashboard' properly handles HttpRequests when unauthenticated
 # Accepts Both GET and POST requests and refuses all others with an error code 405 (Method not allowed)
 class DashboardIndexHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
@@ -25,7 +28,7 @@ class DashboardIndexHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
         self.route = '/dashboard'
         self.view = dashboard.index
         self.responses = {
-            'exists': 200,
+            'exists': 403,
             'GET': 200,
             'POST': 200,
             'PUT': 405,
@@ -36,6 +39,48 @@ class DashboardIndexHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {}
+
+
+# Tests checking that that '/dashboard' properly handles HttpRequests when authenticated
+# Accepts Both GET and POST requests and refuses all others with an error code 405 (Method not allowed)
+class AuthDashboardIndexHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
+    # setup for all test cases
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.client = Client()
+        self.route_name = 'app:dashboard_index'
+        self.route = '/dashboard'
+        self.view = dashboard.index
+        self.responses = {
+            'exists': 403,
+            'GET': 403,
+            'POST': 200,
+            'PUT': 405,
+            'PATCH': 405,
+            'DELETE': 405,
+            'HEAD': 405,
+            'OPTIONS': 405,
+            'TRACE': 405
+        }
+        self.kwargs = {}
+
+        # Create user in database
+        input_email = "ryan.dens@contrastsecurity.com"
+        input_password = "12345"
+        input_admin = True
+        input_first_name = "Ryan"
+        input_last_name = "Dens"
+        u_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0))
+        u_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 3, 0, 0))
+        model = User.objects.create(
+            email=input_email, password=input_password,
+            is_admin=input_admin, first_name=input_first_name,
+            last_name=input_last_name, created_at=u_input_create_date,
+            updated_at=u_input_update_date
+        )
+
+        request = self.factory.post('/sessions/')
+        sessions.sessions_index(request, "ryan.dens@contrastsecurity.com", "12345")
 
 
 # Tests checking that that '/dashboard/home' properly handles HttpRequests

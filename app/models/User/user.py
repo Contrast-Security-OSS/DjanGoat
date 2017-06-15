@@ -108,10 +108,10 @@ class User(models.Model):
                 raise Exception("Incorrect Password!")
             return auth
         else:
-            raise Exception("User does not exist!")
+            raise User.DoesNotExist
 
     @staticmethod
-    def authenticate(input_auth_token):
+    def authenticate_by_token(input_auth_token):
         user = User.objects.filter(auth_token=input_auth_token).first()
 
     def assign_user_id(self):

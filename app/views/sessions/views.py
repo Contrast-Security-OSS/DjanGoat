@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 
+from app.models.User.user import User
+
 
 @require_http_methods(["GET"])
 def login(request):
@@ -15,16 +17,23 @@ def logout(request):
 
 
 @require_http_methods(["GET", "POST"])
-def sessions_index(request, username, password):
-    # if request.method == "POST":
-    return HttpResponse('You are at the sessions index')
+def sessions_index(request, username=None, password=None):
+    response = HttpResponse('You are at the sessions index')
+
+    if request.method == "POST":
+        # Creating a new session
+        try:
+            user = User.authenticate(username, password)
+            response.set_cookie("auth_token", user.auth_token)
+        except User.DoesNotExist:
+            response.content = "User does not exist!"
+
+    return response
 
 
 @require_http_methods(["GET"])
 def new_sessions(request):
-    response = HttpResponse('You created a new session')
-    response.set_cookie("auth_token", "test token")
-    return response
+    return HttpResponse("You're creating a new session!")
 
 
 @require_http_methods(["GET"])
