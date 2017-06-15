@@ -22,9 +22,9 @@ class Schedule(models.Model):
 
     def __str__(self):
         return self.user_id.__str__() + " Schedule Summary: \n" \
-               + "\nTotal: " + str(self.total) \
-               + "\nEmployee Contribution: " + str(self.employee_contrib) \
-               + "\nEmployer Contribution: " + str(self.employer_contrib)
+               + "\nEvent Type: " + str(self.event_type) \
+               + "\nEvent Name: " + str(self.event_name) \
+               + "\nEvent Description: " + str(self.event_desc) + "\n"
 
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
     date_begin = models.DateField()
