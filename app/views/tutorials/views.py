@@ -25,10 +25,10 @@ def new(request):
 # -tutorials#show, update, destroy
 @require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
 def id(request, id_number):
-    return HttpResponse("Welcome tutorial person " + id_number)
+    return HttpResponse("Welcome tutorial person " + str(id_number))
 
 
 # -tutorials#edit
 @require_http_methods(["GET"])
 def id_edit(request, id_number):
-    return HttpResponse("Come edit your tutorial person " + id_number)
+    return HttpResponse("Come edit your tutorial person " + str(id_number))
