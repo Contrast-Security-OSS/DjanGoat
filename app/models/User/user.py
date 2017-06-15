@@ -33,9 +33,6 @@ class User(models.Model):
     updated_at = models.DateTimeField()
     auth_token = models.CharField(max_length=255)
 
-    def __str__(self):
-        return self.first_name + " " + self.last_name
-
     def build_benefits_data(self):
         # index of the data being chosen
         index = random.randint(0, 3)
@@ -145,3 +142,6 @@ class User(models.Model):
         :return: the user with an email matching input_email
         """
         return User.objects.filter(email=input_email).first()
+
+    def full_name(self):
+        return self.first_name + ' ' + self.last_name

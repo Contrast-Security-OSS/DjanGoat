@@ -5,7 +5,7 @@ from django.test import TestCase
 import datetime
 import pytz
 from app.models import User, Retirement, PaidTimeOff, Schedule, WorkInfo, Performance
-from app.tests.mixins import ModelCrudTests, Pep8ModelTests
+from app.tests.mixins import ModelCrudTests
 
 
 class UserModelTests(TestCase, ModelCrudTests):
@@ -105,3 +105,7 @@ class UserModelTests(TestCase, ModelCrudTests):
         # Calculated using https://www.freeformatter.com/message-digest.html
         known_md5_output = "c44d3353bc7bc459402506378394ae10"
         self.assertEqual(self.model.auth_token, known_md5_output)
+
+    def test_full_name(self):
+        user = User.objects.get(user_id=1)
+        self.assertEqual(user.full_name(), "Ryan Dens")
