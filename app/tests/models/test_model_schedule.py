@@ -49,12 +49,12 @@ class ScheduleModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             date_end = input_date_end,
             created_at=perf_input_create_date,
             updated_at=perf_input_update_date,
-            user_id=self.parent,
+            user=self.parent,
         )
         self.model.save()
 
         # Model attributes to be updated
-        self.attributes = ["user_id", "event_type", "event_name",
+        self.attributes = ["user", "event_type", "event_name",
                            "event_desc", "date_begin", "date_end",
                            "created_at", "updated_at"]
         self.model_update_index = 1

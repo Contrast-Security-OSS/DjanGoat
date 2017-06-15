@@ -21,12 +21,12 @@ class Schedule(models.Model):
     """
 
     def __str__(self):
-        return self.user_id.__str__() + " Schedule Summary: \n" \
+        return self.user.__str__() + " Schedule Summary: \n" \
                + "\nTotal: " + str(self.total) \
                + "\nEmployee Contribution: " + str(self.employee_contrib) \
                + "\nEmployer Contribution: " + str(self.employer_contrib)
 
-    user_id = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
     date_begin = models.DateField()
     date_end = models.DateField()
     event_name = models.CharField(max_length=255)

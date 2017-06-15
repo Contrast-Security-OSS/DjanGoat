@@ -32,7 +32,6 @@ class WorkInfoModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             last_name=input_last_name, created_at=u_input_create_date,
             updated_at=u_input_update_date, auth_token=input_auth_token
         )
-        self.parent.save()
 
         # Create WorkInfo Model
         input_income = "fun"
@@ -53,22 +52,21 @@ class WorkInfoModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             DoB=input_dob,
             created_at=perf_input_create_date,
             updated_at=perf_input_update_date,
-            user_id=self.parent,
+            user=self.parent,
         )
-        self.model.save()
+
         input_iv = binascii.hexlify(Random.new().read(8))
         km_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 4, 0, 0))
         km_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 5, 0, 0))
 
         self.key_model = KeyManagement.objects.create(
-            iv=input_iv, user_id=self.parent,
+            iv=input_iv, user=self.parent,
             created_at=km_input_create_date,
             updated_at=km_input_update_date
         )
-        self.key_model.save()
 
         # Model attributes to be updated
-        self.attributes = ["user_id", "income", "bonuses",
+        self.attributes = ["user", "income", "bonuses",
                            "years_worked", "SSN", "encrypted_ssn",
                            "DoB", "created_at", "updated_at"]
         self.model_update_index = 1

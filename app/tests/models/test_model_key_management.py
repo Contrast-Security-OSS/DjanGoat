@@ -39,14 +39,14 @@ class KeyManagementModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         km_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 5, 0, 0))
 
         self.model = KeyManagement.objects.create(
-            iv=input_iv, user_id=self.parent,
+            iv=input_iv, user=self.parent,
             created_at=km_input_create_date,
             updated_at=km_input_update_date
         )
         self.model.save()
 
         # Model attributes to be updated
-        self.attributes = ["user_id", "iv", "created_at", "updated_at"]
+        self.attributes = ["user", "iv", "created_at", "updated_at"]
         self.model_update_index = 1
         self.model_update_input = "iv2"
 
