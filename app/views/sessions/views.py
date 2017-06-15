@@ -15,13 +15,16 @@ def logout(request):
 
 
 @require_http_methods(["GET", "POST"])
-def sessions_index(request):
+def sessions_index(request, username, password):
+    # if request.method == "POST":
     return HttpResponse('You are at the sessions index')
 
 
 @require_http_methods(["GET"])
 def new_sessions(request):
-    return HttpResponse('You created a new session')
+    response = HttpResponse('You created a new session')
+    response.set_cookie("auth_token", "test token")
+    return response
 
 
 @require_http_methods(["GET"])

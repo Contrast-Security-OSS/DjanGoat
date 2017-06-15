@@ -110,6 +110,10 @@ class User(models.Model):
         else:
             raise Exception("User does not exist!")
 
+    @staticmethod
+    def authenticate(input_auth_token):
+        user = User.objects.filter(auth_token=input_auth_token).first()
+
     def assign_user_id(self):
         # User with highest id
         user = User.objects.order_by("-user_id").first()
