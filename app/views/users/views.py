@@ -2,6 +2,8 @@ from __future__ import unicode_literals
 
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
+from django.shortcuts import render, redirect
+from app.models import User
 
 
 @require_http_methods(["GET", "POST"])
@@ -26,7 +28,9 @@ def edit_user(request, user_id):
 
 @require_http_methods(["GET"])
 def account_settings(request, user_id):
-    return HttpResponse("Account settings for user #" + str(user_id))
+    user = User.objects.get(user_id=user_id)
+    return render(request, "users/account_settings.html",
+                  context=user.__dict__)
 
 
 @require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
