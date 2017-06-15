@@ -13,6 +13,8 @@ from django.utils import timezone
 def index(request):
     if request.method == "POST":
         form = request.POST
+        if not form:
+            return HttpResponse("Users index")
         email = form["email"]
         first_name = form["first_name"]
         last_name = form["last_name"]
@@ -26,18 +28,20 @@ def index(request):
         err_msg = " and ".join(err_list)
         if len(err_msg) > 0:
             messages.add_message(request, messages.INFO, err_msg)
-            return redirect("/signup/", permanent=True)
+            return redirect("/signup/", permanent=False)
         else:
-            user_id = User.assign_user_id()
-            auth_token = User.generate_token()
-            User.objects.create(user_id=user_id, email=email,
-                                password=password, is_admin=False,
-                                first_name=first_name, last_name=last_name,
-                                created_at=timezone.now(),
-                                updated_at=timezone.now(),
-                                auth_token=auth_token
-                                )
-            return redirect("/dashboard/home", permanent=True)
+            try:
+                User.objects.create(email=email,
+                                    password=password, is_admin=False,
+                                    first_name=first_name, last_name=last_name,
+                                    created_at=timezone.now(),
+                                    updated_at=timezone.now(),
+                                    )
+                return redirect("/dashboard/home", permanent=False)
+            except Exception as e:
+                messages.add_message(request, messages.INFO, str(e))
+                return redirect("/signup/", permanent=False)
+
     else:
         return HttpResponse("Users index")
 
@@ -49,7 +53,6 @@ def new_user(request):
 
 @require_http_methods(["GET"])
 def signup(request):
-    print(request.GET)
     return render(request, "users/signup.html")
 
 
