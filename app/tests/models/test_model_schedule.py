@@ -30,7 +30,6 @@ class ScheduleModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             last_name=input_last_name, created_at=u_input_create_date,
             updated_at=u_input_update_date, auth_token=input_auth_token
         )
-        self.parent.save()
 
         # Create Schedule Model
         input_event_type = "fun"
@@ -51,7 +50,6 @@ class ScheduleModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             updated_at=perf_input_update_date,
             user=self.parent,
         )
-        self.model.save()
 
         # Model attributes to be updated
         self.attributes = ["user", "event_type", "event_name",

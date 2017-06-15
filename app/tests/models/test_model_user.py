@@ -40,7 +40,6 @@ class UserModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             last_name=input_last_name, created_at=u_input_create_date,
             updated_at=u_input_update_date, auth_token=input_auth_token
         )
-        self.model.save()
 
         self.parent = None
 

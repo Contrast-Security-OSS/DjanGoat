@@ -23,7 +23,6 @@ class AnalyticsModelTests(TestCase, Pep8ModelTests, ModelCrudTests):
         self.model = Analytics.objects.create(ip_address=self.ip_address, referrer=self.referrer,
                                               user_agent=self.user_agent, created_at=self.created_at,
                                               updated_at=self.updated_at)
-        self.model.save()
         self.attributes = ["ip_address", "referrer",
                            "user_agent", "created_at", "updated_at"]
         self.model_update_index = 1

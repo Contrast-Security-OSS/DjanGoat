@@ -31,7 +31,6 @@ class KeyManagementModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             last_name=input_last_name, created_at=u_input_create_date,
             updated_at=u_input_update_date, auth_token=input_auth_token
         )
-        self.parent.save()
 
         # Create KeyManagement Model
         input_iv = binascii.hexlify(Random.new().read(8))
@@ -43,7 +42,6 @@ class KeyManagementModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             created_at=km_input_create_date,
             updated_at=km_input_update_date
         )
-        self.model.save()
 
         # Model attributes to be updated
         self.attributes = ["user", "iv", "created_at", "updated_at"]
