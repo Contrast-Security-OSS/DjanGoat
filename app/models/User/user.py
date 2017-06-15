@@ -41,7 +41,7 @@ class User(models.Model):
         retirement = Retirement.objects.create(
             employee_contrib=user_data.retirement_data[index][0],
             employer_contrib=user_data.retirement_data[index][1],
-            total=user_data.retirement_data[index][2], user_id=self,
+            total=user_data.retirement_data[index][2], user=self,
             created_at=user_data.date_one, updated_at=user_data.date_three)
 
         # ("sick_days_taken", "sick_days_earned", "pto_taken", "pto_earned")
@@ -50,7 +50,7 @@ class User(models.Model):
             sick_days_earned=user_data.pto_data[index][1],
             pto_taken=user_data.pto_data[index][2],
             pto_earned=user_data.pto_data[index][3],
-            user_id=self, created_at=user_data.date_two,
+            user=self, created_at=user_data.date_two,
             updated_at=user_data.date_three
         )
 
@@ -61,7 +61,7 @@ class User(models.Model):
             event_type=user_data.schedule_data[index][0],
             event_desc=user_data.schedule_data[index][1],
             event_name=user_data.schedule_data[index][2],
-            user_id=self, created_at=user_data.date_one,
+            user=self, created_at=user_data.date_one,
             updated_at=user_data.date_two
         )
 
@@ -72,7 +72,7 @@ class User(models.Model):
             years_worked=user_data.work_info_data[index][2],
             SSN=user_data.work_info_data[index][3],
             DoB=user_data.work_info_data[index][4],
-            user_id=self, created_at=user_data.date_two,
+            user=self, created_at=user_data.date_two,
             updated_at=user_data.date_two
         )
 
@@ -94,7 +94,7 @@ class User(models.Model):
             comments=user_data.performance_data[index][0],
             date_submitted=user_data.performance_data[index][1],
             score=user_data.pto_data[index][2],
-            user_id=self, created_at=user_data.date_three,
+            user=self, created_at=user_data.date_three,
             updated_at=user_data.date_four)
 
     @staticmethod

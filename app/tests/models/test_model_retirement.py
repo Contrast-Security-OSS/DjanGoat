@@ -27,7 +27,6 @@ class RetirementModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             last_name=input_last_name, created_at=u_input_create_date,
             updated_at=u_input_update_date
         )
-        self.parent.save()
 
         # Create Retirement Model
         input_total = "102543"
@@ -42,12 +41,11 @@ class RetirementModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             employee_contrib=input_employee_contrib,
             created_at=perf_input_create_date,
             updated_at=perf_input_update_date,
-            user_id=self.parent,
+            user=self.parent,
         )
-        self.model.save()
 
         # Model attributes to be updated
-        self.attributes = ["user_id", "total", "employee_contrib",
+        self.attributes = ["user", "total", "employee_contrib",
                            "employer_contrib", "created_at", "updated_at"]
         self.model_update_index = 1
         self.model_update_input = "102544"

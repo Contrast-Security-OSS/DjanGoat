@@ -26,7 +26,6 @@ class PayModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             last_name=input_last_name, created_at=u_input_create_date,
             updated_at=u_input_update_date
         )
-        self.parent.save()
 
         # Create Pay Model
         input_bank_acc_num = "123456789"
@@ -41,12 +40,11 @@ class PayModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             percent_of_deposit=input_perc_deposit,
             created_at=pay_input_create_date,
             updated_at=pay_input_update_date,
-            user_id=self.parent
+            user=self.parent
         )
-        self.model.save()
 
         # Model attributes to be updated
-        self.attributes = ["user_id", "bank_account_num", "bank_routing_num",
+        self.attributes = ["user", "bank_account_num", "bank_routing_num",
                            "percent_of_deposit", "created_at", "updated_at"]
         self.model_update_index = 1
         self.model_update_input = "123454321"

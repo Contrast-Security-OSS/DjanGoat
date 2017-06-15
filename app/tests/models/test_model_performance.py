@@ -30,7 +30,6 @@ class PerformanceModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             last_name=input_last_name, created_at=u_input_create_date,
             updated_at=u_input_update_date
         )
-        self.parent.save()
 
         # Create the Reviewer
         input_email_reviewer = "ryan.dens@contrastsecurity.com"
@@ -49,7 +48,6 @@ class PerformanceModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             last_name=input_last_name_reviewer, created_at=u_input_create_date_reviewer,
             updated_at=u_input_update_date_reviewer
         )
-        user_reviewer.save()
 
         # Create Performance Model
         input_date_submitted = datetime.date(2017, 4, 6)
@@ -66,13 +64,12 @@ class PerformanceModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             comments=input_comments,
             created_at=perf_input_create_date,
             updated_at=perf_input_update_date,
-            user_id=self.parent,
+            user=self.parent,
             reviewer=user_reviewer
         )
-        self.model.save()
 
         # Model attributes to be updated
-        self.attributes = ["user_id", "reviewer", "date_submitted", "score",
+        self.attributes = ["user", "reviewer", "date_submitted", "score",
                            "comments", "created_at", "updated_at"]
         self.model_update_index = 3
         self.model_update_input = 10

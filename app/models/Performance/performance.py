@@ -22,13 +22,13 @@ class Performance(models.Model):
     MAX_INT_VALUE = 2**32-1
 
     def __str__(self):
-        return self.user_id.__str__() + " Performance Summary: \n" \
+        return self.user.__str__() + " Performance Summary: \n" \
             + "\nReviewer: " + str(self.reviewer) \
             + "\nDate Submitted: " + str(self.date_submitted) \
             + "\nScore: " + str(self.score) + "\nComments: " + self.comments
 
-    user_id = models.ForeignKey('User', related_name="u_id",
-                                on_delete=models.CASCADE)
+    user = models.ForeignKey('User', related_name="u_id",
+                             on_delete=models.CASCADE)
     reviewer = models.ForeignKey('User', related_name="r_id")
     date_submitted = models.DateField('date submitted')
     score = models.PositiveIntegerField(
@@ -42,7 +42,7 @@ class Performance(models.Model):
         db_table = "app_performances"
 
     def reviewer_name(self):
-        reviewer = self.user_id.__class__.objects.filter(
+        reviewer = self.user.__class__.objects.filter(
             user_id=self.reviewer.user_id
         ).first()
         if reviewer is not None:
