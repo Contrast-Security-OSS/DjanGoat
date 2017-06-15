@@ -12,7 +12,6 @@ from app.tests.mixins import ModelCrudTests, Pep8ModelTests
 class PayModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
     def setUp(self):
         # Create the user
-        input_user_id = 1
         input_email = "ryan.dens@contrastsecurity.com"
         input_password = "12345"
         input_admin = True
@@ -20,16 +19,13 @@ class PayModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         input_last_name = "Dens"
         u_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0))
         u_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 3, 0, 0))
-        input_auth_token = "test"
 
         self.parent = User.objects.create(
-            user_id=input_user_id,
             email=input_email, password=input_password,
             is_admin=input_admin, first_name=input_first_name,
             last_name=input_last_name, created_at=u_input_create_date,
-            updated_at=u_input_update_date, auth_token=input_auth_token
+            updated_at=u_input_update_date
         )
-        self.parent.save()
 
         # Create Pay Model
         input_bank_acc_num = "123456789"
@@ -44,12 +40,11 @@ class PayModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             percent_of_deposit=input_perc_deposit,
             created_at=pay_input_create_date,
             updated_at=pay_input_update_date,
-            user_id=self.parent
+            user=self.parent
         )
-        self.model.save()
 
         # Model attributes to be updated
-        self.attributes = ["user_id", "bank_account_num", "bank_routing_num",
+        self.attributes = ["user", "bank_account_num", "bank_routing_num",
                            "percent_of_deposit", "created_at", "updated_at"]
         self.model_update_index = 1
         self.model_update_input = "123454321"

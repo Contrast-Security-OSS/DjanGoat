@@ -13,16 +13,16 @@ class KeyManagement(models.Model):
     """
 
     def __str__(self):
-        return self.iv + " for user " + self.user_id.__str__()
+        return self.iv + " for user " + self.user.__str__()
 
     # needs to be a 16byte string use -> binascii.hexlify(Random.new().read(8))
     iv = models.CharField(max_length=255)
-    user_id = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
 
     def work_info(self):
-        return WorkInfo.object.get(self.user_id)
+        return WorkInfo.object.get(self.user)
 
     class Meta:
         db_table = "app_key_managements"

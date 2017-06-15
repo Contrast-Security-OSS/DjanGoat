@@ -20,12 +20,12 @@ class Retirement(models.Model):
     MAX_INT_VALUE = 2**32-1
 
     def __str__(self):
-        return self.user_id.__str__() + " Retirement Summary: \n" \
+        return self.user.__str__() + " Retirement Summary: \n" \
                + "\nTotal: " + str(self.total) \
                + "\nEmployee Contribution: " + str(self.employee_contrib) \
                + "\nEmployer Contribution: " + str(self.employer_contrib)
 
-    user_id = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
     total = models.CharField(max_length=255)
     employee_contrib = models.CharField(max_length=255)
     employer_contrib = models.CharField(max_length=255)

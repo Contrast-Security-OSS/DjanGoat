@@ -14,7 +14,7 @@ class PaidTimeOff(models.Model):
     MAX_INT_VALUE = 2**32-1
 
     def __str__(self):
-        return self.user_id.__str__() + " PTO Summary: \n" \
+        return self.user.__str__() + " PTO Summary: \n" \
             + "\nSick Days Taken: " + str(self.sick_days_taken) \
             + "\nSick Days Earned: " + str(self.sick_days_earned) \
             + "\nPTO Taken: " + str(self.pto_taken) \
@@ -32,7 +32,7 @@ class PaidTimeOff(models.Model):
     pto_earned = models.PositiveIntegerField(
         validators=[MaxValueValidator(MAX_INT_VALUE)]
     )
-    user_id = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
 
