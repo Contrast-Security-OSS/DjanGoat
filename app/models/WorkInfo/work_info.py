@@ -6,7 +6,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.core.validators import MaxValueValidator
 from Crypto.Cipher import AES
 from django.conf import settings
-from app.models import KeyManagement
+from app.models.KeyManagement.key_management import KeyManagement
 
 KEY = settings.KEY
 
