@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.core.validators import MaxValueValidator
-from app.models.User.user import User
+# from app.models.User.user import User
 
 
 @python_2_unicode_compatible
@@ -43,7 +43,9 @@ class Performance(models.Model):
         db_table = "app_performances"
 
     def reviewer_name(self):
-        reviewer = User.objects.filter(user_id=self.reviewer.user_id).first()
+        reviewer = self.user_id.__class__.objects.filter(
+            user_id=self.reviewer.user_id
+        ).first()
         if reviewer is not None:
             return reviewer.full_name()
         else:

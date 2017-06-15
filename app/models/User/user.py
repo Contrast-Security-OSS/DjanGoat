@@ -145,3 +145,6 @@ class User(models.Model):
 
     def full_name(self):
         return self.first_name + ' ' + self.last_name
+
+    def __str__(self):
+        return "User is: " + self.full_name()
