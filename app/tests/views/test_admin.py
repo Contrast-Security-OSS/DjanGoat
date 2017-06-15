@@ -153,7 +153,7 @@ class AdminDeleteUserTest(TestCase, RouteTestingWithKwargs):
         self.factory = RequestFactory()
         self.client = Client()
         self.route_name = 'app:admin_delete_user'
-        self.route = '/admin/5/delete_user'
+        self.route = '/admin/1/delete_user'
         self.view = admin_views.admin_delete_user
         self.responses = {
             'exists': 200,
@@ -166,14 +166,7 @@ class AdminDeleteUserTest(TestCase, RouteTestingWithKwargs):
             'OPTIONS': 405,
             'TRACE': 405
         }
-        self.kwargs = {'selected_id': 5}
-
-    # Verifies a route exists
-    def test_route_exists(self):
-        response = self.client.post(reverse(self.route_name, kwargs=self.kwargs))
-        self.assertEqual(response.status_code, self.responses['exists'])
-
-    def test_can_delete_a_user(self):
+        self.kwargs = {'selected_id': 1}
         input_user_id = 1
         input_email = "ryan.dens@contrastsecurity.com"
         input_password = "12345"
@@ -192,8 +185,20 @@ class AdminDeleteUserTest(TestCase, RouteTestingWithKwargs):
             updated_at=u_input_update_date, auth_token=input_auth_token
         )
         self.model.save()
-        response = self.client.post("/admin/1/delete_user")
+
+    # Verifies a route exists
+    def test_route_exists(self):
+        response = self.client.post(reverse(self.route_name, kwargs=self.kwargs))
+        self.assertEqual(response.status_code, self.responses['exists'])
+
+    def test_can_delete_a_user(self):
+        self.client.post(reverse(self.route_name, kwargs=self.kwargs))  # simulate the post request
         self.assertEquals(0, len(User.objects.all()))
+
+    def test_not_present_user_does_not_do_anything(self):
+        self.kwargs = {'selected_id': 5}
+        self.client.post(reverse(self.route_name, kwargs=self.kwargs))  # simulate the post request
+        self.assertEquals(1, len(User.objects.all()))
 
 
 class AdminUpdateUserTest(TestCase, RouteTestingWithKwargs):
@@ -217,11 +222,38 @@ class AdminUpdateUserTest(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'selected_id': 5}
+        input_user_id = 5
+        input_email = "ryan.dens@contrastsecurity.com"
+        input_password = "12345"
+        input_admin = True
+        input_first_name = "Ryan"
+        input_last_name = "Dens"
+        u_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0))
+        u_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 3, 0, 0))
+        input_auth_token = "test"
+
+        self.model = User.objects.create(
+            user_id=input_user_id,
+            email=input_email, password=input_password,
+            is_admin=input_admin, first_name=input_first_name,
+            last_name=input_last_name, created_at=u_input_create_date,
+            updated_at=u_input_update_date, auth_token=input_auth_token
+        )
+        self.model.save()
 
     # Verifies a route exists
     def test_route_exists(self):
         response = self.client.patch(reverse(self.route_name, kwargs=self.kwargs))
         self.assertEqual(response.status_code, self.responses['exists'])
+
+    def test_simple_update(self):
+        response = self.client.patch(
+            self.route +
+            "/?user_id=6&email=yo@email.com&is_admin=False&password=test&password_confirmation=test")
+
+        self.assertEquals(1, len(User.objects.all()))
+        self.assertEquals("yo@email.com", User.objects.get(user_id=6).email)
+        self.assertEquals("Ryan", User.objects.get(user_id=6).first_name)
 
 
 class AdminGetAllUsersTest(TestCase, RouteTestingWithKwargs):

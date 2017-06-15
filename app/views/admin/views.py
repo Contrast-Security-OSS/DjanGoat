@@ -2,6 +2,8 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 from app.models import User
 from app.models import Analytics
+import pytz
+import datetime
 
 
 @require_http_methods(["GET", "POST"])
@@ -58,17 +60,18 @@ def admin_update_user(request, selected_id):
     success = True
     try:
         user = User.objects.get(user_id=int(selected_id))
-        data = request.GET.get('field').dict().copy()
-        password = data['password']
-        data.pop('password')
-        data.pop('password_confirmation')
-        user.update(**data)
-        if password != '':
-            user.password = password
-        user.save()
+        data = request.GET.dict().copy()
+        if data:
+            password = data['password']
+            data.pop('password')
+            data.pop('password_confirmation')
+            data['updated_at'] = pytz.utc.localize(datetime.datetime.now())
+            if password != '':
+                user.password = password
+        User.objects.filter(user_id=int(selected_id)).update(**data)
+
     except User.DoesNotExist:
         success = False
-
     msg = "success" if success else "failure"
     return JsonResponse({'msg': msg})
 
