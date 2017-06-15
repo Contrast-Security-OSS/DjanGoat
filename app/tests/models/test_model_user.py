@@ -25,7 +25,6 @@ class UserModelTests(TestCase, ModelCrudTests):
         # Path to file of model
         self.path = "app/models/User/user.py"
         # Create the user
-        input_user_id = 1
         input_email = "ryan.dens@contrastsecurity.com"
         input_password = "12345"
         input_admin = True
@@ -33,7 +32,6 @@ class UserModelTests(TestCase, ModelCrudTests):
         input_last_name = "Dens"
         u_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0))
         u_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 3, 0, 0))
-        input_auth_token = "test"
         self.model = User.objects.create(
             email=input_email, password=input_password,
             is_admin=input_admin, first_name=input_first_name,
