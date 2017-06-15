@@ -5,7 +5,9 @@ from django.test import TestCase, RequestFactory, Client
 from app.tests.mixins import RouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
 from django_webtest import WebTest
+from django.utils import timezone
 import app.views as views
+from app.models import User
 
 users = views.users_views
 
@@ -177,52 +179,85 @@ class UserViewSignUpUserFormTests(TestCase):
     def setUp(self):
         pass
 
+
 class UserViewsSignUpUserFormTests(WebTest):
 
-    def test_view_page(self):
-        page = self.app.get('/signup/')
-        print(page.forms)
-
-
-class UserViewSignUpUserLogicTests(TestCase):
-
     def setUp(self):
-        self.factory = RequestFactory()
-        self.client = Client()
         self.param = {'email': 'ziyang@contrast.com', 'first_name': 'ziyang',
                       'last_name': 'wang', 'password': '123456',
                       'confirm': '123456'}
+        page = self.app.get('/signup/')
+        self.assertEqual(len(page.forms), 1)
+        form = page.forms[0]
+        form.set('email', self.param['email'])
+        form.set('first_name', self.param['first_name'])
+        form.set('last_name', self.param['last_name'])
+        form.set('password', self.param['password'])
+        form.set('confirm', self.param['confirm'])
+        self.form = form
 
-    def test_redirect_on_form_submit(self):
-        """
-        response_signup = self.client.get('/signup/')
-        form = response_signup.context
-        self.assertIsNotNone(form)
-        print(form)
-        data = form.initial()
-        print(data)
-        """
+    def test_invalid_password_length_short(self):
+        password_short = '12345'
+        self.form.set('password', password_short)
+        self.form.set('password', password_short)
+        response = self.form.submit()
+        self.assertEqual(response.url, '/signup/')
+        response_message = response._headers['Set-Cookie']
+        password_short_message = "Password minimum 6 characters"
+        self.assertTrue(password_short_message in response_message)
+        self.form.set('password', self.param['password'])
+        self.form.set('confirm', self.param['confirm'])
 
-    def test_redirct_on_signup_fail(self):
-        pass
-
-    def test_redirect_on_signup_success(self):
-        pass
-
-    def test_invalid_password_length(self):
-        pass
+    def test_invalid_password_length_long(self):
+        password_long = '1'*41
+        self.form.set('password', password_long)
+        self.form.set('password', password_long)
+        response = self.form.submit()
+        self.assertEqual(response.url, '/signup/')
+        response_message = response._headers['Set-Cookie']
+        password_long_message = "Password maximum 40 characters"
+        self.assertTrue(password_long_message in response_message)
+        self.form.set('password', self.param['password'])
+        self.form.set('confirm', self.param['confirm'])
 
     def test_not_matched_password_confirm(self):
-        pass
-
-    def test_bad_email_format(self):
-        pass
+        self.form.set('password', '135790')
+        response = self.form.submit()
+        self.assertEqual(response.url, '/signup/')
+        response_message = response._headers['Set-Cookie']
+        not_matched_message = "Password and Confirm Password does not match"
+        self.assertTrue(not_matched_message in response_message)
+        self.form.set('password', self.param['password'])
 
     def test_email_already_exist(self):
-        pass
+        user = User.objects.create(
+            email=self.param['email'], password='',
+            is_admin=True, first_name='ziyang',
+            last_name='wang', created_at=timezone.now(),
+            updated_at=timezone.now()
+        )
+        response = self.form.submit()
+        self.assertEqual(response.url, '/signup/')
+        response_message = response._headers['Set-Cookie']
+        email_exist_message = "Email has already been taken"
+        self.assertTrue(email_exist_message in response_message)
+        user.delete()
 
     def test_error_sql_create_user(self):
-        pass
+        self.form.set('first_name', 'z'*256)
+        response = self.form.submit()
+        self.assertEqual(response.url, '/signup/')
+        response_message = response._headers['Set-Cookie']
+        sql_message = "Data too long for column 'first_name'"
+        self.assertTrue(sql_message in response_message)
+        self.form.set('first_name', self.param['first_name'])
 
-    def test_login_on_signup_success(self):
-        pass
+    def test_redirect_and_login_on_signup_success(self):
+        response = self.form.submit()
+        response_message = response._headers['Set-Cookie']
+        user = User.objects.filter(email=self.param['email'])
+        self.assertTrue(user)
+        auth_token = user.first().auth_token
+        self.assertTrue(auth_token in response_message)
+        self.assertEqual(response.url, '/dashboard/home')
+        user.first().delete()
