@@ -104,11 +104,14 @@ class User(models.Model):
     def authenticate(input_email, input_password):
         user = User.find_by_email(input_email)
 
-        if user.password == input_password:
-            auth = user
+        if user is not None:
+            if user.password == hashlib.md5(input_password.encode()).hexdigest():
+                auth = user
+            else:
+                raise Exception("Incorrect Password!")
+            return auth
         else:
-            raise Exception("Incorrect Password!")
-        return auth
+            raise Exception("User does not exist!")
 
     def assign_user_id(self):
         # User with highest id
@@ -124,6 +127,15 @@ class User(models.Model):
         if self.password is not None:
             hash_obj = hashlib.md5(self.password.encode())
             self.password = hash_obj.hexdigest()
+            self.save()
+
+    def generate_token(self):
+        """
+        Generates and sets an auth token for a user.
+        :return: None
+        """
+        self.auth_token = hashlib.md5(self.email.encode().encode()).hexdigest()
+        self.save()
 
     @staticmethod
     def find_by_email(input_email):
@@ -132,7 +144,4 @@ class User(models.Model):
         :param input_email: The email of the user being searched for
         :return: the user with an email matching input_email
         """
-        try:
-            return User.objects.filter(email=input_email).first()
-        except User.DoesNotExist:
-            print("User does not exist!")
+        return User.objects.filter(email=input_email).first()

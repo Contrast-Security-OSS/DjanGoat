@@ -52,14 +52,19 @@ class UserModelTests(TestCase, ModelCrudTests):
         self.model_update_input = "Vinai"
 
     def test_user_authenticate(self):
-        with self.assertRaises(Exception) as context:
+        # Hash password
+        self.model.hash_password()
+
+        with self.assertRaises(Exception) as incorrectPassword:
             User.authenticate("ryan.dens@contrastsecurity.com", "1234")
-        self.assertTrue("Incorrect Password!" in context.exception)
+        self.assertTrue("Incorrect Password!" in incorrectPassword.exception)
 
         # User should not be found in database
-        with self.assertRaises(AttributeError):
+        with self.assertRaises(Exception) as userDNE:
             User.authenticate("ryand.ens@contrastsecurity.com", "12345")
+        self.assertTrue("User does not exist!" in userDNE.exception)
 
+        # Correct email with corresponding password
         self.assertEqual(self.model.pk,
                          User.authenticate("ryan.dens@contrastsecurity.com",
                                            "12345").pk)
@@ -94,3 +99,9 @@ class UserModelTests(TestCase, ModelCrudTests):
         # Calculated using https://www.freeformatter.com/message-digest.html
         known_md5_output = "827ccb0eea8a706c4c34a16891f84e7b"
         self.assertEqual(known_md5_output, self.model.password)
+
+    def test_generate_token(self):
+        self.model.generate_token()
+        # Calculated using https://www.freeformatter.com/message-digest.html
+        known_md5_output = "c44d3353bc7bc459402506378394ae10"
+        self.assertEqual(self.model.auth_token, known_md5_output)
