@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.test import TestCase, RequestFactory, Client
-from app.tests.mixins import RouteTestingWithKwargs
+from app.tests.mixins import AuthRouteTestingWithKwargs, RouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
 
 import app.views as views
@@ -17,7 +17,7 @@ class DashboardPep8Tests(TestCase, Pep8ViewsTests):
 # Tests checking that that '/dashboard' properly handles HttpRequests when unauthenticated
 # Accepts Both GET and POST requests and refuses all others with an error code 405 (Method not allowed)
 # Redirects GET and POST to error page for cookies not existing
-class DashboardIndexHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
+class DashboardIndexHttpRequestMethodTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -37,6 +37,8 @@ class DashboardIndexHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {}
+        self.expected_response_content = 'dashboard index'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # Tests checking that that '/dashboard/home' properly handles HttpRequests

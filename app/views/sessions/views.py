@@ -43,7 +43,12 @@ def sessions_index(request, email=None, password=None, path='/dashboard/home'):
             response.set_cookie("auth_token", user.auth_token)
             return response
         except User.DoesNotExist:
-            return HttpResponse("User does not exist!")
+            return HttpResponse("Email or password incorrect!")
+        except Exception as error:
+            if u'Incorrect Password' in error.message:
+                return HttpResponse("Email or password incorrect!")
+            else:
+                raise error
 
     return HttpResponse("Sessions Index")
 
