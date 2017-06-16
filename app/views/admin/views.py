@@ -7,26 +7,6 @@ import pytz
 import datetime
 
 
-@require_http_methods(["GET", "POST"])
-def admin_index(request):
-    return HttpResponse("Admin index")
-
-
-@require_http_methods(["GET"])
-def new_admin(request):
-    return HttpResponse("Admin New")
-
-
-@require_http_methods(["GET"])
-def edit_admin(request, id):
-    return HttpResponse("Admin edit with user " + str(id))
-
-
-@require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
-def admin(request, id):
-    return HttpResponse("Admin with user " + str(id))
-
-
 @require_http_methods(["GET"])
 def admin_dashboard(request, selected_id):
     return render(request, 'admin/dashboard.html')
