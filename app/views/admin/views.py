@@ -41,7 +41,11 @@ def admin_get_user(request, selected_id):
     except User.DoesNotExist:
         success = False
 
-    other_is_admin_val = not user.is_admin
+    if user is None:
+        other_is_admin_val = False
+    else:
+        other_is_admin_val = not user.is_admin
+
     return render(request, 'admin/modal.html', {'user': user, 'other_admin_val': other_is_admin_val})
 
 
@@ -64,7 +68,6 @@ def admin_update_user(request, selected_id):
     try:
         user = User.objects.get(user_id=int(selected_id))
         data = request.POST.dict().copy()
-        print(request.POST)
         if data:
             password = data['password']
             data.pop('password')
@@ -73,10 +76,10 @@ def admin_update_user(request, selected_id):
             if password != '':
                 user.password = password
                 user.save()
-        User.objects.filter(user_id=int(selected_id)).update(**data)
-
+        User.objects.filter(user_id=int(user.user_id)).update(**data)
     except User.DoesNotExist:
         success = False
+
     msg = "success" if success else "failure"
     return JsonResponse({'msg': msg})
 
@@ -91,7 +94,6 @@ def admin_get_all_users(request, selected_id):
 
 @require_http_methods(["GET"])
 def admin_analytics(request, selected_id):
-    print(request.GET)
     data = request.GET.dict().copy()
     show_user_agent = False
     show_ip_address = False
@@ -104,7 +106,6 @@ def admin_analytics(request, selected_id):
         show_ip_address = True
 
     if 'referrer' in data or (not data):
-        print ('dsds')
         show_referrer = True
 
     if request.GET.get('ip', '') != '':

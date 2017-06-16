@@ -146,7 +146,7 @@ class AdminGetUserTest(TestCase, RouteTestingWithKwargs):
         self.kwargs = {'selected_id': 5}
 
 
-class AdminDeleteUserTest(TestCase, RouteTestingWithKwargs):
+class AdminDeleteUserTest(TestCase):
     # setup for all test cases
     def setUp(self):
         """ Class for testing admin delete view"""
@@ -166,8 +166,8 @@ class AdminDeleteUserTest(TestCase, RouteTestingWithKwargs):
             'OPTIONS': 405,
             'TRACE': 405
         }
-        self.kwargs = {'selected_id': 1}
-        input_user_id = 1
+        self.kwargs = {'selected_id': 2}
+        input_user_id = 2
         input_email = "ryan.dens@contrastsecurity.com"
         input_password = "12345"
         input_admin = True
@@ -208,7 +208,7 @@ class AdminUpdateUserTest(TestCase, RouteTestingWithKwargs):
         self.factory = RequestFactory()
         self.client = Client()
         self.route_name = 'app:admin_update_user'
-        self.route = '/admin/5/update_user'
+        self.route = '/admin/4/update_user'
         self.view = admin_views.admin_update_user
         self.responses = {
             'exists': 200,
@@ -221,25 +221,23 @@ class AdminUpdateUserTest(TestCase, RouteTestingWithKwargs):
             'OPTIONS': 405,
             'TRACE': 405
         }
-        self.kwargs = {'selected_id': 5}
-        input_user_id = 5
+        self.kwargs = {'selected_id': 1}
+        input_user_id = 1
         input_email = "ryan.dens@contrastsecurity.com"
         input_password = "12345"
         input_admin = True
         input_first_name = "Ryan"
-        input_last_name = "Dens"
+        input_last_name = "Ryan"
         u_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0))
         u_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 3, 0, 0))
         input_auth_token = "test"
 
         self.model = User.objects.create(
-            user_id=input_user_id,
             email=input_email, password=input_password,
             is_admin=input_admin, first_name=input_first_name,
             last_name=input_last_name, created_at=u_input_create_date,
-            updated_at=u_input_update_date, auth_token=input_auth_token
+            updated_at=u_input_update_date
         )
-        self.model.save()
 
     # Verifies a route exists
     def test_route_exists(self):
@@ -247,13 +245,11 @@ class AdminUpdateUserTest(TestCase, RouteTestingWithKwargs):
         self.assertEqual(response.status_code, self.responses['exists'])
 
     def test_simple_update(self):
-        response = self.client.patch(
-            self.route +
-            "/?user_id=6&email=yo@email.com&is_admin=False&password=test&password_confirmation=test")
-
+        response = self.client.post(reverse(self.route_name, kwargs=self.kwargs),
+                                    data={'password': 'ds', 'email': 'yo@email.com', 'password_confirmation': 'ds', 'first_name': 'Vinai'})
         self.assertEquals(1, len(User.objects.all()))
-        self.assertEquals("yo@email.com", User.objects.get(user_id=6).email)
-        self.assertEquals("Ryan", User.objects.get(user_id=6).first_name)
+        self.assertEquals("yo@email.com", User.objects.get(user_id=2).email)
+        self.assertEquals("Vinai", User.objects.get(user_id=2).first_name)
 
 
 class AdminGetAllUsersTest(TestCase, RouteTestingWithKwargs):
