@@ -45,7 +45,9 @@ def user_view(request, user_id):
         form = request.POST
         if not form:
             return HttpResponse("User " + str(user_id) + "POST")
-        user = User.objects.filter(user_id=user_id).first()
+        table_name = User.objects.model._meta.db_table
+        user = User.objects.raw("SELECT * FROM %s WHERE user_id='%s'"
+                                % (table_name, ip))
         if not user:
             return HttpResponse("User " + str(user_id) + " NOT FOUND")
         email = form["email"]

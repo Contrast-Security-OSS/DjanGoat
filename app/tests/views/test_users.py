@@ -4,9 +4,10 @@ from __future__ import unicode_literals
 from django.test import TestCase, RequestFactory, Client
 from app.tests.mixins import RouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
+from django_webtest import WebTest
 from django.utils import timezone
-from app.models import User
 import app.views as views
+from app.models import User
 
 users = views.users_views
 
