@@ -38,40 +38,6 @@ class DashboardIndexHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
         }
         self.kwargs = {}
 
-    def test_auth_decorator(self):
-        msg = "Sorry, but you are not logged in. Please log in again"
-        request = self.factory.get(self.route)
-        response = self.view(request, *self.kwargs)
-        self.assertEqual(response.content, msg)
-
-        request = self.factory.post(self.route)
-        response = self.view(request, *self.kwargs)
-        self.assertEqual(response.content, msg)
-
-
-# Tests checking that that '/dashboard' properly handles HttpRequests when authenticated
-# Accepts Both GET and POST requests and refuses all others with an error code 405 (Method not allowed)
-class AuthDashboardIndexHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
-    # setup for all test cases
-    def setUp(self):
-        self.factory = RequestFactory()
-        self.client = Client()
-        self.route_name = 'app:dashboard_index'
-        self.route = '/dashboard'
-        self.view = dashboard.index
-        self.responses = {
-            'exists': 200,
-            'GET': 200,
-            'POST': 200,
-            'PUT': 405,
-            'PATCH': 405,
-            'DELETE': 405,
-            'HEAD': 405,
-            'OPTIONS': 405,
-            'TRACE': 405
-        }
-        self.kwargs = {}
-
 
 # Tests checking that that '/dashboard/home' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
