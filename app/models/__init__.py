@@ -10,3 +10,4 @@ from app.models.Performance.performance import Performance
 from app.models.Retirement.retirement import Retirement
 from app.models.Schedule.schedule import Schedule
 from app.models.WorkInfo.work_info import WorkInfo
+import app.signals

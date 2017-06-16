@@ -13,7 +13,6 @@ class UserModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
 
     def setUp(self):
         # Create the user
-        input_user_id = 1
         input_email = "ryan.dens@contrastsecurity.com"
         input_password = "12345"
         input_admin = True
@@ -23,16 +22,13 @@ class UserModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             datetime.datetime(2017, 6, 1, 0, 0))
         u_input_update_date = pytz.utc.localize(
             datetime.datetime(2017, 6, 3, 0, 0))
-        input_auth_token = "test"
 
         self.parent = User.objects.create(
-            user_id=input_user_id,
             email=input_email, password=input_password,
             is_admin=input_admin, first_name=input_first_name,
             last_name=input_last_name, created_at=u_input_create_date,
-            updated_at=u_input_update_date, auth_token=input_auth_token
+            updated_at=u_input_update_date
         )
-        self.parent.save()
 
         # Create PTO Model
         input_sick_days_earned = 20
@@ -52,12 +48,11 @@ class UserModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
             pto_taken=input_pto_days_taken,
             created_at=pto_input_create_date,
             updated_at=pto_input_update_date,
-            user_id=self.parent
+            user=self.parent
         )
-        self.model.save()
 
         # Model attributes to be updated
-        self.attributes = ["user_id", "sick_days_earned", "sick_days_taken",
+        self.attributes = ["user", "sick_days_earned", "sick_days_taken",
                            "pto_earned", "pto_taken", "created_at",
                            "updated_at"]
         self.model_update_index = 4
@@ -67,13 +62,13 @@ class UserModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         self.path = "app/models/PaidTimeOff/paid_time_off.py"
 
     def test_sick_days_remaining(self):
-        pto = PaidTimeOff.objects.get(user_id=self.parent)
+        pto = PaidTimeOff.objects.get(user=self.parent)
         self.assertEqual(pto.sick_days_remaining(), 18)
 
     def test_pto_days_remaining(self):
-        pto = PaidTimeOff.objects.get(user_id=self.parent)
+        pto = PaidTimeOff.objects.get(user=self.parent)
         self.assertEqual(pto.pto_days_remaining(), 6)
 
     def test_sick_days_taken_percentage(self):
-        pto = PaidTimeOff.objects.get(user_id=self.parent)
+        pto = PaidTimeOff.objects.get(user=self.parent)
         self.assertEqual(pto.sick_days_taken_percentage(), 10.0)

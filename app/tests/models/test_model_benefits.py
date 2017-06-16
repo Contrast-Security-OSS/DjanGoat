@@ -22,7 +22,6 @@ class BenefitsModelTests(TestCase, Pep8ModelTests, ModelCrudTests):
             datetime.datetime(2017, 6, 3, 0, 0))
         self.model = Benefits.objects.create(
             created_at=self.created_at, updated_at=self.updated_at)
-        self.model.save()
         self.attributes = ["created_at", "updated_at"]
         self.model_update_index = 1
         self.model_update_input = pytz.utc.localize(
