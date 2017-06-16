@@ -7,8 +7,8 @@ from django.template.loader import get_template
 from app.decorators import user_is_authenticated
 
 
-@user_is_authenticated
 @require_http_methods(["GET", "POST"])
+@user_is_authenticated
 def index(request):
     return HttpResponse("dashboard index")
 

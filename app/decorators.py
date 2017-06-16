@@ -1,5 +1,6 @@
-from django.core.exceptions import PermissionDenied
 from app.models import User
+from django.http import HttpResponseForbidden
+from django.http import HttpResponse
 
 
 def user_is_authenticated(function):
@@ -10,9 +11,9 @@ def user_is_authenticated(function):
             if user is not None:
                 return function(request, *args, **kwargs)
             else:
-                raise PermissionDenied
+                return HttpResponse("Sorry, but you are no longer logged in to your session. Please log in again")
         except AttributeError:
-            raise PermissionDenied
+            return HttpResponse("Sorry, but you are not logged in. Please log in again")
 
     wrap.__doc__ = function.__doc__
     wrap.__name__ = function.__name__
