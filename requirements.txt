@@ -18,3 +18,4 @@ singledispatch==3.4.0.3
 six==1.10.0
 virtualenv==15.1.0
 wrapt==1.10.10
+django-webtest==1.9.2
