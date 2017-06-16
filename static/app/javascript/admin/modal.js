@@ -47,6 +47,7 @@ function submitForm(user_id) {
 }
 
 function deleteUser(user_id) {
+    var csrftoken = getCookie('csrftoken');
     $.ajax({
         url: "/admin/" + user_id + "/delete_user/",
         type: "POST",
