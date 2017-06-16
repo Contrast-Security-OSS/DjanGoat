@@ -17,41 +17,27 @@ def index(request):
         form = request.POST
         if not form:
             return HttpResponse("Users index")
-        email = form["email"]
-        first_name = form["first_name"]
-        last_name = form["last_name"]
-        password = form["password"]
-        confirm = form["confirm"]
-        err_list = []
-        if len(password) < 6:
-            err_list.append("Password minimum 6 characters")
-        if len(password) > 40:
-            err_list.append("Password maximum 40 characters")
-        if password != confirm:
-            err_list.append("Password and Confirm Password does not match")
-        if User.objects.filter(email=email):
-            err_list.append("Email has already been taken")
-        err_msg = " and ".join(err_list)
+        err_msg = User.validate_signup_form(form)
         if len(err_msg) > 0:
             messages.add_message(request, messages.INFO, err_msg)
-            return redirect("/signup/", permanent=False)
         else:
             try:
-                user = User.objects.create(email=email,
-                                           password=password, is_admin=False,
-                                           first_name=first_name,
-                                           last_name=last_name,
+                user = User.objects.create(email=form["email"],
+                                           password=form["password"],
+                                           is_admin=False,
+                                           first_name=form["first_name"],
+                                           last_name=form["last_name"],
                                            created_at=timezone.now(),
                                            updated_at=timezone.now(),
                                            )
                 user.build_benefits_data()
-                auth = User.authenticate(email, password)
+                auth = User.authenticate(form["email"], form["password"])
                 response = redirect("/dashboard/home", permanent=False)
                 response.set_cookie('auth_token', auth.auth_token)
                 return response
             except Exception as e:
                 messages.add_message(request, messages.INFO, str(e))
-                return redirect("/signup/", permanent=False)
+        return redirect("/signup/", permanent=False)
 
     else:
         return HttpResponse("Users index")
