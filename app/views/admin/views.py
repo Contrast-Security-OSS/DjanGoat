@@ -123,14 +123,35 @@ def admin_get_all_users(request, selected_id):
 
 @require_http_methods(["GET"])
 def admin_analytics(request, selected_id):
-    if request.GET.get('field', '') == '':
-        fields = "*"
-    else:
-        fields = ', '.join("%s" % (key) for (key, val) in request.GET.dict().iteritems())
+    print(request.GET)
+    data = request.GET.dict().copy()
+    show_user_agent = False
+    show_ip_address = False
+    show_referrer = False
+
+    if 'user_agent' in data or (not data):
+        show_user_agent = True
+
+    if 'ip_address' in data or (not data):
+        show_ip_address = True
+
+    if 'referrer' in data or (not data):
+        print ('dsds')
+        show_referrer = True
+
+    # if show_referrer and show_ip_address and show_user_agent:
+    #     fields = "*"
+    # else:
+    #     fields = ', '.join("%s" % (key) for (key, val) in request.GET.dict().iteritems()).replace('field[', '').replace(
+    #         ']', '')
 
     if request.GET.get('ip', '') != '':
-        analytics = Analytics.hits_by_ip(request.GET['ip'], fields)
+        analytics = Analytics.hits_by_ip(request.GET['ip'])
+        print(analytics)
+        # analytics = Analytics.objects.all()
+
     else:
         analytics = Analytics.objects.all()
 
-    return HttpResponse("Admin analytics " + str(selected_id))
+    return render(request, 'admin/analytics.html', {'analytics': analytics, 'show_user_agent': show_user_agent,
+                                                    'show_ip_address': show_ip_address, 'show_referrer': show_referrer})
