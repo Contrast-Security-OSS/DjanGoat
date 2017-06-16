@@ -2,35 +2,11 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 from app.models.User.user import User
 from app.models.Analytics.analytics import Analytics
-from django.template.loader import get_template
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 import pytz
 import datetime
-import django_tables2 as tables
 from django_tables2 import RequestConfig
-from django_filters.views import FilterView
-from django.utils.html import format_html
 from django.views.decorators.csrf import csrf_exempt
-
-
-class ButtonColumn(tables.Column):
-    def render(self, value):
-        return format_html(
-            '<button type="submit" class="btn btn-primary" data-target="#myModal" onclick="openEditModal({})"> Edit </button>',
-            value)
-
-
-class UserTable(tables.Table):
-    action = ButtonColumn(verbose_name="action", accessor='user_id', orderable=False)
-
-    class Meta:
-        model = User
-        template = 'django_tables2/table.html'
-        attrs = {'class': 'table table-bordered table-striped table-hover paleblue'}
-        exclude = ('password', 'updated_at', 'created_at', 'user_id', 'auth_token')
-        sequence = ('id', 'first_name', 'last_name', 'email', 'is_admin', 'action')
-        summary = tables.Column(order_by=('id'))
-
 
 @require_http_methods(["GET", "POST"])
 def admin_index(request):
@@ -139,16 +115,8 @@ def admin_analytics(request, selected_id):
         print ('dsds')
         show_referrer = True
 
-    # if show_referrer and show_ip_address and show_user_agent:
-    #     fields = "*"
-    # else:
-    #     fields = ', '.join("%s" % (key) for (key, val) in request.GET.dict().iteritems()).replace('field[', '').replace(
-    #         ']', '')
-
     if request.GET.get('ip', '') != '':
         analytics = Analytics.hits_by_ip(request.GET['ip'])
-        print(analytics)
-        # analytics = Analytics.objects.all()
 
     else:
         analytics = Analytics.objects.all()
