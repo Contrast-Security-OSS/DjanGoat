@@ -111,10 +111,8 @@ class User(models.Model):
             raise Exception("User does not exist!")
 
     def assign_user_id(self):
-
         if self.user_id != None:
             return
-
         # User with highest id
         user = User.objects.order_by("-user_id").first()
         if user is not None:
@@ -133,6 +131,8 @@ class User(models.Model):
         Generates and sets an auth token for a user.
         :return: None
         """
+        # token is only generated on create to replicate railsgoat
+        if len(self.auth_token) > 0: return
         self.auth_token = hashlib.md5(self.email.encode().encode()).hexdigest()
 
     @staticmethod
@@ -146,6 +146,20 @@ class User(models.Model):
 
     def full_name(self):
         return self.first_name + ' ' + self.last_name
+
+    @staticmethod
+    def validate_signup_form(form):
+        err_list = []
+        if len(form["password"]) < 6:
+            err_list.append("Password minimum 6 characters")
+        if len(form["password"]) > 40:
+            err_list.append("Password maximum 40 characters")
+        if form["password"] != form["confirm"]:
+            err_list.append("Password and Confirm Password does not match")
+        if User.objects.filter(email=form["email"]):
+            err_list.append("Email has already been taken")
+        err_msg = " and ".join(err_list)
+        return err_msg
 
     def __str__(self):
         return "User is: " + self.full_name()
