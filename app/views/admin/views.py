@@ -5,8 +5,7 @@ from app.models.Analytics.analytics import Analytics
 from django.shortcuts import render
 import pytz
 import datetime
-from django_tables2 import RequestConfig
-from django.views.decorators.csrf import csrf_exempt
+
 
 @require_http_methods(["GET", "POST"])
 def admin_index(request):
@@ -30,12 +29,7 @@ def admin(request, id):
 
 @require_http_methods(["GET"])
 def admin_dashboard(request, selected_id):
-    queryset = User.objects.all()
-    table = UserTable(queryset)
-    RequestConfig(request, paginate={
-        'per_page': 1
-    }).configure(table)
-    return render(request, 'admin/dashboard.html', {'table': table})
+    return render(request, 'admin/dashboard.html')
 
 
 @require_http_methods(["GET"])
@@ -51,7 +45,6 @@ def admin_get_user(request, selected_id):
     return render(request, 'admin/modal.html', {'user': user, 'other_admin_val': other_is_admin_val})
 
 
-@csrf_exempt
 @require_http_methods(["POST"])
 def admin_delete_user(request, selected_id):
     success = True
@@ -65,7 +58,6 @@ def admin_delete_user(request, selected_id):
     return JsonResponse({'msg': msg})
 
 
-@csrf_exempt
 @require_http_methods(["POST", "PATCH"])
 def admin_update_user(request, selected_id):
     success = True
