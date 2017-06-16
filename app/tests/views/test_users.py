@@ -174,12 +174,6 @@ class UserViewRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
         self.kwargs = {'user_id': 55}
 
 
-class UserViewSignUpUserFormTests(TestCase):
-
-    def setUp(self):
-        pass
-
-
 class UserViewsSignUpUserFormTests(WebTest):
 
     def setUp(self):
