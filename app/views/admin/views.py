@@ -76,7 +76,7 @@ def admin_update_user(request, selected_id):
             if password != '':
                 user.password = password
                 user.save()
-        User.objects.filter(user_id=int(user.user_id)).update(**data)
+        User.objects.filter(user_id=int(selected_id)).update(**data)
     except User.DoesNotExist:
         success = False
 

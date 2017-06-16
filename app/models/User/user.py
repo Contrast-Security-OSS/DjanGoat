@@ -111,6 +111,10 @@ class User(models.Model):
             raise Exception("User does not exist!")
 
     def assign_user_id(self):
+
+        if self.user_id != None:
+            return
+
         # User with highest id
         user = User.objects.order_by("-user_id").first()
         if user is not None:

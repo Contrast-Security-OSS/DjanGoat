@@ -248,8 +248,8 @@ class AdminUpdateUserTest(TestCase, RouteTestingWithKwargs):
         response = self.client.post(reverse(self.route_name, kwargs=self.kwargs),
                                     data={'password': 'ds', 'email': 'yo@email.com', 'password_confirmation': 'ds', 'first_name': 'Vinai'})
         self.assertEquals(1, len(User.objects.all()))
-        self.assertEquals("yo@email.com", User.objects.get(user_id=2).email)
-        self.assertEquals("Vinai", User.objects.get(user_id=2).first_name)
+        self.assertEquals("yo@email.com", User.objects.get(user_id=1).email)
+        self.assertEquals("Vinai", User.objects.get(user_id=1).first_name)
 
 
 class AdminGetAllUsersTest(TestCase, RouteTestingWithKwargs):
