@@ -1,19 +1,20 @@
+"use strict";
 function submitForm(user_id) {
     var valuesToSubmit = $("form").serialize();
     $("#editAcct").modal('hide');
-    // reload table here
 
   $.ajax({
          url: "/admin/" +  user_id + "/update_user/",
-        data: valuesToSubmit,
-        type: "POST",
-        success: function(response) {
+         data: valuesToSubmit,
+         type: "POST",
+         success: function(response) {
                  $('#success').show(500).delay(1500).fadeOut();
-                },
-                 error: function(event) {
-                     $('#failure').show(500).delay(1500).fadeOut();
-                 }
-  });
+                    loadTable();
+                   },
+         error: function(event) {
+                 $('#failure').show(500).delay(1500).fadeOut();
+           }
+    });
 }
 
 function deleteUser(user_id) {
@@ -22,9 +23,10 @@ function deleteUser(user_id) {
          type: "POST",
         success: function(response) {
                  $('#success').show(500).delay(1500).fadeOut();
+                 loadTable()
                 },
-                 error: function(event) {
-                     $('#failure').show(500).delay(1500).fadeOut();
-                 }
+        error: function(event) {
+                    $('#failure').show(500).delay(1500).fadeOut();
+        }
   });
 }

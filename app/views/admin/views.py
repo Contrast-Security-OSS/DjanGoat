@@ -117,7 +117,8 @@ def admin_update_user(request, selected_id):
 def admin_get_all_users(request, selected_id):
     users = User.objects.all()
     # render appropriately
-    return HttpResponse("Admin number " + str(selected_id) + " wants to get all users")
+    users2 = ['dsds', 'f', 'f', 'f']
+    return render(request, 'admin/table.html', {'users': users, 'users2': users2})
 
 
 @require_http_methods(["GET"])
