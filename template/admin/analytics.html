@@ -56,9 +56,11 @@
             <tbody>
             {% for analytic in analytics %}
             <tr>
+                {% if show_ip_address %}
                 <td>
                     {{analytic.ip_address}}
                 </td>
+                {% endif %}
                 {% if show_referrer %}
                 <td>
                     {{analytic.referrer}}
