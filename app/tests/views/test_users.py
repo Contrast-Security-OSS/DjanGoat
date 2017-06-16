@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 from django.test import TestCase, RequestFactory, Client
 from app.tests.mixins import RouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
+from django.utils import timezone
+from app.models import User
 import app.views as views
 
 users = views.users_views
@@ -121,7 +123,12 @@ class UserAccountSettingsRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
         self.factory = RequestFactory()
         self.client = Client()
         self.route_name = 'app:user_account_settings'
-        self.route = '/users/55/account_settings'
+        self.user = User.objects.create(email="", first_name="", last_name="",
+                                        password="", is_admin=False,
+                                        created_at=timezone.now(),
+                                        updated_at=timezone.now())
+        self.user_id = self.user.user_id
+        self.route = '/users/%s/account_settings' % self.user_id
         self.view = users.account_settings
         self.responses = {
             'exists': 200,
@@ -134,11 +141,14 @@ class UserAccountSettingsRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'OPTIONS': 405,
             'TRACE': 405
         }
-        self.kwargs = {'user_id': 55}
+        self.kwargs = {'user_id': self.user_id}
+
+    def test_model_delete(self):
+        self.assertIsNotNone(self.user.delete())
 
 
 # Tests checking that that '/users/:id' properly handles HttpRequests
-# Accepts GET, PATCH, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)
+# Accepts GET, POST, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
 class UserViewRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
     # setup for all test cases
@@ -146,17 +156,25 @@ class UserViewRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
         self.factory = RequestFactory()
         self.client = Client()
         self.route_name = 'app:user_view'
-        self.route = '/users/55'
+        self.user = User.objects.create(email="", first_name="", last_name="",
+                                        password="", is_admin=False,
+                                        created_at=timezone.now(),
+                                        updated_at=timezone.now())
+        self.user_id = self.user.user_id
+        self.route = '/users/%s' % self.user_id
         self.view = users.user_view
         self.responses = {
             'exists': 200,
             'GET': 200,
-            'POST': 405,
+            'POST': 200,
             'PUT': 200,
-            'PATCH': 200,
+            'PATCH': 405,
             'DELETE': 200,
             'HEAD': 405,
             'OPTIONS': 405,
             'TRACE': 405
         }
-        self.kwargs = {'user_id': 55}
+        self.kwargs = {'user_id': self.user_id}
+
+    def test_model_delete(self):
+        self.assertIsNotNone(self.user.delete())
