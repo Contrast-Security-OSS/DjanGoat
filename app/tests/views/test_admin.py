@@ -213,7 +213,7 @@ class AdminUpdateUserTest(TestCase, RouteTestingWithKwargs):
         self.responses = {
             'exists': 200,
             'GET': 405,
-            'POST': 405,
+            'POST': 200,
             'PUT': 405,
             'PATCH': 200,
             'DELETE': 405,
