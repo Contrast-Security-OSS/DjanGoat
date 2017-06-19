@@ -1,6 +1,7 @@
 #horizontalNav a, #verticalNav a {
     color: white;
     text-align:center;
+    font-size: 16;
 }
 
 /* Style The Dropdown Button */
@@ -84,5 +85,5 @@
 }
 
 #pageContent {
-    margin-top: 5%;
+    background-color: #f2f2f2;
 }
