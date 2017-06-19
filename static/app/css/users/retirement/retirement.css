@@ -1,4 +1,5 @@
-/* KEEP! */
+/* Adapted from main.css.erb in Railsgoat. Some constants changed and selectors
+   deleted, otherwise identical. */
 body {
   margin: 0;
   font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -19,9 +20,6 @@ body {
     content: "";
     line-height: 0;
     clear: both; }
-
-
-
 
 .row-fluid {
   width: 100%;
@@ -163,12 +161,6 @@ body {
 
 [class*="span"].pull-right, .row-fluid [class*="span"].pull-right {
   float: right; }
-
-/* end of what we need */
-
-
-
-
 
 /*  Bootstrap Date Range Picker  */
 .daterangepicker {
