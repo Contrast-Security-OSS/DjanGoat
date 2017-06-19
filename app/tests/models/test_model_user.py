@@ -63,22 +63,22 @@ class UserModelTests(TestCase, ModelCrudTests):
                                            "12345").pk)
 
     def test_build_benefits_data(self):
-        self.assertIsNone(Retirement.objects.filter(user_id=self.model).first(), "Benefit already in database")
-        self.assertIsNone(PaidTimeOff.objects.filter(user_id=self.model).first(), "Benefit already in database")
-        self.assertIsNone(Schedule.objects.filter(user_id=self.model).first(), "Benefit already in database")
-        self.assertIsNone(WorkInfo.objects.filter(user_id=self.model).first(), "Benefit already in database")
-        self.assertIsNone(Performance.objects.filter(user_id=self.model).first(), "Benefit already in database")
+        self.assertIsNone(Retirement.objects.filter(user=self.model).first(), "Benefit already in database")
+        self.assertIsNone(PaidTimeOff.objects.filter(user=self.model).first(), "Benefit already in database")
+        self.assertIsNone(Schedule.objects.filter(user=self.model).first(), "Benefit already in database")
+        self.assertIsNone(WorkInfo.objects.filter(user=self.model).first(), "Benefit already in database")
+        self.assertIsNone(Performance.objects.filter(user=self.model).first(), "Benefit already in database")
 
         self.model.build_benefits_data()
-        self.assertEqual(Retirement.objects.filter(user_id=self.model).first().user_id,
+        self.assertEqual(Retirement.objects.filter(user=self.model).first().user,
                          self.model, "Benefit not in database")
-        self.assertEqual(PaidTimeOff.objects.filter(user_id=self.model).first().user_id,
+        self.assertEqual(PaidTimeOff.objects.filter(user=self.model).first().user,
                          self.model, "Benefit not in database")
-        self.assertEqual(Schedule.objects.filter(user_id=self.model).first().user_id,
+        self.assertEqual(Schedule.objects.filter(user=self.model).first().user,
                          self.model, "Benefit not in database")
-        self.assertEqual(WorkInfo.objects.filter(user_id=self.model).first().user_id,
+        self.assertEqual(WorkInfo.objects.filter(user=self.model).first().user,
                          self.model, "Benefit not in database")
-        self.assertEqual(Performance.objects.filter(user_id=self.model).first().user_id,
+        self.assertEqual(Performance.objects.filter(user=self.model).first().user,
                          self.model, "Benefit not in database")
         user = User.objects.order_by("-user_id").first()
 

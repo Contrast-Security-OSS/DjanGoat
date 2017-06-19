@@ -41,7 +41,7 @@ class User(models.Model):
         retirement = Retirement.objects.create(
             employee_contrib=user_data.retirement_data[index][0],
             employer_contrib=user_data.retirement_data[index][1],
-            total=user_data.retirement_data[index][2], user_id=self,
+            total=user_data.retirement_data[index][2], user=self,
             created_at=user_data.date_one, updated_at=user_data.date_three)
 
         # ("sick_days_taken", "sick_days_earned", "pto_taken", "pto_earned")
@@ -50,7 +50,7 @@ class User(models.Model):
             sick_days_earned=user_data.pto_data[index][1],
             pto_taken=user_data.pto_data[index][2],
             pto_earned=user_data.pto_data[index][3],
-            user_id=self, created_at=user_data.date_two,
+            user=self, created_at=user_data.date_two,
             updated_at=user_data.date_three
         )
 
@@ -61,7 +61,7 @@ class User(models.Model):
             event_type=user_data.schedule_data[index][0],
             event_desc=user_data.schedule_data[index][1],
             event_name=user_data.schedule_data[index][2],
-            user_id=self, created_at=user_data.date_one,
+            user=self, created_at=user_data.date_one,
             updated_at=user_data.date_two
         )
 
@@ -72,7 +72,7 @@ class User(models.Model):
             years_worked=user_data.work_info_data[index][2],
             SSN=user_data.work_info_data[index][3],
             DoB=user_data.work_info_data[index][4],
-            user_id=self, created_at=user_data.date_two,
+            user=self, created_at=user_data.date_two,
             updated_at=user_data.date_two
         )
 
@@ -94,7 +94,7 @@ class User(models.Model):
             comments=user_data.performance_data[index][0],
             date_submitted=user_data.performance_data[index][1],
             score=user_data.pto_data[index][2],
-            user_id=self, created_at=user_data.date_three,
+            user=self, created_at=user_data.date_three,
             updated_at=user_data.date_four)
 
     @staticmethod
@@ -115,6 +115,8 @@ class User(models.Model):
         user = User.objects.filter(auth_token=input_auth_token).first()
 
     def assign_user_id(self):
+        # Do not reassign if user_id present
+        if self.user_id is not None: return
         # User with highest id
         user = User.objects.order_by("-user_id").first()
         if user is not None:
@@ -133,7 +135,13 @@ class User(models.Model):
         Generates and sets an auth token for a user.
         :return: None
         """
+<<<<<<< HEAD
         self.auth_token = hashlib.md5((self.email + str(random.randint(1, 1000000))).encode()).hexdigest()
+=======
+        # token is only generated on create to replicate railsgoat
+        if len(self.auth_token) > 0: return
+        self.auth_token = hashlib.md5(self.email.encode().encode()).hexdigest()
+>>>>>>> develop
 
     @staticmethod
     def find_by_email(input_email):
@@ -146,6 +154,20 @@ class User(models.Model):
 
     def full_name(self):
         return self.first_name + ' ' + self.last_name
+
+    @staticmethod
+    def validate_signup_form(form):
+        err_list = []
+        if len(form["password"]) < 6:
+            err_list.append("Password minimum 6 characters")
+        if len(form["password"]) > 40:
+            err_list.append("Password maximum 40 characters")
+        if form["password"] != form["confirm"]:
+            err_list.append("Password and Confirm Password does not match")
+        if User.objects.filter(email=form["email"]):
+            err_list.append("Email has already been taken")
+        err_msg = " and ".join(err_list)
+        return err_msg
 
     def __str__(self):
         return "User is: " + self.full_name()

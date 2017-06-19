@@ -1,0 +1,80 @@
+{% extends 'layouts/shared/base.html' %}
+
+{% block head %}
+    {% load static %}
+    <script type="text/javascript" src="{% static 'javascript/loader.js'%}"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="col-md-6 offset-md-3" >
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div class="header">
+            <h2>Sign Up</h2>
+            <p>Fill out the form below to login</p>
+        </div>
+
+        <form method="post" action="/users/"> {% csrf_token %}
+
+            <div class="form-group">
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                        <input type="email" class="form-control" name="email" id="email"  placeholder="Email"/>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                        <input type="text" class="form-control" name="first_name" id="first_name"  placeholder="First Name"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                        <input type="text" class="form-control" name="last_name" id="last_name"  placeholder="Last Name"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                        <input type="password" class="form-control" name="password" id="password"  placeholder="Password" pattern=".{6,40}" required title="6 to 40 characters"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                        <input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm Password" pattern=".{6,40}" required title="6 to 40 characters"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <input type="submit" value="Submit" id="submit_button", class="btn btn-info btn-large pull-right">
+            </div>
+            
+        </form>
+    </div>
+
+{% endblock %}
