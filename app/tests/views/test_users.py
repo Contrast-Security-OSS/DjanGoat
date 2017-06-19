@@ -372,6 +372,8 @@ class UserViewsUpdateAccountFormTests(WebTest):
     def test_sql_injection_vulnerability(self):
         # Get a target admin to apply SQL injection
         admin = User.objects.filter(is_admin='1').first()
+        admin.password = '1357911'
+        admin.save()
 
         # Send a request by submitting form as a non-admin
         factory = RequestFactory()
