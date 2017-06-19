@@ -115,8 +115,8 @@ class User(models.Model):
         user = User.objects.filter(auth_token=input_auth_token).first()
 
     def assign_user_id(self):
-        # Do not reassign if user_id present
-        if self.user_id is not None: return
+        if self.user_id != None:
+            return
         # User with highest id
         user = User.objects.order_by("-user_id").first()
         if user is not None:

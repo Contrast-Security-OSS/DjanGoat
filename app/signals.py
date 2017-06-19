@@ -1,5 +1,5 @@
 from app.models import User
-from django.db.models.signals import pre_save, post_init
+from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
 
@@ -9,5 +9,3 @@ def create_user_values(sender, instance, *args, **kwargs):
         instance.generate_token()
         instance.hash_password()
         instance.assign_user_id()
-
-

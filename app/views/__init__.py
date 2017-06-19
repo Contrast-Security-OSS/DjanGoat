@@ -16,4 +16,4 @@ from api import views as api_views
 from users.pay import views as user_messages_pay
 from users.paid_time_off import views as pto_views
 from users.performance import views as user_performance_views
-
+from admin import views as admin_views
