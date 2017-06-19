@@ -45,3 +45,10 @@ class TestSensitiveDataExposure(TestCase):
         response = self.client.get(request,
                                    **{'HTTP_AUTHORIZATION': 'Token token=1-fjfsasdja03'})
         self.assertEquals(401, response.status_code)
+
+    def test_no_such_user_returns_empty_response(self):
+        self.kwargs = {'id_number': 100}
+        request = reverse(self.route_name, kwargs=self.kwargs)
+        response = self.client.get(request,
+                                   **{'HTTP_AUTHORIZATION': 'Token token=1-fjfsasdja03'})
+        self.assertEquals(response.content, "[]")

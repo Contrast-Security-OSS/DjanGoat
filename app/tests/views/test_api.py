@@ -109,8 +109,8 @@ class ApiUsersIndexTest(TestCase, RouteTestingWithKwargs):
         self.route = '/api/v1/users'
         self.view = api_users_views.api_index
         self.responses = {
-            'exists': 200,
-            'GET': 200,
+            'exists': 401,
+            'GET': 401,
             'POST': 405,
             'PUT': 405,
             'PATCH': 405,
@@ -132,10 +132,10 @@ class ApiUsersByIDTest(TestCase, RouteTestingWithKwargs):
         self.route = '/api/v1/users/5'
         self.view = api_users_views.api
         self.responses = {
-            'exists': 200,
-            'GET': 200,
+            'exists': 401,
+            'GET': 401,
             'POST': 405,
-            'PUT': 200,
+            'PUT': 405,
             'PATCH': 405,
             'DELETE': 405,
             'HEAD': 405,
@@ -143,7 +143,3 @@ class ApiUsersByIDTest(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'id_number': 5}
-
-    def test_no_such_user_returns_empty_response(self):
-        response = self.client.get(reverse(self.route_name, kwargs=self.kwargs))
-        self.assertEquals(response.content, "[]")
