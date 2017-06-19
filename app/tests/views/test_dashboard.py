@@ -43,7 +43,7 @@ class DashboardIndexHttpRequestMethodTests(TestCase, AuthRouteTestingWithKwargs)
 
 # Tests checking that that '/dashboard/home' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class DashboardHomeHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
+class DashboardHomeHttpRequestMethodTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -63,11 +63,13 @@ class DashboardHomeHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {}
+        self.expected_response_content = 'Current Statistics'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # Tests checking that that '/dashboard/change_graph' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class DashboardChangeGraphHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
+class DashboardChangeGraphHttpRequestMethodTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -87,11 +89,13 @@ class DashboardChangeGraphHttpRequestMethodTests(TestCase, RouteTestingWithKwarg
             'TRACE': 405
         }
         self.kwargs = {}
+        self.expected_response_content = 'Change Graph Index'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # Tests checking that that '/dashboard/doc' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class DashboardDocHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
+class DashboardDocHttpRequestMethodTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -111,11 +115,13 @@ class DashboardDocHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {}
+        self.expected_response_content = 'dashboard doc'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # Tests checking that that '/dashboard/new' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class DashboardNewHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
+class DashboardNewHttpRequestMethodTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -135,12 +141,14 @@ class DashboardNewHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {}
+        self.expected_response_content = 'New dashboard'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # Tests checking that that '/dashboard/:id/edit' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
-class DashboardEditHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
+class DashboardEditHttpRequestMethodTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -160,12 +168,14 @@ class DashboardEditHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'dashboard_id': 55}
+        self.expected_response_content = 'Edit dashboard 55'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # Tests checking that that '/dashboard/:id' properly handles HttpRequests
 # Accepts GET, PATCH, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
-class DashboardViewHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
+class DashboardViewHttpRequestMethodTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -185,3 +195,5 @@ class DashboardViewHttpRequestMethodTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'dashboard_id': 55}
+        self.expected_response_content = 'Dashboard 55'
+        AuthRouteTestingWithKwargs.__init__(self)

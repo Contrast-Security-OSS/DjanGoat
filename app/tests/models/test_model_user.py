@@ -87,9 +87,9 @@ class UserModelTests(TestCase, ModelCrudTests):
         self.assertEqual(1, self.model.user_id)
 
     def test_user_signals_generate_token(self):
-        # Calculated using https://www.freeformatter.com/message-digest.html
-        known_md5_output = "c44d3353bc7bc459402506378394ae10"
-        self.assertEqual(self.model.auth_token, known_md5_output)
+        old_token = self.model.auth_token
+        self.model.generate_token()
+        self.assertNotEqual(self.model.auth_token, old_token)
 
     def test_user_signals_hash_password(self):
         # Calculated using https://www.freeformatter.com/message-digest.html

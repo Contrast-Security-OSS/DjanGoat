@@ -52,10 +52,75 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
             self.bad_password_test(request)
             self.bad_email_test(request)
 
+    def test_route_put(self):
+        if(self.responses['PUT'] != 200):
+            super(AuthRouteTestingWithKwargs, self).test_route_put()
+        else:
+            request = self.factory.put(self.route)
+            self.no_auth_test(request)
+            self.good_auth_test(request)
+            self.old_auth_test(request)
+            self.bad_password_test(request)
+            self.bad_email_test(request)
+
+    def test_route_patch(self):
+        if(self.responses['PATCH'] != 200):
+            super(AuthRouteTestingWithKwargs, self).test_route_patch()
+        else:
+            request = self.factory.patch(self.route)
+            self.no_auth_test(request)
+            self.good_auth_test(request)
+            self.old_auth_test(request)
+            self.bad_password_test(request)
+            self.bad_email_test(request)
+
+    def test_route_delete(self):
+        if(self.responses['DELETE'] != 200):
+            super(AuthRouteTestingWithKwargs, self).test_route_delete()
+        else:
+            request = self.factory.delete(self.route)
+            self.no_auth_test(request)
+            self.good_auth_test(request)
+            self.old_auth_test(request)
+            self.bad_password_test(request)
+            self.bad_email_test(request)
+
+    def test_route_head(self):
+        if(self.responses['HEAD'] != 200):
+            super(AuthRouteTestingWithKwargs, self).test_route_head()
+        else:
+            request = self.factory.head(self.route)
+            self.no_auth_test(request)
+            self.good_auth_test(request)
+            self.old_auth_test(request)
+            self.bad_password_test(request)
+            self.bad_email_test(request)
+
+    def test_route_options(self):
+        if(self.responses['OPTIONS'] != 200):
+            super(AuthRouteTestingWithKwargs, self).test_route_options()
+        else:
+            request = self.factory.options(self.route)
+            self.no_auth_test(request)
+            self.good_auth_test(request)
+            self.old_auth_test(request)
+            self.bad_password_test(request)
+            self.bad_email_test(request)
+
+    def test_route_trace(self):
+        if(self.responses['TRACE'] != 200):
+            super(AuthRouteTestingWithKwargs, self).test_route_trace()
+        else:
+            request = self.factory.trace(self.route)
+            self.no_auth_test(request)
+            self.good_auth_test(request)
+            self.old_auth_test(request)
+            self.bad_password_test(request)
+            self.bad_email_test(request)
 
 
     def no_auth_test(self, request):
-        response = self.view(request, *self.kwargs)
+        response = self.view(request, **self.kwargs)
         self.assertContains(response, self.not_logged_in_message)
 
     def bad_password_test(self, request):
@@ -111,7 +176,7 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
 
         # Add the old auth token cookie to the request
         request.COOKIES['auth_token'] = auth_response.cookies['auth_token'].value
-        response = self.view(request, *self.kwargs)
+        response = self.view(request, **self.kwargs)
 
         # Make sure the user is not authenticated and redirected to proper view
         self.assertContains(response, self.no_longer_logged_in_message)
@@ -121,57 +186,11 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
         auth_request = self.factory.post('/sessions/')
         auth_response = sessions.sessions_index(auth_request, email="ryan.dens@contrastsecurity.com",
                                                    password="12345", path=self.route)
-        print(auth_response.content)
         # Make sure redirect was called (but not followed)
         self.assertEqual(auth_response.status_code, 302)
 
         # Add auth token cookie to request
         request.COOKIES['auth_token'] = auth_response.cookies['auth_token'].value
-        response = self.view(request, *self.kwargs)
-
+        response = self.view(request, **self.kwargs)
         # Make sure request contains expected content
         self.assertContains(response, self.expected_response_content, status_code=200)
-
-
-
-
-
-
-
-
-
-    def test_route_put(self):
-        request = self.factory.put(self.route)
-        response = self.view(request, *self.kwargs)
-        self.assertEqual(response.status_code, self.responses['PUT'],
-                         "your put method for route: " + self.route + "returned: " + str(response.status_code))
-
-    def test_route_patch(self):
-        request = self.factory.patch(self.route)
-        response = self.view(request, *self.kwargs)
-        self.assertEqual(response.status_code, self.responses['PATCH'],
-                         "your patch method for route: " + self.route + "returned: " + str(response.status_code))
-
-    def test_route_delete(self):
-        request = self.factory.delete(self.route)
-        response = self.view(request, *self.kwargs)
-        self.assertEqual(response.status_code, self.responses['DELETE'],
-                         "your delete method for route: " + self.route + "returned: " + str(response.status_code))
-
-    def test_route_head(self):
-        request = self.factory.head(self.route)
-        response = self.view(request, *self.kwargs)
-        self.assertEqual(response.status_code, self.responses['HEAD'],
-                         "your head method for route: " + self.route + "returned: " + str(response.status_code))
-
-    def test_route_options(self):
-        request = self.factory.options(self.route)
-        response = self.view(request, *self.kwargs)
-        self.assertEqual(response.status_code, self.responses['OPTIONS'],
-                         "your options method for route: " + self.route + "returned: " + str(response.status_code))
-
-    def test_route_trace(self):
-        request = self.factory.trace(self.route)
-        response = self.view(request, *self.kwargs)
-        self.assertEqual(response.status_code, self.responses['TRACE'],
-                         "your options method for route: " + self.route + "returned: " + str(response.status_code))
