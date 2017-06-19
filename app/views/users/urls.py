@@ -9,6 +9,7 @@ import paid_time_off.views
 import performance.views
 
 urlpatterns = [
+    url(r'^$', users_views.index, name='users_index'),
     url(r'^new$', users_views.new_user, name='users_new'),
     url(r'^(?P<user_id>[0-9]+)/edit$', users_views.edit_user,
         name="user_edit"),

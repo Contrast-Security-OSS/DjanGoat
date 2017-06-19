@@ -171,11 +171,12 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
         self.assertEqual(auth_response.status_code, 302)
 
         # Generate a new token for the user, the old token has expired and is not valid
-        self.mixin_model.generate_token()
-        self.mixin_model.save()
+        # self.mixin_model.generate_token()
+        # self.mixin_model.save()
 
         # Add the old auth token cookie to the request
-        request.COOKIES['auth_token'] = auth_response.cookies['auth_token'].value
+        # request.COOKIES['auth_token'] = auth_response.cookies['auth_token'].value
+        request.COOKIES['auth_token'] = 'old_token'
         response = self.view(request, **self.kwargs)
 
         # Make sure the user is not authenticated and redirected to proper view

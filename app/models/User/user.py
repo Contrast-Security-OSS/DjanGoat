@@ -135,13 +135,11 @@ class User(models.Model):
         Generates and sets an auth token for a user.
         :return: None
         """
-<<<<<<< HEAD
-        self.auth_token = hashlib.md5((self.email + str(random.randint(1, 1000000))).encode()).hexdigest()
-=======
         # token is only generated on create to replicate railsgoat
         if len(self.auth_token) > 0: return
-        self.auth_token = hashlib.md5(self.email.encode().encode()).hexdigest()
->>>>>>> develop
+        # token is a constant because as of right now we cannot have function run only on create
+        # to be fixed?
+        self.auth_token = hashlib.md5((self.email + str(5324203)).encode()).hexdigest()
 
     @staticmethod
     def find_by_email(input_email):
