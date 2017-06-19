@@ -192,6 +192,5 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
         # Add auth token cookie to request
         request.COOKIES['auth_token'] = auth_response.cookies['auth_token'].value
         response = self.view(request, **self.kwargs)
-        print(response.content)
         # Make sure request contains expected content
         self.assertContains(response, self.expected_response_content, status_code=200)
