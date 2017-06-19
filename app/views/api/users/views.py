@@ -28,6 +28,7 @@ def api(request, id_number):
         return HttpResponse('Unauthorized', status=401)
 
 
+# This is purposely vulnerable see - https://github.com/OWASP/railsgoat/wiki/Extras:-Broken-Regular-Expression
 def check_if_valid_token(request):
     if not request.META['HTTP_AUTHORIZATION']:
         return False
