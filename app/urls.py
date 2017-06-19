@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^sessions/', include(views.sessions.urls)),
     url(r'^schedule/', include(views.schedule.urls)),
     url(r'^api/v1/mobile/', include(views.api.mobile.urls)),
+    url(r'^api/v1/users/', include(views.api.users.urls)),
 ]

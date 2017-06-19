@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
-from app.views.api.mobile import views as api_views
+from app.views.api.mobile import views as api_mobile_views
+from app.views.api.users import views as api_users_views
 from dashboard import views as dashboard_views
 from index import index as app_index
 from password_resets import views as password_reset_views
