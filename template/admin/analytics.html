@@ -1,0 +1,97 @@
+{% extends 'layouts/shared/base.html' %}
+
+{% block head %}
+
+    {% load static %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="{% static 'javascript/admin/modal.js'%}"></script>
+    {% bootstrap_javascript %}
+
+{% endblock %}
+
+{% block content %}
+
+
+    <form action="">
+        Search by IP: <input type="text" name="ip"><br/>
+        <input type="checkbox" value="" name="ip_address"> IP Address<br/>
+        <input type="checkbox" value="" name="referrer"> Referrer<br/>
+        <input type="checkbox" value="" name="user_agent"> User Agent
+    </form>
+
+
+    <div id="userDataTable" class="widget-body" tabindex="-1">
+        <table id="dataTable" class="display" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                {% if show_ip_address %}
+                <th>
+                    IP Address
+                </th>
+                {% endif %}
+                {% if show_referrer %}
+                <th>
+                    Referrer
+                </th>
+                {% endif %}
+                {% if show_user_agent %}
+                <th>
+                    User Agent
+                </th>
+                {% endif %}
+                <th>
+                    Created At
+                </th>
+                <th>
+                    Updated At
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for analytic in analytics %}
+            <tr>
+                {% if show_ip_address %}
+                <td>
+                    {{analytic.ip_address}}
+                </td>
+                {% endif %}
+                {% if show_referrer %}
+                <td>
+                    {{analytic.referrer}}
+                </td>
+                {% endif %}
+                {% if show_user_agent %}
+                <td>
+                    {{analytic.user_agent}}
+                </td>
+                {% endif %}
+                <td>
+                    {{analytic.created_at}}
+                </td>
+                <td>
+                    {{analytic.updated_at}}
+                </td>
+
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+
+<script>
+(function() {
+    $('#dataTable').dataTable({
+      "sPaginationType": "full_numbers"
+    });
+})();
+
+</script>
+
+{% endblock %}

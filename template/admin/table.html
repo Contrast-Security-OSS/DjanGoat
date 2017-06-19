@@ -1,0 +1,45 @@
+{% load static %}
+<table id="dataTable" class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Admin User
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+        <tr>
+            <td>
+                {{user.first_name}}
+            </td>
+            <td>
+                {{user.last_name}}
+            </td>
+            <td>
+                {{user.email}}
+            </td>
+            <td>
+                {{user.is_admin}}
+            </td>
+            <td>
+                <button type="submit" class="btn btn-primary" data-target="#myModal"
+                        onclick="openEditModal({{user.user_id}})"> Edit
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
