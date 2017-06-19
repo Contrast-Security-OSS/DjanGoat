@@ -8,7 +8,6 @@ from app.models import User
 from django.contrib import messages
 from django.utils import timezone
 from django.conf import settings
-from rest_framework.decorators import api_view
 
 
 @require_http_methods(["GET", "POST"])
