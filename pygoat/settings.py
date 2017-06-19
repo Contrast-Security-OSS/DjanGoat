@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app.apps.AppConfig',
     'bootstrap4',
-    'django_tables2',
     'django_filters'
 ]
 

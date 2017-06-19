@@ -1,4 +1,4 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from app.models.User.user import User
 from app.models.Analytics.analytics import Analytics
