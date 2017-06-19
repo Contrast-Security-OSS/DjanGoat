@@ -111,7 +111,7 @@ class ApiUsersIndexTest(TestCase, RouteTestingWithKwargs):
         self.responses = {
             'exists': 200,
             'GET': 200,
-            'POST': 200,
+            'POST': 405,
             'PUT': 405,
             'PATCH': 405,
             'DELETE': 405,
@@ -136,8 +136,8 @@ class ApiUsersByIDTest(TestCase, RouteTestingWithKwargs):
             'GET': 200,
             'POST': 405,
             'PUT': 200,
-            'PATCH': 200,
-            'DELETE': 200,
+            'PATCH': 405,
+            'DELETE': 405,
             'HEAD': 405,
             'OPTIONS': 405,
             'TRACE': 405
