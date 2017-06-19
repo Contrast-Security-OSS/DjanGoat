@@ -68,7 +68,6 @@ def account_settings(request, user_id):
 
 
 @require_http_methods(["GET", "POST", "PUT", "DELETE"])
-@api_view(["GET", "POST", "PUT", "DELETE"])
 def user_view(request, user_id):
     if request.method == "POST":
         form = request.POST
