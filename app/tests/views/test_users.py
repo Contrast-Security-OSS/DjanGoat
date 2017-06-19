@@ -279,8 +279,8 @@ class UserViewsUpdateAccountFormTests(WebTest):
     def setUp(self):
         # First signup and login a user
         self.param = {'email': 'ziyang@contrast.com', 'first_name': 'ziyang',
-                      'last_name': 'wang', 'password': '123456',
-                      'confirm': '123456'}
+                      'last_name': 'wang', 'password': 'ziyangw',
+                      'confirm': 'ziyangw'}
         signup_page = self.app.get('/signup/')
         signup_form = signup_page.forms[0]
         signup_form.set('email', self.param['email'])
@@ -371,11 +371,7 @@ class UserViewsUpdateAccountFormTests(WebTest):
 
     def test_sql_injection_vulnerability(self):
         # Get a target admin to apply SQL injection
-        admin = User.objects.create(email="a@admin", first_name="admin",
-                                    last_name="hack",
-                                    password="hello123", is_admin=True,
-                                    created_at=timezone.now(),
-                                    updated_at=timezone.now())
+        admin = User.objects.filter(is_admin='1').first()
 
         # Send a request by submitting form as a non-admin
         factory = RequestFactory()
@@ -388,6 +384,7 @@ class UserViewsUpdateAccountFormTests(WebTest):
         request.POST = request.POST.copy()
         request.POST['password'] = '123456'
         request.POST['confirm'] = '123456'
+        request.POST['user_id'] = "%s' OR is_admin = '1" % self.user.user_id
         request.path_info = url
         setattr(request, 'session', 'session')
         messages = FallbackStorage(request)
