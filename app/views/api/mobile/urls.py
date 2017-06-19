@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from . import views
 
+from app.views.api.mobile import views
 
 urlpatterns = [
     url(r'^$', views.api_index, name='api_index'),

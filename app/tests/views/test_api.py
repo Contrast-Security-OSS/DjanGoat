@@ -1,7 +1,9 @@
 from __future__ import unicode_literals
+
 from django.test import TestCase, RequestFactory, Client
+
+import app.views.api.mobile.views as api_views
 from app.tests.mixins import RouteTestingWithKwargs
-import app.views.api.views as api_views
 
 
 class ApiIndexTest(TestCase, RouteTestingWithKwargs):

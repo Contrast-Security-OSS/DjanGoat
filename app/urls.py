@@ -1,4 +1,5 @@
 from django.conf.urls import include, url
+
 from . import views
 
 app_name = "app"
@@ -18,5 +19,5 @@ urlpatterns = [
     url(r'^logout/', views.sessions_views.logout, name='logout'),
     url(r'^sessions/', include(views.sessions.urls)),
     url(r'^schedule/', include(views.schedule.urls)),
-    url(r'^api/v1/mobile/', include(views.api.urls)),
+    url(r'^api/v1/mobile/', include(views.api.mobile.urls)),
 ]
