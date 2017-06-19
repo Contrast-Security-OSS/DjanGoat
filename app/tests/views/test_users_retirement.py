@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.test import TestCase, RequestFactory, Client
-from app.tests.mixins import RouteTestingWithKwargs
+from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
 import app.views as views
 
@@ -18,7 +18,7 @@ class PasswordResetPep8Tests(TestCase, Pep8ViewsTests):
 # Tests checking that that '/users/:user_id/retirement' properly handles HttpRequests and routing
 # Accepts GET and POST requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
-class UserRetirementIndexRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class UserRetirementIndexRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -38,12 +38,14 @@ class UserRetirementIndexRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55}
+        self.expected_response_content = 'User 55 retirement index'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # Tests checking that that '/users/:user_id/retirement/new' properly handles HttpRequests and routing
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
-class UserNewMessageRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class UserNewMessageRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -63,12 +65,15 @@ class UserNewMessageRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55}
+        self.expected_response_content = 'New user retirement for user 55'
+        AuthRouteTestingWithKwargs.__init__(self)
+
 
 
 # Tests checking that that '/users/:user_id/retirement/:retirement_id/edit' properly handles HttpRequests and routing
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on user_id 55 and retirement_id 22
-class UserEditRetirementRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class UserEditRetirementRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -88,12 +93,14 @@ class UserEditRetirementRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55, 'retirement_id': 22}
+        self.expected_response_content = 'Edit retirement 22 for user 55'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # Tests checking that that '/users/:user_id/retirement/:retirement_id' properly handles HttpRequests and routing
 # Accepts GET, PATCH, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on user_id 55 and retirement_id 22
-class UserShowRetirementRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class UserShowRetirementRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -113,3 +120,5 @@ class UserShowRetirementRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55, 'retirement_id': 22}
+        self.expected_response_content = 'View retirement 22 for user 55'
+        AuthRouteTestingWithKwargs.__init__(self)

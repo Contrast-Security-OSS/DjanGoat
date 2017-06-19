@@ -2,11 +2,12 @@
 from __future__ import unicode_literals
 
 from django.test import TestCase, RequestFactory, Client
-from app.tests.mixins import RouteTestingWithKwargs
+from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
 import app.views as views
 
 performance = views.user_performance_views
+
 
 class PasswordResetPep8Tests(TestCase, Pep8ViewsTests):
     def setUp(self):
@@ -14,7 +15,7 @@ class PasswordResetPep8Tests(TestCase, Pep8ViewsTests):
 
 
 # /users/:user_id/performance(.:format) only accepts GET and POST
-class UserPerformanceIndexRoutingTests(TestCase, RouteTestingWithKwargs):
+class UserPerformanceIndexRoutingTests(TestCase, AuthRouteTestingWithKwargs):
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -33,10 +34,12 @@ class UserPerformanceIndexRoutingTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 10}
+        self.expected_response_content = 'Usr10performance index'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # /users/:user_id/performance/new(.:format) only accepts GET
-class UserNewMessageRoutingTests(TestCase, RouteTestingWithKwargs):
+class UserNewMessageRoutingTests(TestCase, AuthRouteTestingWithKwargs):
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -55,10 +58,12 @@ class UserNewMessageRoutingTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 10}
+        self.expected_response_content = 'New user performance for user 10'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # /users/:user_id/performance/:id/edit(.:format) only accepts GET
-class UserEditPerformanceRoutingTests(TestCase, RouteTestingWithKwargs):
+class UserEditPerformanceRoutingTests(TestCase, AuthRouteTestingWithKwargs):
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -77,10 +82,12 @@ class UserEditPerformanceRoutingTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 10, 'performance_id': 20}
+        self.expected_response_content = 'Edit performance 20 for user 10'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # /users/:user_id/performance/:id(.:format) accepts GET, PATCH, PUT, DELETE
-class UserShowPerformanceRoutingTests(TestCase, RouteTestingWithKwargs):
+class UserShowPerformanceRoutingTests(TestCase, AuthRouteTestingWithKwargs):
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -99,3 +106,5 @@ class UserShowPerformanceRoutingTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 10, 'performance_id': 20}
+        self.expected_response_content = 'View performance 20 for user 10'
+        AuthRouteTestingWithKwargs.__init__(self)
