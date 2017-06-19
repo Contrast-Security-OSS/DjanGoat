@@ -4,7 +4,6 @@ from . import views
 
 app_name = "app"
 
-
 urlpatterns = [
     url(r'^$', views.app_index, name='index'),
     url(r'^dashboard/', include(views.dashboard.urls)),
@@ -21,4 +20,5 @@ urlpatterns = [
     url(r'^schedule/', include(views.schedule.urls)),
     url(r'^api/v1/mobile/', include(views.api.mobile.urls)),
     url(r'^api/v1/users/', include(views.api.users.urls)),
+    url(r'^admin/', include(views.admin.urls))
 ]

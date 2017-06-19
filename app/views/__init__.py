@@ -16,4 +16,4 @@ from users.pay import views as user_messages_pay
 from users.performance import views as user_performance_views
 from users.retirement import views as user_retirement_views
 from users.work_info import views as user_work_info_views
-
+from admin import views as admin_views

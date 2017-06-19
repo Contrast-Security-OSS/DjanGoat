@@ -28,9 +28,14 @@ class Analytics(models.Model):
         if (col != '*'):
             col = 'id, ' + col
         table_name = cls.objects.model._meta.db_table
-        return cls.objects.raw(
+        objects = cls.objects.raw(
             "SELECT %s FROM %s WHERE ip_address='%s' ORDER BY id DESC"
             % (col, table_name, ip))
+        # if (col != '*'):
+        #     cols = col.split(',')
+        #     cols[0] = 'ip_address'
+        #     result =
+        return objects
 
     # defined in railsgoat but not used, expects valid column name
     @classmethod
