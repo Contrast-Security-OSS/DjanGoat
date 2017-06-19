@@ -10,6 +10,7 @@ class TestMissingFunctionLevelAccessControl(TestCase):
         self.factory = RequestFactory()
         self.client = Client()
 
+    # Simulate logging in as a normal user and switching to a different user
     def test_route_post(self):
         # Create user in database
         input_email = "ryan.dens@contrastsecurity.com"
@@ -28,7 +29,7 @@ class TestMissingFunctionLevelAccessControl(TestCase):
 
         factory_request = self.factory.post('/sessions/')
         factory_response = sessions.sessions_index(factory_request, email="ryan.dens@contrastsecurity.com",
-                                                   password="12345", path="/admin/1/dashboard/")
+                                                   password="12345", path="/dashboard/home")
         self.assertEqual(factory_response.status_code, 302)
 
         client_request = self.client.post('/sessions/',
