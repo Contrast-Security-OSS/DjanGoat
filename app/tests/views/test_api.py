@@ -4,11 +4,8 @@ from django.test import TestCase, RequestFactory, Client
 
 import app.views.api.mobile.views as api_mobile_views
 import app.views.api.users.views as api_users_views
-import pytz
-import datetime
 from app.tests.mixins import RouteTestingWithKwargs
 from django.urls import reverse
-from app.models import User
 
 
 class ApiMobileIndexTest(TestCase, RouteTestingWithKwargs):
