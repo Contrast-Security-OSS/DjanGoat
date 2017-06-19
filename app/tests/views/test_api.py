@@ -4,7 +4,11 @@ from django.test import TestCase, RequestFactory, Client
 
 import app.views.api.mobile.views as api_mobile_views
 import app.views.api.users.views as api_users_views
+import pytz
+import datetime
 from app.tests.mixins import RouteTestingWithKwargs
+from django.urls import reverse
+from app.models import User
 
 
 class ApiMobileIndexTest(TestCase, RouteTestingWithKwargs):
@@ -142,3 +146,7 @@ class ApiUsersByIDTest(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'id_number': 5}
+
+    def test_no_such_user_returns_empty_response(self):
+        response = self.client.get(reverse(self.route_name, kwargs=self.kwargs))
+        self.assertEquals(response.content, "[]")
