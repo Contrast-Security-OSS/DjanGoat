@@ -38,7 +38,6 @@ class TestSensitiveDataExposure(TestCase):
         content = json.loads(response.content)[0]['fields']
         self.assertTrue('password' in content)
 
-
     def test_401_with_invalid_token(self):
         user = User.objects.get(first_name="Vinai!")
         self.kwargs = {'id_number': user.user_id}
