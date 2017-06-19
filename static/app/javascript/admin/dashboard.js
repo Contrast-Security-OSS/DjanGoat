@@ -5,7 +5,8 @@ function openEditModal(id) {
 }
 
 function loadTable() {
-    var link = '/admin/1' + '/get_all_users';
+    var admin_id = 1;
+    var link = '/admin/'+ admin_id +'/get_all_users';
     $("#userDataTable").load(link, function() {
         $('#dataTable').dataTable({
             "sPaginationType": "full_numbers"
