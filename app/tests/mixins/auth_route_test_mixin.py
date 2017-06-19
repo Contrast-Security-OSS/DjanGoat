@@ -1,13 +1,19 @@
+from django.http import SimpleCookie
 from django.urls import reverse
 import pytz
 import datetime
 from app.models.User.user import User
 from app.views import sessions_views as sessions
+from app.tests.mixins.route_test_mixin import RouteTestingWithKwargs
+
 
 # Mixin for testing the creation of routes
 # Make sure your kwargs match your variable argument
-class AuthRouteTestingWithKwargs(object):
+class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
     mixin_model = None
+    not_logged_in_message = "Sorry, but you are not logged in. Please log in again"
+    no_longer_logged_in_message = "Sorry, but you are no longer logged in to your session. Please log in again"
+    bad_auth_message = "Email or password incorrect!"
 
     def __init__(self):
         input_email = "ryan.dens@contrastsecurity.com"
@@ -24,53 +30,115 @@ class AuthRouteTestingWithKwargs(object):
             updated_at=u_input_update_date
         )
 
-    # Tries to verify a route exists to a place without an auth_token
-    def test_route_exists_no_auth(self):
-        response = self.client.get(reverse(self.route_name, kwargs=self.kwargs))
-        self.assertContains(response, "Sorry, but you are not logged in. Please log in again", status_code=self.responses['exists'])
-
-    def test_route_exists_bad_password(self):
-        factory_request = self.factory.post('/sessions/')
-        factory_response = sessions.sessions_index(factory_request, email="ryan.dens@contrastsecurity.com",
-                                                   password="1234", path="/dashboard")
-        self.assertEqual(factory_response.status_code, 200)
-        self.assertEqual(factory_response.content, "Email or password incorrect!")
-
-    def test_route_exists_bad_email(self):
-        factory_request = self.factory.post('/sessions/')
-        factory_response = sessions.sessions_index(factory_request, email="ryan.den@contrastsecurity.com",
-                                                   password="12345", path="/dashboard")
-        self.assertEqual(factory_response.status_code, 200)
-        self.assertEqual(factory_response.content, "Email or password incorrect!")
-
-    # Manually changes the user's auth token to be different than what the stored cookie is
-    def test_route_exists_old_auth(self):
-        # Create new session
-        factory_request = self.factory.post('/sessions/')
-        factory_response = sessions.sessions_index(factory_request, email="ryan.dens@contrastsecurity.com",
-                                                   password="12345", path="/dashboard")
-        # Make sure redirect was called (but not followed_
-        self.assertEqual(factory_response.status_code, 302)
-
-        # Create new request to self.route, changing the token stored in the user's cookies
-        # to simulate the auth_token expiring in the database
-        new_factory_request = self.factory.get(self.route)
-        new_factory_request.COOKIES['auth_token'] = 'old_token'
-        new_factory_response = self.view(new_factory_request, *self.kwargs)
-        self.assertEqual(new_factory_response.content,
-                         "Sorry, but you are no longer logged in to your session. Please log in again")
-
     def test_route_get(self):
-        request = self.factory.get(self.route)
-        response = self.view(request, *self.kwargs)
-        self.assertEqual(response.status_code, self.responses['GET'],
-                         "your get method for route: " + self.route + " returned: " + str(response.status_code))
+        if(self.responses['GET'] != 200):
+            super(AuthRouteTestingWithKwargs, self).test_route_get()
+        else:
+            request = self.factory.get(self.route)
+            self.no_auth_test(request)
+            self.good_auth_test(request)
+            self.old_auth_test(request)
+            self.bad_password_test(request)
+            self.bad_email_test(request)
 
     def test_route_post(self):
-        request = self.factory.post(self.route)
+        if(self.responses['POST'] != 200):
+            super(AuthRouteTestingWithKwargs, self).test_route_post()
+        else:
+            request = self.factory.post(self.route)
+            self.no_auth_test(request)
+            self.good_auth_test(request)
+            self.old_auth_test(request)
+            self.bad_password_test(request)
+            self.bad_email_test(request)
+
+
+
+    def no_auth_test(self, request):
         response = self.view(request, *self.kwargs)
-        self.assertEqual(response.status_code, self.responses['POST'],
-                         "your post method for route: " + self.route + "returned: " + str(response.status_code))
+        self.assertContains(response, self.not_logged_in_message)
+
+    def bad_password_test(self, request):
+        """
+        Test to make sure a bad password does not create a new session
+        :param request: is the request to be completed
+        :return: None
+        """
+        # Create new session
+        auth_request = self.factory.post('/sessions/')
+        auth_response = sessions.sessions_index(auth_request, email="ryan.dens@contrastsecurity.com",
+                                                   password="1234", path="/dashboard")
+
+        # Make sure new session not created
+        self.assertEqual(auth_response.status_code, 200)
+        self.assertEqual(auth_response.content, "Email or password incorrect!")
+
+        # Error should be raised as no cookie should be set (post to create session failed)
+        with self.assertRaises(KeyError) as error:
+            request.COOKIES['auth_token'] = auth_response.cookies['auth_token'].value
+
+        self.assertTrue('auth_token' in error.exception)
+
+    def bad_email_test(self, request):
+        # Create new session
+        auth_request = self.factory.post('/sessions/')
+        auth_response = sessions.sessions_index(auth_request, email="ryan.den@contrastsecurity.com",
+                                                       password="12345", path=self.route)
+
+        # Make sure new session not created
+        self.assertEqual(auth_response.status_code, 200)
+        self.assertEqual(auth_response.content, "Email or password incorrect!")
+
+        # Error should be raised as no cookie should be set (post to create session failed)
+        with self.assertRaises(KeyError) as error:
+            request.COOKIES['auth_token'] = auth_response.cookies['auth_token'].value
+
+        self.assertTrue('auth_token' in error.exception)
+
+    # Test authentication decorator with an old token stored in the user's cookies
+    def old_auth_test(self, request):
+        # Create new session
+        auth_request = self.factory.post('/sessions/')
+        auth_response = sessions.sessions_index(auth_request, email="ryan.dens@contrastsecurity.com",
+                                                   password="12345", path="/dashboard")
+
+        # Make sure redirect was called (but not followed)
+        self.assertEqual(auth_response.status_code, 302)
+
+        # Generate a new token for the user, the old token has expired and is not valid
+        self.mixin_model.generate_token()
+        self.mixin_model.save()
+
+        # Add the old auth token cookie to the request
+        request.COOKIES['auth_token'] = auth_response.cookies['auth_token'].value
+        response = self.view(request, *self.kwargs)
+
+        # Make sure the user is not authenticated and redirected to proper view
+        self.assertContains(response, self.no_longer_logged_in_message)
+
+    def good_auth_test(self, request):
+        # Create new session
+        auth_request = self.factory.post('/sessions/')
+        auth_response = sessions.sessions_index(auth_request, email="ryan.dens@contrastsecurity.com",
+                                                   password="12345", path=self.route)
+        print(auth_response.content)
+        # Make sure redirect was called (but not followed)
+        self.assertEqual(auth_response.status_code, 302)
+
+        # Add auth token cookie to request
+        request.COOKIES['auth_token'] = auth_response.cookies['auth_token'].value
+        response = self.view(request, *self.kwargs)
+
+        # Make sure request contains expected content
+        self.assertContains(response, self.expected_response_content, status_code=200)
+
+
+
+
+
+
+
+
 
     def test_route_put(self):
         request = self.factory.put(self.route)

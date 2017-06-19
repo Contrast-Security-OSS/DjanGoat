@@ -133,7 +133,7 @@ class User(models.Model):
         Generates and sets an auth token for a user.
         :return: None
         """
-        self.auth_token = hashlib.md5(self.email.encode().encode()).hexdigest()
+        self.auth_token = hashlib.md5((self.email + str(random.randint(1, 1000000))).encode()).hexdigest()
 
     @staticmethod
     def find_by_email(input_email):
