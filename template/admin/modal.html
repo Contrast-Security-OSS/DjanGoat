@@ -1,0 +1,58 @@
+{% load static %}
+<div class="modal-dialog" role="document">
+    <form id="user-update" class="form" method="patch">
+        { % crsf_token % }
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="false">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Account Settings</h4>
+            </div>
+            <div class="modal-body">
+                <fieldset class="form-group">
+                    <label for="inputEmail">Email address</label>
+                    <input type="email" name="email" class="form-control" id="inputEmail" aria-describedby="emailHelp"
+                           value={{user.email}}>
+
+                    <label for="firstName">First Name</label>
+                    <input type="text" name="first_name" class="form-control" id="firstName"
+                           aria-describedby="emailHelp"
+                           value={{user.first_name}}>
+
+                    <label for="lastName">Last Name</label>
+                    <input type="text" name="last_name" class="form-control" id="lastName" aria-describedby="emailHelp"
+                           value={{user.last_name}}>
+
+                    <label for="password">Password</label>
+                    <input type="password" name="password" class="form-control" id="password"
+                           placeholder="Enter Password">
+
+                    <label for="password-confirmation">Password Confirmation</label>
+                    <input type="password" name="password_confirmation" class="form-control" id="password-confirmation"
+                           placeholder="Enter Password">
+
+                    <label for="admin">Is Admin</label>
+                    <select class="form-control" id="admin" name="is_admin" s>
+                        <option selected>{{user.is_admin}}</option>
+                        <option>{{other_admin_val}}</option>
+                    </select>
+                </fieldset>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="deleteUser({{user.user_id}})"
+                        data-dismiss="modal">
+                    Delete
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="submit_button" onclick="submitForm({{user.user_id}})">
+                    Save
+                    changes
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% block javascript%}
+<script type="text/javascript" src="{% static 'javascript/admin/validation.js'%}"></script>
+{% endblock %}
