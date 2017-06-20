@@ -13,7 +13,6 @@
     {% fullcalendar_jquery %}
     {% fullcalendar_jquery_ui %}
     {% fullcalendar_javascript %}
-    {% calendar_init event_url %}
 
 {% endblock %}
 
@@ -23,6 +22,7 @@
   <input type="hidden" id="sick_days_earned" value="{{ sick_days_earned }}">
   <input type="hidden" id="pto_taken" value="{{ pto_taken }}">
   <input type="hidden" id="pto_earned" value="{{ pto_earned }}">
+  <input type="hidden" id="schedules" value="{{ schedules }}">
 
   {% if messages %}
     <ul class="messages">
@@ -37,10 +37,8 @@
     <div class="col-md-6">
       <div class="row-fluid">
         <div class="card">
-          <div class="card-header"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>PTO Calendar</div>
-          <div class="card-block" style="background-color: #e8e8e8">
-            {% calendar %}
-          </div>
+          <div class="card-header">PTO Calendar</div>
+          <div class="card-block" id="calendar" style="background-color: #e8e8e8"></div>
         </div>
       </div>
     </div>

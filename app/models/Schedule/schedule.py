@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-
+import json
 
 @python_2_unicode_compatible
 class Schedule(models.Model):
@@ -45,3 +45,15 @@ class Schedule(models.Model):
     def reformat(s):
         M, D, Y = s.split('/')
         return Y + '-' + M + '-' + D
+
+    # Take list of schedules and turn them into JSON list for calendar
+    @staticmethod
+    def to_calendar(schedules):
+        calendar_list = []
+        for schedule in schedules:
+            calendar_list.append({
+                "title": str(schedule.event_name),
+                "start": str(schedule.date_begin),
+                "end": str(schedule.date_end),
+                })
+        return json.dumps(calendar_list)

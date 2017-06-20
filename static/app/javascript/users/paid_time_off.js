@@ -51,7 +51,8 @@ function drawChart() {
 }
 
 $(document).ready(function(){
-    $('.input-daterange input').each(function() {
-    $(this).datepicker('clearDates');
+    var schedules = JSON.parse(document.getElementById('schedules').value)
+    $('#calendar').fullCalendar({
+        events: schedules,
     });
-})
+});

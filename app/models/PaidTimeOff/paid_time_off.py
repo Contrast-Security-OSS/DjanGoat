@@ -47,3 +47,15 @@ class PaidTimeOff(models.Model):
 
     def sick_days_taken_percentage(self):
         return float(self.sick_days_taken)/float(self.sick_days_earned)*100.0
+
+    @staticmethod
+    def validate_PTO_form(form):
+        err_list = []
+        if len(form['event_name']) == 0:
+            err_list.append('Event Name cannot be empty')
+        if len(form['event_description']) == 0:
+            err_list.append('Event Description cannot be empty')
+        if len(form['date_begin']) == 0:
+            err_list.append('Event Dates cannot be empty')
+        err_msg = " and ".join(err_list)
+        return err_msg

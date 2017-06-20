@@ -17,26 +17,33 @@ def index(request, user_id):
     if not pto:
         return HttpResponse("PTO " + str(user_id) + " NOT FOUND")
     if request.method == "GET":
-        events = pto.schedule_set
-        print(events)
+        schedules = Schedule.to_calendar((Schedule.objects.filter(pto=pto)))
+        print(schedules)
+        context = pto.__dict__
+        context.update({"schedules": schedules})
         return render(request, "users/paid_time_off.html",
-                      context=pto.__dict__)
+                      context=context)
     elif request.method == "POST":
         form = request.POST
         if not form:
             return HttpResponse("No form found")
-        try:
-            date_begin = Schedule.reformat(form['date_begin'])
-            date_end = Schedule.reformat(form['date_end'])
-            schedule = Schedule.objects.create(
-                user=user, pto=pto, date_begin=date_begin,
-                date_end=date_end, event_name=form['event_name'],
-                event_type='PTO', event_desc=form['event_description'],
-                created_at=timezone.now(), updated_at=timezone.now())
-            messages.add_message(request, messages.INFO,
-                                 "Information successfully updated")
-        except Exception as e:
-            messages.add_message(request, messages.INFO, str(e))
+
+        err_msg = PaidTimeOff.validate_PTO_form(form)
+        if len(err_msg) > 0:
+            messages.add_message(request, messages.INFO, err_msg)
+        else:
+            try:
+                date_begin = Schedule.reformat(form['date_begin'])
+                date_end = Schedule.reformat(form['date_end'])
+                schedule = Schedule.objects.create(
+                    user=user, pto=pto, date_begin=date_begin,
+                    date_end=date_end, event_name=form['event_name'],
+                    event_type='PTO', event_desc=form['event_description'],
+                    created_at=timezone.now(), updated_at=timezone.now())
+                messages.add_message(request, messages.INFO,
+                                     "Information successfully updated")
+            except Exception as e:
+                messages.add_message(request, messages.INFO, str(e))
         url = "/users/%s/paid_time_off" % user_id
         return redirect(url, permanent=False)
     else:
