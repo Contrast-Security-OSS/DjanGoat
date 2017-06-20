@@ -18,7 +18,7 @@ class PaidTimeOff(models.Model):
             + "\nSick Days Taken: " + str(self.sick_days_taken) \
             + "\nSick Days Earned: " + str(self.sick_days_earned) \
             + "\nPTO Taken: " + str(self.pto_taken) \
-            + "\n PTO Earned: " + self.pto_earned
+            + "\n PTO Earned: " + str(self.pto_earned)
 
     sick_days_taken = models.PositiveIntegerField(
         validators=[MaxValueValidator(MAX_INT_VALUE)]

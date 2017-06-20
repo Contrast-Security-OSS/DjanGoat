@@ -27,6 +27,8 @@ class Schedule(models.Model):
                + "\nEvent Description: " + str(self.event_desc) + "\n"
 
     user = models.ForeignKey('User', on_delete=models.CASCADE)
+    pto = models.ForeignKey('PaidTimeOff', on_delete=models.CASCADE,
+                            blank=True, null=True)
     date_begin = models.DateField()
     date_end = models.DateField()
     event_name = models.CharField(max_length=255)
@@ -37,3 +39,9 @@ class Schedule(models.Model):
 
     class Meta:
         db_table = "app_schedules"
+
+    # Take MM/DD/YYYY and return YYYY-MM-DD
+    @staticmethod
+    def reformat(s):
+        M, D, Y = s.split('/')
+        return Y + '-' + M + '-' + D
