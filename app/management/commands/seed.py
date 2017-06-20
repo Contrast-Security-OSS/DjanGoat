@@ -318,9 +318,6 @@ messages = [
 
 
 class Command(BaseCommand):
-    args = '<foo bar ...>'
-    help = 'our help string comes here'
-
     def create_users(self):
         for obj in users:
             User.objects.create(**obj)
