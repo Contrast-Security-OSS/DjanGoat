@@ -351,7 +351,7 @@ class Command(BaseCommand):
 
     def create_performance(self):
         for obj in performance:
-            obj['reviewer'] = User.objects.get(user_id=1),
+            obj['reviewer'] = User.objects.get(user_id=1)
             Performance.objects.create(**obj)
 
     def create_messages(self):
@@ -365,5 +365,5 @@ class Command(BaseCommand):
         self.create_schedule()
         self.create_key_management()
         self.create_work_info()
-        # self.create_performance()
+        self.create_performance()
         self.create_messages()
