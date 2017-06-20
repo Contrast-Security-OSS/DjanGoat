@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 import json
 
+
 @python_2_unicode_compatible
 class Schedule(models.Model):
     """
