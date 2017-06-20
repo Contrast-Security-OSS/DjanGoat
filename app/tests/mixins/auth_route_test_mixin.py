@@ -1,11 +1,9 @@
-from django.urls import reverse
-import pytz
-import datetime
-from app.models.User.user import User
-from app.views import sessions_views as sessions
 from app.tests.mixins.route_test_mixin import RouteTestingWithKwargs
-from django.test import Client
-from app.views import users_views
+from app.views import sessions_views as sessions, users_views
+from app.models.User.user import User
+from django.urls import reverse
+import datetime
+import pytz
 
 
 # Mixin for testing the creation of routes
