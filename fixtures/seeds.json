@@ -1,0 +1,62 @@
+[
+  {
+    "model": "app.user",
+    "pk": 1,
+    "fields": {
+      "email": "admin@metacorp.com",
+      "is_admin": true,
+      "password": "admin1234",
+      "first_name": "Admin",
+      "last_name": "",
+      "user_id": 1
+    }
+  },
+  {
+    "model": "app.user",
+    "pk": 2,
+    "fields": {
+      "email": "jack@metacorp.com",
+      "is_admin": false,
+      "password": "yankeessuck",
+      "first_name": "Jack",
+      "last_name": "Mannino",
+      "user_id": 2
+    }
+  },
+  {
+    "model": "app.user",
+    "pk": 3,
+    "fields": {
+      "email": "jim@metacorp.com",
+      "is_admin": false,
+      "password": "alohaowasp",
+      "first_name": "Jim",
+      "last_name": "Manico",
+      "user_id": 3
+    }
+  },
+  {
+    "model": "app.user",
+    "pk": 4,
+    "fields": {
+      "email": "mike@metacorp.com",
+      "is_admin": false,
+      "password": "motocross1445",
+      "first_name": "Mike",
+      "last_name": "McCabe",
+      "user_id": 4
+    }
+  },
+  {
+    "model": "app.user",
+    "pk": 5,
+    "fields": {
+      "email": "ken@metacorp.com",
+      "is_admin": false,
+      "password": "citrusblend",
+      "first_name": "Ken",
+      "last_name": "Johnson",
+      "user_id": 5
+    }
+  }
+]
