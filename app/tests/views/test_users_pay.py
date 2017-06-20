@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.test import TestCase, RequestFactory, Client
-from app.tests.mixins import RouteTestingWithKwargs
+from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
 from django.urls import reverse
 import app.views as views
@@ -15,7 +15,7 @@ class PasswordResetPep8Tests(TestCase, Pep8ViewsTests):
         self.path = 'app/views/users/pay/'
 
 
-class UserPayIndexRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class UserPayIndexRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     """
     Tests checking that that '/users/:user_id/pay' properly handles HttpRequests and routing
     Accepts GET and POST requests and refuses all others with an error code 405 (Method not allowed)
@@ -40,9 +40,11 @@ class UserPayIndexRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55}
+        self.expected_response_content = 'Pay index for user 55'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
-class UserPayUpdateDDInfo(TestCase, RouteTestingWithKwargs):
+class UserPayUpdateDDInfo(TestCase, AuthRouteTestingWithKwargs):
     """
         Tests checking that that '/users/:user_id/pay/update_dd_info' properly handles HttpRequests and routing
         Accepts  POST requests and refuses all others with an error code 405 (Method not allowed)
@@ -67,6 +69,8 @@ class UserPayUpdateDDInfo(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55}
+        self.expected_response_content = 'Update dd info for user 55'
+        AuthRouteTestingWithKwargs.__init__(self)
 
     # Override
     def test_route_exists(self):
@@ -74,7 +78,7 @@ class UserPayUpdateDDInfo(TestCase, RouteTestingWithKwargs):
         self.assertEqual(response.status_code, self.responses['exists'])
 
 
-class UserPayDecryptBankInfo(TestCase, RouteTestingWithKwargs):
+class UserPayDecryptBankInfo(TestCase, AuthRouteTestingWithKwargs):
     """
         Tests checking that that '/users/:user_id/pay/update_dd_info' properly handles HttpRequests and routing
         Accepts  POST requests and refuses all others with an error code 405 (Method not allowed)
@@ -99,6 +103,8 @@ class UserPayDecryptBankInfo(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55}
+        self.expected_response_content = 'Decrypt the bank info 55'
+        AuthRouteTestingWithKwargs.__init__(self)
 
     # Override
     def test_route_exists(self):
@@ -106,7 +112,7 @@ class UserPayDecryptBankInfo(TestCase, RouteTestingWithKwargs):
         self.assertEqual(response.status_code, self.responses['exists'])
 
 
-class UserNewPayRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class UserNewPayRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     """
         Tests checking that that '/users/:user_id/user/new' properly handles HttpRequests and routing
         Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
@@ -131,9 +137,11 @@ class UserNewPayRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55}
+        self.expected_response_content = 'New pay for 55'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
-class UserEditPayRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class UserEditPayRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     """
     Tests checking that that '/users/:user_id/pay/id/edit' properly handles HttpRequests and routing
     Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
@@ -158,9 +166,11 @@ class UserEditPayRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55, 'id': 22}
+        self.expected_response_content = 'Edit pay for user 55 for pay with id 22'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
-class UserShowRetirementRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class UserShowRetirementRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     """
        Tests checking that that '/users/:user_id/pay/id/' properly handles HttpRequests and routing
        Accepts GET, PATCH, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)
@@ -185,3 +195,5 @@ class UserShowRetirementRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55, 'id': 22}
+        self.expected_response_content = 'Pay for user 55 for pay with id 22'
+        AuthRouteTestingWithKwargs.__init__(self)
