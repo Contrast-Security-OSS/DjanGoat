@@ -108,7 +108,11 @@ class User(models.Model):
                 raise Exception("Incorrect Password!")
             return auth
         else:
-            raise Exception("User does not exist!")
+            raise User.DoesNotExist
+
+    @staticmethod
+    def authenticate_by_token(input_auth_token):
+        user = User.objects.filter(auth_token=input_auth_token).first()
 
     def assign_user_id(self):
         if self.user_id != None:
@@ -131,9 +135,7 @@ class User(models.Model):
         Generates and sets an auth token for a user.
         :return: None
         """
-        # token is only generated on create to replicate railsgoat
-        if len(self.auth_token) > 0: return
-        self.auth_token = hashlib.md5(self.email.encode().encode()).hexdigest()
+        self.auth_token = hashlib.md5((self.email + str(random.randint(1,1000000))).encode()).hexdigest()
 
     @staticmethod
     def find_by_email(input_email):
