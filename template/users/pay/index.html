@@ -7,38 +7,53 @@
 {% endblock %}
 
 {% block content %}
-    <div id="payIndex" class="row">
-        <div class="col-md-9">
-            <div class="card">
-                <div class="card-header"><i class="fa fa-cog" aria-hidden="true"></i> Direct Deposit</div>
-                <div class="card-block">
-                    <div class="well">
-                        <!--<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
-                        <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
-                        <form class="form-inline">
-                            <label class="sr-only" for="bankAccNumInput">Bank Account Number</label>
-                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                <input type="text" class="form-control" id="bankAccNumInput" placeholder="Bank Account Number">
-                                <div class="input-group-addon">#</div>
-                            </div>
+    <div id="payIndex">
 
-                            <label class="sr-only" for="bankRouteNumInput">Bank Routing Number</label>
-                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                <input type="text" class="form-control" id="bankRouteNumInput" placeholder="Bank Routing Number">
-                                <div class="input-group-addon">#</div>
-                            </div>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header"><i class="fa fa-cog" aria-hidden="true"></i> Direct Deposit</div>
+                    <div class="card-block">
+                        <div class="well">
+                            <!--<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
+                            <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+                            <form class="form-inline">
+                                <label class="sr-only" for="bankAccNumInput">Bank Account Number</label>
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <input type="text" class="form-control" id="bankAccNumInput" placeholder="Bank Account Number">
+                                    <div class="input-group-addon">#</div>
+                                </div>
 
-                            <label class="sr-only" for="percentDepositInput">Percentage of Deposit</label>
-                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                <input type="text" class="form-control" id="percentDepositInput" placeholder="Percentage of Deposit">
-                                <div class="input-group-addon">%</div>
-                            </div>
-                            <button type="submit" class="btn btn-primary mb-2 mr-sm-2 mb-sm-0">Submit</button>
-                        </form>
+                                <label class="sr-only" for="bankRouteNumInput">Bank Routing Number</label>
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <input type="text" class="form-control" id="bankRouteNumInput" placeholder="Bank Routing Number">
+                                    <div class="input-group-addon">#</div>
+                                </div>
+
+                                <label class="sr-only" for="percentDepositInput">Percentage of Deposit</label>
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <input type="text" class="form-control" id="percentDepositInput" placeholder="Percentage of Deposit">
+                                    <div class="input-group-addon">%</div>
+                                </div>
+                                <button type="submit" class="btn btn-primary mb-2 mr-sm-2 mb-sm-0">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header"><i class="fa fa-table" aria-hidden="true"></i> Accounts</div>
+                    <div class="card-block">
+                        <div class="well">
+                            test
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 {% endblock %}

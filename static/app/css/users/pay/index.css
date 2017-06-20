@@ -7,3 +7,7 @@
 #payIndex .form-inline {
     margin-top: 1em;
 }
+
+#payIndex .row {
+    margin-bottom: 30px;
+}
