@@ -11,3 +11,11 @@
 #payIndex .row {
     margin-bottom: 30px;
 }
+
+#payIndex table tr:nth-child(2n+1) > td, #payIndex table tr:nth-child(2n+1) > th {
+    background-color: #fff;
+}
+
+#payIndex #hint {
+    color: #AA6F93;
+}
