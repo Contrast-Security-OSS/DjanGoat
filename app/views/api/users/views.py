@@ -30,21 +30,20 @@ def api(request, id_number):
 
 # This is purposely vulnerable see - https://github.com/OWASP/railsgoat/wiki/Extras:-Broken-Regular-Expression
 def check_if_valid_token(request):
-    # print (request.META)
     if 'HTTP_AUTHORIZATION' not in request.META:
         return False
     else:
         token = request.META['HTTP_AUTHORIZATION']
-        m = re.compile("(.*?)-(.*)")
-        g = m.match(token)
-        if g.group(1):
-            id = g.group(1)[len(g.group(1)) - 1:len(g.group(1))]
+        regex = re.compile("(.*?)-(.*)")
+        regex_groups = regex.match(token)
+        if regex_groups.group(1):
+            id = regex_groups.group(1)[len(regex_groups.group(1)) - 1:len(regex_groups.group(1))]
         else:
             return False
-        if g.group(2):
-            hash = g.group(2)
+        if regex_groups.group(2):
+            hash = regex_groups.group(2)
         else:
             return False
-        h = SHA.new()
-        h.update(ACCESS_TOKEN_SALT + ":" + str(id))
-        return hash == h.hexdigest()
+        sha = SHA.new()
+        sha.update(ACCESS_TOKEN_SALT + ":" + str(id))
+        return hash == sha.hexdigest()

@@ -9,7 +9,7 @@ from app.models import User
 import json
 
 
-class TestSensitiveDataExposure(TestCase):
+class SensitiveDataExposureTest(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
@@ -50,5 +50,5 @@ class TestSensitiveDataExposure(TestCase):
         self.kwargs = {'id_number': 100}
         request = reverse(self.route_name, kwargs=self.kwargs)
         response = self.client.get(request,
-                                   **{'HTTP_AUTHORIZATION': 'Token token=1-fjfsasdja03'})
+                                   **{'HTTP_AUTHORIZATION': 'Token token=1-01de24d75cffaa66db205278d1cf900bf087a737'})
         self.assertEquals(response.content, "[]")
