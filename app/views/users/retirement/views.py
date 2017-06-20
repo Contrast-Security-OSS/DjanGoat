@@ -8,6 +8,7 @@ from app.models import User
 import datetime
 import pytz
 from app.views import utils
+from app.decorators import user_is_authenticated
 
 
 @require_http_methods(["GET", "POST"])
@@ -35,5 +36,4 @@ def user_retirement_index(request, user_id):
     t = get_template('users/retirement/index.html')
     html = t.render({'retirement': retirement_info})
     return HttpResponse(html)
-
 
