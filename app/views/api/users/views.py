@@ -5,6 +5,7 @@ from django.core import serializers
 from Crypto.Hash import SHA
 from pygoat.settings import ACCESS_TOKEN_SALT
 import re
+import urlparse
 
 
 @require_http_methods(["GET"])
@@ -39,11 +40,12 @@ def split_token_into_id_token(request):
     if 'HTTP_AUTHORIZATION' not in request.META:
         return None, None
     else:
-        token = request.META['HTTP_AUTHORIZATION']
+        token = urlparse.unquote(request.META['HTTP_AUTHORIZATION'])
         regex = re.compile("(.*?)-(.*)")
-        regex_groups = regex.match(token)
+        regex_groups = regex.search(token)
         if regex_groups.group(1):
-            _, id = regex_groups.group(1).split('=')
+            print(regex_groups.group(0))
+            id = regex_groups.group(1).split('=')[0]
         else:
             return None, None
         if regex_groups.group(2):
@@ -62,3 +64,7 @@ def check_if_valid_token(id, hash):
     sha = SHA.new()
     sha.update(ACCESS_TOKEN_SALT + ":" + str(id))
     return hash == sha.hexdigest()
+
+
+def extrapolate_user(token):
+    print token
