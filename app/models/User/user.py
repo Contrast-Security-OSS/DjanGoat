@@ -113,6 +113,7 @@ class User(models.Model):
     @staticmethod
     def authenticate_by_token(input_auth_token):
         user = User.objects.filter(auth_token=input_auth_token).first()
+        return user
 
     def assign_user_id(self):
         if self.user_id != None:
