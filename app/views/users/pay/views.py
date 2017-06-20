@@ -5,6 +5,7 @@ from app.decorators import user_is_authenticated
 
 from django.template.loader import get_template
 from django.http import HttpResponse
+from app.views import utils
 
 
 @require_http_methods(["POST"])
@@ -23,7 +24,9 @@ def decrypt_bank_acct_num(request, user_id):
 @user_is_authenticated
 def user_pay_index(request, user_id):
     template = get_template('users/pay/index.html')
-    return HttpResponse(template.render())
+    user = utils.current_user(request)
+    # if user_id != user.user_id:
+    return HttpResponse(template.render({'user': user}))
 
 
 @require_http_methods(["GET"])

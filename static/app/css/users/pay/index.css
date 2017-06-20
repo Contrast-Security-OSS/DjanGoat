@@ -19,3 +19,7 @@
 #payIndex #hint {
     color: #AA6F93;
 }
+
+#payIndex #pageTitle {
+    margin-bottom: 15px;
+}

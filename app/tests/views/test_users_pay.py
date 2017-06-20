@@ -40,7 +40,7 @@ class UserPayIndexRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55}
-        self.expected_response_content = 'Pay index for user 55'
+        self.expected_response_content = 'Ryan Dens Pay Summary'
         AuthRouteTestingWithKwargs.__init__(self)
 
 
