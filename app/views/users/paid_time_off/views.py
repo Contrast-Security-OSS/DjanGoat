@@ -6,9 +6,11 @@ from django.shortcuts import render, redirect
 from app.models import User, PaidTimeOff, Schedule
 from django.utils import timezone
 from django.contrib import messages
+from app.decorators import user_is_authenticated
 
 
 @require_http_methods(["GET", "POST"])
+@user_is_authenticated
 def index(request, user_id):
     user = User.objects.filter(user_id=user_id).first()
     if not user:
@@ -57,17 +59,20 @@ def index_post(request, user_id, user, pto):
 
 
 @require_http_methods(["GET"])
+@user_is_authenticated
 def new(request, user_id):
     return HttpResponse("You made a new pto for user " + str(user_id))
 
 
 @require_http_methods(["GET"])
+@user_is_authenticated
 def edit(request, user_id, id):
-    return HttpResponse("Edit PTO for user " + str(user_id) +
-                        " with id " + str(id))
+    return HttpResponse("Edit PTO for user " + str(user_id) + " with id " +
+                        str(id))
 
 
 @require_http_methods(["GET", "PATCH", "DELETE", "PUT"])
+@user_is_authenticated
 def pto_id(request, user_id, id):
     return HttpResponse("Show, update, or destroy PTO for user " +
                         str(user_id) + " with id " + str(id))
