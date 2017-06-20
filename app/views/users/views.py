@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
 from app.decorators import user_is_authenticated
 from django.shortcuts import render, redirect
@@ -38,7 +38,7 @@ def index(request):
                 return response
             except Exception as e:
                 messages.add_message(request, messages.INFO, str(e))
-        return redirect("/signup/", permanent=False)
+        return HttpResponseRedirect("/signup/")
 
     else:
         return HttpResponse("Users index")
