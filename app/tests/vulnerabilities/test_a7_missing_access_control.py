@@ -27,13 +27,8 @@ class TestMissingFunctionLevelAccessControl(TestCase):
             updated_at=u_input_update_date
         )
 
-        factory_request = self.factory.post('/sessions/')
-        factory_response = sessions.sessions_index(factory_request, email="ryan.dens@contrastsecurity.com",
-                                                   password="12345", path="/dashboard/home")
-        self.assertEqual(factory_response.status_code, 302)
-
-        client_request = self.client.post('/sessions/',
+        client_response = self.client.post('/sessions/',
                                           {'email': 'ryan.dens@contrastsecurity.com', 'password': '12345',
                                            'path': '/admin/1/dashboard/'},
                                           follow=True)
-        self.assertEqual(client_request.status_code, 200)
+        self.assertEqual(client_response.status_code, 200)

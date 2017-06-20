@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.test import TestCase, RequestFactory, Client
-from app.tests.mixins import RouteTestingWithKwargs
+from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
 
 import app.views as views
@@ -17,7 +17,7 @@ class SchedulePep8Tests(TestCase, Pep8ViewsTests):
 
 # Tests checking that that '/schedule' properly handles HttpRequests and routing
 # Accepts GET and POST requests and refuses all others with an error code 405 (Method not allowed)
-class ScheduleIndexRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class ScheduleIndexRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -37,10 +37,13 @@ class ScheduleIndexRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {}
+        self.expected_response_content = 'Schedule index'
+        AuthRouteTestingWithKwargs.__init__(self)
+
 
 # Tests checking that that '/schedule/get_pto_schedule' properly handles HttpRequests and routing
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class PTOScheduleIndexRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class PTOScheduleIndexRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -60,11 +63,13 @@ class PTOScheduleIndexRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {}
+        self.expected_response_content = 'PTO schedule index'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # Tests checking that that '/schedule/new' properly handles HttpRequests and routing
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class NewScheduleRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class NewScheduleRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -84,11 +89,13 @@ class NewScheduleRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {}
+        self.expected_response_content = 'New schedule'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 # Tests checking that that '/schedule/:schedule_id/edit' properly handles HttpRequests and routing
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on schedule_id 55
-class EditScheduleRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class EditScheduleRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -108,12 +115,14 @@ class EditScheduleRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'schedule_id': 55}
+        self.expected_response_content = 'Edit schedule 55'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # Tests checking that that '/schedule/:schedule_id' properly handles HttpRequests and routing
 # Accepts GET, PATCH, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on schedule_id 55
-class UserShowRetirementRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class UserShowRetirementRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -133,3 +142,5 @@ class UserShowRetirementRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'schedule_id': 55}
+        self.expected_response_content = 'View schedule 55'
+        AuthRouteTestingWithKwargs.__init__(self)

@@ -4,6 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
 from app.models.User.user import User
 
+from app.models.User.user import User
+
 
 @require_http_methods(["GET"])
 def login(request):
@@ -17,6 +19,7 @@ def logout(request):
 
 @require_http_methods(["GET", "POST"])
 def sessions_index(request, email=None, password=None, path='/dashboard/home'):
+
     if request.method == "POST":
 
         # Set path variable
@@ -41,14 +44,19 @@ def sessions_index(request, email=None, password=None, path='/dashboard/home'):
             response.set_cookie("auth_token", user.auth_token)
             return response
         except User.DoesNotExist:
-            return HttpResponse("User does not exist!")
+            return HttpResponse("Email or password incorrect!")
+        except Exception as error:
+            if u'Incorrect Password' in error.message:
+                return HttpResponse("Email or password incorrect!")
+            else:
+                raise error
 
     return HttpResponse("Sessions Index")
 
 
 @require_http_methods(["GET"])
 def new_sessions(request):
-    return HttpResponse('You created a new session')
+    return HttpResponse("You're creating a new session!")
 
 
 @require_http_methods(["GET"])

@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse
 
-from app.tests.mixins import RouteTestingWithKwargs
+from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
 
 
@@ -22,7 +22,7 @@ class UserBenefitFormsPep8Tests(TestCase, Pep8ViewsTests):
 # Tests checking that that '/users/:user_id/benefit_forms' properly handles HttpRequests and routing
 # Accepts GET and POST requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
-class UserBenefitFormsRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class UserBenefitFormsRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -42,12 +42,14 @@ class UserBenefitFormsRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55}
+        self.expected_response_content = 'Benefit forms index55'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # Tests checking that that '/users/:user_id/benefit_forms/new' properly handles HttpRequests and routing
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
-class UserNewBenefitFormsRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class UserNewBenefitFormsRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -67,13 +69,15 @@ class UserNewBenefitFormsRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55}
+        self.expected_response_content = 'New benefit form55'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # Tests checking that that '/users/:user_id/benefit_forms/:benefit_form_id/edit' properly handles HttpRequests and rout-
 # ing
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on user_id 55 and benefit_form_id 22
-class UserEditBenefitFormRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class UserEditBenefitFormRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -93,12 +97,14 @@ class UserEditBenefitFormRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55, 'benefit_form_id': 22}
+        self.expected_response_content = 'edit benefit form5522'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # Tests checking that that '/users/:user_id/benefit_forms/benefit_form_id' properly handles HttpRequests and routing
 # Accepts GET, PATCH, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on user_id 55 and benefit_form_id 22
-class UserShowBenefitFormRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class UserShowBenefitFormRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -119,11 +125,13 @@ class UserShowBenefitFormRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
         }
         self.kwargs = {'user_id': 55, 'benefit_form_id': 22}
         self.client = Client()
+        self.expected_response_content = 'show benefit form5522'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # Tests checking that that '/upload' properly handles HttpRequests and routing
 # Accepts POST requests and refuses all others with an error code 405 (Method not allowed)
-class UploadRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class UploadRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -143,6 +151,8 @@ class UploadRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {}
+        self.expected_response_content = 'Upload user benefit form'
+        AuthRouteTestingWithKwargs.__init__(self)
 
     # Override
     # Verifies the route exists by getting the /upload
@@ -155,7 +165,7 @@ class UploadRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
 # Tests checking that that '/download' properly handles HttpRequests and routing
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
-class DownloadBenefitFormsRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class DownloadBenefitFormsRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -175,3 +185,5 @@ class DownloadBenefitFormsRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {}
+        self.expected_response_content = 'Download user benefit form'
+        AuthRouteTestingWithKwargs.__init__(self)
