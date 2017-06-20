@@ -1,0 +1,9 @@
+.well {
+    background-color: #e8e8e8;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#payIndex .form-inline {
+    margin-top: 1em;
+}
