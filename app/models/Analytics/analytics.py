@@ -22,6 +22,9 @@ class Analytics(models.Model):
     created_at = models.DateTimeField('date created')
     updated_at = models.DateTimeField('date updated')
 
+    class Meta:
+        db_table = "app_analytics"
+
     @classmethod
     def hits_by_ip(cls, ip, col='*'):
         # raw method requires a primary key
