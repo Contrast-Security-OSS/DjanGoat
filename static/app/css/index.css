@@ -2,10 +2,7 @@
     background-color: #000000;
     border: 1px Gray;
     color: white;
-    padding: 10px 24px;
     cursor: pointer;
-    float: left;
-    display: inline;
 }
 
 /* Modal Content/Box */
@@ -15,4 +12,16 @@
     border: 1px solid #888;
     width: 600px; /* Could be more or less, depending on screen size */
     position: absolute;
+}
+
+.navbar {
+    height: 55px;
+    position: absolute;
+    right: 0px;
+    width: 100%;
+}
+
+.linkButton {
+    padding-right: 20px;
+    right: 0px;
 }
