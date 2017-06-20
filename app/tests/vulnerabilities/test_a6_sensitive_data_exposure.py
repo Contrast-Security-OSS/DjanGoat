@@ -46,9 +46,13 @@ class SensitiveDataExposureTest(TestCase):
                                    **{'HTTP_AUTHORIZATION': 'Token token=1-fjfsasdja03'})
         self.assertEquals(401, response.status_code)
 
-    def test_no_such_user_returns_empty_response(self):
-        self.kwargs = {'id_number': 100}
+    def test_non_admin_gets_id_response(self):
+        self.kwargs = {'id_number': 5}
+        user = User.objects.get(first_name="Vinai!")
+        user.is_admin = False
+        user.save()
         request = reverse(self.route_name, kwargs=self.kwargs)
         response = self.client.get(request,
                                    **{'HTTP_AUTHORIZATION': 'Token token=1-01de24d75cffaa66db205278d1cf900bf087a737'})
-        self.assertEquals(response.content, "[]")
+        content = json.loads(response.content)[0]['fields']
+        self.assertEquals('vinai.dens@contrastsecurity.com', content['email'])
