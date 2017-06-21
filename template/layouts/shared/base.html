@@ -20,7 +20,9 @@
         {% endif %}
         <div id="content" class="container-fluid">
             <div class="row">
-                {% include 'layouts/shared/side_bar.html' %}
+                {% if current_user %}
+                    {% include 'layouts/shared/side_bar.html' %}
+                {% endif %}
                 <div id="pageContent" class="col-8 col-sm-9 col-md-9 col-lg-10 col-xl-10">
                     {% block content %}{% endblock %}
                 </div>
