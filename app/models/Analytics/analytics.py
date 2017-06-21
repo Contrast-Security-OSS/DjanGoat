@@ -25,6 +25,16 @@ class Analytics(models.Model):
     class Meta:
         db_table = "app_analytics"
 
+    @classmethod
+    def objects_in_list(cls):
+        objects = cls.objects.all()
+        cols = ['ip_address', 'referrer', 'user_agent',
+                'created_at', 'updated_at']
+        formated = dict()
+        for col in cols:
+            formated.update({col: [getattr(item, col) for item in objects]})
+        return formated
+
     @staticmethod
     def format_raw_sql(cmd, raw):
         try:
@@ -32,20 +42,14 @@ class Analytics(models.Model):
             cols = cols.split(',')
             num_cols = len(cols)
             formated = dict()
-            for (col, i) in (cols, range(num_cols)):
-                col_values = []
-                for item, j in raw, range(num_cols):
-                    col_values.append(item[i][j])
-                formated.update({col: col_values})
-            print(formated)
+            for i in range(num_cols):
+                formated.update({cols[i]: [item[i] for item in raw]})
+            return formated
         except Exception as e:
-            print(e)
+            return dict()
 
     @classmethod
     def hits_by_ip(cls, ip, col='*'):
-        # raw method requires a primary key
-        if (col != '*'):
-            col = 'id, ' + col
         table_name = cls.objects.model._meta.db_table
         cmd = "SELECT %s FROM %s WHERE ip_address='%s' ORDER BY id DESC" % (
             col, table_name, ip)
@@ -53,9 +57,7 @@ class Analytics(models.Model):
             cursor.execute(cmd)
             raw = cursor.fetchall()
         formated = Analytics.format_raw_sql(cmd, raw)
-        return cls.objects.raw(
-            "SELECT %s FROM %s WHERE ip_address='%s' ORDER BY id DESC"
-            % (col, table_name, ip))
+        return formated
 
     # defined in railsgoat but not used, expects valid column name
     @classmethod

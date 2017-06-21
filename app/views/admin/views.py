@@ -97,7 +97,7 @@ def admin_analytics(request, selected_id):
         analytics = Analytics.hits_by_ip(request.GET['ip'], col=col)
 
     else:
-        analytics = Analytics.objects.all()
+        analytics = Analytics.objects_in_list()
 
     return render(request, 'admin/analytics.html', {'analytics': analytics, 'show_user_agent': show_user_agent,
                                                     'show_ip_address': show_ip_address, 'show_referrer': show_referrer})
