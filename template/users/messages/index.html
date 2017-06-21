@@ -35,7 +35,7 @@
                                 </thead>
                                 <tbody>
                                     {% if current_user.received_messages %}
-                                        {% for message in messages %}
+                                        {% for message in current_user.received_messages.all %}
                                             <tr>
                                                 <td>{{ message.creator_name }}</td>
                                                 <td>{{ message.created_at }}</td>
