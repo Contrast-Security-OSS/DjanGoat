@@ -2,12 +2,14 @@ from __future__ import unicode_literals
 
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
+from app.decorators import user_is_authenticated
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from app.models import User
 from django.contrib import messages
 from django.utils import timezone
 from django.conf import settings
+from app.views import utils
 
 
 @require_http_methods(["GET", "POST"])
@@ -53,13 +55,15 @@ def signup(request):
 
 
 @require_http_methods(["GET"])
+@user_is_authenticated
 def edit_user(request, user_id):
     return HttpResponse("Edit user " + str(user_id))
 
 
 @require_http_methods(["GET"])
+@user_is_authenticated
 def account_settings(request, user_id):
-    user = User.objects.filter(user_id=user_id).first()
+    user = utils.current_user(request)
     if not user:
         return HttpResponse("User " + str(user_id) + " NOT FOUND")
     else:
@@ -68,6 +72,7 @@ def account_settings(request, user_id):
 
 
 @require_http_methods(["GET", "POST", "PUT", "DELETE"])
+@user_is_authenticated
 def user_view(request, user_id):
     if request.method == "POST":
         form = request.POST

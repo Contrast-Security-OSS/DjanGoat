@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.test import TestCase, RequestFactory, Client
-from app.tests.mixins import RouteTestingWithKwargs
+from app.tests.mixins import RouteTestingWithKwargs, AuthRouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
 from django_webtest import WebTest
 from django.utils import timezone
@@ -101,7 +101,7 @@ class UserSignupRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
 # Tests checking that that '/users/:id/edit' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
-class UserEditRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class UserEditRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
 
     def setUp(self):
@@ -122,24 +122,21 @@ class UserEditRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55}
+        self.expected_response_content = 'Edit user 55'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # Tests checking that that '/users/:id/account_settings' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
-class UserAccountSettingsRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class UserAccountSettingsRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
 
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
         self.route_name = 'app:user_account_settings'
-        self.user = User.objects.create(email="", first_name="", last_name="",
-                                        password="", is_admin=False,
-                                        created_at=timezone.now(),
-                                        updated_at=timezone.now())
-        self.user_id = self.user.user_id
-        self.route = '/users/%s/account_settings' % self.user_id
+        self.route = '/users/55/account_settings'
         self.view = users.account_settings
         self.responses = {
             'exists': 200,
@@ -152,28 +149,22 @@ class UserAccountSettingsRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'OPTIONS': 405,
             'TRACE': 405
         }
-        self.kwargs = {'user_id': self.user_id}
-
-    def test_model_delete(self):
-        self.assertIsNotNone(self.user.delete())
+        self.kwargs = {'user_id': 55}
+        self.expected_response_content = 'Update Account Information'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # Tests checking that that '/users/:id' properly handles HttpRequests
 # Accepts GET, POST, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
-class UserViewRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
+class UserViewRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
 
     def setUp(self):
         self.factory = RequestFactory()
         self.client = Client()
         self.route_name = 'app:user_view'
-        self.user = User.objects.create(email="", first_name="", last_name="",
-                                        password="", is_admin=False,
-                                        created_at=timezone.now(),
-                                        updated_at=timezone.now())
-        self.user_id = self.user.user_id
-        self.route = '/users/%s' % self.user_id
+        self.route = '/users/55'
         self.view = users.user_view
         self.responses = {
             'exists': 200,
@@ -186,10 +177,9 @@ class UserViewRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'OPTIONS': 405,
             'TRACE': 405
         }
-        self.kwargs = {'user_id': self.user_id}
-
-    def test_model_delete(self):
-        self.assertIsNotNone(self.user.delete())
+        self.kwargs = {'user_id': 55}
+        self.expected_response_content = 'User 55'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 class UserViewsSignUpUserFormTests(WebTest):
@@ -288,7 +278,9 @@ class UserViewsUpdateAccountFormTests(WebTest):
         signup_form.set('last_name', self.param['last_name'])
         signup_form.set('password', self.param['password'])
         signup_form.set('confirm', self.param['confirm'])
-        signup_form.submit()
+        form_response = signup_form.submit()
+        cookies = form_response._headers['Set-Cookie'].split(';')
+        self.cookie = cookies[0].split('=')[1]
         self.user = User.objects.filter(email=self.param['email']).first()
         # Setting up for update account setting test
         self.url = '/users/%s/account_settings' % self.user.user_id
@@ -381,6 +373,7 @@ class UserViewsUpdateAccountFormTests(WebTest):
         url = "/users/%s" % self.user.user_id
         fields = self.form.submit_fields(None, index=None, submit_value=None)
         request = factory.post(url, dict(fields))
+        request.COOKIES['auth_token'] = self.cookie
 
         # Change fields as SQL injection
         request.POST = request.POST.copy()
