@@ -16,12 +16,11 @@
             <!-- Begin Row -->
             <div class="row-fluid">
                 <!-- Begin Span12 -->
-                <div class="span12">
+                <div class="col-md-12">
                     <div class="widget">
                         <div class="widget-header">
                             <div class="title">
-                                <span class="fs1" aria-hidden="true" data-icon="&#xe022;"></span> Messages for <%= current_user.full_name %>
-                                <!--<span class="fs1" aria-hidden="true" data-icon="&#xe006;"><%#= link_to "Send Message", new_user_message_path %></span>-->
+                                <span class="fs1" aria-hidden="true" data-icon="&#xe022;"></span> Messages for {{ current_user.full_name }}
                             </div>
                         </div>
                         <div class="widget-body">
@@ -35,29 +34,30 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <% if @messages.empty? %>
-                                    <td><%= "No messages!" %></td><td></td><td></td><td></td>
-                                    <% end %>
-                                    <% @messages.each do |message| %>
-                                    <td><%= message.creator_name %></td>
-                                    <td><%= message.created_at.to_date %></td>
-                                    <td><%= message.message %></td>
-                                    <td><%= link_to "Details", user_message_path(:id => message.id), {:class => "btn btn-info pull-left"}%>
-                                        <%= link_to "Delete", user_message_path(:id => message.id), {:method => 'delete', :class => "btn btn-danger pull-left"}%></td>
-                                </tr>
+                                    {% if current_user.received_messages %}
+                                        {% for message in messages %}
+                                            <tr>
+                                                <td>{{ message.creator_name }}</td>
+                                                <td>{{ message.created_at }}</td>
+                                                <td>{{ message.message }}</td>
+                                                <td>
+                                                    <a href="/users/{{ current_user.id }}/messages/{{ message.id }}" class="btn btn-info pull-left">Details</a>
+                                                    <a href="/users/{{ current_user.id }}/messages/{{ message.id }}" class="btn btn-danger pull-left">Delete</a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td>No messages!</td><td></td><td></td><td></td>
+                                        </tr>
+                                    {% endif %}
                                 </tbody>
-                                <% end %>
                             </table>
                         </div>
                     </div>
                 </div>
-                <!-- End Span12 -->
             </div>
-            <!-- End Row -->
-            <!-- Begin Row -->
             <div class="row-fluid">
-                <!-- Begin Span12 -->
                 <div class="span12">
                     <div class="widget">
                         <div class="widget-header">
@@ -83,36 +83,38 @@
                                 </p>
                             </div>
                             <div class="row-fluid">
-                                <div class="span8">
+                                <div class="col-md-8">
                                     <!-- Begin Message Draft Content-->
-                                    <%= form_for @message, :url => user_messages_path, :method => :post, :html => {:id => "send_message"} do |f|%>
-                                    <%= f.hidden_field :creator_id, :value => current_user.id %>
-                                    <%= f.hidden_field :read, :value => '0' %>
-                                    <div class="control-group">
-                                        <%= f.label "To:", nil, {:class => "control-label"}%>
-                                        <%= f.select(:receiver_id, options_from_collection_for_select(User.all, :id, :full_name)) %>
-                                    </div>
+                                    <form method="POST" url="/users/{{ current_user.id }}/messages" id="send_message">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="creator_id" value="{{ current_user.id }}" />
+                                        <input type="hidden" name="read" value="0" />
+                                        <div class="form-group">
+                                            <label class="control-label">To:</label>
+                                            <select name="receiver_id" class="form-control">
+                                                {% for user in available_recipients %}
+                                                    <option value="{{ user.id }}">{{ user.full_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
 
-                                    <div class="control-group">
-                                        <%= f.label :message, nil, {:class => "control-label"}%>
-                                        <%= f.text_area :message, {:class => "span12"} %>
-                                    </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Message</label>
+                                            <textarea name="message" class="col-md-12 form-control"></textarea>
+                                        </div>
 
-                                    <div class="form-actions no-margin">
-                                        <%= f.submit "Submit", {:id => 'submit_button', :class => "btn btn-info pull-right"} %>
-                                    </div>
+                                        <div class="form-actions no-margin">
+                                            <button type="submit" id="submit_button" class="btn btn-info pull-right">Submit</button>
+                                        </div>
 
-                                    <div class="clearfix"></div>
-                                    <% end %>
-                                    <!-- End Message Draft Content-->
+                                        <div class="clearfix"></div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- End Span12 -->
             </div>
-            <!-- End Row -->
         </div>
     </div>
     </body>
@@ -123,20 +125,21 @@
         $("#submit_button").click(function(event) {
             var valuesToSubmit = $("#send_message").serialize();
             event.preventDefault();
-            $.ajax({ url: "/users/{{  current_user.id }}/messages.json",
+            $.ajax({
+                url: "/users/{{  current_user.id }}/messages.json",
                 data: valuesToSubmit,
                 type: "POST",
                 success: function(response) {
-                if (response.msg == "failure") {
+                    if (response.msg == "failure") {
+                        $('#failure').show(500).delay(1500).fadeOut();
+                    } else {
+                        $('#success').show(500).delay(1500).fadeOut();
+                    }
+                },
+                error: function(event) {
                     $('#failure').show(500).delay(1500).fadeOut();
-                } else {
-                    $('#success').show(500).delay(1500).fadeOut();
                 }
-            },
-            error: function(event) {
-                $('#failure').show(500).delay(1500).fadeOut();
-            }
-        });
+            });
         });
 
         function makeActive(){
