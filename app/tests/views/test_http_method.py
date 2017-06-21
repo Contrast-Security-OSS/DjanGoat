@@ -7,7 +7,7 @@ from app.tests.mixins import RouteTestingWithKwargs
 import app.views as v
 
 
-class HttpMethodTests(TestCase, RouteTestingWithKwargs):
+class HttpMethodTests(TestCase):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()

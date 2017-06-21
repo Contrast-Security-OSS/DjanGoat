@@ -1,12 +1,12 @@
 from __future__ import unicode_literals
 from django.test import TestCase, RequestFactory, Client
 
-from app.tests.mixins import RouteTestingWithKwargs
+from app.tests.mixins import AuthRouteTestingWithKwargs
 
 from app.views import user_retirement_views
 
 
-class PassingWrongArgumentRegressionTests(TestCase, RouteTestingWithKwargs):
+class PassingWrongArgumentRegressionTests(TestCase, AuthRouteTestingWithKwargs):
     def setUp(self):
         """ Class for testing api index view"""
         self.factory = RequestFactory()
@@ -26,6 +26,8 @@ class PassingWrongArgumentRegressionTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55}
+        self.expected_response_content = 'User 55 retirement index'
+        AuthRouteTestingWithKwargs.__init__(self)
 
     def dummy_function_that_represents_a_view(self, user_id):
         return type(user_id) is int
