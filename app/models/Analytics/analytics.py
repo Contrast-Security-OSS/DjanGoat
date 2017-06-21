@@ -5,6 +5,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.db import models, connection
 from app.models import User
 import re
+import json
 
 
 @python_2_unicode_compatible
@@ -32,18 +33,18 @@ class Analytics(models.Model):
                 'created_at', 'updated_at']
         formated = dict()
         for col in cols:
-            formated.update({col: [getattr(item, col) for item in objects]})
+            formated[col] = [getattr(item, col) for item in objects]
         return formated
 
     @staticmethod
     def format_raw_sql(cmd, raw):
         try:
             cols = re.search('SELECT (.+?) FROM', cmd).group(1)
-            cols = cols.split(',')
+            cols = cols.split(', ')
             num_cols = len(cols)
             formated = dict()
             for i in range(num_cols):
-                formated.update({cols[i]: [item[i] for item in raw]})
+                formated[cols[i]] = [item[i] for item in raw]
             return formated
         except Exception as e:
             return dict()

@@ -84,20 +84,13 @@ def admin_analytics(request, selected_id):
             col.append(key)
     col = ', '.join(col)
 
-    if 'user_agent' in data or (not data):
-        show_user_agent = True
-
-    if 'ip_address' in data or (not data):
-        show_ip_address = True
-
-    if 'referrer' in data or (not data):
-        show_referrer = True
-
     if request.GET.get('ip', '') != '':
         analytics = Analytics.hits_by_ip(request.GET['ip'], col=col)
 
     else:
         analytics = Analytics.objects_in_list()
-
-    return render(request, 'admin/analytics.html', {'analytics': analytics, 'show_user_agent': show_user_agent,
-                                                    'show_ip_address': show_ip_address, 'show_referrer': show_referrer})
+    cols = [key for key in analytics]
+    values = analytics.values()
+    num_data = range(len(values[0]))
+    return render(request, 'admin/analytics.html',
+                  {'cols': cols, 'values': values, 'num_data': num_data})

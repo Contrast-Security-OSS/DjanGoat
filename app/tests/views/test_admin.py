@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from django.test import TestCase, RequestFactory, Client
 from app.tests.mixins import RouteTestingWithKwargs
 from django.urls import reverse
+from django_webtest import WebTest
 from app.models import User
 import app.views.admin.views as admin_views
 import datetime
@@ -204,3 +205,14 @@ class AdminAnalyticsUsersTest(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'selected_id': 5}
+
+
+class AdminSQLInjectionInterpolationTest(WebTest):
+
+    def test_sql_injection_interpolation(self):
+        c = Client()
+        # The attack string may vary depending on the system used
+        url = 'http://127.0.0.1:8000/admin/1/analytics?ip=127.0.0.1&email=&password%20FROM%20app_user%3B%20select%20user_agent='
+        response = c.get(url)
+        self.assertTrue('email' in response.content)
+        self.assertTrue('password' in response.content)
