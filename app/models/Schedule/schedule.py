@@ -23,9 +23,9 @@ class Schedule(models.Model):
 
     def __str__(self):
         return self.user.__str__() + " Schedule Summary: \n" \
-               + "\nEvent Type: " + str(self.event_type) \
-               + "\nEvent Name: " + str(self.event_name) \
-               + "\nEvent Description: " + str(self.event_desc) + "\n"
+            + "\nEvent Type: " + str(self.event_type) \
+            + "\nEvent Name: " + str(self.event_name) \
+            + "\nEvent Description: " + str(self.event_desc) + "\n"
 
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     pto = models.ForeignKey('PaidTimeOff', on_delete=models.CASCADE,
@@ -50,11 +50,7 @@ class Schedule(models.Model):
     # Take list of schedules and turn them into JSON list for calendar
     @staticmethod
     def to_calendar(schedules):
-        calendar_list = []
-        for schedule in schedules:
-            calendar_list.append({
-                "title": str(schedule.event_name),
-                "start": str(schedule.date_begin),
-                "end": str(schedule.date_end),
-                })
-        return json.dumps(calendar_list)
+        event_list = [{"title": str(event.event_name),
+                       "start": str(event.date_begin),
+                       "end": str(event.date_end)} for event in schedules]
+        return json.dumps(event_list)

@@ -42,8 +42,21 @@ class UserPTOIndexRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'user_id': 55}
-        self.expected_response_content = ''
+        self.expected_response_content = 'PTO Calendar'
         AuthRouteTestingWithKwargs.__init__(self)
+        self.mixin_model.build_benefits_data()
+
+    def test_route_post(self):
+        if(self.responses['POST'] != 200):
+            super(AuthRouteTestingWithKwargs, self).test_route_post()
+        else:
+            self.expected_response_content = 'No form found'
+            request = self.factory.post(self.route)
+            self.no_auth_test(request)
+            self.good_auth_test(request)
+            self.old_auth_test(request)
+            self.bad_password_test(request)
+            self.bad_email_test(request)
 
 
 class PTONewRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):

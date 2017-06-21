@@ -7,12 +7,13 @@ from app.models import User, PaidTimeOff, Schedule
 from django.utils import timezone
 from django.contrib import messages
 from app.decorators import user_is_authenticated
+from app.views import utils
 
 
 @require_http_methods(["GET", "POST"])
 @user_is_authenticated
 def index(request, user_id):
-    user = User.objects.filter(user_id=user_id).first()
+    user = utils.current_user(request)
     if not user:
         return HttpResponse("User " + str(user_id) + " NOT FOUND")
     pto = PaidTimeOff.objects.filter(user=user).first()
@@ -23,13 +24,13 @@ def index(request, user_id):
     elif request.method == "POST":
         return index_post(request, user_id, user, pto)
     else:
-        return HttpResponse("Invalud HTTP method")
+        return HttpResponse("Invalid HTTP method")
 
 
 def index_get(request, user_id, user, pto):
     schedules = Schedule.to_calendar((Schedule.objects.filter(pto=pto)))
     context = pto.__dict__
-    context.update({"schedules": schedules})
+    context.update({"schedules": schedules, "current_user": user})
     return render(request, "users/paid_time_off.html",
                   context=context)
 
