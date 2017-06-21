@@ -42,11 +42,11 @@ function drawChart() {
     };
 
     // Instantiate and draw our chart, passing in some options.
-    var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-    var chart2 = new google.visualization.ColumnChart(document.getElementById('chart_div2'));
+    var sick_days_chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+    var pto_chart = new google.visualization.ColumnChart(document.getElementById('chart_div2'));
 
-    chart.draw(sick_days_data, options);
-    chart2.draw(pto_data, options);
+    sick_days_chart.draw(sick_days_data, options);
+    pto_chart.draw(pto_data, options);
 
 }
 
