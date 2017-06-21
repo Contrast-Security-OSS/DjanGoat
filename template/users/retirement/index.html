@@ -1,0 +1,97 @@
+{% extends 'layouts/shared/base.html' %}
+
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/users/retirement/format.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-wrapper">
+  <div class="main-container">
+    <div class="row-fluid">
+        <div class="card-deck">
+          <div class="span3">  <!-- Beginning of span-->
+            <div class="card">
+              <div class="card-header">
+                  <div class="title">
+                      <i class="fa fa-user icon" aria-hidden="true"></i>
+                      <span class="fs1" aria-hidden="true"></span> Employee Contribution
+                  </div>
+              </div>
+              <div class="card-block">
+                <div class="card-block" style="background-color:#b5799e">
+                    <div class="current-statistics">
+                          <div class="expenses">
+                            <h3> {{ retirement.employee_contrib }} </h3>
+                          </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div> <!-- End of span-->
+          <div class="span3">  <!-- Beginning of span-->
+            <div class="card">
+              <div class="card-header">
+                  <div class="title">
+                      <i class="fa fa-suitcase icon" aria-hidden="true"></i>
+                      <span class="fs1" aria-hidden="true"></span> Employer Contribution
+                  </div>
+              </div>
+              <div class="card-block">
+                <div class="card-block" style="background-color:#579da9">
+                    <div class="current-statistics">
+                          <div class="expenses">
+                            <h3> {{ retirement.employer_contrib }} </h3>
+                          </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div> <!-- End of span-->
+          <div class="span3">  <!-- Beginning of span-->
+            <div class="card">
+              <div class="card-header">
+                  <div class="title">
+                      <i class="fa fa-th icon" aria-hidden="true"></i>
+                      <span class="fs1" aria-hidden="true"></span> Total Contribution
+                  </div>
+              </div>
+              <div class="card-block">
+                <div class="card-block" style="background-color:#47759e">
+                    <div class="current-statistics">
+                          <div class="expenses">
+                            <h3> {{ retirement.total }} </h3>
+                          </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div> <!-- End of span-->
+        </div>
+    </div>
+    <div class="row-fluid">
+       <div class="span6">  <!-- Beginning of span-->
+            <div class="card" style="width:620px">
+              <div class="card-header">
+                  <div class="title">
+                      <i class="fa fa-thumbs-up icon" aria-hidden="true"></i>
+                      <span class="fs1" aria-hidden="true"></span> Employee Services
+                  </div>
+              </div>
+              <div class="card-block" style="text-align:left;color:black">
+                <div class="current-statistics">
+                  <p>
+                    Saving for retirement can be difficult. Choosing the plan that is right for you is incredibly important. MetaCorp understands this and offers free one-on-one interaction with a savings counselor. This service is available weekly, Monday thru Wednesday. Sign up through your department's designated finance lead.
+                  </p>
+                  <hr/>
+                  <p>MetaCorp is dedicated to its employees and this service is just one way of showing it!</p>
+                </div>
+              </div>
+            </div>
+          </div> <!-- End of span-->
+    </div>
+  </div>
+</div>
+
+{% endblock %}
