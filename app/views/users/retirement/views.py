@@ -17,5 +17,5 @@ def user_retirement_index(request, user_id):
     current_user = utils.current_user(request)
     retirement_info = current_user.retirements.first()
     t = get_template('users/retirement/index.html')
-    html = t.render({'retirement': retirement_info})
+    html = t.render({'retirement': retirement_info, 'current_user': current_user})
     return HttpResponse(html)
