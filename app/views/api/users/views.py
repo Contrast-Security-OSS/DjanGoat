@@ -10,15 +10,16 @@ import urlparse
 
 @require_http_methods(["GET"])
 def api_index(request):
-    id, hash = split_token_into_id_token(request)
-    if check_if_valid_token(id, hash):
+    if check_if_valid_token(request):
         try:
-            user = User.objects.get(user_id=id)
+            token = urlparse.unquote(request.META['HTTP_AUTHORIZATION'])
+            user_id = extrapolate_user(token)
+            user = User.objects.get(user_id=user_id)
             if user.is_admin:
                 data = serializers.serialize("json", User.objects.all())
                 return HttpResponse(data, content_type='application/json')
             else:
-                data = serializers.serialize("json", User.objects.filter(user_id=id))
+                data = serializers.serialize("json", User.objects.filter(user_id=user_id))
                 return HttpResponse(data, content_type='application/json')
         except User.DoesNotExist:
             return HttpResponse("null", content_type='application/json')
@@ -28,38 +29,31 @@ def api_index(request):
 
 @require_http_methods(["GET"])
 def api(request, id_number):
-    id, hash = split_token_into_id_token(request)
-    if check_if_valid_token(id, hash):
-        data = serializers.serialize("json", User.objects.filter(user_id=id))
+    if check_if_valid_token(request):
+        token = urlparse.unquote(request.META['HTTP_AUTHORIZATION'])
+        user_id = extrapolate_user(token)
+        data = serializers.serialize("json", User.objects.filter(user_id=user_id))
         return HttpResponse(data, content_type='application/json')
     else:
         return HttpResponse('Unauthorized', status=401)
 
 
-def split_token_into_id_token(request):
+# This is purposely vulnerable see - https://github.com/OWASP/railsgoat/wiki/Extras:-Broken-Regular-Expression
+def check_if_valid_token(request):
     if 'HTTP_AUTHORIZATION' not in request.META:
-        return None, None
+        return False
     else:
         token = urlparse.unquote(request.META['HTTP_AUTHORIZATION'])
         regex = re.compile("(.*?)-(.*)")
         regex_groups = regex.search(token)
         if regex_groups.group(1):
-            print(regex_groups.group(0))
             id = regex_groups.group(1).split('=')[0]
         else:
-            return None, None
+            return False
         if regex_groups.group(2):
             hash = regex_groups.group(2)
         else:
-            return None, None
-
-        return id, hash
-
-
-# This is purposely vulnerable see - https://github.com/OWASP/railsgoat/wiki/Extras:-Broken-Regular-Expression
-def check_if_valid_token(id, hash):
-    if id is None or hash is None:
-        return False
+            return False
 
     sha = SHA.new()
     sha.update(ACCESS_TOKEN_SALT + ":" + str(id))
@@ -67,4 +61,6 @@ def check_if_valid_token(id, hash):
 
 
 def extrapolate_user(token):
-    print token
+    cleaned_token = token.split("=")[1]
+    part_containing_id = cleaned_token.split('-')[0]
+    return int(re.split('[^0-9.]', part_containing_id)[0])
