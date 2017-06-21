@@ -5,13 +5,15 @@
     cursor: pointer;
 }
 
-/* Modal Content/Box */
+#credentialModal {
+    left: -20%;
+}
+
 .modal-content {
     background-color: #fefefe;
     padding: 20px;
     border: 1px solid #888;
-    width: 600px; /* Could be more or less, depending on screen size */
-    position: absolute;
+    width: 800px;
 }
 
 .navbar {
