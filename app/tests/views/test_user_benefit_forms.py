@@ -158,7 +158,7 @@ class UploadRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     # Verifies the route exists by getting the /upload
     # and ensuring the response code is 200 (OK)
     def test_route_exists(self):
-        response = self.client.post(reverse('app:upload_benefit_form'))
+        response = self.client.post(reverse('app:upload_benefit_form'), follow=True)
         self.assertEqual(response.status_code, 200)
 
 

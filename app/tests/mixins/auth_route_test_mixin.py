@@ -1,18 +1,17 @@
-from django.http import SimpleCookie
-from django.urls import reverse
-import pytz
-import datetime
-from app.models.User.user import User
-from app.views import sessions_views as sessions
 from app.tests.mixins.route_test_mixin import RouteTestingWithKwargs
+from app.views import sessions_views as sessions, users_views
+from app.models.User.user import User
+from django.urls import reverse
+import datetime
+import pytz
 
 
 # Mixin for testing the creation of routes
 # Make sure your kwargs match your variable argument
 class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
     mixin_model = None
-    not_logged_in_message = "Sorry, but you are not logged in. Please log in again"
-    no_longer_logged_in_message = "Sorry, but you are no longer logged in to your session. Please log in again"
+    not_logged_in_message = "Sign Up"
+    no_longer_logged_in_message = "Sign Up"
     bad_auth_message = "Email or password incorrect!"
 
     def __init__(self):
@@ -30,11 +29,15 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
             updated_at=u_input_update_date
         )
 
+    def test_route_exists(self):
+        response = self.client.get(reverse(self.route_name, kwargs=self.kwargs), follow=True)
+        self.assertEqual(response.status_code, self.responses['exists'])
+
     def test_route_get(self):
         if(self.responses['GET'] != 200):
             super(AuthRouteTestingWithKwargs, self).test_route_get()
         else:
-            request = self.factory.get(self.route)
+            request = self.factory.get(self.route, follow=True)
             self.no_auth_test(request)
             self.good_auth_test(request)
             self.old_auth_test(request)
@@ -118,10 +121,15 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
             self.bad_password_test(request)
             self.bad_email_test(request)
 
-
     def no_auth_test(self, request):
         response = self.view(request, **self.kwargs)
-        self.assertContains(response, self.not_logged_in_message)
+        # We should be redirected
+        self.assertEqual(response.status_code, 302)
+        # Make a new request to the location of the redirect
+        request = self.factory.get(response['LOCATION'])
+        redirect_response = users_views.signup(request)
+        # Check to make sure the response is correct
+        self.assertContains(redirect_response, self.not_logged_in_message)
 
     def bad_password_test(self, request):
         """
@@ -165,22 +173,28 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
         # Create new session
         auth_request = self.factory.post('/sessions/')
         auth_response = sessions.sessions_index(auth_request, email="ryan.dens@contrastsecurity.com",
-                                                   password="12345", path="/dashboard")
-
-        # Make sure redirect was called (but not followed)
+                                                   password="12345", path=self.route)
+        # Make sure initial redirect was called (but not followed)
         self.assertEqual(auth_response.status_code, 302)
 
         # Generate a new token for the user, the old token has expired and is not valid
-        # self.mixin_model.generate_token()
-        # self.mixin_model.save()
+        self.mixin_model.generate_token()
+        self.mixin_model.save()
 
         # Add the old auth token cookie to the request
-        # request.COOKIES['auth_token'] = auth_response.cookies['auth_token'].value
-        request.COOKIES['auth_token'] = 'old_token'
+        request.COOKIES['auth_token'] = auth_response.cookies['auth_token'].value
         response = self.view(request, **self.kwargs)
 
-        # Make sure the user is not authenticated and redirected to proper view
-        self.assertContains(response, self.no_longer_logged_in_message)
+        # We should be redirected
+        self.assertEqual(response.status_code, 302)
+
+        # Make a new request to the location of the redirect
+        request = self.factory.get(response['LOCATION'])
+        redirect_response = users_views.signup(request)
+
+        # Check to make sure the response is correct
+        self.assertContains(redirect_response, self.not_logged_in_message)
+
 
     def good_auth_test(self, request):
         # Create new session
