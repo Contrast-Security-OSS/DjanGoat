@@ -1,11 +1,9 @@
 from __future__ import unicode_literals
-
 from django.test import TestCase, RequestFactory, Client
-
-import pytz
-import datetime
 from django.urls import reverse
 from app.models import User
+import pytz
+import datetime
 import json
 
 

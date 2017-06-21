@@ -1,9 +1,9 @@
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
-from app.models import User
 from django.core import serializers
-from Crypto.Hash import SHA
+from app.models import User
 from pygoat.settings import ACCESS_TOKEN_SALT
+from Crypto.Hash import SHA
 import re
 import urlparse
 
