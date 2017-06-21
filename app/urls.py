@@ -1,11 +1,12 @@
 from django.conf.urls import include, url
+from django.views.generic import RedirectView
 from . import views
 
 app_name = "app"
-
+# url(r'^$', RedirectView.as_view(pattern_name='dashboard_home', permanent=False), name='index'),
 
 urlpatterns = [
-    url(r'^$', views.app_index, name='index'),
+    url(r'^$', RedirectView.as_view(url='dashboard/home', permanent=False)),
     url(r'^dashboard/', include(views.dashboard.urls)),
     url(r'^tutorials/', include(views.tutorials.urls)),
     url(r'^forgot_password/', views.password_reset_views.forgot_password, name='forgot_password'),
