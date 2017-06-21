@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.core.validators import MaxValueValidator
+from django.utils.safestring import mark_safe
 from . import user_data
 import random
 import hashlib
@@ -149,6 +150,9 @@ class User(models.Model):
 
     def full_name(self):
         return self.first_name + ' ' + self.last_name
+
+    def safe_name(self):
+        return mark_safe(self.first_name)
 
     @staticmethod
     def validate_signup_form(form):
