@@ -1,14 +1,15 @@
 from __future__ import unicode_literals
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
+from app.decorators import user_is_authenticated
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from app.models import User
 from django.contrib import messages
 from django.utils import timezone
-from django.contrib.auth import login
 from django.conf import settings
+from app.views import utils
 
 
 @require_http_methods(["GET", "POST"])
@@ -37,7 +38,7 @@ def index(request):
                 return response
             except Exception as e:
                 messages.add_message(request, messages.INFO, str(e))
-        return redirect("/signup/", permanent=False)
+        return HttpResponseRedirect("/signup/")
 
     else:
         return HttpResponse("Users index")
@@ -54,15 +55,58 @@ def signup(request):
 
 
 @require_http_methods(["GET"])
+@user_is_authenticated
 def edit_user(request, user_id):
     return HttpResponse("Edit user " + str(user_id))
 
 
 @require_http_methods(["GET"])
+@user_is_authenticated
 def account_settings(request, user_id):
-    return HttpResponse("Account settings for user #" + str(user_id))
+    user = utils.current_user(request)
+    if not user:
+        return HttpResponse("User " + str(user_id) + " NOT FOUND")
+    else:
+        return render(request, "users/account_settings.html",
+                      context=user.__dict__)
 
 
-@require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
+@require_http_methods(["GET", "POST", "PUT", "DELETE"])
+@user_is_authenticated
 def user_view(request, user_id):
-    return HttpResponse("User " + str(user_id) + " " + str(request.method))
+    if request.method == "POST":
+        form = request.POST
+        if not form:
+            return HttpResponse("User " + str(user_id) + "POST")
+        user_id_form = form['user_id']
+        table_name = User.objects.model._meta.db_table
+        # The order by is_admin='0' moves admin to the first in list
+        # which allows sql injection
+        users = User.objects.raw(
+            "SELECT * FROM %s WHERE user_id='%s' ORDER BY is_admin='0'"
+            % (table_name, user_id_form))
+        try:
+            user = users[0]
+        except:
+            return HttpResponse("User " + str(user_id_form) + " NOT FOUND")
+        update = dict()
+        err_msg = User.validate_update_form(form, update)
+        if len(err_msg) > 0:
+            messages.add_message(request, messages.INFO, err_msg)
+        else:
+            try:
+                # skip hash_password if password not updated
+                if "password" not in update:
+                    User.objects.filter(pk=user.pk).update(**update)
+                else:
+                    user.__dict__.update(update)
+                    user.save()
+                messages.add_message(request, messages.INFO,
+                                     "Successfully Updated")
+            except Exception as e:
+                messages.add_message(request, messages.INFO, str(e))
+        return redirect("/users/%s/account_settings" % user_id,
+                        permanent=False)
+
+    else:
+        return HttpResponse("User " + str(user_id) + " " + str(request.method))

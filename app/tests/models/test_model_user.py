@@ -54,9 +54,8 @@ class UserModelTests(TestCase, ModelCrudTests):
         self.assertTrue("Incorrect Password!" in incorrectPassword.exception)
 
         # User should not be found in database
-        with self.assertRaises(Exception) as userDNE:
+        with self.assertRaises(User.DoesNotExist):
             User.authenticate("ryand.ens@contrastsecurity.com", "12345")
-        self.assertTrue("User does not exist!" in userDNE.exception)
 
         # Correct email with corresponding password
         self.assertEqual(self.model.pk,
@@ -88,9 +87,15 @@ class UserModelTests(TestCase, ModelCrudTests):
         self.assertEqual(1, self.model.user_id)
 
     def test_user_signals_generate_token(self):
-        # Calculated using https://www.freeformatter.com/message-digest.html
-        known_md5_output = "c44d3353bc7bc459402506378394ae10"
-        self.assertEqual(self.model.auth_token, known_md5_output)
+        """
+        Checks that the token generated is correct
+        calculated using https://www.freeformatter.com/message-digest.html
+        :return:
+        """
+        old_token = self.model.auth_token
+        self.model.generate_token()
+        self.model.save()
+        self.assertNotEqual(self.model.auth_token, old_token)
 
     def test_user_signals_hash_password(self):
         # Calculated using https://www.freeformatter.com/message-digest.html
