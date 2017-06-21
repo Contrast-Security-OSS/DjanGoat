@@ -2,9 +2,7 @@ from __future__ import unicode_literals
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
-from app.models.User.user import User
-
-from app.models.User.user import User
+from app.models import User
 
 
 @require_http_methods(["GET"])
@@ -19,7 +17,6 @@ def logout(request):
 
 @require_http_methods(["GET", "POST"])
 def sessions_index(request, email=None, password=None, path='/dashboard/home'):
-
     if request.method == "POST":
 
         # Set path variable
