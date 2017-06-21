@@ -1,0 +1,19 @@
+<html>
+    <head>
+        {% load bootstrap4 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}" />
+
+        {% block head %}{% endblock %}
+    </head>
+
+    <body>
+      {% block content %}
+      {% endblock %}
+    </body>
+
+</html>
