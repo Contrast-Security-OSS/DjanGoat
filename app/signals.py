@@ -7,5 +7,5 @@ from django.dispatch import receiver
 def create_user_values(sender, instance, *args, **kwargs):
     if (instance.pk == None):
         instance.generate_token()
-        instance.hash_password()
         instance.assign_user_id()
+    instance.hash_password()
