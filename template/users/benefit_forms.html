@@ -1,0 +1,76 @@
+{% extends 'layouts/shared/base.html' %}
+
+{% block head %}
+    {% load static %}
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-wrapper">
+
+  <div class="main-container">
+    <div class="row-fluid">
+        <div class="card-deck">
+          <div class="span6" style="margin-right:70px">  <!-- Beginning of span-->
+            <div id = "health_insurance" class="card">
+              <div class="card-header">
+                  <div class="title">
+                      <i class="fa fa-address-card icon" aria-hidden="true"></i>
+                      <span class="fs1" aria-hidden="true"></span> Health Insurance
+                  </div>
+              </div>
+              <div class="card-block">
+                <div class="card-block" style="background-color:#e8e8e8">
+                  <div>
+                      <p> Click on PDF to download </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> <!-- End of span-->
+          <div class="span6">  <!-- Beginning of span-->
+            <div class="card">
+              <div class="card-header">
+                  <div class="title">
+                      <i class="fa fa-address-card icon" aria-hidden="true"></i>
+                      <span class="fs1" aria-hidden="true"></span> Dental Insurance
+                  </div>
+              </div>
+              <div class="card-block">
+                <div class="card-block" style="background-color:#e8e8e8">
+                    <div>
+                      <p> Click on PDF to download </p>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div> <!-- End of span-->
+        </div>
+    </div>
+    <br>
+
+    <div class="row-fluid">
+       <div class="span6">  <!-- Beginning of span-->
+            <div class="card" style="width:620px">
+              <div class="card-header">
+                  <div class="title">
+                      <i class="fa fa-thumbs-up icon" aria-hidden="true"></i>
+                      <span class="fs1" aria-hidden="true"></span> Employee Services
+                  </div>
+              </div>
+              <div class="card-block" style="text-align:left;color:black">
+                <div class="current-statistics">
+                  <p>
+                    Saving for retirement can be difficult. Choosing the plan that is right for you is incredibly important. MetaCorp understands this and offers free one-on-one interaction with a savings counselor. This service is available weekly, Monday thru Wednesday. Sign up through your department's designated finance lead.
+                  </p>
+                  <hr/>
+                  <p>MetaCorp is dedicated to its employees and this service is just one way of showing it!</p>
+                </div>
+              </div>
+            </div>
+          </div> <!-- End of span-->
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
+from django.shortcuts import render
 
 from app.decorators import user_is_authenticated
 
@@ -9,7 +10,7 @@ from app.decorators import user_is_authenticated
 @require_http_methods(["GET", "POST"])
 @user_is_authenticated
 def user_benefit_forms(request, user_id):
-    return HttpResponse("Benefit forms index" + str(user_id))
+    return render(request, 'users/benefit_forms.html')
 
 
 @require_http_methods(["GET"])
