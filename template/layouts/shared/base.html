@@ -13,7 +13,11 @@
     </head>
 
     <body>
-        {% include 'layouts/shared/nav_loggedin.html' %}
+        {% if current_user %}
+            {% include 'layouts/shared/nav_loggedin.html' %}
+        {% else %}
+            {% include 'layouts/shared/not_logged_in.html' %}
+        {% endif %}
         <div id="content" class="container-fluid">
             <div class="row">
                 {% include 'layouts/shared/side_bar.html' %}

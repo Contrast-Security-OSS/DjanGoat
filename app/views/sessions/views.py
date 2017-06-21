@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
-
+from django.shortcuts import redirect
 from app.models.User.user import User
 
 
@@ -13,7 +13,9 @@ def login(request):
 
 @require_http_methods(["GET"])
 def logout(request):
-    return HttpResponse('You logged out')
+    response = redirect("/login")
+    response.delete_cookie('auth_token')
+    return response
 
 
 @require_http_methods(["GET", "POST"])

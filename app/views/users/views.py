@@ -67,8 +67,10 @@ def account_settings(request, user_id):
     if not user:
         return HttpResponse("User " + str(user_id) + " NOT FOUND")
     else:
+        context = user.__dict__
+        context.update({'current_user': user})
         return render(request, "users/account_settings.html",
-                      context=user.__dict__)
+                      context=context)
 
 
 @require_http_methods(["GET", "POST", "PUT", "DELETE"])
