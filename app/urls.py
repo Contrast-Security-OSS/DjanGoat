@@ -3,8 +3,8 @@ from django.views.generic import RedirectView
 from . import views
 
 app_name = "app"
-# url(r'^$', RedirectView.as_view(pattern_name='dashboard_home', permanent=False), name='index'),
 
+# url(r'^$', RedirectView.as_view(pattern_name='dashboard_home', permanent=False), name='index'),
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='dashboard/home', permanent=False)),
     url(r'^dashboard/', include(views.dashboard.urls)),
@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^logout/', views.sessions_views.logout, name='logout'),
     url(r'^sessions/', include(views.sessions.urls)),
     url(r'^schedule/', include(views.schedule.urls)),
-    url(r'^api/v1/mobile/', include(views.api.urls)),
+    url(r'^api/v1/mobile/', include(views.api.mobile.urls)),
+    url(r'^api/v1/users/', include(views.api.users.urls)),
     url(r'^admin/', include(views.admin.urls))
 ]
