@@ -75,7 +75,6 @@ def admin_get_all_users(request, selected_id):
 @require_http_methods(["GET"])
 def admin_analytics(request, selected_id):
     data = request.GET.dict().copy()
-    print(request.GET)
     show_user_agent = False
     show_ip_address = False
     show_referrer = False
@@ -96,7 +95,6 @@ def admin_analytics(request, selected_id):
 
     if request.GET.get('ip', '') != '':
         analytics = Analytics.hits_by_ip(request.GET['ip'], col=col)
-        print(list(analytics))
 
     else:
         analytics = Analytics.objects.all()

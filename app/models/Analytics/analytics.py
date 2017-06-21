@@ -2,9 +2,9 @@
 from __future__ import unicode_literals
 
 from django.utils.encoding import python_2_unicode_compatible
-from django.db import models
-
+from django.db import models, connection
 from app.models import User
+import re
 
 
 @python_2_unicode_compatible
@@ -25,13 +25,34 @@ class Analytics(models.Model):
     class Meta:
         db_table = "app_analytics"
 
+    @staticmethod
+    def format_raw_sql(cmd, raw):
+        try:
+            cols = re.search('SELECT (.+?) FROM', cmd).group(1)
+            cols = cols.split(',')
+            num_cols = len(cols)
+            formated = dict()
+            for (col, i) in (cols, range(num_cols)):
+                col_values = []
+                for item, j in raw, range(num_cols):
+                    col_values.append(item[i][j])
+                formated.update({col: col_values})
+            print(formated)
+        except Exception as e:
+            print(e)
+
     @classmethod
     def hits_by_ip(cls, ip, col='*'):
         # raw method requires a primary key
         if (col != '*'):
             col = 'id, ' + col
-        print(col)
         table_name = cls.objects.model._meta.db_table
+        cmd = "SELECT %s FROM %s WHERE ip_address='%s' ORDER BY id DESC" % (
+            col, table_name, ip)
+        with connection.cursor() as cursor:
+            cursor.execute(cmd)
+            raw = cursor.fetchall()
+        formated = Analytics.format_raw_sql(cmd, raw)
         return cls.objects.raw(
             "SELECT %s FROM %s WHERE ip_address='%s' ORDER BY id DESC"
             % (col, table_name, ip))
