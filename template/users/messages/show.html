@@ -18,7 +18,7 @@
                     <div class="widget">
                         <div class="widget-header">
                             <div class="title">
-                                <span class="fs1" aria-hidden="true" data-icon="&#xe088;"></span> Messages for <%= current_user.full_name %>
+                                <span class="fs1" aria-hidden="true" data-icon="&#xe088;"></span> Messages for {{ current_user.full_name }}
                             </div>
                         </div>
                         <div class="widget-body">
@@ -33,10 +33,12 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td><%= @message.creator_name %></td>
-                                    <td><%= @message.created_at.to_date %></td>
-                                    <td><%= @message.message %></td>
-                                    <td><%= link_to "Delete", user_message_path, {:id => "@message.id", :method => 'delete', :class => "btn btn-danger pull-left"}%></td>
+                                    <td>{{ message.creator_name }}</td>
+                                    <td>{{ message.created_at }}</td>
+                                    <td>{{ message.message }}</td>
+                                    <td>
+                                        <a href="/users/{{ current_user.id }}/messages/{{ message.id }}" class="btn btn-danger pull-left">Delete</a>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>

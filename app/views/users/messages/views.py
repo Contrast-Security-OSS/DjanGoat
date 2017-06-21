@@ -27,8 +27,9 @@ def user_messages(request, user_id):
                                receiver_id=int(request.POST['receiver_id']),
                                message=request.POST['message'],
                                read=int(request.POST['read']),
-                               created_at=str(timezone.now()))
-        return redirect(request, "users/"+ current_user.id +"/messages")
+                               created_at=str(timezone.now()),
+                               updated_at=str(timezone.now()))
+        return redirect("/users/"+ str(current_user.id) +"/messages")
 
 
 @require_http_methods(["GET", "DELETE"])
@@ -42,5 +43,5 @@ def user_message(request, user_id, message_id):
         return render(request, "users/messages/show.html", { 'current_user': current_user, 'message': message })
     else:
         message.delete()
-        return redirect(request, "users/"+ current_user.id +"/messages")
+        return redirect("/users/"+ str(current_user.id) +"/messages")
 
