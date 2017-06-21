@@ -2,6 +2,7 @@
 
 {% block head %}
     {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/benefit_forms.css' %}" />
 {% endblock %}
 
 {% block content %}
@@ -11,7 +12,7 @@
   <div class="main-container">
     <div class="row-fluid">
         <div class="card-deck">
-          <div class="span6" style="margin-right:70px">  <!-- Beginning of span-->
+          <div class="span5">  <!-- Beginning of span-->
             <div id = "health_insurance" class="card">
               <div class="card-header">
                   <div class="title">
@@ -23,12 +24,16 @@
                 <div class="card-block" style="background-color:#e8e8e8">
                   <div>
                       <p> Click on PDF to download </p>
+                      <a href="http://localhost:8000/download?name=public%2Fdocs%2FHealth_n_Stuff.pdf&type=File">
+                          <i class="fa fa-file-pdf-o fa-3x" aria-hidden="true" style="color: blue">
+                          </i>
+                      </a>
                   </div>
                 </div>
               </div>
             </div>
           </div> <!-- End of span-->
-          <div class="span6">  <!-- Beginning of span-->
+          <div class="span5">  <!-- Beginning of span-->
             <div class="card">
               <div class="card-header">
                   <div class="title">
@@ -39,7 +44,11 @@
               <div class="card-block">
                 <div class="card-block" style="background-color:#e8e8e8">
                     <div>
-                      <p> Click on PDF to download </p>
+                        <p> Click on PDF to download </p>
+                         <a href="http://localhost:8000/download?name=public%2Fdocs%2FDental_n_Stuff.pdf&type=File">
+                          <i class="fa fa-file-pdf-o fa-3x" aria-hidden="true" style="color: blue">
+                          </i>
+                      </a>
                     </div>
                 </div>
               </div>
