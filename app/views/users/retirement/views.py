@@ -19,4 +19,3 @@ def user_retirement_index(request, user_id):
     t = get_template('users/retirement/index.html')
     html = t.render({'retirement': retirement_info})
     return HttpResponse(html)
-
