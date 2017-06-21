@@ -85,6 +85,8 @@ def admin_analytics(request, selected_id):
     col = ', '.join(col)
 
     if request.GET.get('ip', '') != '':
+        if len(col) == 0:
+            col = "*"
         analytics = Analytics.hits_by_ip(request.GET['ip'], col=col)
 
     else:

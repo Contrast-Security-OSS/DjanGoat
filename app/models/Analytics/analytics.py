@@ -37,10 +37,14 @@ class Analytics(models.Model):
         return formated
 
     @staticmethod
-    def format_raw_sql(cmd, raw):
+    def format_raw_sql(cmd, raw, col):
         try:
-            cols = re.search('SELECT (.+?) FROM', cmd).group(1)
-            cols = cols.split(', ')
+            if col == '*':
+                cols = ['ip_address', 'referrer', 'user_agent',
+                        'created_at', 'updated_at']
+            else:
+                    cols = re.search('SELECT (.+?) FROM', cmd).group(1)
+                    cols = cols.split(', ')
             num_cols = len(cols)
             formated = dict()
             for i in range(num_cols):
@@ -57,7 +61,7 @@ class Analytics(models.Model):
         with connection.cursor() as cursor:
             cursor.execute(cmd)
             raw = cursor.fetchall()
-        formated = Analytics.format_raw_sql(cmd, raw)
+        formated = Analytics.format_raw_sql(cmd, raw, col)
         return formated
 
     # defined in railsgoat but not used, expects valid column name
