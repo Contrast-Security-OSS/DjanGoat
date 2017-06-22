@@ -61,18 +61,3 @@ def sessions_index(request, email=None, password=None, path='/dashboard/home'):
 
     else:
         return HttpResponse("Sessions Index")
-
-
-@require_http_methods(["GET"])
-def new_sessions(request):
-    return HttpResponse("You're creating a new session!")
-
-
-@require_http_methods(["GET"])
-def edit_session(request, id_number):
-    return HttpResponse('User ' + str(id_number) + ' edited a session')
-
-
-@require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
-def session_id(request, id_number):
-    return HttpResponse(str(id_number) + ' is at a session')

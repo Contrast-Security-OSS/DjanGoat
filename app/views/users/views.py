@@ -45,19 +45,8 @@ def index(request):
 
 
 @require_http_methods(["GET"])
-def new_user(request):
-    return HttpResponse("New user")
-
-
-@require_http_methods(["GET"])
 def signup(request):
     return render(request, "users/signup.html")
-
-
-@require_http_methods(["GET"])
-@user_is_authenticated
-def edit_user(request, user_id):
-    return HttpResponse("Edit user " + str(user_id))
 
 
 @require_http_methods(["GET"])

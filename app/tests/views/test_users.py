@@ -46,32 +46,6 @@ class UsersIndexRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
         self.kwargs = {}
 
 
-# Tests checking that that '/users/new' properly handles HttpRequests
-# Accepts GET requests and refuses all others with an error code 405
-# (Method not allowed)
-class UsersNewRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
-    # setup for all test cases
-
-    def setUp(self):
-        self.factory = RequestFactory()
-        self.client = Client()
-        self.route_name = 'app:users_new'
-        self.route = '/users/new'
-        self.view = users.new_user
-        self.responses = {
-            'exists': 200,
-            'GET': 200,
-            'POST': 405,
-            'PUT': 405,
-            'PATCH': 405,
-            'DELETE': 405,
-            'HEAD': 405,
-            'OPTIONS': 405,
-            'TRACE': 405
-        }
-        self.kwargs = {}
-
-
 # Tests checking that that '/signup' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405
 # (Method not allowed)
@@ -96,34 +70,6 @@ class UserSignupRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {}
-
-
-# Tests checking that that '/users/:id/edit' properly handles HttpRequests
-# Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-# Tested on id #55
-class UserEditRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
-    # setup for all test cases
-
-    def setUp(self):
-        self.factory = RequestFactory()
-        self.client = Client()
-        self.route_name = 'app:user_edit'
-        self.route = '/users/55/edit'
-        self.view = users.edit_user
-        self.responses = {
-            'exists': 200,
-            'GET': 200,
-            'POST': 405,
-            'PUT': 405,
-            'PATCH': 405,
-            'DELETE': 405,
-            'HEAD': 405,
-            'OPTIONS': 405,
-            'TRACE': 405
-        }
-        self.kwargs = {'user_id': 55}
-        self.expected_response_content = 'Edit user 55'
-        AuthRouteTestingWithKwargs.__init__(self)
 
 
 # Tests checking that that '/users/:id/account_settings' properly handles HttpRequests

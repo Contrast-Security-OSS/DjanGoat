@@ -8,4 +8,3 @@ urlpatterns = [
     url(r'^(?P<id_number>[0-9]+)/edit$', views.api_id_edit, name='api_id_edit'),
     url(r'^(?P<id_number>[0-9]+)$', views.api_id, name='api_id'),
 ]
-
