@@ -4,7 +4,9 @@ from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.template.loader import get_template
 from app.views import utils
+from django.shortcuts import render
 from app.decorators import user_is_authenticated
+from app.views import utils
 
 
 @require_http_methods(["GET", "POST"])

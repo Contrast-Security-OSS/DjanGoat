@@ -1,9 +1,8 @@
 {% extends 'layouts/shared/base.html' %}
 
 {% block head %}
-{% load static %}
-<script type="text/javascript" src="{% static 'javascript/loader.js'%}"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    {% load static %}
+    <script type="text/javascript" src="{% static 'javascript/loader.js'%}"></script>
 {% endblock %}
 
 {% block content %}
@@ -21,6 +20,13 @@
 </script>
 
 <div class="col-md-6 offset-md-3">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+                {% endfor %}
+            </ul>
+        {% endif %}
 
     {% if messages %}
     <ul class="messages">

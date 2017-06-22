@@ -8,11 +8,13 @@ from app.views import user_retirement_views
 
 class PassingWrongArgumentRegressionTests(TestCase, AuthRouteTestingWithKwargs):
     def setUp(self):
+        AuthRouteTestingWithKwargs.__init__(self)
+
         """ Class for testing api index view"""
         self.factory = RequestFactory()
         self.client = Client()
         self.route_name = 'app:user_retirement_index'
-        self.route = '/users/55/retirement'
+        self.route = "/users/"+ str(self.mixin_model.id) +"/retirement"
         self.view = user_retirement_views.user_retirement_index
         self.responses = {
             'exists': 200,
@@ -25,9 +27,9 @@ class PassingWrongArgumentRegressionTests(TestCase, AuthRouteTestingWithKwargs):
             'OPTIONS': 405,
             'TRACE': 405
         }
-        self.kwargs = {'user_id': 55}
-        self.expected_response_content = 'User 55 retirement index'
-        AuthRouteTestingWithKwargs.__init__(self)
+        self.kwargs = {'user_id': int(self.mixin_model.id) }
+        self.expected_response_content = "Employer Contribution"
+
 
     def dummy_function_that_represents_a_view(self, user_id):
         return type(user_id) is int
