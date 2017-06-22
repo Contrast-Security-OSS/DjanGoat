@@ -98,7 +98,7 @@ class UploadRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
             self.assertContains(response, 'File was successfully uploaded!')
             self.assertTrue(
                 os.path.isfile(BASE_DIR + '/media/data/Dental_n_Stuff.pdf'))
-            os.remove(BASE_DIR + '/media/data/Dental_n_Stuff.pdf') # cleanup
+            os.remove(BASE_DIR + '/media/data/Dental_n_Stuff.pdf')  # cleanup
 
     def test_no_upload_returns_error_message(self):
         auth_request = self.factory.post('/sessions/')
@@ -113,11 +113,12 @@ class UploadRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
         auth_token = auth_response.cookies['auth_token'].value
 
         self.client.cookies = SimpleCookie({'auth_token': auth_token})
-        response = self.client.post(reverse('app:upload_benefit_form'), follow=True)
-        self.assertContains(response, 'Something went wrong! Are you sure you selected a file?')
+        response = self.client.post(reverse('app:upload_benefit_form'),
+                                    follow=True)
+        self.assertContains(response,
+                            'Something went wrong! Are you sure you selected a file?')
         self.assertFalse(
             os.path.isfile(BASE_DIR + '/media/data/Dental_n_Stuff.pdf'))
-
 
 
 # Tests checking that that '/download' properly handles HttpRequests and routing
