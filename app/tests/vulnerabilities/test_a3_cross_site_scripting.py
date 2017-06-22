@@ -8,31 +8,25 @@ import json
 
 class CrossSiteScriptingTest(TestCase):
     def setUp(self):
-        self.factory = RequestFactory()
-        self.client = Client()
-        self.route_name = '/users/13/retirement'
-        self.kwargs = {'id_number': 13}
-        input_email = "cat.dog@contrastsecurity.com"
-        input_password = "catdogzzz"
-        input_admin = False
-        input_first_name = "<script>alert(1)</script>"
-        input_last_name = "catdog"
-        u_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0))
-        u_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 3, 0, 0))
-        self.model = User.objects.create(
-            email=input_email, password=input_password,
-            is_admin=input_admin, first_name=input_first_name,
-            last_name=input_last_name, created_at=u_input_create_date,
-            updated_at=u_input_update_date
-        )
+        self.param = {'email': 'catdog@gmail.com', 'first_name': '<script>alert(1)</script>',
+                      'last_name': 'dog', 'password': '123456',
+                      'confirm': '123456'}
+        page = self.app.get('/signup/')
+        self.assertEqual(len(page.forms), 1)
+        form = page.forms[0]
+        form.set('email', self.param['email'])
+        form.set('first_name', self.param['first_name'])
+        form.set('last_name', self.param['last_name'])
+        form.set('password', self.param['password'])
+        form.set('confirm', self.param['confirm'])
+        self.form = form
 
     def test_header_xss(self):
-        user = User.objects.get(last_name="catdogz")
-        response = self.client.get(request)
-        self.assertTrue('first_name' in response)
-
-    def test_dom_xss(self):
-        self.assertTrue(True)
-
-
+        response = self.form.submit()
+        user = User.objects.filter(email=self.param['first_name'])
+        self.assertTrue(user)
+        self.assertContains(self, response, '<script>alert(1)</script>')
+        self.assertNotContains(self, response,
+                               '&lt;script&gt;alert(1)&lt;/script&gt;')
+        user.first().delete()
 

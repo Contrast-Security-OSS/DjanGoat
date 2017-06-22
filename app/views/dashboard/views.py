@@ -10,7 +10,7 @@ from app.decorators import user_is_authenticated
 @require_http_methods(["GET", "POST"])
 @user_is_authenticated
 def index(request):
-    return HttpResponse("html")
+    return HttpResponse("dashboard index")
 
 
 @require_http_methods(["GET"])
