@@ -22,7 +22,6 @@ def logout(request):
 
 @require_http_methods(["GET", "POST"])
 def sessions_index(request, email=None, password=None, path='/dashboard/home'):
-
     if request.method == "POST":
 
         # Set path variable
