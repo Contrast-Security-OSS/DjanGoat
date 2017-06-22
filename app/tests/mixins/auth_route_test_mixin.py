@@ -11,8 +11,8 @@ import pytz
 # Make sure your kwargs match your variable argument
 class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
     mixin_model = None
-    not_logged_in_message = "Sign Up"
-    no_longer_logged_in_message = "Sign Up"
+    not_logged_in_message = "Fill out the form below to login to your control panel"
+    no_longer_logged_in_message = "Fill out the form below to login to your control panel"
     bad_auth_message = "Email or password incorrect!"
 
     def __init__(self):
@@ -141,9 +141,7 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
         # We should be redirected
         self.assertEqual(response.status_code, 302)
         # Make a new request to the location of the redirect
-        request = self.factory.get(response['LOCATION'])
-        AuthRouteTestingWithKwargs.add_messages_middleware(request)
-        redirect_response = users_views.signup(request)
+        redirect_response = self.client.get(response['LOCATION'], follow=True)
         # Check to make sure the response is correct
         self.assertContains(redirect_response, self.not_logged_in_message)
 
@@ -208,9 +206,7 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
         self.assertEqual(response.status_code, 302)
 
         # Make a new request to the location of the redirect
-        request = self.factory.get(response['LOCATION'])
-        redirect_response = users_views.signup(request)
-
+        redirect_response = self.client.get(response['LOCATION'], follow=True)
         # Check to make sure the response is correct
         self.assertContains(redirect_response, self.not_logged_in_message)
 
