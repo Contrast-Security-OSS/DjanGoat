@@ -45,9 +45,10 @@ def check_if_valid_token(request):
     else:
         token = urlparse.unquote(request.META['HTTP_AUTHORIZATION'])
         regex = re.compile("(.*?)-(.*)")
-        regex_groups = regex.search(token)
+        split_token = token.split('=')[1]
+        regex_groups = regex.search(split_token)
         if regex_groups.group(1):
-            id = regex_groups.group(1).split('=')[0]
+            id = regex_groups.group(1)
         else:
             return False
         if regex_groups.group(2):
