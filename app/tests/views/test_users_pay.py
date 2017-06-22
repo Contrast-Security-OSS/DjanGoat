@@ -7,8 +7,11 @@ from app.tests.mixins import Pep8ViewsTests
 from django_webtest import WebTest
 from django.urls import reverse
 import app.views as views
-from app.models import Pay
+from app.models import Pay, KeyManagement
 from django.utils import timezone
+from Crypto import Random
+import binascii
+
 
 pay = views.user_messages_pay
 
@@ -207,6 +210,15 @@ class UserShowRetirementRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs
             'OPTIONS': 405,
             'TRACE': 405
         }
+        input_iv = binascii.hexlify(Random.new().read(8))
+        km_input_create_date = timezone.now()
+        km_input_update_date = timezone.now()
+
+        self.key_model = KeyManagement.objects.create(
+            iv=input_iv, user=self.mixin_model,
+            created_at=km_input_create_date,
+            updated_at=km_input_update_date
+        )
         self.pay = Pay.objects.create(bank_account_num="1234",
                                       bank_routing_num="5678",
                                       percent_of_deposit=10,

@@ -34,6 +34,7 @@ class User(models.Model):
     auth_token = models.CharField(max_length=255)
 
     def build_benefits_data(self):
+        print("\n\nBUILD BENEFITS DATA RAN\n\n\n")
         # index of the data being chosen
         index = random.randint(0, 3)
 

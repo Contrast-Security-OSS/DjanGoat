@@ -21,6 +21,8 @@ class Encryption():
         try:
             return KeyManagement.objects.get(user=user)
         except KeyManagement.DoesNotExist:
+            print(KeyManagement.objects.all())
+            print(user.id)
             raise Exception("User is not present")
         except KeyManagement.MultipleObjectsReturned:
             raise Exception("Users are sharing the same user_id")

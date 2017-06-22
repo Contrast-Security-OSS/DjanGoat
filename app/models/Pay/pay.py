@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.core.validators import MaxValueValidator
+from app.models.utils import Encryption
 
 
 @python_2_unicode_compatible
@@ -33,10 +34,17 @@ class Pay(models.Model):
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
 
-    def encrypt_ban(self):
-        aes = AES.new(self.get_key(), AES.MODE_CBC, self.get_iv())
-        self.encrypted_ssn = aes.encrypt(self.pad(self.SSN))
-        self.SSN = None
+    def encrypt_bank_num(self):
+        self.bank_account_num = Encryption.encrypt_sensitive_value(
+            self.user, self.bank_account_num
+        )
+
+    def decrypt_ssn(self):
+        return Encryption.decrypt_sensitive_value(
+            self.user, self.bank_account_num
+        )
+
+
 
     class Meta:
         db_table = "app_pays"
