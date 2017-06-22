@@ -1,19 +1,27 @@
-<html>
-    <head>
-        {% load bootstrap4 %}
-        {% bootstrap_css %}
-        {% bootstrap_javascript %}
+<nav id="horizontalNav" class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
 
-        {% load static %}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}" />
+    <button class="navbar-toggler navbar-toggler-right" type="button"
+            data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        {% block head %}{% endblock %}
-    </head>
+    <a class="navbar-brand" href="#">PyGoat</a>
 
-    <body>
-      {% block content %}
-      {% endblock %}
-    </body>
+    <div id="navItems" class="collapse navbar-collapse">
 
-</html>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active ml-5">
+                <!--<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
+                <button type="button" class="btn btn-info">Visit Tutorial</button>
+            </li>
+            <li class="nav-item ml-5">
+                <a href="/login/" class="btn btn-info" role="button">login</a>
+            </li>
+            <li class="nav-item ml-5">
+                <a href="/signup/" class="btn btn-info" role="button">Signup</a>
+            </li>
+        </ul>
+    </div>
+</nav>

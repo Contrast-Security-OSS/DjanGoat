@@ -40,7 +40,7 @@ class TestLogout(TestCase, RouteTestingWithKwargs):
         self.route = '/logout'
         self.view = sessions.login
         self.responses = {
-            'exists': 200,
+            'exists': 302,
             'GET': 200,
             'POST': 405,
             'PUT': 405,

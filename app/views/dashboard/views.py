@@ -18,10 +18,10 @@ def index(request):
 @require_http_methods(["GET"])
 @user_is_authenticated
 def home(request):
-    current_user = utils.current_user(request)
-    t = get_template('dashboard/home.html')
-    html = t.render({'current_user': current_user})
-    return HttpResponse(html)
+    user = utils.current_user(request)
+    context = user.__dict__
+    context.update({'current_user': user})
+    return render(request, 'dashboard/home.html', context=context)
 
 
 @require_http_methods(["GET"])
