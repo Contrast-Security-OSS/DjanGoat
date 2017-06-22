@@ -49,4 +49,5 @@ def download(request):
 @require_http_methods(["POST"])
 @user_is_authenticated
 def upload(request):
+    print request.FILES
     return HttpResponse("Upload user benefit form")
