@@ -7,6 +7,8 @@ import binascii
 
 users = [
     {
+        "id": 1,
+        "user_id": 1,
         "email": "admin@metacorp.com",
         "is_admin": True,
         "password": "admin1234",
@@ -16,6 +18,8 @@ users = [
         "updated_at": pytz.utc.localize(datetime.datetime.now())
     },
     {
+        "id": 2,
+        "user_id": 2,
         "email": "jack@metacorp.com",
         "is_admin": False,
         "password": "yankeessuck",
@@ -25,6 +29,8 @@ users = [
         "updated_at": pytz.utc.localize(datetime.datetime.now())
     },
     {
+        "id": 3,
+        "user_id": 3,
         "email": "jim@metacorp.com",
         "is_admin": False,
         "password": "alohaowasp",
@@ -34,6 +40,8 @@ users = [
         "updated_at": pytz.utc.localize(datetime.datetime.now())
     },
     {
+        "id": 4, 
+        "user_id": 4, 
         "email": "mike@metacorp.com",
         "is_admin": False,
         "password": "motocross1445",
@@ -43,6 +51,8 @@ users = [
         "updated_at": pytz.utc.localize(datetime.datetime.now())
     },
     {
+        "id": 5,
+        "user_id": 5,
         "email": "ken@metacorp.com",
         "is_admin": False,
         "password": "citrusblend",
