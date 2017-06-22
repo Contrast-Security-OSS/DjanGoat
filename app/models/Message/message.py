@@ -9,8 +9,8 @@ from django.utils import safestring
 
 class Message(models.Model):
     MAX_MESSAGE_LEN = 65535
-    creator_id = models.PositiveIntegerField()
-    receiver_id = models.PositiveIntegerField()
+    creator = models.ForeignKey('User', on_delete=models.CASCADE, related_name="created_messages")
+    receiver = models.ForeignKey('User', on_delete=models.CASCADE, related_name="received_messages")
     message = models.TextField(max_length=MAX_MESSAGE_LEN)
     read = models.BooleanField(default=False)
     created_at = models.DateTimeField()
