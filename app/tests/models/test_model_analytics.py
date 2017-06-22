@@ -37,19 +37,16 @@ class AnalyticsModelTests(TestCase, Pep8ModelTests, ModelCrudTests):
                                                     updated_at=self.updated_at)
 
     def test_hits_by_ip(self):
-        # testing search
-        models = list(Analytics.hits_by_ip(self.ip_address))
-        self.assertEqual(len(models), 2)
-        model_first, model_second = models[0], models[1]
-        # testing desc
-        self.assertEqual(model_first, self.model_second)
-        self.assertEqual(model_second, self.model)
-        # testing search with different ip
-        model_third = Analytics.hits_by_ip(self.ip_address2)[0]
-        self.assertEqual(model_third, self.model_third)
-        # testing with col specified
-        models2 = list(Analytics.hits_by_ip(self.ip_address, 'referrer'))
-        self.assertEqual(len(models2), 2)
+        analytics = Analytics.hits_by_ip(self.ip_address, 'referrer')
+        self.assertEqual(len(analytics['referrer']), 2)
+        referrers = analytics['referrer']
+        referrer_first, referrer_second = referrers[0], referrers[1]
+        self.assertEqual(referrer_first, 'Ryan')
+        self.assertEqual(referrer_second, 'Vinai')
+
+        referrer_third = Analytics.hits_by_ip(self.ip_address2,
+                                              'referrer')['referrer'][0]
+        self.assertEqual(referrer_third, "Ryan")
 
     def test_count_by_col(self):
         count1 = Analytics.count_by_col('referrer')

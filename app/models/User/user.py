@@ -100,7 +100,6 @@ class User(models.Model):
     @staticmethod
     def authenticate(input_email, input_password):
         user = User.find_by_email(input_email)
-
         if user is not None:
             if user.password == hashlib.md5(input_password.encode()).hexdigest():
                 auth = user

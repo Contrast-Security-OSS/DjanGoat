@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
     <script type="text/javascript" src="{% static 'javascript/admin/modal.js'%}"></script>
     {% bootstrap_javascript %}
+    {% load list_index %}
 
 {% endblock %}
 
@@ -29,54 +30,21 @@
         <table id="dataTable" class="display" cellspacing="0" width="100%">
             <thead>
             <tr>
-                {% if show_ip_address %}
+                {% for col in cols %}
                 <th>
-                    IP Address
+                    {{ col }}
                 </th>
-                {% endif %}
-                {% if show_referrer %}
-                <th>
-                    Referrer
-                </th>
-                {% endif %}
-                {% if show_user_agent %}
-                <th>
-                    User Agent
-                </th>
-                {% endif %}
-                <th>
-                    Created At
-                </th>
-                <th>
-                    Updated At
-                </th>
+                {% endfor %}
             </tr>
             </thead>
             <tbody>
-            {% for analytic in analytics %}
+            {% for i in num_data %}
             <tr>
-                {% if show_ip_address %}
+            {% for value_list in values %}
                 <td>
-                    {{analytic.ip_address}}
+                    {{ value_list|index:i }}
                 </td>
-                {% endif %}
-                {% if show_referrer %}
-                <td>
-                    {{analytic.referrer}}
-                </td>
-                {% endif %}
-                {% if show_user_agent %}
-                <td>
-                    {{analytic.user_agent}}
-                </td>
-                {% endif %}
-                <td>
-                    {{analytic.created_at}}
-                </td>
-                <td>
-                    {{analytic.updated_at}}
-                </td>
-
+            {% endfor %}
             </tr>
             {% endfor %}
             </tbody>
