@@ -31,18 +31,23 @@ class Pay(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     bank_account_num = models.CharField(max_length=255)
     bank_routing_num = models.CharField(max_length=255)
-    percent_of_deposit = models.PositiveIntegerField(validators=[MaxValueValidator(MAX_INT_VALUE)])
+    percent_of_deposit = models.PositiveIntegerField(
+        validators=[MaxValueValidator(MAX_INT_VALUE)]
+    )
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
 
     def encrypt_bank_num(self):
-        self.bank_account_num = binascii.hexlify(Encryption.encrypt_sensitive_value(self.user, self.bank_account_num))
-
-    def decrypt_ssn(self):
-        return Encryption.decrypt_sensitive_value(
-            self.user, self.bank_account_num
+        self.bank_account_num = binascii.hexlify(
+            Encryption.encrypt_sensitive_value(
+                self.user, self.bank_account_num
+            )
         )
 
+    def decrypt_bank_num(self):
+        return Encryption.decrypt_sensitive_value(
+            self.user, binascii.unhexlify(self.bank_account_num)
+        )
 
     class Meta:
         db_table = "app_pays"

@@ -93,38 +93,38 @@ class UserPayUpdateDDInfo(TestCase, AuthRouteTestingWithKwargs):
         # form.set('email', self.param['email'])
 
 
-class UserPayDecryptBankInfo(TestCase, AuthRouteTestingWithKwargs):
-    """
-        Tests checking that that '/users/:user_id/pay/update_dd_info' properly handles HttpRequests and routing
-        Accepts  POST requests and refuses all others with an error code 405 (Method not allowed)
-        Tested on id #55
-    """
-
-    def setUp(self):
-        self.factory = RequestFactory()
-        self.client = Client()
-        self.route_name = 'app:decrypted_bank_acct_num'
-        self.route = '/users/55/pay/decrypted_bank_acct_num'
-        self.view = pay.decrypt_bank_acct_num
-        self.responses = {
-            'exists': 200,
-            'GET': 405,
-            'POST': 200,
-            'PUT': 405,
-            'PATCH': 405,
-            'DELETE': 405,
-            'HEAD': 405,
-            'OPTIONS': 405,
-            'TRACE': 405
-        }
-        self.kwargs = {'user_id': 55}
-        self.expected_response_content = 'Decrypt the bank info 55'
-        AuthRouteTestingWithKwargs.__init__(self)
-
-    # Override
-    def test_route_exists(self):
-        response = self.client.post(reverse(self.route_name, kwargs=self.kwargs), follow=True)
-        self.assertEqual(response.status_code, self.responses['exists'])
+# class UserPayDecryptBankInfo(TestCase, AuthRouteTestingWithKwargs):
+#     """
+#         Tests checking that that '/users/:user_id/pay/update_dd_info' properly handles HttpRequests and routing
+#         Accepts  POST requests and refuses all others with an error code 405 (Method not allowed)
+#         Tested on id #55
+#     """
+#
+#     def setUp(self):
+#         self.factory = RequestFactory()
+#         self.client = Client()
+#         self.route_name = 'app:decrypted_bank_acct_num'
+#         self.route = '/users/55/pay/decrypted_bank_acct_num'
+#         self.view = pay.decrypt_bank_acct_num
+#         self.responses = {
+#             'exists': 200,
+#             'GET': 405,
+#             'POST': 200,
+#             'PUT': 405,
+#             'PATCH': 405,
+#             'DELETE': 405,
+#             'HEAD': 405,
+#             'OPTIONS': 405,
+#             'TRACE': 405
+#         }
+#         self.kwargs = {'user_id': 55}
+#         self.expected_response_content = 'Decrypt the bank info 55'
+#         AuthRouteTestingWithKwargs.__init__(self)
+#
+#     # Override
+#     def test_route_exists(self):
+#         response = self.client.post(reverse(self.route_name, kwargs=self.kwargs), follow=True)
+#         self.assertEqual(response.status_code, self.responses['exists'])
 
 
 class UserShowRetirementRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):

@@ -28,8 +28,7 @@ function getCookie(name) {
 }
 
 
-function deleteDirectDeposit(deposit_id, token) {
-//    alert(getCookie('csrftoken'))
+function deleteDirectDeposit(deposit_id) {
     var tableRow = $(this).parents('tr');
     $.ajax({
         url: "" + deposit_id,
@@ -43,8 +42,53 @@ function deleteDirectDeposit(deposit_id, token) {
       });
 }
 
-$(document).ready(function(){
-    $(".delete_button").click(function() {
-        console.log("hi")
-    });
+function decryptDirectDeposit() {
+    input = $('#decryptAccountInput').val()
+
+    $.ajax({
+        url: 'decrypt_bank_account_num',
+        type: 'POST',
+        data: {
+            'account_number': input
+        },
+        headers: {'X-CSRFToken': getCookie('csrftoken')},
+        success: function (response) {
+            var td = $("#ddTable td:contains('" + input + "')")
+            td.html(response);
+            td.css("background-color", "green");
+            td.css("color", "white");
+        }
+      });
+}
+
+//$('#decryptForm').on('submit', function(e) {
+//    e.preventDefault();
+//    e.stopPropagation();
+//    console.log("form submitted")
+//    input = $('#decryptAccountInput').val()
+//    console.log(input)
+//    $.ajax({
+//        url: 'decrypt_bank_account_num',
+//        type: 'POST',
+//        data: {
+//            'account_number': input
+//        },
+//        headers: {'X-CSRFToken': getCookie('csrftoken')},
+//        success: function (response) {
+//            console.log(response)
+//            $( "td:contains(" + input + ")" ).css( "text-decoration", "underline" );
+//
+//        }
+//      });
+//});
+
+//$('#decryptForm').submit(function(event){
+//    e.preventDefault();
+//    console.log("sanity check")
+//});
+
+// Submit post on submit
+$('#post-form').on('submit', function(event){
+    event.preventDefault();
+    console.log("form submitted!")  // sanity check
 });

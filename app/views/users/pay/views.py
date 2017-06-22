@@ -16,8 +16,6 @@ from django.utils import timezone
 def update_dd_info(request, user_id):
     curr_user = utils.current_user(request)
 
-    # return HttpResponse("Update dd info for user ")
-
     form = request.POST
     if not form:
         return HttpResponse("Pay index")
@@ -34,7 +32,15 @@ def update_dd_info(request, user_id):
 @require_http_methods(["POST"])
 @user_is_authenticated
 def decrypt_bank_acct_num(request, user_id):
-    return HttpResponse("Decrypt the bank info " + str(user_id))
+    print("test")
+    account_num = request.POST['account_number']
+    print(account_num)
+    curr_user = utils.current_user(request)
+    pay = Pay.objects.get(
+        user=curr_user, bank_account_num=account_num
+    )
+    decrypted_account_num = pay.decrypt_bank_num()
+    return HttpResponse(decrypted_account_num)
 
 
 @require_http_methods(["GET", "POST"])
@@ -58,5 +64,5 @@ def user_pay(request, user_id, id):
         Pay.objects.get(id=id).delete()
         return HttpResponse("Success!")
 
-    return HttpResponse("Pay for user " + str(user_id) +
-                        " for pay with id " + str(id))
+    return HttpResponse("Pay for user " +
+                        str(user_id) + " for pay with id " + str(id))
