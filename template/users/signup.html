@@ -1,8 +1,8 @@
 {% extends 'layouts/shared/base.html' %}
 
 {% block head %}
-    {% load static %}
-    <script type="text/javascript" src="{% static 'javascript/loader.js'%}"></script>
+{% load static %}
+<script type="text/javascript" src="{% static 'javascript/loader.js'%}"></script>
 {% endblock %}
 
 {% block content %}
@@ -17,16 +17,17 @@
       var paramValue = decodeURIComponent(hashParam.split('=')[1]);
       document.write("<OPTION value=3>" + paramValue + "</OPTION>");
     //document.write("</select>");
+
 </script>
 
 <div class="col-md-6 offset-md-3">
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
-                {% endfor %}
-            </ul>
-        {% endif %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>{{ message }}</div>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
     {% if messages %}
     <ul class="messages">

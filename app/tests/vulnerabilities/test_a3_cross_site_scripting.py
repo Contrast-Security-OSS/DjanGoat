@@ -50,5 +50,3 @@ class CrossSiteScriptingTest(WebTest):
         self.form.submit()
         page = self.app.get('/dashboard/home')
         self.assertEqual(len(page.forms), 3)
-
-
