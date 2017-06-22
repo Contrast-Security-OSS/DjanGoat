@@ -159,7 +159,7 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
 
         # Make sure new session not created
         self.assertEqual(auth_response.status_code, 302)
-        self.assertEqual(auth_response['message'], "Email or password incorrect!")
+        self.assertEqual(auth_response['message'], "Password incorrect!")
 
         # Error should be raised as no cookie should be set (post to create session failed)
         with self.assertRaises(KeyError) as error:
@@ -176,7 +176,7 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
 
         # Make sure new session not created
         self.assertEqual(auth_response.status_code, 302)
-        self.assertEqual(auth_response["message"], "Email or password incorrect!")
+        self.assertEqual(auth_response["message"], "Email incorrect!")
 
         # Error should be raised as no cookie should be set (post to create session failed)
         with self.assertRaises(KeyError) as error:
