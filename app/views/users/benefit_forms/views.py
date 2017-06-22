@@ -1,12 +1,11 @@
 from __future__ import unicode_literals
-
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import render, reverse
 from wsgiref.util import FileWrapper
 from app.decorators import user_is_authenticated
 from pygoat.settings import BASE_DIR
-from app.models import Benefits, User
+from app.models import Benefits
 from django.contrib import messages
 from app.views import utils
 import os
