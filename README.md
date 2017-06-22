@@ -53,6 +53,12 @@ setup the database
     python manage.py migrate
 ```
 
+4. To set up seed data you can run:
+
+```
+    python manage.py seed
+```
+
 For developers create a local_settings.py file in the pygoat folder
 that mocks production_setting.py.
 
