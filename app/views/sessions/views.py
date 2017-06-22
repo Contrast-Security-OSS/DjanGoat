@@ -51,9 +51,9 @@ def sessions_index(request, email=None, password=None, path='/dashboard/home'):
             message += "Email or password incorrect!"
         except Exception as error:
             if u'Incorrect Password' in error.message:
-                message += "Email or password incorrect!"
+                message = "Email or password incorrect!"
             else:
-                message += str(error)
+                message = str(error)
         messages.add_message(request, messages.INFO, message)
 
         response = HttpResponseRedirect("/login/")
