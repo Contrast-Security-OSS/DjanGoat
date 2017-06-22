@@ -80,7 +80,7 @@ class UserPayUpdateDDInfo(TestCase, AuthRouteTestingWithKwargs):
 
     # Override
     def test_route_exists(self):
-        response = self.client.post(reverse(self.route_name, kwargs=self.kwargs))
+        response = self.client.post(reverse(self.route_name, kwargs=self.kwargs), follow=True)
         self.assertEqual(response.status_code, self.responses['exists'])
 
     def test_route_post(self):
@@ -123,7 +123,7 @@ class UserPayDecryptBankInfo(TestCase, AuthRouteTestingWithKwargs):
 
     # Override
     def test_route_exists(self):
-        response = self.client.post(reverse(self.route_name, kwargs=self.kwargs))
+        response = self.client.post(reverse(self.route_name, kwargs=self.kwargs), follow=True)
         self.assertEqual(response.status_code, self.responses['exists'])
 
 

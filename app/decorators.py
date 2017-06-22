@@ -1,5 +1,5 @@
 from app.models import User
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 
 
 def user_is_authenticated(function):
@@ -10,9 +10,9 @@ def user_is_authenticated(function):
                 user = User.objects.get(auth_token=request.COOKIES['auth_token'])
                 return function(request, *args, **kwargs)
             except User.DoesNotExist:
-                return HttpResponse("Sorry, but you are no longer logged in to your session. Please log in again")
+                return HttpResponseRedirect('/login')
         else:
-            return HttpResponse("Sorry, but you are not logged in. Please log in again")
+            return HttpResponseRedirect('/login')
 
     wrap.__doc__ = function.__doc__
     wrap.__name__ = function.__name__

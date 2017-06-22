@@ -2,9 +2,10 @@
 from __future__ import unicode_literals
 
 from django.utils.encoding import python_2_unicode_compatible
-from django.db import models
-
+from django.db import models, connection
 from app.models import User
+import re
+import json
 
 
 @python_2_unicode_compatible
@@ -22,20 +23,46 @@ class Analytics(models.Model):
     created_at = models.DateTimeField('date created')
     updated_at = models.DateTimeField('date updated')
 
+    class Meta:
+        db_table = "app_analytics"
+
+    @classmethod
+    def objects_in_list(cls):
+        objects = cls.objects.all()
+        cols = ['ip_address', 'referrer', 'user_agent',
+                'created_at', 'updated_at']
+        formated = dict()
+        for col in cols:
+            formated[col] = [getattr(item, col) for item in objects]
+        return formated
+
+    @staticmethod
+    def format_raw_sql(cmd, raw, col):
+        try:
+            if col == '*':
+                cols = ['ip_address', 'referrer', 'user_agent',
+                        'created_at', 'updated_at']
+            else:
+                    cols = re.search('SELECT (.+?) FROM', cmd).group(1)
+                    cols = cols.split(', ')
+            num_cols = len(cols)
+            formated = dict()
+            for i in range(num_cols):
+                formated[cols[i]] = [item[i] for item in raw]
+            return formated
+        except Exception as e:
+            return dict()
+
     @classmethod
     def hits_by_ip(cls, ip, col='*'):
-        # raw method requires a primary key
-        if (col != '*'):
-            col = 'id, ' + col
         table_name = cls.objects.model._meta.db_table
-        objects = cls.objects.raw(
-            "SELECT %s FROM %s WHERE ip_address='%s' ORDER BY id DESC"
-            % (col, table_name, ip))
-        # if (col != '*'):
-        #     cols = col.split(',')
-        #     cols[0] = 'ip_address'
-        #     result =
-        return objects
+        cmd = "SELECT %s FROM %s WHERE ip_address='%s' ORDER BY id DESC" % (
+            col, table_name, ip)
+        with connection.cursor() as cursor:
+            cursor.execute(cmd)
+            raw = cursor.fetchall()
+        formated = Analytics.format_raw_sql(cmd, raw, col)
+        return formated
 
     # defined in railsgoat but not used, expects valid column name
     @classmethod

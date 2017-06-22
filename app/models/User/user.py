@@ -100,7 +100,6 @@ class User(models.Model):
     @staticmethod
     def authenticate(input_email, input_password):
         user = User.find_by_email(input_email)
-
         if user is not None:
             if user.password == hashlib.md5(input_password.encode()).hexdigest():
                 auth = user
@@ -161,6 +160,30 @@ class User(models.Model):
             err_list.append("Password and Confirm Password does not match")
         if User.objects.filter(email=form["email"]):
             err_list.append("Email has already been taken")
+        err_msg = " and ".join(err_list)
+        return err_msg
+
+    @staticmethod
+    def validate_update_form(form, update):
+        err_list = []
+        if form["password"] != form["confirm"]:
+            err_list.append("Password and Confirm Password does not match")
+        elif len(form["password"]) != 0:
+            if len(form["password"]) < 6:
+                err_list.append("Password minimum 6 characters")
+            elif len(form["password"]) > 40:
+                err_list.append("Password maximum 40 characters")
+            else:
+                update["password"] = form["password"]
+        if len(form["email"]) > 0:
+            if User.objects.filter(email=form["email"]):
+                err_list.append("Email has already been taken")
+            else:
+                update["email"] = form["email"]
+        if len(form["first_name"]) > 0:
+            update["first_name"] = form["first_name"]
+        if len(form["last_name"]) > 0:
+            update["last_name"] = form["last_name"]
         err_msg = " and ".join(err_list)
         return err_msg
 
