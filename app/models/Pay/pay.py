@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.core.validators import MaxValueValidator
 from app.models.utils import Encryption
+import binascii
 
 
 @python_2_unicode_compatible
@@ -35,15 +36,12 @@ class Pay(models.Model):
     updated_at = models.DateTimeField()
 
     def encrypt_bank_num(self):
-        self.bank_account_num = Encryption.encrypt_sensitive_value(
-            self.user, self.bank_account_num
-        )
+        self.bank_account_num = binascii.hexlify(Encryption.encrypt_sensitive_value(self.user, self.bank_account_num))
 
     def decrypt_ssn(self):
         return Encryption.decrypt_sensitive_value(
             self.user, self.bank_account_num
         )
-
 
 
     class Meta:

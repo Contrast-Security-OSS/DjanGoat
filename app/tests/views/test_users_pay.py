@@ -127,64 +127,6 @@ class UserPayDecryptBankInfo(TestCase, AuthRouteTestingWithKwargs):
         self.assertEqual(response.status_code, self.responses['exists'])
 
 
-class UserNewPayRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
-    """
-        Tests checking that that '/users/:user_id/user/new' properly handles HttpRequests and routing
-        Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-        Tested on id #55
-    """
-
-    def setUp(self):
-        self.factory = RequestFactory()
-        self.client = Client()
-        self.route_name = 'app:pay_new'
-        self.route = '/users/55/pay/new'
-        self.view = pay.new_user_pay
-        self.responses = {
-            'exists': 200,
-            'GET': 200,
-            'POST': 405,
-            'PUT': 405,
-            'PATCH': 405,
-            'DELETE': 405,
-            'HEAD': 405,
-            'OPTIONS': 405,
-            'TRACE': 405
-        }
-        self.kwargs = {'user_id': 55}
-        self.expected_response_content = 'New pay for 55'
-        AuthRouteTestingWithKwargs.__init__(self)
-
-
-class UserEditPayRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
-    """
-    Tests checking that that '/users/:user_id/pay/id/edit' properly handles HttpRequests and routing
-    Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-    Tested on user_id 55 and id 22
-    """
-
-    def setUp(self):
-        self.factory = RequestFactory()
-        self.client = Client()
-        self.route_name = 'app:pay_edit'
-        self.route = 'users/55/pay/22/edit'
-        self.view = pay.edit_user_pay
-        self.responses = {
-            'exists': 200,
-            'GET': 200,
-            'POST': 405,
-            'PUT': 405,
-            'PATCH': 405,
-            'DELETE': 405,
-            'HEAD': 405,
-            'OPTIONS': 405,
-            'TRACE': 405
-        }
-        AuthRouteTestingWithKwargs.__init__(self)
-        self.kwargs = {'user_id': 55, 'id': 22}
-        self.expected_response_content = 'Edit pay for user 55 for pay with id 22'
-
-
 class UserShowRetirementRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     """
        Tests checking that that '/users/:user_id/pay/id/' properly handles HttpRequests and routing
@@ -219,6 +161,7 @@ class UserShowRetirementRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs
             created_at=km_input_create_date,
             updated_at=km_input_update_date
         )
+
         self.pay = Pay.objects.create(bank_account_num="1234",
                                       bank_routing_num="5678",
                                       percent_of_deposit=10,

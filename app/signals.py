@@ -10,6 +10,7 @@ def create_user_values(sender, instance, *args, **kwargs):
         instance.hash_password()
         instance.assign_user_id()
 
+
 @receiver(pre_save, sender=Pay)
 def encrypt(sender, instance, *args, **kwargs):
     if instance.pk is None:
