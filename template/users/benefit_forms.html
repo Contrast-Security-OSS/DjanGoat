@@ -72,14 +72,20 @@
                         <div class="row">
                             <label class="btn btn-primary" for="my-file-selector">
                                 <input id="my-file-selector" type="file" style="display:none"
-                                       onchange="$('#upload-file-info').html(this.files[0].name)">
+                                       onchange="$('#upload-file-info').html(this.files[0].name); console.log(this.files[0])">
                                 Add File
                             </label>
                             <span class='label label-info' id="upload-file-info"></span>
 
-                            <form method="post" action="{% url 'app:upload_benefit_form' %}" enctype="multipart/form-data">
+                            <form method="post" action="{% url 'app:upload_benefit_form' %}"
+                                  enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <button class="btn btn-success" type="submit"> Start Upload</button>
+                            </form>
+                            <form method="post" action="{% url 'app:upload_benefit_form' %} enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="file" name="myfile">
+                                <button type="submit">Upload</button>
                             </form>
                         </div>
                     </div>
