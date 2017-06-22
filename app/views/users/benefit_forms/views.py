@@ -16,36 +16,22 @@ import os
 @user_is_authenticated
 def user_benefit_forms(request, user_id):
     user = utils.current_user(request)
-    return render(request, 'users/benefit_forms.html', context={'current_user': user})
-
-
-@require_http_methods(["GET"])
-@user_is_authenticated
-def new_user_benefit_form(request, user_id):
-    return HttpResponse("New benefit form" + str(user_id))
-
-
-@require_http_methods(["GET"])
-@user_is_authenticated
-def edit_user_benefit_form(request, user_id, benefit_form_id):
-    return HttpResponse("edit benefit form" + str(user_id) +
-                        str(benefit_form_id))
-
-
-@require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
-@user_is_authenticated
-def user_benefit_form(request, user_id, benefit_form_id):
-    return HttpResponse("show benefit form" + str(user_id) +
-                        str(benefit_form_id))
+    return render(request, 'users/benefit_forms.html',
+                  context={'current_user': user})
 
 
 @require_http_methods(["GET"])
 @user_is_authenticated
 def download(request):
-    path = BASE_DIR + r"/" + request.GET.get('name')
-    wrapper = FileWrapper(file(path))
-    response = HttpResponse(wrapper, content_type='application/pdf')  # hard coded for now
-    response['Content-Disposition'] = 'attachment; filename=%s' % os.path.basename(path)
+    path = BASE_DIR + r"/" + request.GET.get('name', '')
+    try:
+        wrapper = FileWrapper(file(path))
+    except:
+        wrapper = None
+    response = HttpResponse(wrapper,
+                            content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=%s' \
+                                      % os.path.basename(path)
     response['Content-Length'] = os.path.getsize(path)
     return response
 
@@ -58,6 +44,8 @@ def upload(request):
         Benefits.save_data(request.FILES['myfile'])
         messages.success(request, 'File was successfully uploaded!')
     else:
-        messages.error(request, 'Something went wrong! Are you sure you selected a file?')
+        messages.error(
+            request, 'Something went wrong! Are you sure you selected a file?')
 
-    return HttpResponseRedirect(reverse('app:user_benefit_forms', kwargs={'user_id': id}))
+    return HttpResponseRedirect(reverse('app:user_benefit_forms',
+                                        kwargs={'user_id': id}))
