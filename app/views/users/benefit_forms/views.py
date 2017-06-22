@@ -40,7 +40,7 @@ def download(request):
 def upload(request):
     id = utils.current_user(request).user_id
     if 'myfile' in request.FILES:
-        Benefits.save_data(request.FILES['myfile'])
+        Benefits.save_data(request.FILES['myfile'], request.POST['backup'])
         messages.success(request, 'File was successfully uploaded!')
     else:
         messages.error(

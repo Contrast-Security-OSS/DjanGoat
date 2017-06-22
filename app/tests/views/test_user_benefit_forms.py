@@ -94,7 +94,7 @@ class UploadRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
         self.client.cookies = SimpleCookie({'auth_token': auth_token})
         with open(BASE_DIR + '/public/docs/Dental_n_Stuff.pdf') as fp:
             response = self.client.post(reverse('app:upload_benefit_form'),
-                                        {'myfile': fp}, follow=True)
+                                        {'myfile': fp, 'backup': False}, follow=True)
             self.assertContains(response, 'File was successfully uploaded!')
             self.assertTrue(
                 os.path.isfile(BASE_DIR + '/media/data/Dental_n_Stuff.pdf'))
@@ -114,7 +114,7 @@ class UploadRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
 
         self.client.cookies = SimpleCookie({'auth_token': auth_token})
         response = self.client.post(reverse('app:upload_benefit_form'),
-                                    follow=True)
+                                    {'backup': False},follow=True)
         self.assertContains(response,
                             'Something went wrong! Are you sure you selected a file?')
         self.assertFalse(
