@@ -7,6 +7,8 @@ from app.tests.mixins import Pep8ViewsTests
 from django_webtest import WebTest
 from django.urls import reverse
 import app.views as views
+from app.models import Pay
+from django.utils import timezone
 
 pay = views.user_messages_pay
 
@@ -175,9 +177,9 @@ class UserEditPayRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
             'OPTIONS': 405,
             'TRACE': 405
         }
+        AuthRouteTestingWithKwargs.__init__(self)
         self.kwargs = {'user_id': 55, 'id': 22}
         self.expected_response_content = 'Edit pay for user 55 for pay with id 22'
-        AuthRouteTestingWithKwargs.__init__(self)
 
 
 class UserShowRetirementRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
@@ -188,6 +190,7 @@ class UserShowRetirementRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs
      """
 
     def setUp(self):
+        AuthRouteTestingWithKwargs.__init__(self)
         self.factory = RequestFactory()
         self.client = Client()
         self.route_name = 'app:pay_user'
@@ -195,15 +198,24 @@ class UserShowRetirementRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs
         self.view = pay.user_pay
         self.responses = {
             'exists': 200,
-            'GET': 200,
+            'GET': 405,
             'POST': 405,
-            'PUT': 200,
-            'PATCH': 200,
+            'PUT': 405,
+            'PATCH': 405,
             'DELETE': 200,
             'HEAD': 405,
             'OPTIONS': 405,
             'TRACE': 405
         }
-        self.kwargs = {'user_id': 55, 'id': 22}
-        self.expected_response_content = 'Pay for user 55 for pay with id 22'
-        AuthRouteTestingWithKwargs.__init__(self)
+        self.pay = Pay.objects.create(bank_account_num="1234",
+                                      bank_routing_num="5678",
+                                      percent_of_deposit=10,
+                                      user=self.mixin_model,
+                                      created_at=timezone.now(),
+                                      updated_at=timezone.now())
+        self.kwargs = {'user_id': 55, 'id': self.pay.id}
+        self.expected_response_content = 'Success!'
+
+    def test_route_exists(self):
+        response = self.client.delete(reverse(self.route_name, kwargs=self.kwargs))
+        self.assertEqual(response.status_code, self.responses['exists'])

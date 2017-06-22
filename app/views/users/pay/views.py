@@ -64,7 +64,7 @@ def edit_user_pay(request, user_id, id):
                         " for pay with id " + str(id))
 
 
-@require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
+@require_http_methods(["DELETE"])
 @user_is_authenticated
 def user_pay(request, user_id, id):
     if request.method == "DELETE":

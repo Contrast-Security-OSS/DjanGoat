@@ -33,5 +33,10 @@ class Pay(models.Model):
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
 
+    def encrypt_ban(self):
+        aes = AES.new(self.get_key(), AES.MODE_CBC, self.get_iv())
+        self.encrypted_ssn = aes.encrypt(self.pad(self.SSN))
+        self.SSN = None
+
     class Meta:
         db_table = "app_pays"
