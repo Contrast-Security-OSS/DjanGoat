@@ -18,14 +18,9 @@ def index(request):
 @user_is_authenticated
 def home(request):
     user = utils.current_user(request)
-<<<<<<< HEAD
     context = user.__dict__
     context.update({'current_user': user})
     return render(request, 'dashboard/home.html', context=context)
-=======
-    return render(request, 'dashboard/home.html',
-                  context={'current_user': user})
->>>>>>> 49f2392ad72177ebd458b0c95b3df40bf8966fa6
 
 
 @require_http_methods(["GET"])
