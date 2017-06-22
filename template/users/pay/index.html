@@ -8,32 +8,33 @@
 
 {% block content %}
     <div id="payIndex">
-        <h1 id="pageTitle">{{ user.first_name }} {{ user.last_name }} Pay Summary</h1>
+        <h1 id="pageTitle">{{ current_user.first_name }} {{ current_user.last_name }} Pay Summary</h1>
         <div class="row">
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header"><i class="fa fa-cog" aria-hidden="true"></i> Direct Deposit</div>
                     <div class="card-block">
                         <div class="well">
-                            <form class="form-inline">
+                            <form method="post" class="form-inline" action="/users/{{ current_user.id }}/pay/update_dd_info">
+                                {% csrf_token %}
                                 <label class="sr-only" for="bankAccNumInput">Bank Account Number</label>
                                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                    <input type="text" class="form-control" id="bankAccNumInput" placeholder="Bank Account Number">
+                                    <input type="text" class="form-control" id="bankAccNumInput" name="bankAccNumInput" placeholder="Bank Account Number">
                                     <div class="input-group-addon">#</div>
                                 </div>
 
                                 <label class="sr-only" for="bankRouteNumInput">Bank Routing Number</label>
                                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                    <input type="text" class="form-control" id="bankRouteNumInput" placeholder="Bank Routing Number">
+                                    <input type="text" class="form-control" id="bankRouteNumInput" name="bankRouteNumInput" placeholder="Bank Routing Number">
                                     <div class="input-group-addon">#</div>
                                 </div>
 
                                 <label class="sr-only" for="percentDepositInput">Percentage of Deposit</label>
                                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                    <input type="text" class="form-control" id="percentDepositInput" placeholder="Percentage of Deposit">
+                                    <input type="text" class="form-control" id="percentDepositInput" name="percentDepositInput" placeholder="Percentage of Deposit">
                                     <div class="input-group-addon">%</div>
                                 </div>
-                                <button type="submit" class="btn btn-primary mb-2 mr-sm-2 mb-sm-0">Submit</button>
+                                <button type="submit" value="Submit" class="btn btn-primary mb-2 mr-sm-2 mb-sm-0">Submit</button>
                             </form>
                         </div>
                     </div>
@@ -69,30 +70,16 @@
                                     <th>Percentage of deposit</th>
                                     <th>Action</th>
                                 </tr>
-                                <tr>
-                                    <td>a</td>
-                                    <td>b</td>
-                                    <td>c</td>
-                                    <td>d</td>
+                                {% for entry in direct_deposits %}
+                                <tr id="entry{{ entry.id }}">
+                                    <td>{{ entry.bank_account_num }}</td>
+                                    <td>{{ entry.bank_routing_num }}</td>
+                                    <td>{{ entry.percent_of_deposit }}</td>
+                                    <td>
+                                        <a onclick="deleteDirectDeposit({{ entry.id }})" class="delete_button"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <td>a</td>
-                                    <td>b</td>
-                                    <td>c</td>
-                                    <td>d</td>
-                                </tr>
-                                <tr>
-                                    <td>a</td>
-                                    <td>b</td>
-                                    <td>c</td>
-                                    <td>d</td>
-                                </tr>
-                                <tr>
-                                    <td>a</td>
-                                    <td>b</td>
-                                    <td>c</td>
-                                    <td>d</td>
-                                </tr>
+                                {% endfor %}
                             </table>
                         </div>
                     </div>

@@ -5,13 +5,30 @@ from app.decorators import user_is_authenticated
 
 from django.template.loader import get_template
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
 from app.views import utils
+from app.models import Pay
+from django.utils import timezone
 
 
 @require_http_methods(["POST"])
 @user_is_authenticated
 def update_dd_info(request, user_id):
-    return HttpResponse("Update dd info for user " + str(user_id))
+    curr_user = utils.current_user(request)
+
+    # return HttpResponse("Update dd info for user ")
+
+    form = request.POST
+    if not form:
+        return HttpResponse("Pay index")
+
+    Pay.objects.create(user=curr_user,
+                       bank_account_num=form['bankAccNumInput'],
+                       bank_routing_num=form['bankRouteNumInput'],
+                       percent_of_deposit=form['percentDepositInput'],
+                       created_at=timezone.now(), updated_at=timezone.now())
+
+    return HttpResponseRedirect('/users/' + str(user_id) + '/pay')
 
 
 @require_http_methods(["POST"])
@@ -26,7 +43,10 @@ def user_pay_index(request, user_id):
     template = get_template('users/pay/index.html')
     user = utils.current_user(request)
     if user is not None:
-        return HttpResponse(template.render({'user': user}))
+        direct_deposits = Pay.objects.filter(user=user)
+        return render(request, 'users/pay/index.html',
+                      {'current_user': user,
+                       'direct_deposits': direct_deposits})
     else:
         return HttpResponseRedirect('/signup')
 
@@ -47,5 +67,9 @@ def edit_user_pay(request, user_id, id):
 @require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
 @user_is_authenticated
 def user_pay(request, user_id, id):
+    if request.method == "DELETE":
+        Pay.objects.get(id=id).delete()
+        return HttpResponse("Success!")
+
     return HttpResponse("Pay for user " + str(user_id) +
                         " for pay with id " + str(id))

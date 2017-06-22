@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.test import TestCase, RequestFactory, Client
 from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
+from django_webtest import WebTest
 from django.urls import reverse
 import app.views as views
 
@@ -76,6 +77,15 @@ class UserPayUpdateDDInfo(TestCase, AuthRouteTestingWithKwargs):
     def test_route_exists(self):
         response = self.client.post(reverse(self.route_name, kwargs=self.kwargs))
         self.assertEqual(response.status_code, self.responses['exists'])
+
+    def test_route_post(self):
+        self.param = {'email': 'ziyang@contrast.com', 'first_name': 'ziyang',
+                      'last_name': 'wang', 'password': '123456',
+                      'confirm': '123456'}
+        # page = self.app.get('/users/55/pays')
+        # self.assertEqual(len(page.forms), 2)
+        # form = page.forms[0]
+        # form.set('email', self.param['email'])
 
 
 class UserPayDecryptBankInfo(TestCase, AuthRouteTestingWithKwargs):
