@@ -20,11 +20,11 @@ class CrossSiteScriptingTest(WebTest):
         form.set('confirm', self.param['confirm'])
         self.form = form
 
-    # the first name field above is specified as a form, so by testing whether
-    # there is a form on the dashboard page, we can confirm that the xss attack
-    # executed correctly
+    # the first name field is where the vulnerability occurs, so by testing how
+    # many forms are on the dashboard page with different first names, we can
+    # confirm that the xss attack has executed correctly
     def test_header_xss_0_forms(self):
-        first_name = 'dog'
+        first_name = 'dogs'
         self.form.set('first_name', first_name)
         self.form.submit()
         page = self.app.get('/dashboard/home')
@@ -43,5 +43,12 @@ class CrossSiteScriptingTest(WebTest):
         self.form.submit()
         page = self.app.get('/dashboard/home')
         self.assertEqual(len(page.forms), 2)
+
+    def test_header_xss_3_forms(self):
+        first_name = '<form>dogs</form><form>cat</form><form>bird</form>'
+        self.form.set('first_name', first_name)
+        self.form.submit()
+        page = self.app.get('/dashboard/home')
+        self.assertEqual(len(page.forms), 3)
 
 
