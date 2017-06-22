@@ -15,7 +15,7 @@ class CrossSiteScriptingTest(TestCase):
         input_email = "cat.dog@contrastsecurity.com"
         input_password = "catdogzzz"
         input_admin = False
-        input_first_name = "<script>document.write("<b>dog</b>");</script>"
+        input_first_name = "<script>alert(1)</script>"
         input_last_name = "catdog"
         u_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0))
         u_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 3, 0, 0))

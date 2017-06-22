@@ -3,21 +3,22 @@ from __future__ import unicode_literals
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.template.loader import get_template
-
+from app.views import utils
 from app.decorators import user_is_authenticated
 
 
 @require_http_methods(["GET", "POST"])
 @user_is_authenticated
 def index(request):
-    return HttpResponse("dashboard index")
+    return HttpResponse("html")
 
 
 @require_http_methods(["GET"])
 @user_is_authenticated
 def home(request):
+    current_user = utils.current_user(request)
     t = get_template('dashboard/home.html')
-    html = t.render()
+    html = t.render({'current_user': current_user})
     return HttpResponse(html)
 
 
