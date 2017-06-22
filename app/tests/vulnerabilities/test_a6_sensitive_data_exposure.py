@@ -69,3 +69,15 @@ class SensitiveDataExposureTest(TestCase):
                                    **{'HTTP_AUTHORIZATION': 'Token token=1%0A2-050ddd40584978fe9e82840b8b95abb98e4786dc'})
         content = json.loads(response.content)
         self.assertTrue(len(content) > 1)
+
+    def test_new_line_token_allows_you_to_act_like_another_user(self):
+        self.kwargs = {'id_number': 2}
+        user = User.objects.get(first_name="Vinai!")
+        user.is_admin = False
+        user.save()
+        request = reverse(self.route_name, kwargs=self.kwargs)
+        response = self.client.get(request,
+                                   **{'HTTP_AUTHORIZATION': 'Token token=1%0A2-050ddd40584978fe9e82840b8b95abb98e4786dc'})
+        content = json.loads(response.content)[0]['fields']
+        self.assertEquals('vinai.dens@contrastsecurity.com', content['email'])
+
