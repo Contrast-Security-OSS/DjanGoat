@@ -1,12 +1,13 @@
 from __future__ import unicode_literals
 from django.test import TestCase, RequestFactory, Client
+from django_webtest import WebTest
 from app.models import User
 import pytz
 import datetime
 import json
 
 
-class CrossSiteScriptingTest(TestCase):
+class CrossSiteScriptingTest(WebTest):
     def setUp(self):
         self.param = {'email': 'catdog@gmail.com', 'first_name': '<script>alert(1)</script>',
                       'last_name': 'dog', 'password': '123456',
@@ -23,10 +24,9 @@ class CrossSiteScriptingTest(TestCase):
 
     def test_header_xss(self):
         response = self.form.submit()
+        print (response)
         user = User.objects.filter(email=self.param['first_name'])
-        self.assertTrue(user)
-        self.assertContains(self, response, '<script>alert(1)</script>')
-        self.assertNotContains(self, response,
-                               '&lt;script&gt;alert(1)&lt;/script&gt;')
+        self.assertTrue('<script>alert(1)</script>' in response)
+        self.assertNotContains('&lt;script&gt;alert(1)&lt;/script&gt;' not in response)
         user.first().delete()
 
