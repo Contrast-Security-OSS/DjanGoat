@@ -5,6 +5,7 @@ from django.views.decorators.http import require_http_methods
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from app.models.User.user import User
+from django.contrib.messages import get_messages
 
 
 @require_http_methods(["GET"])
@@ -19,48 +20,45 @@ def logout(request):
     return response
 
 
-def validate_login_form(form):
-    err_list = []
-    if 'email' not in form or form['email'] is None:
-        err_list.append("Error: no email inputted")
-    if 'password' not in form or form['password']is None:
-        err_list.append("Error: no password inputted")
-    err_msg = " and ".join(err_list)
-    return err_msg
-
-
 @require_http_methods(["GET", "POST"])
 def sessions_index(request, email=None, password=None, path='/dashboard/home'):
 
     if request.method == "POST":
 
-        form = request.POST
-        if not form:
-            return HttpResponse("POST with no form")
-        err_msg = validate_login_form(form)
+        # Set path variable
+        if 'path' in request.POST:
+            path = request.POST['path']
 
-        if len(err_msg) > 0:
-            messages.add_message(request, messages.INFO, err_msg)
-        else:
-            try:
-                if 'path' in form:
-                    path = form['path']
-                else:
-                    path = '/dashboard/home'
-                response = HttpResponseRedirect(path)
-                user = User.authenticate(form['email'], form['password'])
-                response.set_cookie("auth_token", user.auth_token)
-                return response
-            except User.DoesNotExist:
-                messages.add_message(request, messages.INFO,
-                                     "Email or password incorrect!")
-            except Exception as error:
-                if u'Incorrect Password' in error.message:
-                    messages.add_message(request, messages.INFO,
-                                         "Email or password incorrect!")
-                else:
-                    messages.add_message(request, messages.INFO, error)
-        return HttpResponseRedirect("/login/")
+        # Set email variable
+        if 'email' in request.POST:
+            email = request.POST['email']
+        elif email is None:
+            return HttpResponse("Error: no email inputted")
+
+        # Set password variable
+        if 'password' in request.POST:
+            password = request.POST['password']
+        elif password is None:
+            return HttpResponse("Error: no password inputted")
+
+        message = ""
+        try:
+            response = HttpResponseRedirect(path)
+            user = User.authenticate(email, password)
+            response.set_cookie("auth_token", user.auth_token)
+            return response
+        except User.DoesNotExist:
+            message += "Email or password incorrect!"
+        except Exception as error:
+            if u'Incorrect Password' in error.message:
+                message += "Email or password incorrect!"
+            else:
+                message += str(error)
+        messages.add_message(request, messages.INFO, message)
+
+        response = HttpResponseRedirect("/login/")
+        response['message'] = message
+        return response
 
     else:
         return HttpResponse("Sessions Index")

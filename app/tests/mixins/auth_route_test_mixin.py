@@ -1,6 +1,7 @@
 from app.tests.mixins.route_test_mixin import RouteTestingWithKwargs
 from app.views import sessions_views as sessions, users_views
 from app.models.User.user import User
+from django.contrib.messages.storage.fallback import FallbackStorage
 from django.urls import reverse
 import datetime
 import pytz
@@ -38,6 +39,9 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
             super(AuthRouteTestingWithKwargs, self).test_route_get()
         else:
             request = self.factory.get(self.route, follow=True)
+            setattr(request, 'session', 'session')
+            messages = FallbackStorage(request)
+            setattr(request, '_messages', messages)
             self.no_auth_test(request)
             self.good_auth_test(request)
             self.old_auth_test(request)
@@ -49,6 +53,9 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
             super(AuthRouteTestingWithKwargs, self).test_route_post()
         else:
             request = self.factory.post(self.route)
+            setattr(request, 'session', 'session')
+            messages = FallbackStorage(request)
+            setattr(request, '_messages', messages)
             self.no_auth_test(request)
             self.good_auth_test(request)
             self.old_auth_test(request)
@@ -60,6 +67,9 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
             super(AuthRouteTestingWithKwargs, self).test_route_put()
         else:
             request = self.factory.put(self.route)
+            setattr(request, 'session', 'session')
+            messages = FallbackStorage(request)
+            setattr(request, '_messages', messages)
             self.no_auth_test(request)
             self.good_auth_test(request)
             self.old_auth_test(request)
@@ -71,6 +81,9 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
             super(AuthRouteTestingWithKwargs, self).test_route_patch()
         else:
             request = self.factory.patch(self.route)
+            setattr(request, 'session', 'session')
+            messages = FallbackStorage(request)
+            setattr(request, '_messages', messages)
             self.no_auth_test(request)
             self.good_auth_test(request)
             self.old_auth_test(request)
@@ -82,6 +95,9 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
             super(AuthRouteTestingWithKwargs, self).test_route_delete()
         else:
             request = self.factory.delete(self.route)
+            setattr(request, 'session', 'session')
+            messages = FallbackStorage(request)
+            setattr(request, '_messages', messages)
             self.no_auth_test(request)
             self.good_auth_test(request)
             self.old_auth_test(request)
@@ -93,6 +109,9 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
             super(AuthRouteTestingWithKwargs, self).test_route_head()
         else:
             request = self.factory.head(self.route)
+            setattr(request, 'session', 'session')
+            messages = FallbackStorage(request)
+            setattr(request, '_messages', messages)
             self.no_auth_test(request)
             self.good_auth_test(request)
             self.old_auth_test(request)
@@ -104,6 +123,9 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
             super(AuthRouteTestingWithKwargs, self).test_route_options()
         else:
             request = self.factory.options(self.route)
+            setattr(request, 'session', 'session')
+            messages = FallbackStorage(request)
+            setattr(request, '_messages', messages)
             self.no_auth_test(request)
             self.good_auth_test(request)
             self.old_auth_test(request)
@@ -115,6 +137,9 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
             super(AuthRouteTestingWithKwargs, self).test_route_trace()
         else:
             request = self.factory.trace(self.route)
+            setattr(request, 'session', 'session')
+            messages = FallbackStorage(request)
+            setattr(request, '_messages', messages)
             self.no_auth_test(request)
             self.good_auth_test(request)
             self.old_auth_test(request)
@@ -127,6 +152,9 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
         self.assertEqual(response.status_code, 302)
         # Make a new request to the location of the redirect
         request = self.factory.get(response['LOCATION'])
+        setattr(request, 'session', 'session')
+        messages = FallbackStorage(request)
+        setattr(request, '_messages', messages)
         redirect_response = users_views.signup(request)
         # Check to make sure the response is correct
         self.assertContains(redirect_response, self.not_logged_in_message)
@@ -139,12 +167,15 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
         """
         # Create new session
         auth_request = self.factory.post('/sessions/')
+        setattr(auth_request, 'session', 'session')
+        messages = FallbackStorage(request)
+        setattr(auth_request, '_messages', messages)
         auth_response = sessions.sessions_index(auth_request, email="ryan.dens@contrastsecurity.com",
-                                                   password="1234", path="/dashboard")
+                                                password="1234", path="/dashboard")
 
         # Make sure new session not created
-        self.assertEqual(auth_response.status_code, 200)
-        self.assertEqual(auth_response.content, "Email or password incorrect!")
+        self.assertEqual(auth_response.status_code, 302)
+        self.assertEqual(auth_response['message'], "Email or password incorrect!")
 
         # Error should be raised as no cookie should be set (post to create session failed)
         with self.assertRaises(KeyError) as error:
@@ -155,12 +186,15 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
     def bad_email_test(self, request):
         # Create new session
         auth_request = self.factory.post('/sessions/')
+        setattr(auth_request, 'session', 'session')
+        messages = FallbackStorage(request)
+        setattr(auth_request, '_messages', messages)
         auth_response = sessions.sessions_index(auth_request, email="ryan.den@contrastsecurity.com",
                                                        password="12345", path=self.route)
 
         # Make sure new session not created
-        self.assertEqual(auth_response.status_code, 200)
-        self.assertEqual(auth_response.content, "Email or password incorrect!")
+        self.assertEqual(auth_response.status_code, 302)
+        self.assertEqual(auth_response["message"], "Email or password incorrect!")
 
         # Error should be raised as no cookie should be set (post to create session failed)
         with self.assertRaises(KeyError) as error:
@@ -172,6 +206,9 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
     def old_auth_test(self, request):
         # Create new session
         auth_request = self.factory.post('/sessions/')
+        setattr(auth_request, 'session', 'session')
+        messages = FallbackStorage(request)
+        setattr(auth_request, '_messages', messages)
         auth_response = sessions.sessions_index(auth_request, email="ryan.dens@contrastsecurity.com",
                                                    password="12345", path=self.route)
         # Make sure initial redirect was called (but not followed)
@@ -199,6 +236,9 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
     def good_auth_test(self, request):
         # Create new session
         auth_request = self.factory.post('/sessions/')
+        setattr(auth_request, 'session', 'session')
+        messages = FallbackStorage(request)
+        setattr(auth_request, '_messages', messages)
         auth_response = sessions.sessions_index(auth_request, email="ryan.dens@contrastsecurity.com",
                                                    password="12345", path=self.route)
         # Make sure redirect was called (but not followed)
