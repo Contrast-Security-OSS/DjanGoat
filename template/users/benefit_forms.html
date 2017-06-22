@@ -78,7 +78,7 @@
                             <form method="post" action="{% url 'app:upload_benefit_form' %}"
                                   enctype="multipart/form-data">
                                 {% csrf_token %}
-                                <label class="btn btn-primary" for="my-file-selector">
+                                <label class="btn btn-primary m-3" for="my-file-selector">
 
                                     <input id="my-file-selector" name="myfile" type="file"
                                            onchange="$('#upload-file-info').html(this.files[0].name)">
