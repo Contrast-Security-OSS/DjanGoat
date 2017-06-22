@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from django.contrib import messages
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import render, redirect
 from django.utils import timezone
@@ -31,6 +32,7 @@ def user_messages(request, user_id):
                                    created_at=now, updated_at=now)
             return redirect("/users/" + str(current_user.id) + "/messages")
         except Exception as e:
+            messages.add_message(request, messages.INFO, str(e))
             return render(request, "users/messages/index.html", {
                 'current_user': current_user,
                 'available_receipients': User.objects.all()

@@ -74,13 +74,14 @@
                                     Message successfully sent.
                                 </p>
                             </div>
-                            <div id="failure" style="display: none;" class="alert alert-block alert-error fade in">
+                            <div id="failure" class="alert alert-block alert-error fade in">
                                 <h4 class="alert-heading">
                                     Error!
                                 </h4>
-                                <p>
-                                    Failed to send message.
-                                </p>
+                                {% for error in messages %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+
                             </div>
                             <div class="row-fluid">
                                 <div class="col-md-8">
@@ -92,6 +93,7 @@
                                         <div class="form-group">
                                             <label class="control-label">To:</label>
                                             <select name="receiver_id" class="form-control">
+                                                <option></option>
                                                 {% for user in available_recipients %}
                                                     <option value="{{ user.id }}">{{ user.full_name }}</option>
                                                 {% endfor %}
