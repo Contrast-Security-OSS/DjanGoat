@@ -26,6 +26,12 @@ class SensitiveDataExposureTest(TestCase):
             last_name=input_last_name, created_at=u_input_create_date,
             updated_at=u_input_update_date
         )
+        self.model = User.objects.create(
+            email="ryan.rachakonda@contrastsecurity.com", password=input_password,
+            is_admin=input_admin, first_name='ryan',
+            last_name=input_last_name, created_at=u_input_create_date,
+            updated_at=u_input_update_date
+        )
 
     def test_password_is_revealed(self):
         user = User.objects.get(first_name="Vinai!")
@@ -54,3 +60,24 @@ class SensitiveDataExposureTest(TestCase):
                                    **{'HTTP_AUTHORIZATION': 'Token token=1-01de24d75cffaa66db205278d1cf900bf087a737'})
         content = json.loads(response.content)[0]['fields']
         self.assertEquals('vinai.dens@contrastsecurity.com', content['email'])
+
+    def test_new_line_gives_too_much_info(self):
+        route_name = 'app:api_users_index'
+        kwargs = {}
+        request = reverse(route_name, kwargs=kwargs)
+        response = self.client.get(request,
+                                   **{'HTTP_AUTHORIZATION': 'Token token=1%0A2-050ddd40584978fe9e82840b8b95abb98e4786dc'})
+        content = json.loads(response.content)
+        self.assertTrue(len(content) > 1)
+
+    def test_new_line_token_allows_you_to_act_like_another_user(self):
+        self.kwargs = {'id_number': 2}
+        user = User.objects.get(first_name="Vinai!")
+        user.is_admin = False
+        user.save()
+        request = reverse(self.route_name, kwargs=self.kwargs)
+        response = self.client.get(request,
+                                   **{'HTTP_AUTHORIZATION': 'Token token=1%0A2-050ddd40584978fe9e82840b8b95abb98e4786dc'})
+        content = json.loads(response.content)[0]['fields']
+        self.assertEquals('vinai.dens@contrastsecurity.com', content['email'])
+
