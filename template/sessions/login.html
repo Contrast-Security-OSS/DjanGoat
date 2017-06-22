@@ -1,0 +1,52 @@
+{% extends 'layouts/shared/base.html' %}
+
+{% block head %}
+    {% load static %}
+    <script type="text/javascript" src="{% static 'javascript/loader.js'%}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="col-md-4 offset-md-5" >
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div class="header">
+            <h2>Login</h2>
+            <p>Fill out the form below to login to your control panel.</p>
+        </div>
+
+        <form method="post" action="/sessions/"> {% csrf_token %}
+
+            <div class="form-group">
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                        <input type="email" class="form-control" name="email" id="email"  placeholder="Email"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                        <input type="password" class="form-control" name="password" id="password"  placeholder="Password" pattern=".{6,40}" required title="6 to 40 characters"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <input type="submit" value="Login" id="submit_button", class="btn btn-info btn-large pull-right">
+            </div>
+            
+        </form>
+    </div>
+
+{% endblock %}

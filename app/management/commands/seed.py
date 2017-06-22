@@ -325,7 +325,9 @@ messages = [
 class Command(BaseCommand):
     def create_users(self):
         for obj in users:
-            User.objects.create(**obj)
+            u = User.objects.create(**obj)
+            u.generate_token()
+            User.objects.filter(pk=u.pk).update(**{'auth_token': u.auth_token})
 
     def create_paid_time_off(self):
         for obj in paid_time_off:
