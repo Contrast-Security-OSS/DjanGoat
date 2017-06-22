@@ -1,0 +1,79 @@
+{% extends 'layouts/shared/base.html' %}
+
+{% block head %}
+    {% load static %}
+    <script type="text/javascript" src="{% static 'javascript/loader.js'%}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="col-md-6 offset-md-3" >
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div class="header">
+            <h2>Update Account Information</h2>
+        </div>
+
+        <form method="post" action="/users/{{user_id}}"> {% csrf_token %}
+
+            <input type="hidden" value={{user_id}} name="user_id">
+            <div class="form-group">
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                        <input type="email" class="form-control" name="email" id="email"  placeholder={{email}} />
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                        <input type="text" class="form-control" name="first_name" id="first_name"  placeholder={{first_name}} />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                        <input type="text" class="form-control" name="last_name" id="last_name"  placeholder={{last_name}} />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                        <input type="password" class="form-control" name="password" id="password"  placeholder="New Password" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                        <input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm Password" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <input type="submit" value="Submit" id="submit_button", class="btn btn-info btn-large pull-right">
+            </div>
+            
+        </form>
+    </div>
+
+{% endblock %}

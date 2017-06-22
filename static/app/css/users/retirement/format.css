@@ -1,0 +1,15 @@
+.card {
+    width: 300px;
+    margin: 10px;
+}
+
+.card-block {
+    padding: 15px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+}
+
+.row-fluid {
+    top-margin: 750%;
+}

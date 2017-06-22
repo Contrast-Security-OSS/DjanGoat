@@ -25,7 +25,8 @@ class Retirement(models.Model):
                + "\nEmployee Contribution: " + str(self.employee_contrib) \
                + "\nEmployer Contribution: " + str(self.employer_contrib)
 
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey('User', on_delete=models.CASCADE,
+                             related_name="retirements")
     total = models.CharField(max_length=255)
     employee_contrib = models.CharField(max_length=255)
     employer_contrib = models.CharField(max_length=255)

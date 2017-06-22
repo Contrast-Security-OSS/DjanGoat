@@ -330,11 +330,13 @@ class Command(BaseCommand):
             Schedule.objects.create(**obj)
 
     def create_key_management(self):
+        counter = 1
         for obj in users:
-            user = User.objects.get(user_id=obj['user_id'])
+            user = User.objects.get(user_id=counter)
             KeyManagement.objects.create(iv=binascii.hexlify(Random.new().read(8)), user=user,
                                          created_at=pytz.utc.localize(datetime.datetime.now()),
                                          updated_at=pytz.utc.localize(datetime.datetime.now()))
+            counter = counter + 1
 
     def create_work_info(self):
         for obj in work_info:
