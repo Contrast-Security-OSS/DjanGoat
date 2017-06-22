@@ -12,7 +12,6 @@ users = [
         "password": "admin1234",
         "first_name": "Admin",
         "last_name": "",
-        "user_id": 1,
         "created_at": pytz.utc.localize(datetime.datetime.now()),
         "updated_at": pytz.utc.localize(datetime.datetime.now())
     },
@@ -22,7 +21,6 @@ users = [
         "password": "yankeessuck",
         "first_name": "Jack",
         "last_name": "Mannino",
-        "user_id": 2,
         "created_at": pytz.utc.localize(datetime.datetime.now()),
         "updated_at": pytz.utc.localize(datetime.datetime.now())
     },
@@ -32,7 +30,6 @@ users = [
         "password": "alohaowasp",
         "first_name": "Jim",
         "last_name": "Manico",
-        "user_id": 3,
         "created_at": pytz.utc.localize(datetime.datetime.now()),
         "updated_at": pytz.utc.localize(datetime.datetime.now())
     },
@@ -42,7 +39,6 @@ users = [
         "password": "motocross1445",
         "first_name": "Mike",
         "last_name": "McCabe",
-        "user_id": 4,
         "created_at": pytz.utc.localize(datetime.datetime.now()),
         "updated_at": pytz.utc.localize(datetime.datetime.now())
     },
@@ -52,7 +48,6 @@ users = [
         "password": "citrusblend",
         "first_name": "Ken",
         "last_name": "Johnson",
-        "user_id": 5,
         "created_at": pytz.utc.localize(datetime.datetime.now()),
         "updated_at": pytz.utc.localize(datetime.datetime.now())
     }
