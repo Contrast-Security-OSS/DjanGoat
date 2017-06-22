@@ -172,5 +172,7 @@ class UserShowRetirementRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs
         self.expected_response_content = 'Success!'
 
     def test_route_exists(self):
-        response = self.client.delete(reverse(self.route_name, kwargs=self.kwargs))
+        response = self.client.delete(reverse(self.route_name, kwargs=self.kwargs), follow=True)
+        # print(response)
         self.assertEqual(response.status_code, self.responses['exists'])
+        self.assertContains(response, AuthRouteTestingWithKwargs.not_logged_in_message)

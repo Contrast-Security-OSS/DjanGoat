@@ -51,19 +51,6 @@ def user_pay_index(request, user_id):
         return HttpResponseRedirect('/signup')
 
 
-@require_http_methods(["GET"])
-@user_is_authenticated
-def new_user_pay(request, user_id):
-    return HttpResponse("New pay for " + str(user_id))
-
-
-@require_http_methods(["GET"])
-@user_is_authenticated
-def edit_user_pay(request, user_id, id):
-    return HttpResponse("Edit pay for user " + str(user_id) +
-                        " for pay with id " + str(id))
-
-
 @require_http_methods(["DELETE"])
 @user_is_authenticated
 def user_pay(request, user_id, id):
