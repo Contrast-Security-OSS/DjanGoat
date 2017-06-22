@@ -36,7 +36,8 @@ class WorkInfo(models.Model):
                + "\nSSN: " + str(self.SSN) \
                + "\nDate of Birth: " + str(self.DoB)
 
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey('User', on_delete=models.CASCADE,
+                             related_name="work_info")
     income = models.CharField(max_length=255)
     bonuses = models.CharField(max_length=255)
     years_worked = models.PositiveIntegerField(
