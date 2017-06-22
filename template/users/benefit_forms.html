@@ -9,6 +9,11 @@
 {% block content %}
 
 <div class="dashboard-wrapper">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
     <div class="main-container">
         <div class="row-fluid">
             <div class="card-deck">
@@ -73,8 +78,16 @@
                             <form method="post" action="{% url 'app:upload_benefit_form' %}"
                                   enctype="multipart/form-data">
                                 {% csrf_token %}
-                                <input class="btn btn-primary" type="file" name="myfile">
-                                <button type="submit">Upload</button>
+                                <label class="btn btn-primary" for="my-file-selector">
+
+                                    <input id="my-file-selector" name="myfile" style="display: None" type="file"
+                                           onchange="$('#upload-file-info').html(this.files[0].name)">
+                                    Add File
+                                </label>
+                                <span class='label label-info' id="upload-file-info">No file selected</span>
+                                <label class="btn btn-primary">
+                                    <button type="submit" style="display:None"></button>
+                                    Upload</label>
                             </form>
                         </div>
                     </div>
@@ -85,4 +98,3 @@
 </div>
 
 {% endblock %}
-

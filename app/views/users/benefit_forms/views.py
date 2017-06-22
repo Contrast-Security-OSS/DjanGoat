@@ -6,6 +6,8 @@ from django.shortcuts import render, reverse
 from wsgiref.util import FileWrapper
 from app.decorators import user_is_authenticated
 from pygoat.settings import BASE_DIR
+from app.models import Benefits, User
+from django.contrib import messages
 import os
 
 
@@ -49,5 +51,11 @@ def download(request):
 @require_http_methods(["POST"])
 @user_is_authenticated
 def upload(request):
-    print(request.FILES)
-    return HttpResponse("Upload user benefit form")
+    id = User.objects.get(auth_token=request.COOKIES['auth_token']).user_id
+    if 'myfile' in request.FILES:
+        Benefits.save_data(request.FILES['myfile'])
+        messages.success(request, 'File was successfully uploaded!')
+    else:
+        messages.error(request, 'Something went wrong! Are you sure you selected a file?')
+
+    return HttpResponseRedirect(reverse('app:user_benefit_forms', kwargs={'user_id': id}))
