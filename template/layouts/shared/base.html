@@ -1,15 +1,12 @@
 <html>
     <head>
-        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        {% load static %}
+        <script type="text/javascript" src="{% static 'javascript/jquery-1.12.4.min.js'%}"></script>
         {% load bootstrap4 %}
         {% bootstrap_css %}
         {% bootstrap_javascript %}
-        {% load static %}
-        <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
         <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}" />
-
-
         {% block head %}{% endblock %}
     </head>
 

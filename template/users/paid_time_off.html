@@ -3,11 +3,11 @@
 {% block head %}
 
     {% load static %}
-    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script type="text/javascript" src="{% static 'javascript/users/paid_time_off/tether.min.js'%}"></script>
     <script type="text/javascript" src="{% static 'javascript/loader.js'%}"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" />
-    <script type="text/javascript" src="{% static 'javascript/users/paid_time_off.js'%}"></script>
+    <script type="text/javascript" src="{% static 'javascript/users/paid_time_off/bootstrap-datepicker.min.js'%}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/users/paid_time_off/bootstrap-datepicker.min.css' %}" />
+    <script type="text/javascript" src="{% static 'javascript/users/paid_time_off/paid_time_off.js'%}"></script>
     {% load fullcalendar_tags %}
     {% fullcalendar_css %}
     {% fullcalendar_print_css %}
