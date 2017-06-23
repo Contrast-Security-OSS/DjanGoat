@@ -52,7 +52,6 @@ function decryptDirectDeposit() {
         headers: {'X-CSRFToken': getCookie('csrftoken')},
         success: function (response, status, xhr) {
             var success = xhr.getResponseHeader("success")
-            console.log(success)
             if (success == "True") {
                 var td = $(".accNum:contains('" + input + "')");
                 td.html(response);
