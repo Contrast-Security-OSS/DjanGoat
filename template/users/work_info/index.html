@@ -16,28 +16,28 @@
         Employee Information</div>
         <div class="card-block">
             <div class="container">       
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Full Name</th>
-                    <th>Income</th>
-                    <th>Bonus</th>
-                    <th>Years w/ MetaCrop</th>
-                    <th>SSN</th>
-                    <th>DoB</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{{ current_user.full_name }}</td>
-                    <td>{{ work_info.income }}</td>
-                    <td>{{ work_info.bonuses }}</td>
-                    <td>{{ work_info.years_worked }}</td>
-                    <td class="ssn">{{ work_info.SSN }}</td>
-                    <td>{{ work_info.DoB }}</td>
-                  </tr>
-                </tbody>
-              </table>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Income</th>
+                            <th>Bonus</th>
+                            <th>Years w/ MetaCrop</th>
+                            <th>SSN</th>
+                            <th>DoB</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ current_user.full_name }}</td>
+                            <td>{{ work_info.income }}</td>
+                            <td>{{ work_info.bonuses }}</td>
+                            <td>{{ work_info.years_worked }}</td>
+                            <td class="ssn">{{ work_info.SSN }}</td>
+                            <td>{{ work_info.DoB }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
