@@ -1,6 +1,6 @@
 
 <div id="verticalNav" class="col-4 col-sm-3 col-md-3 col-lg-2 col-xl-2">
-    <nav class="nav navbar-inverse bg-inverse navbar-toggleable-sm">
+    <div class="nav navbar-inverse bg-inverse navbar-toggleable-sm">
         <button class="navbar-toggler navbar-toggler-right"
                 type="button" data-toggle="collapse" data-target="#navbarWEX"
                 aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -12,6 +12,27 @@
                 <i class="fa fa-tachometer icon" aria-hidden="true"></i>
                 <br/>Dashboard
             </a>
+            {% if current_user.is_admin %}
+                    <li class="submenu" id='admin'>
+                        <a class="nav-link">
+                            <i class="fa fa-lock icon" aria-hidden="true"></i>
+                            <br>
+                            Admin
+                        </a>
+                        <ul style="display: None">
+                            <li class="subitem">
+                                <a href ='/admin/1/dashboard/'>Manage Users
+                                </a>
+                            </li>
+                            <li class="subitem">
+                                <a href ='/admin/1/analytics/'>
+                                    View Analytics
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+            {% endif %}
+
             <a class="nav-link">
                 <i class="fa fa-archive icon" aria-hidden="true"></i>
                 <br/>Benefit Forms
@@ -41,5 +62,43 @@
                 <br/>Pay
             </a>
         </div>
-    </nav>
+    </div>
 </div>
+
+{% block javascript %}
+
+<script type="text/javascript">
+  //Main menu navigation
+
+  $('.submenu > a').click(function(e){
+    e.preventDefault();
+    var submenu = $(this).siblings('ul');
+    var li = $(this).parents('li');
+    var submenus = $('#verticalNav li.submenu ul');
+    var submenus_parents = $('#verticalNav li.submenu');
+    if(li.hasClass('open'))
+    {
+      if(($(window).width() > 768) || ($(window).width() < 479)) {
+        submenu.slideUp();
+      } else {
+        submenu.fadeOut(250);
+      }
+      li.removeClass('open');
+    } else
+    {
+      if(($(window).width() > 768) || ($(window).width() < 479)) {
+        submenus.slideUp();
+        submenu.slideDown();
+      } else {
+        submenus.fadeOut(250);
+        submenu.fadeIn(250);
+      }
+      submenus_parents.removeClass('open');
+      li.addClass('open');
+    }
+  });
+
+
+  </script>
+
+{% endblock %}

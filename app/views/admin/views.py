@@ -3,13 +3,15 @@ from django.views.decorators.http import require_http_methods
 from app.models.User.user import User
 from app.models.Analytics.analytics import Analytics
 from django.shortcuts import render
+from app.views import utils
 import pytz
 import datetime
 
 
 @require_http_methods(["GET"])
 def admin_dashboard(request, selected_id):
-    return render(request, 'admin/dashboard.html')
+    user = utils.current_user(request)
+    return render(request, 'admin/dashboard.html', context={'current_user': user})
 
 
 @require_http_methods(["GET"])
@@ -74,6 +76,7 @@ def admin_get_all_users(request, selected_id):
 
 @require_http_methods(["GET"])
 def admin_analytics(request, selected_id):
+    user = utils.current_user(request)
     data = request.GET.dict().copy()
     show_user_agent = False
     show_ip_address = False
@@ -95,4 +98,4 @@ def admin_analytics(request, selected_id):
     values = analytics.values()
     num_data = range(len(values[0]))
     return render(request, 'admin/analytics.html',
-                  {'cols': cols, 'values': values, 'num_data': num_data})
+                  {'cols': cols, 'values': values, 'num_data': num_data,'current_user': user})
