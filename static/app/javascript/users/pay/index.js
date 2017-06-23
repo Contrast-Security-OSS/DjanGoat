@@ -36,8 +36,6 @@ function deleteDirectDeposit(deposit_id) {
         headers: {'X-CSRFToken': getCookie('csrftoken')},
         success: function () {
             $("#entry"+deposit_id).remove();
-            console.log(tableRow)
-
         }
       });
 }
@@ -52,11 +50,18 @@ function decryptDirectDeposit() {
             'account_number': input
         },
         headers: {'X-CSRFToken': getCookie('csrftoken')},
-        success: function (response) {
-            var td = $("#ddTable td:contains('" + input + "')")
-            td.html(response);
-            td.css("background-color", "green");
-            td.css("color", "white");
+        success: function (response, status, xhr) {
+            var success = xhr.getResponseHeader("success")
+            console.log(success)
+            if (success == "True") {
+                var td = $(".accNum:contains('" + input + "')");
+                td.html(response);
+                td.css("background-color", "green");
+                td.css("color", "white");
+            } else {
+                $('#decryptAccountInput').val("");
+                alert("Error: you do not have the inputted encrypted account number associated with this accounts");
+            }
         }
       });
 }

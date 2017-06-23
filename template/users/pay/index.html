@@ -47,6 +47,13 @@
                 <div class="card">
                     <div class="card-header float-right"><i class="fa fa-table" aria-hidden="true"></i> Accounts</div>
                     <div class="card-block">
+                        {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                    <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                         <div class="well">
                             <table id="ddTable" class="table table-hover table-bordered">
                                 <tr>
@@ -60,7 +67,7 @@
                                 </tr>
                                 {% for entry in direct_deposits %}
                                 <tr id="entry{{ entry.id }}">
-                                    <td>{{ entry.bank_account_num }}</td>
+                                    <td class="accNum"> {{ entry.bank_account_num }}</td>
                                     <td>{{ entry.bank_routing_num }}</td>
                                     <td>{{ entry.percent_of_deposit }}</td>
                                     <td>
