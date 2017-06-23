@@ -23,8 +23,8 @@ class CommandInjectionTest(TestCase):
         new_file_path = os.path.join(settings.BASE_DIR, origin_file)
         create_new_file = open(new_file_path, "w+")
         create_new_file.close()
-        file = open(new_file_path, "rb")
         # Send POST request
+        file = open(new_file_path, "rb")
         request = self.factory.post(
             route, {'enctype': enctype, 'file': file})
         file.close()
