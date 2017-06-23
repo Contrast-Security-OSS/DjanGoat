@@ -4,17 +4,21 @@ from app.models.User.user import User
 from app.models.Analytics.analytics import Analytics
 from django.shortcuts import render
 from app.views import utils
+from app.decorators import user_is_authenticated
 import pytz
 import datetime
 
 
 @require_http_methods(["GET"])
+@user_is_authenticated
 def admin_dashboard(request, selected_id):
     user = utils.current_user(request)
-    return render(request, 'admin/dashboard.html', context={'current_user': user})
+    return render(request, 'admin/dashboard.html',
+                  context={'current_user': user})
 
 
 @require_http_methods(["GET"])
+@user_is_authenticated
 def admin_get_user(request, selected_id):
     success = True
     user = None
@@ -28,10 +32,12 @@ def admin_get_user(request, selected_id):
     else:
         other_is_admin_val = not user.is_admin
 
-    return render(request, 'admin/modal.html', {'user': user, 'other_admin_val': other_is_admin_val})
+    return render(request, 'admin/modal.html',
+                  {'user': user, 'other_admin_val': other_is_admin_val})
 
 
 @require_http_methods(["POST"])
+@user_is_authenticated
 def admin_delete_user(request, selected_id):
     success = True
     try:
@@ -45,6 +51,7 @@ def admin_delete_user(request, selected_id):
 
 
 @require_http_methods(["POST", "PATCH"])
+@user_is_authenticated
 def admin_update_user(request, selected_id):
     success = True
     try:
@@ -67,14 +74,17 @@ def admin_update_user(request, selected_id):
 
 
 @require_http_methods(["GET"])
+@user_is_authenticated
 def admin_get_all_users(request, selected_id):
     users = User.objects.all()
     # render appropriately
     users2 = ['dsds', 'f', 'f', 'f']
-    return render(request, 'admin/table.html', {'users': users, 'users2': users2})
+    return render(request, 'admin/table.html',
+                  {'users': users, 'users2': users2})
 
 
 @require_http_methods(["GET"])
+@user_is_authenticated
 def admin_analytics(request, selected_id):
     user = utils.current_user(request)
     data = request.GET.dict().copy()
@@ -98,4 +108,5 @@ def admin_analytics(request, selected_id):
     values = analytics.values()
     num_data = range(len(values[0]))
     return render(request, 'admin/analytics.html',
-                  {'cols': cols, 'values': values, 'num_data': num_data,'current_user': user})
+                  {'cols': cols, 'values': values, 'num_data': num_data,
+                   'current_user': user})

@@ -1,15 +1,18 @@
 from __future__ import unicode_literals
 from django.test import TestCase, RequestFactory, Client
 from app.tests.mixins import RouteTestingWithKwargs
+from app.tests.mixins import AuthRouteTestingWithKwargs
 from django.urls import reverse
 from django_webtest import WebTest
+from django.http import SimpleCookie
 from app.models import User
+from app.views import sessions_views as sessions
 import app.views.admin.views as admin_views
 import datetime
 import pytz
 
 
-class AdminDashboardTest(TestCase, RouteTestingWithKwargs):
+class AdminDashboardTest(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         """ Class for testing admin dashboard view"""
@@ -30,9 +33,11 @@ class AdminDashboardTest(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'selected_id': 5}
+        self.expected_response_content = 'edit'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
-class AdminGetUserTest(TestCase, RouteTestingWithKwargs):
+class AdminGetUserTest(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         """ Class for testing admin dashboard view"""
@@ -53,9 +58,11 @@ class AdminGetUserTest(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'selected_id': 5}
+        self.expected_response_content = 'fields'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
-class AdminDeleteUserTest(TestCase):
+class AdminDeleteUserTest(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         """ Class for testing admin delete view"""
@@ -76,48 +83,75 @@ class AdminDeleteUserTest(TestCase):
             'TRACE': 405
         }
         self.kwargs = {'selected_id': 2}
-        input_user_id = 2
-        input_email = "ryan.dens@contrastsecurity.com"
-        input_password = "12345"
-        input_admin = True
-        input_first_name = "Ryan"
-        input_last_name = "Dens"
-        u_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0))
-        u_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 3, 0, 0))
-        input_auth_token = "test"
-
-        self.model = User.objects.create(
-            user_id=input_user_id,
-            email=input_email, password=input_password,
-            is_admin=input_admin, first_name=input_first_name,
-            last_name=input_last_name, created_at=u_input_create_date,
-            updated_at=u_input_update_date, auth_token=input_auth_token
-        )
-        self.model.save()
+        self.expected_response_content = "failure"
+        AuthRouteTestingWithKwargs.__init__(self)
 
     # Verifies a route exists
     def test_route_exists(self):
-        response = self.client.post(reverse(self.route_name, kwargs=self.kwargs))
+        response = self.client.post(
+            reverse(self.route_name, kwargs=self.kwargs), follow=True)
         self.assertEqual(response.status_code, self.responses['exists'])
 
     def test_can_delete_a_user(self):
-        self.client.post(reverse(self.route_name, kwargs=self.kwargs))  # simulate the post request
-        self.assertEquals(0, len(User.objects.all()))
+        input_email = "ryan.dens@contrastsecurity.com"
+        input_password = "12345"
+        input_admin = True
+        input_first_name = "VINAITEST"
+        input_last_name = "Dens"
+        u_input_create_date = pytz.utc.localize(
+            datetime.datetime(2017, 6, 1, 0, 0))
+        u_input_update_date = pytz.utc.localize(
+            datetime.datetime(2017, 6, 3, 0, 0))
+
+        self.model = User.objects.create(
+            email=input_email, password=input_password,
+            is_admin=input_admin, first_name=input_first_name,
+            last_name=input_last_name, created_at=u_input_create_date,
+            updated_at=u_input_update_date
+        )
+        auth_request = self.factory.post('/sessions/')
+        AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
+        auth_response = sessions.sessions_index(auth_request,
+                                                email="ryan.dens@contrastsecurity.com",
+                                                password="12345",
+                                                path='admin/2/delete_user')
+        # Make sure redirect was called (but not followed)
+        self.assertEqual(auth_response.status_code, 302)
+        # Add auth token cookie to request
+        auth_token = auth_response.cookies['auth_token'].value
+
+        self.client.cookies = SimpleCookie({'auth_token': auth_token})
+        response = self.client.post(reverse(self.route_name,
+                                 kwargs=self.kwargs))  # simulate the post request
+        self.assertEquals(0, len(User.objects.filter(first_name="VINAITEST")))
 
     def test_not_present_user_does_not_do_anything(self):
         self.kwargs = {'selected_id': 5}
-        self.client.post(reverse(self.route_name, kwargs=self.kwargs))  # simulate the post request
+        auth_request = self.factory.post('/sessions/')
+        AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
+        auth_response = sessions.sessions_index(auth_request,
+                                                email="ryan.dens@contrastsecurity.com",
+                                                password="12345",
+                                                path='admin/5/update_user')
+        # Make sure redirect was called (but not followed)
+        self.assertEqual(auth_response.status_code, 302)
+        # Add auth token cookie to request
+        auth_token = auth_response.cookies['auth_token'].value
+
+        self.client.cookies = SimpleCookie({'auth_token': auth_token})
+        response = self.client.post(reverse(self.route_name,
+                                 kwargs=self.kwargs))  # simulate the post request
         self.assertEquals(1, len(User.objects.all()))
 
 
-class AdminUpdateUserTest(TestCase, RouteTestingWithKwargs):
+class AdminUpdateUserTest(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         """ Class for testing admin delete view"""
         self.factory = RequestFactory()
         self.client = Client()
         self.route_name = 'app:admin_update_user'
-        self.route = '/admin/4/update_user'
+        self.route = '/admin/1/update_user'
         self.view = admin_views.admin_update_user
         self.responses = {
             'exists': 200,
@@ -131,15 +165,26 @@ class AdminUpdateUserTest(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'selected_id': 1}
-        input_user_id = 1
+
+        self.expected_response_content = "success"
+        AuthRouteTestingWithKwargs.__init__(self)
+
+    # Verifies a route exists
+    def test_route_exists(self):
+        response = self.client.patch(
+            reverse(self.route_name, kwargs=self.kwargs), follow=True)
+        self.assertEqual(response.status_code, self.responses['exists'])
+
+    def test_simple_update(self):
         input_email = "ryan.dens@contrastsecurity.com"
         input_password = "12345"
         input_admin = True
-        input_first_name = "Ryan"
+        input_first_name = "VINAIUPDATETEST"
         input_last_name = "Ryan"
-        u_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0))
-        u_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 3, 0, 0))
-        input_auth_token = "test"
+        u_input_create_date = pytz.utc.localize(
+            datetime.datetime(2017, 6, 1, 0, 0))
+        u_input_update_date = pytz.utc.localize(
+            datetime.datetime(2017, 6, 3, 0, 0))
 
         self.model = User.objects.create(
             email=input_email, password=input_password,
@@ -148,27 +193,37 @@ class AdminUpdateUserTest(TestCase, RouteTestingWithKwargs):
             updated_at=u_input_update_date
         )
 
-    # Verifies a route exists
-    def test_route_exists(self):
-        response = self.client.patch(reverse(self.route_name, kwargs=self.kwargs))
-        self.assertEqual(response.status_code, self.responses['exists'])
+        auth_request = self.factory.post('/sessions/')
+        AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
+        auth_response = sessions.sessions_index(auth_request,
+                                                email="ryan.dens@contrastsecurity.com",
+                                                password="12345",
+                                                path='admin/2/update_user/')
+        # Make sure redirect was called (but not followed)
+        self.assertEqual(auth_response.status_code, 302)
+        # Add auth token cookie to request
+        auth_token = auth_response.cookies['auth_token'].value
 
-    def test_simple_update(self):
-        response = self.client.post(reverse(self.route_name, kwargs=self.kwargs),
-                                    data={'password': 'ds', 'email': 'yo@email.com', 'password_confirmation': 'ds', 'first_name': 'Vinai'})
-        self.assertEquals(1, len(User.objects.all()))
-        self.assertEquals("yo@email.com", User.objects.get(user_id=1).email)
-        self.assertEquals("Vinai", User.objects.get(user_id=1).first_name)
+        self.client.cookies = SimpleCookie({'auth_token': auth_token})
+
+        self.kwargs = {'selected_id': 2}
+        response = self.client.post(
+            reverse(self.route_name, kwargs=self.kwargs),
+            data={'password': 'ds', 'email': 'yo@email.com',
+                  'password_confirmation': 'ds', 'first_name': 'Vinai'})
+        self.assertEquals(2, len(User.objects.all()))
+        self.assertEquals("yo@email.com", User.objects.get(user_id=2).email)
+        self.assertEquals("Vinai", User.objects.get(user_id=2).first_name)
 
 
-class AdminGetAllUsersTest(TestCase, RouteTestingWithKwargs):
+class AdminGetAllUsersTest(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         """ Class for testing admin delete view"""
         self.factory = RequestFactory()
         self.client = Client()
         self.route_name = 'app:admin_get_all_users'
-        self.route = '/admin/5/get_all_users'
+        self.route = '/admin/1/get_all_users'
         self.view = admin_views.admin_get_all_users
         self.responses = {
             'exists': 200,
@@ -181,10 +236,12 @@ class AdminGetAllUsersTest(TestCase, RouteTestingWithKwargs):
             'OPTIONS': 405,
             'TRACE': 405
         }
-        self.kwargs = {'selected_id': 5}
+        self.kwargs = {'selected_id': 1}
+        self.expected_response_content = "First Name"
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
-class AdminAnalyticsUsersTest(TestCase, RouteTestingWithKwargs):
+class AdminAnalyticsUsersTest(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         """ Class for testing admin delete view"""
@@ -205,14 +262,37 @@ class AdminAnalyticsUsersTest(TestCase, RouteTestingWithKwargs):
             'TRACE': 405
         }
         self.kwargs = {'selected_id': 5}
+        self.expected_response_content = 'analytics'
+        AuthRouteTestingWithKwargs.__init__(self)
 
 
 class AdminSQLInjectionInterpolationTest(WebTest):
+    def setUp(self):
+        self.client = Client()
+        User.objects.create(
+            email="ryan.dens@contrastsecurity.com", password="12345",
+            is_admin=True, first_name="Ryan",
+            last_name="Dens",
+            created_at=pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0)),
+            updated_at=pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0))
+        )
 
     def test_sql_injection_interpolation(self):
-        c = Client()
+        self.factory = RequestFactory()
+        auth_request = self.factory.post('/sessions/')
+        AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
+        auth_response = sessions.sessions_index(auth_request,
+                                                email="ryan.dens@contrastsecurity.com",
+                                                password="12345",
+                                                path='http://127.0.0.1:8000/admin/1/analytics/?ip=127.0.0.1&email=&password%20FROM%20app_user%3B%20select%20user_agent=')
+        # Make sure redirect was called (but not followed)
+        self.assertEqual(auth_response.status_code, 302)
+        # Add auth token cookie to request
+        auth_token = auth_response.cookies['auth_token'].value
+
+        self.client.cookies = SimpleCookie({'auth_token': auth_token})
         # The attack string may vary depending on the system used
-        url = 'http://127.0.0.1:8000/admin/1/analytics?ip=127.0.0.1&email=&password%20FROM%20app_user%3B%20select%20user_agent='
-        response = c.get(url)
+        url = 'http://127.0.0.1:8000/admin/1/analytics/?ip=127.0.0.1&email=&password%20FROM%20app_user%3B%20select%20user_agent='
+        response = self.client.get(url)
         self.assertTrue('email' in response.content)
         self.assertTrue('password' in response.content)
