@@ -219,7 +219,6 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
                                                    password="12345", path=self.route)
         # Make sure redirect was called (but not followed)
         self.assertEqual(auth_response.status_code, 302)
-
         # Add auth token cookie to request
         request.COOKIES['auth_token'] = auth_response.cookies['auth_token'].value
         response = self.view(request, **self.kwargs)

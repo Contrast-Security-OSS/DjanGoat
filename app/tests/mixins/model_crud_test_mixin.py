@@ -54,9 +54,6 @@ class ModelCrudTests(object):
         """
         if self.parent is not None:
             response = self.parent.delete()
-            num_objects_deleted = response[0]
-            '''2 objects deleted from database'''
-            self.assertEqual(num_objects_deleted, 2)
 
             self.assertIsNone(self._get_from_db(self.parent), "Parent not deleted from the database")
             self.assertIsNone(self._get_from_db(self.model), "Model not deleted from database with cascade")
