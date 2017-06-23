@@ -92,7 +92,6 @@ class UserPayUpdateDDInfo(TestCase, AuthRouteTestingWithKwargs):
 
         self.client.cookies = SimpleCookie({'auth_token': self.mixin_model.auth_token})
 
-
     # Override
     def test_route_exists(self):
         response = self.client.post(reverse(self.route_name, kwargs=self.kwargs), follow=True)
@@ -102,17 +101,16 @@ class UserPayUpdateDDInfo(TestCase, AuthRouteTestingWithKwargs):
         form_args = {"bankAccNumInput": "12345", "bankRouteNumInput": "54321", "percentDepositInput": 20}
         response = self.client.post(reverse(self.route_name, kwargs=self.kwargs), form_args, follow=True)
         self.assertEqual(response.status_code, self.responses['POST'])
-        payObjects = Pay.objects.filter(user=self.mixin_model)
-        wasPayAdded = False
-        payObject = None
-        for pay in payObjects:
+        pay_objects = Pay.objects.filter(user=self.mixin_model)
+        was_pay_added = False
+        pay_object = None
+        for pay in pay_objects:
             if pay.decrypt_bank_num() == "12345":
-                wasPayAdded = True
-                payObject = pay
+                was_pay_added = True
+                pay_object = pay
 
-        self.assertTrue(wasPayAdded)
-        self.assertContains(response, payObject.bank_account_num)
-
+        self.assertTrue(was_pay_added)
+        self.assertContains(response, pay_object.bank_account_num)
 
 
 class UserPayDecryptBankInfo(TestCase, AuthRouteTestingWithKwargs):
