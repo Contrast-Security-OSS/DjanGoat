@@ -1,16 +1,15 @@
 from __future__ import unicode_literals
 
-from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import render
 from app.decorators import user_is_authenticated
-from app.views import utils
+from app.models import User
 
 
 @require_http_methods(["GET", "POST"])
 @user_is_authenticated
 def user_work_info_index(request, user_id):
-    user = utils.current_user(request)
+    user = User.objects.get(user_id=user_id)
     work_info = user.work_info.first()
     context = {'current_user': user,
                'work_info': work_info}
