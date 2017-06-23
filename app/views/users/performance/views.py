@@ -12,6 +12,9 @@ from app.decorators import user_is_authenticated
 def user_performance_index(request, user_id):
     current_user = utils.current_user(request)
     performance = current_user.u_id
+    first = current_user.u_id.first()
+    print("date submitted: ")
+    print(type(first.date_submitted))
     t = get_template('users/performance/index.html')
     html = t.render({'performance': performance,
                      'current_user': current_user})
