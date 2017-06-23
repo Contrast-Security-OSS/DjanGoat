@@ -32,4 +32,4 @@ class AnalyticsStorageMiddleware(object):
                                      datetime.datetime.now()),
                                  updated_at=pytz.utc.localize(
                                      datetime.datetime.now()))
-        return
+        return None
