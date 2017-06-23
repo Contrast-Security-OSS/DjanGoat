@@ -1,0 +1,233 @@
+{% extends 'layouts/shared/base.html' %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/users/performance/format.css' %}"/>
+
+<script type="text/javascript" src="{% static 'javascript/loader.js'%}"></script>
+<script type="text/javascript" src="{% static 'javascript/dashboard/home.js'%}"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header">
+        <i class="fa fa-line-chart" aria-hidden="true"></i>
+        Performance History Visualization
+    </div>
+    <div class="card-block">
+        <head>
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script type="text/javascript">
+                  google.charts.load('current', {'packages':['corechart']});
+                  google.charts.setOnLoadCallback(drawChart);
+
+                  function drawChart() {
+
+                  <!--var data = google.visualization.arrayToDataTable([-->
+                        <!--['Year', 'Score']--> 
+                        <!--{% for review in performance.all %}-->
+                        <!--, [ {{ review.date_submitted }}, {{ review.score }} ]-->
+                        <!--{% endfor %}-->
+                        <!--]);-->
+
+                    var data = google.visualization.arrayToDataTable([
+                      ['Year', 'Sales', 'Expenses'],
+                      ['2004',  1000,      400]
+                    ]);
+
+                    var options = {
+                      legend: { position: 'right' }
+                    };
+
+                    var chart = new google.visualization.LineChart(document.getElementById('line_chart'));
+
+                    chart.draw(data, options);
+                  }
+            </script>
+        </head>
+        <body>
+        <div id="line_chart"></div>
+        </body>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+        Performance History
+    </div>
+    <div class="card-block">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th style="width:16%">Reviewer</th>
+                <th style="width:16%">Date</th>
+                <th style="width:16%">Score</th>
+                <th style="width:16%">Comments</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for review in performance.all %}
+            <tr>
+                <td>{{ review.reviewer_name }}</td>
+                <td>{{ review.date_submitted }}</td>
+                <td>{{ review.score }}</td>
+                <td>{{ review.comments}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--<script type="text/javascript">-->
+
+<!--google.load("visualization", "1", {-->
+<!--packages: ["corechart"]-->
+<!--});-->
+
+<!--function drawChart2() {-->
+<!--var data = google.visualization.arrayToDataTable([-->
+<!--['Year', 'Score'],-->
+<!--{% for review in performance.all %}-->
+<!--[ {{ review.date_submitted }}, {{ review.score }} ],-->
+<!--{% endfor %}-->
+<!--]);-->
+
+<!--var options = {-->
+<!--min: 1,-->
+<!--max: 5,-->
+<!--width: 'auto',-->
+<!--height: '160',-->
+<!--backgroundColor: 'transparent',-->
+<!--colors: ['#e26666', '#579da9', '#1e825e', '#b5799e', '#dba26b'],-->
+<!--tooltip: {-->
+<!--textStyle: {-->
+<!--color: '#666666',-->
+<!--fontSize: 11-->
+<!--},-->
+<!--showColorCode: true-->
+<!--},-->
+<!--legend: {-->
+<!--textStyle: {-->
+<!--color: 'black',-->
+<!--fontSize: 12-->
+<!--}-->
+<!--},-->
+<!--chartArea: {-->
+<!--left: 100,-->
+<!--top: 10-->
+<!--},-->
+<!--focusTarget: 'category',-->
+<!--hAxis: {-->
+<!--textStyle: {-->
+<!--color: 'black',-->
+<!--fontSize: 12-->
+<!--}-->
+<!--},-->
+<!--vAxis: {-->
+<!--textStyle: {-->
+<!--color: 'black',-->
+<!--fontSize: 12-->
+<!--}-->
+<!--},-->
+<!--pointSize: 8,-->
+<!--chartArea: {-->
+<!--left: 60,-->
+<!--top: 10,-->
+<!--height: '80%'-->
+<!--},-->
+<!--lineWidth: 2,-->
+<!--};-->
+
+<!--var chart = new google.visualization.LineChart(document.getElementById('line_chart'));-->
+<!--chart.draw(data, options);-->
+<!--}-->
+
+<!--function makeActive(){-->
+<!--$('li[id="performance"]').addClass('active');-->
+<!--};-->
+
+<!--$(document).ready(function () {-->
+<!--drawChart2(),-->
+<!--makeActive()-->
+<!--});-->
+
+<!--</script>-->
+
+<!--<script type="text/javascript">-->
+
+<!--google.load("visualization", "1", {-->
+<!--packages: ["corechart"]-->
+<!--});-->
+
+<!--function drawChart2() {-->
+<!--var data = google.visualization.arrayToDataTable([-->
+<!--['Year', 'Score'],-->
+<!--{% for review in performance.all %}-->
+<!--[ {{ review.date_submitted }}, {{ review.score }} ],-->
+<!--{% endfor %}-->
+<!--]);-->
+
+<!--var options = {-->
+<!--min: 1,-->
+<!--max: 5,-->
+<!--width: 'auto',-->
+<!--height: '160',-->
+<!--backgroundColor: 'transparent',-->
+<!--colors: ['#e26666', '#579da9', '#1e825e', '#b5799e', '#dba26b'],-->
+<!--tooltip: {-->
+<!--textStyle: {-->
+<!--color: '#666666',-->
+<!--fontSize: 11-->
+<!--},-->
+<!--showColorCode: true-->
+<!--},-->
+<!--legend: {-->
+<!--textStyle: {-->
+<!--color: 'black',-->
+<!--fontSize: 12-->
+<!--}-->
+<!--},-->
+<!--chartArea: {-->
+<!--left: 100,-->
+<!--top: 10-->
+<!--},-->
+<!--focusTarget: 'category',-->
+<!--hAxis: {-->
+<!--textStyle: {-->
+<!--color: 'black',-->
+<!--fontSize: 12-->
+<!--}-->
+<!--},-->
+<!--vAxis: {-->
+<!--textStyle: {-->
+<!--color: 'black',-->
+<!--fontSize: 12-->
+<!--}-->
+<!--},-->
+<!--pointSize: 8,-->
+<!--chartArea: {-->
+<!--left: 60,-->
+<!--top: 10,-->
+<!--height: '80%'-->
+<!--},-->
+<!--lineWidth: 2,-->
+<!--};-->
+
+<!--var chart = new google.visualization.LineChart(document.getElementById('line_chart'));-->
+<!--chart.draw(data, options);-->
+<!--}-->
+
+<!--function makeActive(){-->
+<!--$('li[id="performance"]').addClass('active');-->
+<!--};-->
+
+<!--$(document).ready(function () {-->
+<!--drawChart2(),-->
+<!--makeActive()-->
+<!--});-->
+
+<!--</script>-->
+
+{% endblock %}
