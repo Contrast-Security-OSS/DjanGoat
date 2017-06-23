@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+# Django imports
 from django.test import TestCase, RequestFactory, Client
+from django.urls import reverse
+from django.utils import timezone
+from django.http import SimpleCookie
+# App imports
 from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
-from django_webtest import WebTest
-from django.urls import reverse
+from app.models import Pay, KeyManagement
 import app.views as views
-from app.views import sessions_views as sessions
-from app.models import Pay, KeyManagement, User
-from django.utils import timezone
+# Other imports
 from Crypto import Random
 import binascii
-from django.http import SimpleCookie
-from app.models.utils import Encryption
 
 
 pay = views.user_messages_pay

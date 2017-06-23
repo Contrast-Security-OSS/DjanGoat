@@ -2,7 +2,6 @@ from app.models.KeyManagement.key_management import KeyManagement
 from django.conf import settings
 from Crypto.Cipher import AES
 
-KEY = settings.KEY
 
 class Encryption():
 
@@ -31,10 +30,11 @@ class Encryption():
 
     @staticmethod
     def get_key():
-        if KEY is None:
+        key = settings.KEY
+        if key is None:
             raise Exception('Key not specified in settings.py file')
         else:
-            return KEY
+            return key
 
     @staticmethod
     def pad(s):

@@ -1,14 +1,14 @@
 from __future__ import unicode_literals
-
+# Django imports
 from django.views.decorators.http import require_http_methods
-from app.decorators import user_is_authenticated
-
 from django.template.loader import get_template
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.utils import timezone
+# App imports
+from app.decorators import user_is_authenticated
 from app.views import utils
 from app.models import Pay
-from django.utils import timezone
 
 
 @require_http_methods(["POST"])

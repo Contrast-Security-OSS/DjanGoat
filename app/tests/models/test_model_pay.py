@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+# Django imports
+from django.test import TestCase
+from django.utils import timezone
+# App imports
 from app.tests.mixins import ModelCrudTests, Pep8ModelTests
 from app.models import User, Pay, KeyManagement
-from django.test import TestCase
-import datetime
-from django.utils import timezone
+# Other imports
 from Crypto import Random
+import datetime
 import pytz
 import binascii
 

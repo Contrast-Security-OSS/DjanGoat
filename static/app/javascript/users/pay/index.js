@@ -60,35 +60,3 @@ function decryptDirectDeposit() {
         }
       });
 }
-
-//$('#decryptForm').on('submit', function(e) {
-//    e.preventDefault();
-//    e.stopPropagation();
-//    console.log("form submitted")
-//    input = $('#decryptAccountInput').val()
-//    console.log(input)
-//    $.ajax({
-//        url: 'decrypt_bank_account_num',
-//        type: 'POST',
-//        data: {
-//            'account_number': input
-//        },
-//        headers: {'X-CSRFToken': getCookie('csrftoken')},
-//        success: function (response) {
-//            console.log(response)
-//            $( "td:contains(" + input + ")" ).css( "text-decoration", "underline" );
-//
-//        }
-//      });
-//});
-
-//$('#decryptForm').submit(function(event){
-//    e.preventDefault();
-//    console.log("sanity check")
-//});
-
-// Submit post on submit
-$('#post-form').on('submit', function(event){
-    event.preventDefault();
-    console.log("form submitted!")  // sanity check
-});

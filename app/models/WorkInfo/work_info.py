@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models
+# Django imports
 from django.utils.encoding import python_2_unicode_compatible
 from django.core.validators import MaxValueValidator
-from Crypto.Cipher import AES
-from django.conf import settings
-from app.models.KeyManagement.key_management import KeyManagement
-from app.models.utils import Encryption
+from django.db import models
 
-KEY = settings.KEY
+# local imports
+from app.models.utils import Encryption
 
 
 @python_2_unicode_compatible
