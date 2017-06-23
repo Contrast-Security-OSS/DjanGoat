@@ -34,7 +34,7 @@ class WorkInfoModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         input_income = "fun"
         input_bonuses = "birthday"
         input_years_worked = 10
-        input_ssn = "12345"
+        input_ssn = "111-22-3333"
         input_encrypted_ssn = "random_chars".encode("utf-8")
         input_dob = datetime.date(1996, 7, 31)
         perf_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 4, 0, 0))
@@ -74,7 +74,7 @@ class WorkInfoModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
 
     def test_encrypt_decrypt(self):
         self.model.encrypt_ssn()
-        self.assertEquals("12345", self.model.decrypt_ssn())
+        self.assertEquals("111-22-3333", self.model.decrypt_ssn())
 
     # Override
     def test_delete_user_and_pto(self):
