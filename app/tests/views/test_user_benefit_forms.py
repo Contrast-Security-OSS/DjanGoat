@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
+
 from __future__ import unicode_literals
 from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse
+from django.http import SimpleCookie
 from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
-from django.http import SimpleCookie
 from app.views import sessions_views as sessions
 from pygoat.settings import BASE_DIR
-import app.views as views
 import os
+import app.views as views
 
 benefit_forms = views.user_benefit_forms_views
 
