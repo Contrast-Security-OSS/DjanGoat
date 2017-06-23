@@ -1,17 +1,20 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import hashlib
+import random
+
+from django.core.validators import MaxValueValidator
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from django.core.validators import MaxValueValidator
-from . import user_data
-import random
-import hashlib
-from app.models.Retirement.retirement import Retirement
+from django.utils.safestring import mark_safe
+
 from app.models.PaidTimeOff.paid_time_off import PaidTimeOff
+from app.models.Performance.performance import Performance
+from app.models.Retirement.retirement import Retirement
 from app.models.Schedule.schedule import Schedule
 from app.models.WorkInfo.work_info import WorkInfo
-from app.models.Performance.performance import Performance
+from . import user_data
 
 
 @python_2_unicode_compatible
@@ -148,6 +151,9 @@ class User(models.Model):
 
     def full_name(self):
         return self.first_name + ' ' + self.last_name
+
+    def safe_name(self):
+        return mark_safe(self.first_name)
 
     @staticmethod
     def validate_signup_form(form):

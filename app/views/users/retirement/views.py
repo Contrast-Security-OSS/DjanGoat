@@ -3,10 +3,6 @@ from __future__ import unicode_literals
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.template.loader import get_template
-from app.models import Retirement
-from app.models import User
-import datetime
-import pytz
 from app.views import utils
 from app.decorators import user_is_authenticated
 
