@@ -71,7 +71,7 @@
                                     <td>{{ entry.bank_routing_num }}</td>
                                     <td>{{ entry.percent_of_deposit }}</td>
                                     <td>
-                                        <a onclick="deleteDirectDeposit({{ entry.id }})" class="delete_button"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                        <button data-action="delete" href="/users/{{ current_user.id }}/pay/{{ entry.id }}" class="btn btn-danger">Delete</button>
                                     </td>
                                 </tr>
                                 {% endfor %}

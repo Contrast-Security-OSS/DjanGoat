@@ -73,7 +73,7 @@ def user_pay_index(request, user_id):
 def user_pay(request, user_id, id):
     if request.method == "DELETE":
         Pay.objects.get(id=id).delete()
-        return HttpResponse("Success!")
+        return HttpResponseRedirect('/users/%s/pay' % user_id)
 
     return HttpResponse("Pay for user " +
                         str(user_id) + " for pay with id " + str(id))

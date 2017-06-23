@@ -37,7 +37,7 @@
                                     <td>{{ message.created_at }}</td>
                                     <td>{{ message.message }}</td>
                                     <td>
-                                        <a href="/users/{{ current_user.id }}/messages/{{ message.id }}" class="btn btn-danger pull-left">Delete</a>
+                                        <button data-action="delete" href="/users/{{ current_user.id }}/messages/{{ message.id }}" class="btn btn-danger">Delete</button>
                                     </td>
                                 </tr>
                                 </tbody>

@@ -42,7 +42,7 @@
                                                 <td>{{ message.message }}</td>
                                                 <td>
                                                     <a href="/users/{{ current_user.id }}/messages/{{ message.id }}" class="btn btn-info pull-left">Details</a>
-                                                    <a href="/users/{{ current_user.id }}/messages/{{ message.id }}" class="btn btn-danger pull-left">Delete</a>
+                                                    <button data-action="delete" href="/users/{{ current_user.id }}/messages/{{ message.id }}" class="btn btn-danger">Delete</button>
                                                 </td>
                                             </tr>
                                         {% endfor %}
@@ -119,9 +119,8 @@
             </div>
         </div>
     </div>
-    </body>
-    </html>
 
+<!--
     <script type="text/javascript">
 
         $("#submit_button").click(function(event) {
@@ -152,5 +151,5 @@
             makeActive()
         });
 
-    </script>
+    </script> -->
 {% endblock %}
