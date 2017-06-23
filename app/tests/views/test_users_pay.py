@@ -175,9 +175,6 @@ class UserPayDecryptBankInfo(TestCase, AuthRouteTestingWithKwargs):
         self.assertEqual(response.content, "12345")
 
 
-
-
-
 class UserShowPayRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     """
        Tests checking that that '/users/:user_id/pay/id/' properly handles HttpRequests and routing
