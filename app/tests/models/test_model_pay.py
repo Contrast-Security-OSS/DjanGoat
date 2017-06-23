@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+# Django imports
 from django.test import TestCase
+from django.utils import timezone
+# App imports
+from app.tests.mixins import ModelCrudTests, Pep8ModelTests
+from app.models import User, Pay, KeyManagement
+# Other imports
+from Crypto import Random
 import datetime
 import pytz
-from app.models import User
-from app.models import Pay
-from app.tests.mixins import ModelCrudTests, Pep8ModelTests
+import binascii
 
 
 class PayModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
@@ -34,6 +38,16 @@ class PayModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         pay_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 4, 0, 0))
         pay_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 5, 0, 0))
 
+        input_iv = binascii.hexlify(Random.new().read(8))
+        km_input_create_date = timezone.now()
+        km_input_update_date = timezone.now()
+
+        self.key_model = KeyManagement.objects.create(
+            iv=input_iv, user=self.parent,
+            created_at=km_input_create_date,
+            updated_at=km_input_update_date
+        )
+
         self.model = Pay.objects.create(
             bank_account_num=input_bank_acc_num,
             bank_routing_num=input_bank_route_num,
@@ -50,4 +64,4 @@ class PayModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         self.model_update_input = "123454321"
 
         # Path for pep8 tests
-        self.path = "app/models/Performance/performance.py"
+        self.path = "app/models/Pay/pay.py"
