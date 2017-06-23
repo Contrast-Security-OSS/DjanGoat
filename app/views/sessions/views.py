@@ -47,10 +47,10 @@ def sessions_index(request, email=None, password=None, path='/dashboard/home'):
             response.set_cookie("auth_token", user.auth_token)
             return response
         except User.DoesNotExist:
-            message = "Email or password incorrect!"
+            message = "Email incorrect!"
         except Exception as error:
             if u'Incorrect Password' in error.message:
-                message = "Email or password incorrect!"
+                message = "Password incorrect!"
             else:
                 message = str(error)
         messages.add_message(request, messages.INFO, message)
