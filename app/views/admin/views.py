@@ -29,7 +29,7 @@ def admin_get_user(request, selected_id):
     return render(request, 'admin/modal.html', {'user': user, 'other_admin_val': other_is_admin_val})
 
 
-@require_http_methods(["POST"])
+@require_http_methods(["DELETE"])
 def admin_delete_user(request, selected_id):
     success = True
     try:

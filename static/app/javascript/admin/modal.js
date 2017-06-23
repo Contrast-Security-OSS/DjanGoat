@@ -50,7 +50,7 @@ function deleteUser(user_id) {
     var csrftoken = getCookie('csrftoken');
     $.ajax({
         url: "/admin/" + user_id + "/delete_user/",
-        type: "POST",
+        type: "DELETE",
         headers: {csrfmiddlewaretoken: csrftoken},
         success: function(response) {
             $('#success').show(500).delay(1500).fadeOut();

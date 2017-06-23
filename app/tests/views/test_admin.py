@@ -97,16 +97,16 @@ class AdminDeleteUserTest(TestCase):
 
     # Verifies a route exists
     def test_route_exists(self):
-        response = self.client.post(reverse(self.route_name, kwargs=self.kwargs))
+        response = self.client.delete(reverse(self.route_name, kwargs=self.kwargs))
         self.assertEqual(response.status_code, self.responses['exists'])
 
     def test_can_delete_a_user(self):
-        self.client.post(reverse(self.route_name, kwargs=self.kwargs))  # simulate the post request
+        self.client.delete(reverse(self.route_name, kwargs=self.kwargs))  # simulate the delete request
         self.assertEquals(0, len(User.objects.all()))
 
     def test_not_present_user_does_not_do_anything(self):
         self.kwargs = {'selected_id': 5}
-        self.client.post(reverse(self.route_name, kwargs=self.kwargs))  # simulate the post request
+        self.client.post(reverse(self.route_name, kwargs=self.kwargs))  # simulate the delete request
         self.assertEquals(1, len(User.objects.all()))
 
 
