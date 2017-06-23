@@ -17,7 +17,7 @@
                 <button type="button" class="btn btn-info">Visit Tutorial</button>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Welcome, {{current_user.first_name}}</a>
+                <a class="nav-link" href="#">Welcome, {{ current_user.safe_name }}</a>
             </li>
             <li class="nav-item">
                 <div class="vertical-dropdown">

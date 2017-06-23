@@ -32,8 +32,7 @@
                         </ul>
                     </li>
             {% endif %}
-
-            <a class="nav-link">
+            <a href="/users/{{ current_user.id }}/benefit_forms" class="nav-link">
                 <i class="fa fa-archive icon" aria-hidden="true"></i>
                 <br/>Benefit Forms
             </a>
@@ -45,19 +44,19 @@
                 <i class="fa fa-heart icon" aria-hidden="true"></i>
                 <br/>PTO
             </a>
-            <a class="nav-link">
+            <a href="/users/{{current_user.id}}/work_info" class="nav-link">
                 <i class="fa fa-briefcase icon" aria-hidden="true"></i>
                 <br/>Work Info
             </a>
             <a class="nav-link">
-                <i class="fa fa-calendar icon" aria-hidden="true"></i>
+                <i class="fa fa-table icon" aria-hidden="true"></i>
                 <br/>Performance
             </a>
             <a href="/users/{{ current_user.id }}/messages" class="nav-link">
                 <i class="fa fa-envelope icon" aria-hidden="true"></i>
                 <br/>Messages
             </a>
-            <a class="nav-link">
+            <a class="nav-link" href="/users/{{ current_user.id }}/pay">
                 <i class="fa fa-money icon" aria-hidden="true"></i>
                 <br/>Pay
             </a>

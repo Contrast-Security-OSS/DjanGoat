@@ -1,0 +1,28 @@
+.span5 {
+    margin-right:70px
+}
+
+.bar {
+    height: 18px;
+    background: green;
+}
+
+.card-block.special {
+    background-color:#e8e8e8
+}
+
+.fa.fa-file-pdf-o.fa-3x {
+    color: blue
+}
+
+#my-file-selector {
+    display: None
+}
+
+#upload-file-info {
+    margin-right:70px
+}
+
+#mySubmitButton {
+    display:None
+}
