@@ -55,13 +55,10 @@
           var data = google.visualization.arrayToDataTable([
                 ['Year', 'Score']
                 {% for review in performance.all %}
-                , [ new Date({{ review.date_submitted.year }},
-                             {{ review.date_submitted.month }},
-                             {{ review.date_submitted.day }} ),
+                , [ '{{ review.date_for_chart }}',
                              {{ review.score }} ]
                 {% endfor %}
                 ]);
-
           var options = {
             min: 1,
             max: 5,
@@ -99,6 +96,16 @@
                 fontSize: 12
               }
             },
+            axes: {
+                x: {
+                    all: {
+                        range: {
+                            min: 2010,
+                            max: 2020
+                        }
+                    }
+                }
+            },
             pointSize: 8,
             chartArea: {
               left: 60,
@@ -117,9 +124,10 @@
       };
 
       $(document).ready(function () {
-        drawChart2(),
+        drawChart(),
         makeActive()
       });
+
 
 </script>
 

@@ -1,9 +1,11 @@
-from django.core.management.base import BaseCommand
-from app.models import *
-from Crypto import Random
-import pytz
-import datetime
 import binascii
+import datetime
+
+import pytz
+from Crypto import Random
+from django.core.management.base import BaseCommand
+
+from app.models import *
 
 users = [
     {
@@ -239,7 +241,7 @@ performance = [
     {
         "user_id": 2,
         "comments": "Once again, you've done a great job this year. We greatly appreciate your hard work.",
-        "date_submitted": pytz.utc.localize(datetime.datetime.now()),
+        "date_submitted": pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0)),
         "score": 5,
         "created_at": pytz.utc.localize(datetime.datetime.now()),
         "updated_at": pytz.utc.localize(datetime.datetime.now())
@@ -255,7 +257,7 @@ performance = [
     {
         "user_id": 4,
         "comments": "Wow, right out of the gate we've been very impressed but unfortunately, our system doesn't allow us to give you a full 5.0 because other ppl have gotten 5.0 ratings.",
-        "date_submitted": pytz.utc.localize(datetime.datetime.now()),
+        "date_submitted": pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0)),
         "score": 4,
         "created_at": pytz.utc.localize(datetime.datetime.now()),
         "updated_at": pytz.utc.localize(datetime.datetime.now())
@@ -263,7 +265,7 @@ performance = [
     {
         "user_id": 4,
         "comments": "We highly recommend promotion for this employee! Consistent performer with proven leadership qualities.",
-        "date_submitted": pytz.utc.localize(datetime.datetime.now()),
+        "date_submitted":  pytz.utc.localize(datetime.datetime(2017, 6, 2, 0, 0)),
         "score": 5,
         "created_at": pytz.utc.localize(datetime.datetime.now()),
         "updated_at": pytz.utc.localize(datetime.datetime.now())
