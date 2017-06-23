@@ -106,7 +106,7 @@ class AdminDeleteUserTest(TestCase):
 
     def test_not_present_user_does_not_do_anything(self):
         self.kwargs = {'selected_id': 5}
-        self.client.post(reverse(self.route_name, kwargs=self.kwargs))  # simulate the delete request
+        self.client.delete(reverse(self.route_name, kwargs=self.kwargs))  # simulate the delete request
         self.assertEquals(1, len(User.objects.all()))
 
 
