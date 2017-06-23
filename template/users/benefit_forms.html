@@ -1,0 +1,101 @@
+{% extends 'layouts/shared/base.html' %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/benefit_forms.css' %}"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-wrapper">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    <div class="main-container">
+        <div class="row-fluid">
+            <div class="card-deck">
+                <div class="span5">  <!-- Beginning of span-->
+                    <div id="health_insurance" class="card">
+                        <div class="card-header">
+                            <div class="title">
+                                <i class="fa fa-address-card icon" aria-hidden="true"></i>
+                                <span class="fs1" aria-hidden="true"></span> Health Insurance
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <div class="card-block special">
+                                <div>
+                                    <p> Click on PDF to download </p>
+                                    <a href="http://localhost:8000/download?name=public%2Fdocs%2FHealth_n_Stuff.pdf&type=File">
+                                        <i class="fa fa-file-pdf-o fa-3x" aria-hidden="true">
+                                        </i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End of span-->
+                <div class="span5">  <!-- Beginning of span-->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="title">
+                                <i class="fa fa-address-card icon" aria-hidden="true"></i>
+                                <span class="fs1" aria-hidden="true"></span> Dental Insurance
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <div class="card-block special">
+                                <div>
+                                    <p> Click on PDF to download </p>
+                                    <a href="http://localhost:8000/download?name=public%2Fdocs%2FDental_n_Stuff.pdf&type=File">
+                                        <i class="fa fa-file-pdf-o fa-3x" aria-hidden="true">
+                                        </i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End of span-->
+            </div>
+        </div>
+        <br>
+
+        <div class="row-fluid">
+            <div class="span6">  <!-- Beginning of span-->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="title">
+                            <i class="fa fa-address-card icon" aria-hidden="true"></i>
+                            <span class="fs1" aria-hidden="true"></span> Health Insurance
+                        </div>
+                    </div>
+                    <div class="card-block special">
+                        <h3> Upload File</h3>
+                        <div class="row">
+                            <form method="post" action="{% url 'app:upload_benefit_form' %}"
+                                  enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <label class="btn btn-primary m-3" for="my-file-selector">
+
+                                    <input id="my-file-selector" name="myfile" type="file"
+                                           onchange="$('#upload-file-info').html(this.files[0].name)">
+                                    Add File
+                                </label>
+                                <span class='label label-info' id="upload-file-info">No file selected</span>
+                                <label class="btn btn-primary">
+                                    <button id = "mySubmitButton" type="submit"></button>
+                                    Upload</label>
+                                <input type="hidden" name="backup" value="False">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- End of span-->
+        </div>
+    </div>
+</div>
+
+{% endblock %}
