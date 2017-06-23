@@ -1,4 +1,3 @@
-
 <div id="verticalNav" class="col-4 col-sm-3 col-md-3 col-lg-2 col-xl-2">
     <div class="nav navbar-inverse bg-inverse navbar-toggleable-sm">
         <button class="navbar-toggler navbar-toggler-right"
@@ -13,24 +12,24 @@
                 <br/>Dashboard
             </a>
             {% if current_user.is_admin %}
-                    <li class="submenu" id='admin'>
-                        <a class="nav-link">
-                            <i class="fa fa-lock icon" aria-hidden="true"></i>
-                            <br>
-                            Admin
-                        </a>
-                        <ul id = "sublist" style="display: None">
-                            <li>
-                                <a href ='/admin/1/dashboard/'>Manage Users
-                                </a>
-                            </li>
-                            <li>
-                                <a href ='/admin/1/analytics/'>
-                                    View Analytics
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                <li class="submenu" id='admin'>
+                    <a class="nav-link">
+                        <i class="fa fa-lock icon" aria-hidden="true"></i>
+                        <br>
+                        Admin
+                    </a>
+                    <ul id="sublist" style="display: None">
+                        <li>
+                            <a href='/admin/1/dashboard/'>Manage Users
+                            </a>
+                        </li>
+                        <li>
+                            <a href='/admin/1/analytics/'>
+                                View Analytics
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             {% endif %}
             <a href="/users/{{ current_user.id }}/benefit_forms" class="nav-link">
                 <i class="fa fa-archive icon" aria-hidden="true"></i>

@@ -1,12 +1,13 @@
-from django.http import JsonResponse
-from django.views.decorators.http import require_http_methods
-from app.models.User.user import User
-from app.models.Analytics.analytics import Analytics
-from django.shortcuts import render
-from app.views import utils
-from app.decorators import user_is_authenticated
 import pytz
 import datetime
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+from django.shortcuts import render
+from app.models.User.user import User
+from app.models.Analytics.analytics import Analytics
+from app.views import utils
+from app.decorators import user_is_authenticated
+
 
 
 @require_http_methods(["GET"])
