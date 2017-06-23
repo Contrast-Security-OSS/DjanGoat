@@ -7,10 +7,13 @@ from app.tests.mixins import Pep8ViewsTests
 from django_webtest import WebTest
 from django.urls import reverse
 import app.views as views
-from app.models import Pay, KeyManagement
+from app.views import sessions_views as sessions
+from app.models import Pay, KeyManagement, User
 from django.utils import timezone
 from Crypto import Random
 import binascii
+from django.http import SimpleCookie
+from app.models.utils import Encryption
 
 
 pay = views.user_messages_pay
@@ -78,56 +81,104 @@ class UserPayUpdateDDInfo(TestCase, AuthRouteTestingWithKwargs):
         self.expected_response_content = 'Update dd info for user 55'
         AuthRouteTestingWithKwargs.__init__(self)
 
+        input_iv = binascii.hexlify(Random.new().read(8))
+        km_input_create_date = timezone.now()
+        km_input_update_date = timezone.now()
+
+        self.key_model = KeyManagement.objects.create(
+            iv=input_iv, user=self.mixin_model,
+            created_at=km_input_create_date,
+            updated_at=km_input_update_date
+        )
+
+        self.client.cookies = SimpleCookie({'auth_token': self.mixin_model.auth_token})
+
+
     # Override
     def test_route_exists(self):
         response = self.client.post(reverse(self.route_name, kwargs=self.kwargs), follow=True)
         self.assertEqual(response.status_code, self.responses['exists'])
 
     def test_route_post(self):
-        self.param = {'email': 'ziyang@contrast.com', 'first_name': 'ziyang',
-                      'last_name': 'wang', 'password': '123456',
-                      'confirm': '123456'}
-        # page = self.app.get('/users/55/pays')
-        # self.assertEqual(len(page.forms), 2)
-        # form = page.forms[0]
-        # form.set('email', self.param['email'])
+        form_args = {"bankAccNumInput": "12345", "bankRouteNumInput": "54321", "percentDepositInput": 20}
+        response = self.client.post(reverse(self.route_name, kwargs=self.kwargs), form_args, follow=True)
+        self.assertEqual(response.status_code, self.responses['POST'])
+        payObjects = Pay.objects.filter(user=self.mixin_model)
+        wasPayAdded = False
+        payObject = None
+        for pay in payObjects:
+            if pay.decrypt_bank_num() == "12345":
+                wasPayAdded = True
+                payObject = pay
+
+        self.assertTrue(wasPayAdded)
+        self.assertContains(response, payObject.bank_account_num)
 
 
-# class UserPayDecryptBankInfo(TestCase, AuthRouteTestingWithKwargs):
-#     """
-#         Tests checking that that '/users/:user_id/pay/update_dd_info' properly handles HttpRequests and routing
-#         Accepts  POST requests and refuses all others with an error code 405 (Method not allowed)
-#         Tested on id #55
-#     """
-#
-#     def setUp(self):
-#         self.factory = RequestFactory()
-#         self.client = Client()
-#         self.route_name = 'app:decrypted_bank_acct_num'
-#         self.route = '/users/55/pay/decrypted_bank_acct_num'
-#         self.view = pay.decrypt_bank_acct_num
-#         self.responses = {
-#             'exists': 200,
-#             'GET': 405,
-#             'POST': 200,
-#             'PUT': 405,
-#             'PATCH': 405,
-#             'DELETE': 405,
-#             'HEAD': 405,
-#             'OPTIONS': 405,
-#             'TRACE': 405
-#         }
-#         self.kwargs = {'user_id': 55}
-#         self.expected_response_content = 'Decrypt the bank info 55'
-#         AuthRouteTestingWithKwargs.__init__(self)
-#
-#     # Override
-#     def test_route_exists(self):
-#         response = self.client.post(reverse(self.route_name, kwargs=self.kwargs), follow=True)
-#         self.assertEqual(response.status_code, self.responses['exists'])
+
+class UserPayDecryptBankInfo(TestCase, AuthRouteTestingWithKwargs):
+    """
+        Tests checking that that '/users/:user_id/pay/update_dd_info' properly handles HttpRequests and routing
+        Accepts  POST requests and refuses all others with an error code 405 (Method not allowed)
+        Tested on id #55
+    """
+
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.client = Client()
+        self.route_name = 'app:decrypt_bank_acct_num'
+        self.route = '/users/55/pay/decrypt_bank_acct_num'
+        self.view = pay.decrypt_bank_acct_num
+        self.responses = {
+            'exists': 200,
+            'GET': 405,
+            'POST': 200,
+            'PUT': 405,
+            'PATCH': 405,
+            'DELETE': 405,
+            'HEAD': 405,
+            'OPTIONS': 405,
+            'TRACE': 405
+        }
+        self.kwargs = {'user_id': 55}
+        self.expected_response_content = 'Decrypt the bank info 55'
+        AuthRouteTestingWithKwargs.__init__(self)
+
+        input_iv = binascii.hexlify(Random.new().read(8))
+        km_input_create_date = timezone.now()
+        km_input_update_date = timezone.now()
+
+        self.key_model = KeyManagement.objects.create(
+            iv=input_iv, user=self.mixin_model,
+            created_at=km_input_create_date,
+            updated_at=km_input_update_date
+        )
+
+        self.client.cookies = SimpleCookie({'auth_token': self.mixin_model.auth_token})
+
+    # Override
+    def test_route_exists(self):
+        response = self.client.post(reverse(self.route_name, kwargs=self.kwargs), follow=True)
+        self.assertEqual(response.status_code, self.responses['exists'])
+
+    def test_route_post(self):
+        pay = Pay.objects.create(user=self.mixin_model,
+                                 bank_account_num="12345",
+                                 bank_routing_num="54321",
+                                 percent_of_deposit=20,
+                                 created_at=timezone.now(),
+                                 updated_at=timezone.now())
+
+        form_args = {"account_number": pay.bank_account_num}
+        response = self.client.post(reverse(self.route_name, kwargs=self.kwargs), form_args, follow=True)
+        self.assertEqual(response.status_code, self.responses['POST'])
+        self.assertEqual(response.content, "12345")
 
 
-class UserShowRetirementRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
+
+
+
+class UserShowPayRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
     """
        Tests checking that that '/users/:user_id/pay/id/' properly handles HttpRequests and routing
        Accepts GET, PATCH, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)

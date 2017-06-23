@@ -15,7 +15,6 @@ from django.utils import timezone
 @user_is_authenticated
 def update_dd_info(request, user_id):
     curr_user = utils.current_user(request)
-
     form = request.POST
     if not form:
         return HttpResponse("Pay index")
@@ -32,9 +31,11 @@ def update_dd_info(request, user_id):
 @require_http_methods(["POST"])
 @user_is_authenticated
 def decrypt_bank_acct_num(request, user_id):
-    print("test")
+    form = request.POST
+    if not form:
+        return HttpResponse("No form")
+
     account_num = request.POST['account_number']
-    print(account_num)
     curr_user = utils.current_user(request)
     pay = Pay.objects.get(
         user=curr_user, bank_account_num=account_num
