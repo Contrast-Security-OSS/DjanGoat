@@ -20,8 +20,13 @@ class AnalyticsStorageMiddleware(object):
         return ip
 
     def process_request(self, request):
+        if 'HTTP_REFERER' in request.META:
+            referrer = request.META['HTTP_REFERER']
+        else:
+            referrer = ""
+
         Analytics.objects.create(ip_address=self.get_client_ip(request),
-                                 referrer=request.META['HTTP_REFERER'],
+                                 referrer=referrer,
                                  user_agent=request.META['HTTP_USER_AGENT'],
                                  created_at=pytz.utc.localize(
                                      datetime.datetime.now()),
