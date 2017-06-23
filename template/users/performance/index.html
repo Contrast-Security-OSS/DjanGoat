@@ -23,19 +23,61 @@
 
                   function drawChart() {
 
-                  var data = google.visualization.arrayToDataTable([
-                        ['Year', 'Score']
-                        {% for review in performance.all %}
-                        , [ {{ review.date_submitted.year }}, {{ review.score }} ]
-                        {% endfor %}
-                        ]);
+                      var data = google.visualization.arrayToDataTable([
+                            ['Year', 'Score']
+                            {% for review in performance.all %}
+                            , [ {{ review.date_submitted.year }}, {{ review.score }} ]
+                            {% endfor %}
+                            ]);
 
-                    var options = {
-                      legend: { position: 'right' }
-                    };
+                      var options = {
+                        min: 1,
+                        max: 5,
+                        width: 'auto',
+                        height: '160',
+                        backgroundColor: 'transparent',
+                        colors: ['#e26666', '#579da9', '#1e825e', '#b5799e', '#dba26b'],
+                        tooltip: {
+                          textStyle: {
+                            color: '#666666',
+                            fontSize: 11
+                          },
+                          showColorCode: true
+                        },
+                        legend: {
+                          textStyle: {
+                            color: 'black',
+                            fontSize: 12
+                          }
+                        },
+                        chartArea: {
+                          left: 100,
+                          top: 10
+                        },
+                        focusTarget: 'category',
+                        hAxis: {
+                          textStyle: {
+                            color: 'black',
+                            fontSize: 12
+                          }
+                        },
+                        vAxis: {
+                          textStyle: {
+                            color: 'black',
+                            fontSize: 12
+                          }
+                        },
+                        pointSize: 8,
+                        chartArea: {
+                          left: 60,
+                          top: 10,
+                          height: '80%'
+                        },
+                        lineWidth: 2,
+                      };
 
-                    var chart = new google.visualization.LineChart(document.getElementById('line_chart'));
-                    chart.draw(data, options);
+                      var chart = new google.visualization.LineChart(document.getElementById('line_chart'));
+                      chart.draw(data, options);
                   }
             </script>
         </head>
