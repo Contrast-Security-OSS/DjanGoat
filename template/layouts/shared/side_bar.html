@@ -1,4 +1,3 @@
-
 <div id="verticalNav" class="col-4 col-sm-3 col-md-3 col-lg-2 col-xl-2">
     <div class="nav navbar-inverse bg-inverse navbar-toggleable-sm">
         <button class="navbar-toggler navbar-toggler-right"
@@ -12,6 +11,26 @@
                 <i class="fa fa-tachometer icon" aria-hidden="true"></i>
                 <br/>Dashboard
             </a>
+            {% if current_user.is_admin %}
+                <li class="submenu" id='admin'>
+                    <a class="nav-link">
+                        <i class="fa fa-lock icon" aria-hidden="true"></i>
+                        <br>
+                        Admin
+                    </a>
+                    <ul id="sublist" style="display: None">
+                        <li>
+                            <a href='/admin/1/dashboard/'>Manage Users
+                            </a>
+                        </li>
+                        <li>
+                            <a href='/admin/1/analytics/'>
+                                View Analytics
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            {% endif %}
             <a href="/users/{{ current_user.id }}/benefit_forms" class="nav-link">
                 <i class="fa fa-archive icon" aria-hidden="true"></i>
                 <br/>Benefit Forms
@@ -28,8 +47,8 @@
                 <i class="fa fa-briefcase icon" aria-hidden="true"></i>
                 <br/>Work Info
             </a>
-            <a class="nav-link">
-                <i class="fa fa-table icon" aria-hidden="true"></i>
+            <a href="/users/{{current_user.id}}/performance" class="nav-link">
+                <i class="fa fa-calendar icon" aria-hidden="true"></i>
                 <br/>Performance
             </a>
             <a href="/users/{{ current_user.id }}/messages" class="nav-link">
@@ -43,3 +62,42 @@
         </div>
     </div>
 </div>
+
+{% block javascript %}
+
+<script type="text/javascript">
+  //Main menu navigation
+
+  $('.submenu > a').click(function(e){
+    e.preventDefault();
+    var submenu = $(this).siblings('ul');
+    var li = $(this).parents('li');
+    var submenus = $('#verticalNav li.submenu ul');
+    var submenus_parents = $('#verticalNav li.submenu');
+    var window = $(window)
+    if(li.hasClass('open'))
+    {
+      if((window.width() > 768) || (window.width() < 479)) {
+        submenu.slideUp();
+      } else {
+        submenu.fadeOut(250);
+      }
+      li.removeClass('open');
+    } else
+    {
+      if((window.width() > 768) || (window.width() < 479)) {
+        submenus.slideUp();
+        submenu.slideDown();
+      } else {
+        submenus.fadeOut(250);
+        submenu.fadeIn(250);
+      }
+      submenus_parents.removeClass('open');
+      li.addClass('open');
+    }
+  });
+
+
+  </script>
+
+{% endblock %}

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.core.validators import MaxValueValidator
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from django.core.validators import MaxValueValidator
 
 
 @python_2_unicode_compatible
@@ -19,13 +19,13 @@ class Performance(models.Model):
     t.datetime "created_at"
     t.datetime "updated_at"
     """
-    MAX_INT_VALUE = 2**32-1
+    MAX_INT_VALUE = 2 ** 32 - 1
 
     def __str__(self):
         return self.user.__str__() + " Performance Summary: \n" \
-            + "\nReviewer: " + str(self.reviewer) \
-            + "\nDate Submitted: " + str(self.date_submitted) \
-            + "\nScore: " + str(self.score) + "\nComments: " + self.comments
+               + "\nReviewer: " + str(self.reviewer) \
+               + "\nDate Submitted: " + str(self.date_submitted) \
+               + "\nScore: " + str(self.score) + "\nComments: " + self.comments
 
     user = models.ForeignKey('User', related_name="u_id",
                              on_delete=models.CASCADE)
@@ -37,6 +37,10 @@ class Performance(models.Model):
     comments = models.CharField(max_length=255)
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
+
+    # returns the date as a string for proper chart formatting in the template
+    def date_for_chart(self):
+        return self.date_submitted.isoformat()
 
     class Meta:
         db_table = "app_performances"

@@ -32,7 +32,6 @@
 
 /* Links inside the dropdown */
 .vertical-dropdown-content a {
-    color: black;
     padding: 12px 16px;
     margin-right: 5px;
     text-decoration: none;
@@ -81,4 +80,11 @@
 
 #pageContent {
     margin-top: 2rem;
+}
+
+#sublist li {
+    text: white;
+    text-align: center;
+    display: block;
+    padding-right: 35px
 }
