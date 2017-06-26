@@ -15,23 +15,20 @@
 {% endblock %}
 
 {% block content %}
+    <div class="col-sm-12">
+        <div id="userDataTable" class="widget-body" tabindex="-1">
+        </div>
 
-    <div id="userDataTable" class="widget-body" tabindex="-1">
-
+        <div id="editAcct" class="modal hide slide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
+             aria-hidden="true">
+        </div>
     </div>
 
-
-    <div id="editAcct" class="modal hide slide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
-         aria-hidden="true">
-
-
-    </div>
-
-<script>
-(function() {
-   loadTable()
-})();
-</script>
+    <script>
+    (function() {
+       loadTable()
+    })();
+    </script>
 
 {% endblock %}
 
