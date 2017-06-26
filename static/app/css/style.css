@@ -78,12 +78,8 @@
     color: gray;
 }
 
-#horizontalNav nav {
-    height 6%;
-}
-
 #pageContent {
-    margin-top: 5%;
+    margin-top: 2rem;
 }
 
 #sublist li {

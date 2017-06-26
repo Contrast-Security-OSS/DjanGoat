@@ -17,13 +17,13 @@
             <div class="row-fluid">
                 <!-- Begin Span12 -->
                 <div class="col-md-12">
-                    <div class="widget">
-                        <div class="widget-header">
+                    <div class="card">
+                        <div class="card-header">
                             <div class="title">
                                 <span class="fs1" aria-hidden="true" data-icon="&#xe022;"></span> Messages for {{ current_user.full_name }}
                             </div>
                         </div>
-                        <div class="widget-body">
+                        <div class="card-body">
                             <table class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
@@ -56,16 +56,15 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row-fluid">
-                <div class="span12">
-                    <div class="widget">
-                        <div class="widget-header">
+            <br/>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
                             <div class="title">
                                 <span class="fs1" aria-hidden="true" data-icon="&#xe006;"></span> Send Message
                             </div>
                         </div>
-                        <div class="widget-body">
+                        <div class="card-body">
                             <div id="success" style="display: none;" class="alert alert-block alert-success fade in">
                                 <h4 class="alert-heading">
                                     Success!
@@ -74,44 +73,42 @@
                                     Message successfully sent.
                                 </p>
                             </div>
-                            <div id="failure" class="alert alert-block alert-error fade in">
+                            <div id="failure" style="display: none;" class="alert alert-block alert-error fade in">
                                 <h4 class="alert-heading">
                                     Error!
                                 </h4>
                                 {% for error in messages %}
                                     <p>{{ error }}</p>
                                 {% endfor %}
-
                             </div>
-                            <div class="row-fluid">
-                                <div class="col-md-8">
-                                    <!-- Begin Message Draft Content-->
-                                    <form method="POST" url="/users/{{ current_user.id }}/messages" id="send_message">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="creator_id" value="{{ current_user.id }}" />
-                                        <input type="hidden" name="read" value="0" />
-                                        <div class="form-group">
-                                            <label class="control-label">To:</label>
-                                            <select name="receiver_id" class="form-control">
-                                                <option></option>
-                                                {% for user in available_recipients %}
-                                                    <option value="{{ user.id }}">{{ user.full_name }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
 
-                                        <div class="form-group">
-                                            <label class="control-label">Message</label>
-                                            <textarea name="message" class="col-md-12 form-control"></textarea>
-                                        </div>
 
-                                        <div class="form-actions no-margin">
-                                            <button type="submit" id="submit_button" class="btn btn-info pull-right">Submit</button>
-                                        </div>
+                            <div class="col-sm-12">
+                                <form method="POST" url="/users/{{ current_user.id }}/messages" id="send_message">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="creator_id" value="{{ current_user.id }}" />
+                                    <input type="hidden" name="read" value="0" />
+                                    <div class="form-group">
+                                        <label class="control-label">To:</label>
+                                        <select name="receiver_id" class="form-control">
+                                            <option></option>
+                                            {% for user in available_recipients %}
+                                                <option value="{{ user.id }}">{{ user.full_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
 
-                                        <div class="clearfix"></div>
-                                    </form>
-                                </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Message</label>
+                                        <textarea name="message" class="col-md-12 form-control"></textarea>
+                                    </div>
+
+                                    <div class="form-actions no-margin">
+                                        <button type="submit" id="submit_button" class="btn btn-info pull-right">Submit</button>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -124,7 +121,7 @@
 
     <script type="text/javascript">
 
-        $("#submit_button").click(function(event) {
+        $("#_disabled_submit_button").click(function(event) {
             var valuesToSubmit = $("#send_message").serialize();
             event.preventDefault();
             $.ajax({

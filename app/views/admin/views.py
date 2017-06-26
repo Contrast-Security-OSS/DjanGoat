@@ -8,14 +8,11 @@ from app.models.Analytics.analytics import Analytics
 from app.views import utils
 from app.decorators import user_is_authenticated
 
-
-
 @require_http_methods(["GET"])
 @user_is_authenticated
 def admin_dashboard(request, selected_id):
-    user = utils.current_user(request)
-    return render(request, 'admin/dashboard.html',
-                  context={'current_user': user})
+    current_user = utils.current_user(request)
+    return render(request, 'admin/dashboard.html', { 'current_user': current_user})
 
 
 @require_http_methods(["GET"])
@@ -87,7 +84,7 @@ def admin_get_all_users(request, selected_id):
 @require_http_methods(["GET"])
 @user_is_authenticated
 def admin_analytics(request, selected_id):
-    user = utils.current_user(request)
+    current_user = utils.current_user(request)
     data = request.GET.dict().copy()
     show_user_agent = False
     show_ip_address = False
@@ -102,12 +99,13 @@ def admin_analytics(request, selected_id):
         if len(col) == 0:
             col = "*"
         analytics = Analytics.hits_by_ip(request.GET['ip'], col=col)
-
     else:
         analytics = Analytics.objects_in_list()
     cols = [key for key in analytics]
     values = analytics.values()
     num_data = range(len(values[0]))
     return render(request, 'admin/analytics.html',
-                  {'cols': cols, 'values': values, 'num_data': num_data,
-                   'current_user': user})
+                  {'current_user': current_user,
+                   'cols': cols,
+                   'values': values,
+                   'num_data': num_data})

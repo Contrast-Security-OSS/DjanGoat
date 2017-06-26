@@ -17,39 +17,39 @@
 
 {% block content %}
 
+    <div class="col-sm-12">
+        <form action="">
+            Search by IP: <input type="text" name="ip"><br/>
+            <input type="checkbox" value="" name="ip_address"> IP Address<br/>
+            <input type="checkbox" value="" name="referrer"> Referrer<br/>
+            <input type="checkbox" value="" name="user_agent"> User Agent
+        </form>
 
-    <form action="">
-        Search by IP: <input type="text" name="ip"><br/>
-        <input type="checkbox" value="" name="ip_address"> IP Address<br/>
-        <input type="checkbox" value="" name="referrer"> Referrer<br/>
-        <input type="checkbox" value="" name="user_agent"> User Agent
-    </form>
 
-
-    <div id="userDataTable" class="widget-body" tabindex="-1">
-        <table id="dataTable" class="display" cellspacing="0" width="100%">
-            <thead>
-            <tr>
-                {% for col in cols %}
-                <th>
-                    {{ col }}
-                </th>
+        <div id="userDataTable" class="widget-body" tabindex="-1">
+            <table id="dataTable" class="display" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    {% for col in cols %}
+                    <th>
+                        {{ col }}
+                    </th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in num_data %}
+                <tr>
+                {% for value_list in values %}
+                    <td>
+                        {{ value_list|index:i }}
+                    </td>
                 {% endfor %}
-            </tr>
-            </thead>
-            <tbody>
-            {% for i in num_data %}
-            <tr>
-            {% for value_list in values %}
-                <td>
-                    {{ value_list|index:i }}
-                </td>
-            {% endfor %}
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
 
