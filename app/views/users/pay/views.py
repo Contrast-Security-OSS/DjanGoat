@@ -17,7 +17,7 @@ from app.views import utils
 @require_http_methods(["POST"])
 @user_is_authenticated
 def update_dd_info(request, user_id):
-    curr_user = 2
+    curr_user = utils.current_user(request)
     form = request.POST
     if not form:
         return HttpResponse("Pay index")
