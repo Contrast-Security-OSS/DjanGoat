@@ -14,7 +14,10 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
                 <!--<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
-                <button type="button" class="btn btn-info">Visit Tutorial</button>
+                <div class="linkButton">
+                    <a onclick="window.open('https://contrast.atlassian.net/wiki/display/ENG/Tutorial')" class="btn btn-info">Visit
+                        Tutorial</a>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Welcome, {{ current_user.safe_name }}</a>
