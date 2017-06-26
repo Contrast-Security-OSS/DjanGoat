@@ -12,11 +12,21 @@
     //document.write("<select style=\"width: 100px;\">");
     //document.write("<OPTION value=1>English</OPTION>");
     //document.write("<OPTION value=2>Spanish</OPTION>");
-    if (typeof location.hash.split("#")[1] !== undefined && && typeof location.hash.split("#") !== 'undefined) {
-      var hashParam = location.hash.split("#")[1];
-      var paramName = hashParam.split('=')[0];
-      var paramValue = decodeURIComponent(hashParam.split('=')[1]);
-      document.write("<OPTION value=3>" + paramValue + "</OPTION>");
+    console.log("location: ",location);
+    console.log("location hash: ", location.hash);
+    console.log("location hash split: ", location.hash.split("#"));
+    console.log("sencond element after split: ", location.hash.split("#")[1]);
+    var hashParam = location.hash.split("#")[1];
+    if (hashParam !== undefined) {
+        console.log("hashParam is defined");
+        var paramName = hashParam.split('=')[0];
+        console.log("hashParam split on =:", paramName);
+        var paramValue = decodeURIComponent(hashParam.split('=')[1]);
+        console.log("paramValue: ", paramValue);
+        if (typeof paramValue !== 'undefined') {
+            console.log("paramValue is defined");
+          document.write("<OPTION value=3>" + paramValue + "</OPTION>");
+        }
     }
     //document.write("</select>");
 

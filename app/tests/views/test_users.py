@@ -189,7 +189,7 @@ class UserViewsSignUpUserFormTests(WebTest):
                       'last_name': 'wang', 'password': '123456',
                       'confirm': '123456'}
         page = self.app.get('/signup/')
-        self.assertEqual(len(page.forms), 1)
+        self.assertEqual(len(page.forms), 5)
         form = page.forms[0]
         form.set('email', self.param['email'])
         form.set('first_name', self.param['first_name'])
