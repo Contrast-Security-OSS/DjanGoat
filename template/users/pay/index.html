@@ -79,7 +79,7 @@
                             </table>
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination justify-content-end">
-                                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                        <li class="page-item"><a class="page-link" onclick="previous()">Previous</a></li>
                                         {% for entry in direct_deposits %}
                                             {% if forloop.counter0|divisibleby:4 %}
                                                 {% widthratio forloop.counter0 4 1 as page_number%}
@@ -89,7 +89,7 @@
                                             {% endif %}
                                         {% endfor %}
 
-                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                        <li class="page-item"><a class="page-link" onclick="next()">Next</a></li>
                                     </ul>
                                 </nav>
                         </div>

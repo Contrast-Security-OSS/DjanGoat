@@ -73,8 +73,9 @@ var currentPage = 1;
  * the page number being clicked, and the number of items on a page.
  */
 function populateTable(page) {
-    $("[class^='page-item-']").css("display", "none")
+    $("[class^='page-item-']").css("display", "none");
     $(".page-item-" + page).css("display", "table-row");
+    currentPage = page;
 
 }
 
@@ -87,5 +88,5 @@ function previous() {
 }
 
 $( document ).ready(function() {
-    populateTable(1)
+    populateTable(1);
 });
