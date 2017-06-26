@@ -1,0 +1,30 @@
+.well {
+    background-color: #e8e8e8;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#payIndex .form-inline {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+#payIndex .row {
+    margin-bottom: 30px;
+}
+
+#payIndex table tr:nth-child(2n+1) > td, #payIndex table tr:nth-child(2n+1) > th {
+    background-color: #fff;
+}
+
+#payIndex #hint {
+    color: #AA6F93;
+}
+
+#payIndex #pageTitle {
+    margin-bottom: 15px;
+}
+
+#payIndex .delete_button {
+    cursor: pointer;
+}

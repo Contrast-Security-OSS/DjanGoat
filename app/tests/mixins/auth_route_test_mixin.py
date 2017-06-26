@@ -159,7 +159,7 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
 
         # Make sure new session not created
         self.assertEqual(auth_response.status_code, 302)
-        self.assertEqual(auth_response['message'], "Email or password incorrect!")
+        self.assertEqual(auth_response['message'], "Password incorrect!")
 
         # Error should be raised as no cookie should be set (post to create session failed)
         with self.assertRaises(KeyError) as error:
@@ -176,7 +176,7 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
 
         # Make sure new session not created
         self.assertEqual(auth_response.status_code, 302)
-        self.assertEqual(auth_response["message"], "Email or password incorrect!")
+        self.assertEqual(auth_response["message"], "Email incorrect!")
 
         # Error should be raised as no cookie should be set (post to create session failed)
         with self.assertRaises(KeyError) as error:
@@ -210,16 +210,18 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
         # Check to make sure the response is correct
         self.assertContains(redirect_response, self.not_logged_in_message)
 
-
     def good_auth_test(self, request):
         # Create new session
         auth_request = self.factory.post('/sessions/')
         AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
-        auth_response = sessions.sessions_index(auth_request, email="ryan.dens@contrastsecurity.com",
-                                                   password="12345", path=self.route)
+
+        auth_response = sessions.sessions_index(
+            auth_request, email="ryan.dens@contrastsecurity.com",
+            password="12345", path=self.route
+        )
+
         # Make sure redirect was called (but not followed)
         self.assertEqual(auth_response.status_code, 302)
-
         # Add auth token cookie to request
         request.COOKIES['auth_token'] = auth_response.cookies['auth_token'].value
         response = self.view(request, **self.kwargs)
