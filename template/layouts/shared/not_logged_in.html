@@ -12,16 +12,10 @@
 <nav class="navbar navbar-light bg-inverse">
     <div class="form-group row justify-content-end">
         <div class="linkButton">
-            <form class="button" method="get"><input class="btn"
-                                                     onclick="window.open(&#39;https://contrast.atlassian.net/wiki/display/ENG/Tutorial&#39;, &#39;_blank&#39;)"
-                                                     type="submit" value="Visit Tutorial"/></form>
+            <a href="https://contrast.atlassian.net/wiki/display/ENG/Tutorial" class="btn btn-warning">Visit Tutorial</a>
         </div>
         <div class="linkButton">
-            <form class="button" method="get" action="#myModalLabel1"><input id="tutorialBtn"
-                                                                             class="btn btn-danger"
-                                                                             type="submit"
-                                                                             value="Tutorial Credentials"/>
-            </form>
+            <a id="tutorialBtn" href="#" class="btn btn-danger">Tutorial Credentials</a>
             <!-- The Modal -->
             <div id="tutorialsModal" class="modal" role="dialog">
                 <div class="modal-dialog modal-lg">
@@ -137,16 +131,12 @@
             </div>
         </div>
         <div class="linkButton">
-            <form class="button_to" method="get" action="/login"><input class="btn" type="submit"
-                                                                        value="Log in"/>
-            </form>
+            <a href="/login" class="btn btn-info">Log in</a>
         </div>
         <div class="linkButton">
-            <form class="button_to" method="get" action="/signup"><input class="btn btn-primary" type="submit"
-                                                                         value="Sign up"/></form>
+            <a href="/signup" class="btn btn-info">Sign up</a>
         </div>
     </div>
-</nav>
 </nav>
 
 
@@ -184,7 +174,7 @@
         hidden.style.display = "none";
     }
 
-    // Get the <span> element that shows the credentials with the "I Understand" button
+    // Get the <span> element that shows the credentials with the "I Underfestand" button
     var btn2 = document.getElementsByClassName("btn btn-primary")[0];
 
     // When the user clicks on <span> "I Understand", show modal that has credentials

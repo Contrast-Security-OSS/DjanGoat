@@ -21,11 +21,11 @@
         console.log("hashParam is defined");
         var paramName = hashParam.split('=')[0];
         console.log("hashParam split on =:", paramName);
-        var paramValue = decodeURIComponent(hashParam.split('=')[1]);
-        console.log("paramValue: ", paramValue);
-        if (typeof paramValue !== 'undefined') {
-            console.log("paramValue is defined");
-          document.write("<OPTION value=3>" + paramValue + "</OPTION>");
+        var paramValue = hashParam.split('=')[1];
+        console.log("paramValue=", paramValue, typeof paramValue);
+        if (paramValue !== undefined) {
+            console.log("paramValue is defined", paramValue);
+            document.write("<OPTION value=3>" + decodeURIcomponent(paramValue) + "</OPTION>");
         }
     }
     //document.write("</select>");
