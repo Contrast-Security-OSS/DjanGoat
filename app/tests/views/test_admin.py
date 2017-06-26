@@ -22,7 +22,7 @@ class AdminDashboardTest(TestCase, AuthRouteTestingWithKwargs):
         self.view = admin_views.admin_dashboard
         self.responses = {
             'exists': 200,
-            'GET': 200,
+            'GET': 302,
             'POST': 405,
             'PUT': 405,
             'PATCH': 405,
@@ -251,7 +251,7 @@ class AdminAnalyticsUsersTest(TestCase, AuthRouteTestingWithKwargs):
         self.view = admin_views.admin_analytics
         self.responses = {
             'exists': 200,
-            'GET': 200,
+            'GET': 302,
             'POST': 405,
             'PUT': 405,
             'PATCH': 405,
