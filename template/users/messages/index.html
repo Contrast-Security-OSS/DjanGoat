@@ -136,7 +136,8 @@
                         $('#failure').show(500).delay(1500).fadeOut();
                     } else {
                         $('#success').show(500).delay(1500).fadeOut();
-                    }
+                    };
+                    window.location.reload();
                 },
                 error: function(event) {
                     $('#failure').show(500).delay(1500).fadeOut();
