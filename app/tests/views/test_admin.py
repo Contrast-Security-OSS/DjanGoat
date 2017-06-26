@@ -71,12 +71,12 @@ class AdminDeleteUserTest(TestCase, AuthRouteTestingWithKwargs):
         self.route = '/admin/1/delete_user'
         self.view = admin_views.admin_delete_user
         self.responses = {
-            'exists': 200,
+            'exists': 405,
             'GET': 405,
-            'POST': 200,
+            'POST': 405,
             'PUT': 405,
             'PATCH': 405,
-            'DELETE': 405,
+            'DELETE': 200,
             'HEAD': 405,
             'OPTIONS': 405,
             'TRACE': 405
@@ -120,7 +120,7 @@ class AdminDeleteUserTest(TestCase, AuthRouteTestingWithKwargs):
         auth_token = auth_response.cookies['auth_token'].value
 
         self.client.cookies = SimpleCookie({'auth_token': auth_token})
-        response = self.client.post(reverse(self.route_name,
+        response = self.client.delete(reverse(self.route_name,
                                  kwargs=self.kwargs))  # simulate the post request
         self.assertEquals(0, len(User.objects.filter(first_name="VINAITEST")))
 

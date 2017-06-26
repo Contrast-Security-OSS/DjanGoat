@@ -9,7 +9,6 @@ from app.views import utils
 from app.decorators import user_is_authenticated
 
 
-
 @require_http_methods(["GET"])
 @user_is_authenticated
 def admin_dashboard(request, selected_id):

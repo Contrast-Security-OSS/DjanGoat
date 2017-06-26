@@ -39,10 +39,7 @@
                 </fieldset>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick="deleteUser({{user.user_id}})"
-                        data-dismiss="modal">
-                    Delete
-                </button>
+                <button type="button" data-action="delete" href="/admin/{{user.user_id}}/delete_user/" class="btn btn-danger">Delete</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" id="submit_button" onclick="submitForm({{user.user_id}})">
                     Save
@@ -55,4 +52,5 @@
 
 {% block javascript%}
 <script type="text/javascript" src="{% static 'javascript/admin/validation.js'%}"></script>
+<script type="text/javascript" src="{% static 'javascript/delete_button.js'%}"></script>
 {% endblock %}
