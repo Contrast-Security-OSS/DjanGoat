@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block content %}
+    {% load integer_division %}
     <div id="payIndex">
         <h1 id="pageTitle">{{ current_user.first_name }} {{ current_user.last_name }} Pay Summary</h1>
         <div class="row">
@@ -66,7 +67,7 @@
                                     <th>Action</th>
                                 </tr>
                                 {% for entry in direct_deposits %}
-                                <tr id="entry{{ entry.id }}">
+                                <tr id="entry{{ entry.id }}" class="page-item-{{ forloop.counter0|integer_division:4|add:1 }}">
                                     <td class="accNum"> {{ entry.bank_account_num }}</td>
                                     <td>{{ entry.bank_routing_num }}</td>
                                     <td>{{ entry.percent_of_deposit }}</td>
@@ -82,10 +83,10 @@
                                         {% for entry in direct_deposits %}
                                             {% if forloop.counter0|divisibleby:4 %}
                                                 {% widthratio forloop.counter0 4 1 as page_number%}
-                                                <li class="page-item"><a class="page-link" href="#">{{ page_number|add:"1" }}</a></li>
+                                                <li class="page-item">
+                                                    <a onclick="populateTable({{ page_number|add:1 }})" class="page-link">{{ page_number|add:"1" }}</a>
+                                                </li>
                                             {% endif %}
-                                            <!--<li class="page-item"><a class="page-link" href="#">2</a></li>-->
-                                            <!--<li class="page-item"><a class="page-link" href="#">3</a></li>-->
                                         {% endfor %}
 
                                         <li class="page-item"><a class="page-link" href="#">Next</a></li>

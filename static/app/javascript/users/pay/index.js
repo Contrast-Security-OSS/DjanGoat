@@ -64,3 +64,28 @@ function decryptDirectDeposit() {
         }
       });
 }
+
+var currentPage = 1;
+
+
+/**
+ * Populates the table based on the data passed in,
+ * the page number being clicked, and the number of items on a page.
+ */
+function populateTable(page) {
+    $("[class^='page-item-']").css("display", "none")
+    $(".page-item-" + page).css("display", "table-row");
+
+}
+
+function next() {
+    populateTable(currentPage + 1);
+}
+
+function previous() {
+    populateTable(currentPage - 1);
+}
+
+$( document ).ready(function() {
+    populateTable(1)
+});
