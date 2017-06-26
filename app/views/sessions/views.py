@@ -38,12 +38,20 @@ def sessions_index(request, email=None, password=None, path='/dashboard/home'):
             password = request.POST['password']
         elif password is None:
             return HttpResponse("Error: no password inputted")
+        if 'remember' in request.POST:
+            remember = True
+        else:
+            remember = False
 
         message = ""
         try:
             response = HttpResponseRedirect(path)
             user = User.authenticate(email, password)
-            response.set_cookie("auth_token", user.auth_token)
+            if remember:
+                response.set_cookie("auth_token", user.auth_token,
+                                    max_age=365*24*60*60)
+            else:
+                response.set_cookie("auth_token", user.auth_token)
             return response
         except User.DoesNotExist:
             message = "Email incorrect!"
