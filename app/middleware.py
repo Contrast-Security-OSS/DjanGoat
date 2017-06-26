@@ -25,9 +25,14 @@ class AnalyticsStorageMiddleware(object):
         else:
             referrer = ""
 
+        if 'HTTP_USER_AGENT' in request.META:
+            user_agent = request.META['HTTP_USER_AGENT']
+        else:
+            user_agent = ""
+
         Analytics.objects.create(ip_address=self.get_client_ip(request),
                                  referrer=referrer,
-                                 user_agent=request.META['HTTP_USER_AGENT'],
+                                 user_agent=user_agent,
                                  created_at=pytz.utc.localize(
                                      datetime.datetime.now()),
                                  updated_at=pytz.utc.localize(
