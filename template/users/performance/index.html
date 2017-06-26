@@ -1,9 +1,9 @@
 {% extends 'layouts/shared/base.html' %}
 
 {% block head %}
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/users/performance/format.css' %}" />
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/users/performance/format.css' %}"/>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -117,6 +117,7 @@
           var chart = new google.visualization.LineChart(document.getElementById('line_chart'));
           chart.draw(data, options);
       }
+
 
 
 </script>
