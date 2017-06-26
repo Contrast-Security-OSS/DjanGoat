@@ -41,6 +41,7 @@ class UserWorkInfoRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
             'OPTIONS': 405,
             'TRACE': 405
         }
-        self.kwargs = {'user_id': 55}
         self.expected_response_content = 'Employee Information'
         AuthRouteTestingWithKwargs.__init__(self)
+        self.kwargs = {'user_id': self.mixin_model.id}
+
