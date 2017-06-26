@@ -1,31 +1,31 @@
 <html>
-    <head>
-        {% load static %}
-        <script type="text/javascript" src="{% static 'javascript/jquery-1.12.4.min.js'%}"></script>
-        {% load bootstrap4 %}
-        {% bootstrap_css %}
-        {% bootstrap_javascript %}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}" />
-        {% block head %}{% endblock %}
-    </head>
+<head>
+    {% load static %}
+    <script type="text/javascript" src="{% static 'javascript/jquery-1.12.4.min.js'%}"></script>
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}"/>
+    {% block head %}{% endblock %}
+</head>
 
-    <body>
+<body>
+{% if current_user %}
+{% include 'layouts/shared/nav_loggedin.html' %}
+{% else %}
+{% include 'layouts/shared/not_logged_in.html' %}
+{% endif %}
+<div id="content" class="container-fluid">
+    <div class="row">
         {% if current_user %}
-            {% include 'layouts/shared/nav_loggedin.html' %}
-        {% else %}
-            {% include 'layouts/shared/not_logged_in.html' %}
+        {% include 'layouts/shared/side_bar.html' %}
         {% endif %}
-        <div id="content" class="container-fluid">
-            <div class="row">
-                {% if current_user %}
-                    {% include 'layouts/shared/side_bar.html' %}
-                {% endif %}
-                <div id="pageContent" class="col-8 col-sm-9 col-md-9 col-lg-10 col-xl-10">
-                    {% block content %}{% endblock %}
-                </div>
-            </div>
+        <div id="pageContent" class="col-8 col-sm-9 col-md-9 col-lg-10 col-xl-10">
+            {% block content %}{% endblock %}
         </div>
-    </body>
+    </div>
+</div>
+</body>
 
 </html>
