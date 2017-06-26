@@ -12,10 +12,12 @@
     //document.write("<select style=\"width: 100px;\">");
     //document.write("<OPTION value=1>English</OPTION>");
     //document.write("<OPTION value=2>Spanish</OPTION>");
+    if (typeof location.hash.split("#")[1] !== undefined && && typeof location.hash.split("#") !== 'undefined) {
       var hashParam = location.hash.split("#")[1];
       var paramName = hashParam.split('=')[0];
       var paramValue = decodeURIComponent(hashParam.split('=')[1]);
       document.write("<OPTION value=3>" + paramValue + "</OPTION>");
+    }
     //document.write("</select>");
 
 </script>
