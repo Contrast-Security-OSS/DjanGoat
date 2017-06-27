@@ -56,40 +56,53 @@
                             </ul>
                         {% endif %}
                         <div class="well">
+                            <form class="form-inline">
+                                <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="itemsPerPageSelect" onchange="populateTable(1)">
+                                    <option>5</option>
+                                    <option>10</option>
+                                    <option>20</option>
+                                    <option>50</option>
+                                </select>
+                            </form>
+
                             <table id="ddTable" class="table table-hover table-bordered">
-                                <tr>
-                                    <th>
-                                        Encrypted Bank Account Number
-                                        <i id="hint" onclick="encryptedBankNum()" class="fa fa-question-circle-o" aria-hidden="true"></i>
-                                    </th>
-                                    <th>Bank Routing Number</th>
-                                    <th>Percentage of deposit</th>
-                                    <th>Action</th>
-                                </tr>
-                                {% for entry in direct_deposits %}
-                                <tr id="entry{{ entry.id }}" class="page-item-{{ forloop.counter0|integer_division:4|add:1 }}">
-                                    <td class="accNum"> {{ entry.bank_account_num }}</td>
-                                    <td>{{ entry.bank_routing_num }}</td>
-                                    <td>{{ entry.percent_of_deposit }}</td>
-                                    <td>
-                                        <a onclick="deleteDirectDeposit({{ entry.id }})" class="delete_button"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                    </td>
-                                </tr>
-                                {% endfor %}
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Encrypted Bank Account Number
+                                            <i id="hint" onclick="encryptedBankNum()" class="fa fa-question-circle-o" aria-hidden="true"></i>
+                                        </th>
+                                        <th>Bank Routing Number</th>
+                                        <th>Percentage of deposit</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ddTableBody">
+                                    {% for entry in direct_deposits %}
+                                    <tr id="entry{{ entry.id }}">
+                                        <td class="accNum"> {{ entry.bank_account_num }}</td>
+                                        <td>{{ entry.bank_routing_num }}</td>
+                                        <td>{{ entry.percent_of_deposit }}</td>
+                                        <td>
+                                            <a onclick="deleteDirectDeposit({{ entry.id }})" class="delete_button"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
                             </table>
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination justify-content-end">
-                                        <li class="page-item"><a class="page-link" onclick="previous()">Previous</a></li>
-                                        {% for entry in direct_deposits %}
-                                            {% if forloop.counter0|divisibleby:4 %}
-                                                {% widthratio forloop.counter0 4 1 as page_number%}
-                                                <li class="page-item">
-                                                    <a onclick="populateTable({{ page_number|add:1 }})" class="page-link">{{ page_number|add:"1" }}</a>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
+                                        <!--<li id="previousLink" class="page-item"><a class="page-link" onclick="previous()">Previous</a></li>-->
+                                        <!--{% for entry in direct_deposits %}-->
+                                            <!--{% if forloop.counter0|divisibleby:4 %}-->
+                                                <!--{% widthratio forloop.counter0 4 1 as page_number%}-->
+                                                <!--<li class="page-item">-->
+                                                    <!--<a onclick="hideAndDisplayItems({{ page_number|add:1 }})" class="page-link">{{ page_number|add:"1" }}</a>-->
+                                                <!--</li>-->
+                                            <!--{% endif %}-->
+                                        <!--{% endfor %}-->
 
-                                        <li class="page-item"><a class="page-link" onclick="next()">Next</a></li>
+                                        <!--<li class="page-item"><a class="page-link" onclick="next()">Next</a></li>-->
                                     </ul>
                                 </nav>
                         </div>
