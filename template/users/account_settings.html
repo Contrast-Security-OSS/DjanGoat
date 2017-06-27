@@ -21,14 +21,14 @@
             <h2>Update Account Information</h2>
         </div>
 
-        <form method="post" action="/users/{{user_id}}"> {% csrf_token %}
+        <form method="post" action="/users/{{current_user.id}}"> {% csrf_token %}
 
-            <input type="hidden" value={{user_id}} name="user_id">
+            <input type="hidden" value={{current_user.id}} name="user_id">
             <div class="form-group">
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                        <input type="email" class="form-control" name="email" id="email"  placeholder={{email}} />
+                        <input type="email" class="form-control" name="email" id="email"  placeholder={{current_user.email}} />
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                        <input type="text" class="form-control" name="first_name" id="first_name"  placeholder={{first_name}} />
+                        <input type="text" class="form-control" name="first_name" id="first_name"  placeholder={{current_user.first_name}} />
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                        <input type="text" class="form-control" name="last_name" id="last_name"  placeholder={{last_name}} />
+                        <input type="text" class="form-control" name="last_name" id="last_name"  placeholder={{current_user.last_name}} />
                     </div>
                 </div>
             </div>
