@@ -1,12 +1,14 @@
 from __future__ import unicode_literals
 
-from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
 from django.contrib import messages
 from django.urls import reverse
-from app.models import User
+from django.shortcuts import render, redirect
 from django.core.mail import send_mail
+from app.models import User
 from Crypto.Hash import MD5
+import pickle
+import base64
 
 
 @require_http_methods(["POST"])
@@ -19,7 +21,7 @@ def forgot_password(request):
     else:
         messages.error(request, 'We do not have the email in our system')
 
-    return HttpResponseRedirect('/login')
+    return redirect('/login')
 
 
 def password_reset_mailer(request, user):
@@ -53,23 +55,41 @@ def reset_password_handler(request):
 
 @require_http_methods(["GET"])
 def confirm_token(request):
-    if request.GET.get('token', '') != '' and is_valid_token(request.GET['token']):
-        return HttpResponse('Ay you can rest')
+    if request.GET.get('token', '') != '' and is_valid_token(
+            request.GET['token']):
+        messages.success(request,
+                         'Password reset token confirmed! Please create a new password.')
+        id = request.GET['token'].split('-')[0]
+        user = User.objects.filter(user_id=id).first()
+        encoded = base64.b64encode(pickle.dumps(user))
+
+        return render(request, 'password_reset/reset.html',
+                      context={'user': encoded})
     else:
-        print(request.GET['token'])
-        return HttpResponse('Bad token!')
+        messages.error(request,
+                       'Invalid password reset token. Please try again')
+        return redirect('/login')
 
 
 @require_http_methods(["POST"])
 def reset_password(request):
-    return HttpResponse('Reset your password')
+    encoded_user = request.POST['user']
+    user = pickle.loads(base64.b64decode(encoded_user))
+
+    if request.POST.get('password', '') != '' and request.POST.get('confirm', '') != '' and request.POST.get('password') == request.POST.get('confirm'):
+        user.password = request.POST['password']
+        user.save()
+        messages.success(request, 'Your password has been updated')
+    else:
+        messages.success(request, 'Something went wrong with the updating')
+
+    return redirect('/login')
 
 
 def is_valid_token(token):
     split = token.split('-')
     if split[0] and split[1]:
         user = User.objects.filter(user_id=split[0]).first()
-        print(user.email)
         email = user.email
         h = MD5.new()
         h.update(email)

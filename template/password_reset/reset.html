@@ -1,0 +1,51 @@
+{% extends 'layouts/shared/base.html' %}
+
+{% load static %}
+{% block content %}
+
+ <div class="col-md-5 offset-md-5" >
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <div {% if message.tags %} class="alert {{ message.tags }}"{% endif %}>{{ message }}</div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div class="header">
+            <h2>Forgot Password</h2>
+            <p> Please reset your password</p>
+        </div>
+
+        <form method="post" action="/password_resets/" > {% csrf_token %}
+
+            <input type="hidden" value={{user}} name="user">
+
+            <div class="form-group">
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                        <input type="password" class="form-control" name="password" id="password"
+                               placeholder="New Password" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                        <input type="password" class="form-control" name="confirm" id="confirm"
+                               placeholder="Confirm Password" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <input type="submit" value="Reset Password" id="submit_button" class="btn btn-info btn-large pull-right">
+            </div>
+
+        </form>
+    </div>
+{% endblock %}
