@@ -1,2 +1,2 @@
-import urls
-from messages import views as messages_views
+from . import urls
+from .messages import views as messages_views

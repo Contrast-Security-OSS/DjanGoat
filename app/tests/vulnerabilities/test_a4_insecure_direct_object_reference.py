@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 from django.test import TestCase, RequestFactory, Client
 from django.http import SimpleCookie
 from app.models import User, WorkInfo

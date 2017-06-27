@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
+
 from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse
 from django.http import SimpleCookie
@@ -166,7 +166,7 @@ class DownloadBenefitFormsRoutingAndHttpTests(TestCase,
         response = self.client.get(
             reverse(self.route_name) + '/?name=public/docs/Dental_n_Stuff.pdf',
             follow=True)
-        self.assertEquals(response['Content-Disposition'],
+        self.assertEqual(response['Content-Disposition'],
                           'attachment; filename=%s' \
                           % os.path.basename('public/docs/Dental_n_Stuff.pdf'))
 
@@ -187,6 +187,6 @@ class DownloadBenefitFormsRoutingAndHttpTests(TestCase,
         response = self.client.get(
             reverse(self.route_name) + '/?name=public/docs/Health_n_Stuff.pdf',
             follow=True)
-        self.assertEquals(response['Content-Disposition'],
+        self.assertEqual(response['Content-Disposition'],
                           'attachment; filename=%s' \
                           % os.path.basename('public/docs/Health_n_Stuff.pdf'))

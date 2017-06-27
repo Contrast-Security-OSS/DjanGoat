@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
@@ -48,7 +48,7 @@ def sessions_index(request, email=None, password=None, path='/dashboard/home'):
         except User.DoesNotExist:
             message = "Email incorrect!"
         except Exception as error:
-            if u'Incorrect Password' in error.message:
+            if 'Incorrect Password' in error.message:
                 message = "Password incorrect!"
             else:
                 message = str(error)

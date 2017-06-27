@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 # Django imports
 from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse, HttpResponseRedirect

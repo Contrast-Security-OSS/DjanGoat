@@ -122,7 +122,7 @@ class AdminDeleteUserTest(TestCase, AuthRouteTestingWithKwargs):
         self.client.cookies = SimpleCookie({'auth_token': auth_token})
         response = self.client.post(reverse(self.route_name,
                                  kwargs=self.kwargs))  # simulate the post request
-        self.assertEquals(0, len(User.objects.filter(first_name="VINAITEST")))
+        self.assertEqual(0, len(User.objects.filter(first_name="VINAITEST")))
 
     def test_not_present_user_does_not_do_anything(self):
         self.kwargs = {'selected_id': 5}
@@ -140,7 +140,7 @@ class AdminDeleteUserTest(TestCase, AuthRouteTestingWithKwargs):
         self.client.cookies = SimpleCookie({'auth_token': auth_token})
         response = self.client.post(reverse(self.route_name,
                                  kwargs=self.kwargs))  # simulate the post request
-        self.assertEquals(1, len(User.objects.all()))
+        self.assertEqual(1, len(User.objects.all()))
 
 
 class AdminUpdateUserTest(TestCase, AuthRouteTestingWithKwargs):
@@ -210,9 +210,9 @@ class AdminUpdateUserTest(TestCase, AuthRouteTestingWithKwargs):
             reverse(self.route_name, kwargs=self.kwargs),
             data={'password': 'ds', 'email': 'yo@email.com',
                   'password_confirmation': 'ds', 'first_name': 'Vinai'})
-        self.assertEquals(2, len(User.objects.all()))
-        self.assertEquals("yo@email.com", User.objects.get(user_id=2).email)
-        self.assertEquals("Vinai", User.objects.get(user_id=2).first_name)
+        self.assertEqual(2, len(User.objects.all()))
+        self.assertEqual("yo@email.com", User.objects.get(user_id=2).email)
+        self.assertEqual("Vinai", User.objects.get(user_id=2).first_name)
 
 
 class AdminGetAllUsersTest(TestCase, AuthRouteTestingWithKwargs):

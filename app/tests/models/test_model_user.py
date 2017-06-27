@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 from django.test import TestCase
 import datetime
@@ -21,7 +21,7 @@ class UserModelTests(TestCase, ModelCrudTests):
 
     def setUp(self):
         for user in User.objects.all():
-            print(str(user) + "id: " + str(user.user_id) + "\n")
+            print((str(user) + "id: " + str(user.user_id) + "\n"))
         # Path to file of model
         self.path = "app/models/User/user.py"
         # Create the user

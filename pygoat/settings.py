@@ -137,9 +137,9 @@ ACCESS_TOKEN_SALT = "S4828341189aefiasd#ASDF"
 
 # local_settings take priority over production settings
 try:
-    from local_settings import *
+    from .local_settings import *
 except ImportError:
     try:
-        from production_settings import *
+        from .production_settings import *
     except ImportError:
         pass
