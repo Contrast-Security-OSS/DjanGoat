@@ -3,6 +3,7 @@
 {% block head %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/users/performance/format.css' %}"/>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -37,7 +38,7 @@
                 <td>{{ review.reviewer_name }}</td>
                 <td>{{ review.date_submitted }}</td>
                 <td>{{ review.score }}</td>
-                <td>{{ review.comments}}</td>
+                <td>{{ review.comments }}</td>
             </tr>
             {% endfor %}
             </tbody>
@@ -45,13 +46,11 @@
     </div>
 </div>
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
-
           var data = google.visualization.arrayToDataTable([
                 ['Year', 'Score']
                 {% for review in performance.all %}
@@ -119,14 +118,6 @@
           chart.draw(data, options);
       }
 
-      function makeActive(){
-        $('li[id="performance"]').addClass('active');
-      };
-
-      $(document).ready(function () {
-        drawChart(),
-        makeActive()
-      });
 
 
 </script>
