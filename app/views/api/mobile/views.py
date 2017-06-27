@@ -8,7 +8,7 @@ import json
 from app.models import Analytics, KeyManagement, Message, User, PaidTimeOff
 from app.models import Performance, Retirement, Schedule, WorkInfo
 
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["GET"])
 def api_index(request):
     if request.GET.__contains__("class"):
         classname = request.GET.get("class").title()
@@ -18,7 +18,7 @@ def api_index(request):
     else:
         return HttpResponse('')
 
-@require_http_methods(["GET", "PUT", "PATCH", "DELETE"])
+@require_http_methods(["GET"])
 def api_id(request, id_number):
     if request.GET.__contains__("class"):
         classname = request.GET.get("class").title()
