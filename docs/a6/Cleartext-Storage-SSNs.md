@@ -1,4 +1,4 @@
-# A4: Insecure Direct Object Reference
+# A6 Sensitive Data Exposure: Cleartext Storage and Transmission of SSNs
 
 ### Description of bugs
 Social Security Numbers, part of the WorkInfo model, are not stored or transmitted securely in the application. These bugs are as follows: 
@@ -9,7 +9,12 @@ Social Security Numbers, part of the WorkInfo model, are not stored or transmitt
 If a malicious user gained access to the database, he or she would be able to clearly see all users' SSNs. Multiple layers of protection are important. Additionally, whenever a WorkInfo model is retrieved from the database and sent to the user, there is potential for access that should not be allowed. There is very little point in obscuring the SSN with javascript client-side because the user can easily reverse this.
 
 ### Why would someone do this?
-I honestly don't know.
+It is important to think how the data can be accessed at every point of the application, whether in the database, traveling from the database to the client, or just at the client side. 
+While there really is no excuse for having cleartext storage of sensitive data in your database, according to the OWASP Top 10, this is the most common instance of this vulnerability. 
+
+However, a smart django developer could mistakenly beleive the sensitive data is secure if the data is encrypted in the database and shown obscured in the view. 
+But transferring data over the internet is extremely dangerous, as it can be easily intercepted. 
+The data should be passed as encrypted or at least partially encrypted so the user can decide whether or not they are in a safe enough place to access the sensitive data.
 
 ### Solution
 In order to fix these bugs, you must
