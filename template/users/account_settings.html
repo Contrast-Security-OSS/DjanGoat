@@ -21,9 +21,9 @@
             <h2>Update Account Information</h2>
         </div>
 
-        <form method="post" action="/users/{{current_user.id}}"> {% csrf_token %}
+        <form method="post" action="/users/{{user_id}}"> {% csrf_token %}
 
-            <input type="hidden" value={{current_user.id}} name="user_id">
+            <input type="hidden" value={{user_id}} name="user_id">
             <div class="form-group">
                 <div class="cols-sm-10">
                     <div class="input-group">
