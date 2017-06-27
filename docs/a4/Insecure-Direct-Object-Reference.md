@@ -18,7 +18,9 @@ def user_work_info_index(request, user_id):
 The error is present in third line of code. Rather than get the user_id based off the authentication used by the application, this method looks up the user by the parameter from the url, allowing the user to view any WorkInfo page.
 
 ### Why would someone do this?
-I honestly don't know.
+While in our example, this is a clear case of bad programming practices, oftentimes bugs like these are caused by good ideas. Since authentication is already required to access this method based on the decorator, a django developer might presume themselves to be "safe" once they are inside it. The reality is, just because someone is authenticated does not mean they are not potentially malicious. 
+
+Additionally, simply querying the database for all objects with an attribute matching a parameter of the function is much less resource-intensive than essentially re-doing authentication to make sure the parameter is valid for the current user.
 
 ### Solution
 In order to fix these bugs, you must replace the line of code in line 12 to retrieve the current user based on the application's authentication system. In the case of pygoat, we store an auth_token stored locally as a cookie to manage a user's session. By retrieving the locally stored and unique authorization token from the user, we can lookup the user in the database. Luckily, we have already implemented a method that does this, as WorkInfo is not the only page that should only be able to display the current user's information. The method is in "app/views/utils.py", shown below.
