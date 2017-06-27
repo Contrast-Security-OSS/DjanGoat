@@ -5,4 +5,4 @@ as part of the summer internship program at [Contrast Security](https://www.cont
 Here's a little bit about us:
 
 #### Ryan Dens
-[<img src="ln.png">](www.google.com)
+[![Alt text](ln.png)](http://www.google.com/)
