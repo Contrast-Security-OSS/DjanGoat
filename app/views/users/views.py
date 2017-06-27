@@ -91,7 +91,7 @@ def user_view(request, user_id):
         except:
             return HttpResponse("User " + str(user_id_form) + " NOT FOUND")
         update = dict()
-        err_msg = User.validate_update_form(form, update)
+        err_msg = User.validate_update_form(form, user, update)
         if len(err_msg) > 0:
             messages.add_message(request, messages.INFO, err_msg)
         else:
