@@ -10,11 +10,9 @@
     <div class="col-md-6 offset-md-3" >
 
         {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
-                {% endfor %}
-            </ul>
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
         {% endif %}
 
         <div class="header">
@@ -28,7 +26,9 @@
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                        <input type="email" class="form-control" name="email" id="email"  placeholder={{current_user.email}} />
+                        <input type="email" class="form-control" name="email" id="email"
+                               placeholder="Email"
+                               value="{{ current_user.email }}" />
                     </div>
                 </div>
             </div>
@@ -37,7 +37,9 @@
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                        <input type="text" class="form-control" name="first_name" id="first_name"  placeholder={{current_user.first_name}} />
+                        <input type="text" class="form-control" name="first_name" id="first_name"
+                               placeholder="First Name"
+                               value="{{current_user.first_name}}" />
                     </div>
                 </div>
             </div>
@@ -46,7 +48,9 @@
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                        <input type="text" class="form-control" name="last_name" id="last_name"  placeholder={{current_user.last_name}} />
+                        <input type="text" class="form-control" name="last_name" id="last_name"
+                               placeholder="Last Name"
+                               value="{{current_user.last_name}}" />
                     </div>
                 </div>
             </div>
@@ -55,7 +59,8 @@
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                        <input type="password" class="form-control" name="password" id="password"  placeholder="New Password" />
+                        <input type="password" class="form-control" name="password" id="password"
+                               placeholder="New Password" />
                     </div>
                 </div>
             </div>
@@ -64,7 +69,8 @@
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                        <input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm Password" />
+                        <input type="password" class="form-control" name="confirm" id="confirm"
+                               placeholder="Confirm Password" />
                     </div>
                 </div>
             </div>

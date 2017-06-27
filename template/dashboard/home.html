@@ -8,24 +8,16 @@
 {% endblock %}
 
 {% block content %}
-    <div id="statsContainer">
 
-
-        <div id="statsHeader">
-            <i class="fa fa-tachometer icon" aria-hidden="true"></i>
+    <div class="card">
+        <div class="card-header">
             Current Statistics
-            <!--<div id="graphButtons">-->
-                <!--<a></a>-->
-                <!--<a></a>-->
-            <!--</div>-->
-            <div id="graphButtons" class="btn-group">
+            <div class="btn-group pull-right">
                 <button type="button" class="btn btn-small" checked><i class="fa fa-pie-chart" aria-hidden="true"></i></button>
                 <button type="button" class="btn btn-small"><i class="fa fa-bar-chart" aria-hidden="true"></i></button>
             </div>
         </div>
-
-        <div id="statsContents" class="row">
-
+        <div class="card-body">
             <div class="stats">
                 <div id="chart_div"></div>
                 <p style="text-align: center">Available PTO</p>
@@ -47,8 +39,6 @@
                 <p style="text-align: center">401k</p>
             </div>
         </div>
-
     </div>
-
 
 {% endblock %}
