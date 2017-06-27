@@ -4,18 +4,18 @@ from django.test import TestCase, RequestFactory, Client
 
 import app.views.api.mobile.views as api_mobile_views
 import app.views.api.users.views as api_users_views
-from app.tests.mixins import RouteTestingWithKwargs
+from app.tests.mixins import AuthRouteTestingWithKwargs
 from django.urls import reverse
 
 
-class ApiMobileIndexTest(TestCase, RouteTestingWithKwargs):
+class ApiMobileIndexTest(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         """ Class for testing api index view"""
         self.factory = RequestFactory()
         self.client = Client()
         self.route_name = 'app:api_index'
-        self.route = '/api/v1/mobile'
+        self.route = '/api/v1/mobile/1?class=user'
         self.view = api_mobile_views.api_index
         self.responses = {
             'exists': 200,
@@ -28,13 +28,11 @@ class ApiMobileIndexTest(TestCase, RouteTestingWithKwargs):
             'OPTIONS': 405,
             'TRACE': 405
         }
+        self.expected_response_content = 'hellohello'
         self.kwargs = {}
 
-    def test_returns_all_objects(self):
 
-
-
-class ApiMobileIDTest(TestCase, RouteTestingWithKwargs):
+class ApiMobileIDTest(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         """ Class for testing api index view"""
@@ -57,7 +55,7 @@ class ApiMobileIDTest(TestCase, RouteTestingWithKwargs):
         self.kwargs = {'id_number': 5}
 
 
-class ApiUsersIndexTest(TestCase, RouteTestingWithKwargs):
+class ApiUsersIndexTest(TestCase, AuthRouteTestingWithKwargs):
     def setUp(self):
         """ Class for testing api index view"""
         self.factory = RequestFactory()
@@ -79,7 +77,7 @@ class ApiUsersIndexTest(TestCase, RouteTestingWithKwargs):
         self.kwargs = {}
 
 
-class ApiUsersByIDTest(TestCase, RouteTestingWithKwargs):
+class ApiUsersByIDTest(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         """ Class for testing api index view"""
