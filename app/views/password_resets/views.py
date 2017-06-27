@@ -76,12 +76,9 @@ def reset_password(request):
     encoded_user = request.POST['user']
     user = pickle.loads(base64.b64decode(encoded_user))
 
-    if request.POST.get('password', '') != '' and request.POST.get('confirm', '') != '' and request.POST.get('password') == request.POST.get('confirm'):
-        user.password = request.POST['password']
-        user.save()
-        messages.success(request, 'Your password has been updated')
-    else:
-        messages.success(request, 'Something went wrong with the updating')
+    user.password = request.POST['password']
+    user.save()
+    messages.success(request, 'Your password has been updated')
 
     return redirect('/login')
 

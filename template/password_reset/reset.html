@@ -1,7 +1,17 @@
 {% extends 'layouts/shared/base.html' %}
 
 {% load static %}
+
 {% block content %}
+
+{% block head %}
+
+    {% load static %}
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+
+
+{% endblock %}
+
 
  <div class="col-md-5 offset-md-5" >
 
@@ -18,7 +28,7 @@
             <p> Please reset your password</p>
         </div>
 
-        <form method="post" action="/password_resets/" > {% csrf_token %}
+        <form id = "resetForm" method="post" action="/password_resets/" > {% csrf_token %}
 
             <input type="hidden" value={{user}} name="user">
 
@@ -27,7 +37,7 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                         <input type="password" class="form-control" name="password" id="password"
-                               placeholder="New Password" />
+                               placeholder="New Password" minlength="5" />
                     </div>
                 </div>
             </div>
@@ -36,8 +46,8 @@
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                        <input type="password" class="form-control" name="confirm" id="confirm"
-                               placeholder="Confirm Password" />
+                        <input type="password" class="form-control" name="password_confirmation" id="confirm"
+                               placeholder="Confirm Password" minlength="5" />
                     </div>
                 </div>
             </div>
@@ -48,4 +58,16 @@
 
         </form>
     </div>
+
+<script>
+
+$( "#resetForm" ).validate({
+  rules: {
+    password: "required",
+    password_confirmation: {
+      equalTo: "#password"
+    }
+  }
+});
+</script>
 {% endblock %}
