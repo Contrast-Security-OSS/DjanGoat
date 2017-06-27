@@ -3,6 +3,7 @@
 {% block head %}
     {% load static %}
     <script type="text/javascript" src="{% static 'javascript/loader.js'%}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sessions/login.css' %}" />
 {% endblock %}
 
 {% block content %}
@@ -17,7 +18,7 @@
             </ul>
         {% endif %}
         <div class="card">
-            <div class="card-block" style="background-color: #e8e8e8">
+            <div class="card-block">
                 <div class="header">
                     <h2>Login</h2>
                     <p>Fill out the form below to login to your control panel.</p>
