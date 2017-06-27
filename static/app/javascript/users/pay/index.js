@@ -78,8 +78,6 @@ function hideAndDisplayItems(page) {
     $(".page-item-" + page).css("display", "table-row");
     currentPage = page;
 
-    console.log(currentPage)
-
     if (currentPage == MAX_PAGE_NUM) {
         $("#nextPageLink").css("display", "none")
     } else {
@@ -87,7 +85,6 @@ function hideAndDisplayItems(page) {
     }
 
     if (currentPage == 1) {
-        console.log("previous")
         $("#previousPageLink").css("display", "none")
     } else {
         $("#previousPageLink").css("display", "list-item")
@@ -167,6 +164,59 @@ function buildPageLinks() {
         $('.pagination').append("<li id='nextPageLink' class='page-item'><a class='page-link' onclick='next()'>Next</a></li>");
     } else {
         $('.pagination').html("");
+    }
+}
+
+function searchFunction() {
+    var input, filter, table, tr;
+    input = document.getElementById("searchInput");
+    filter = input.value;
+
+    table = document.getElementById("ddTableBody");
+    tr = table.getElementsByTagName("tr");
+
+    if (filter.length > 0) {
+        /* Hide all the table rows. */
+        $("[class^='page-item-']").css("display", "none")
+
+        /* Hide the pagination. */
+        $(".pagination").css("display", "none");
+
+        /* Loop through all table rows, and hide those who don't match the search query */
+        for (var i = 0; i < tr.length; i++) {
+            encryptedBankNumTd = tr[i].getElementsByTagName("td")[0];
+            routingNumTd = tr[i].getElementsByTagName("td")[1];
+            percentDepositTd = tr[i].getElementsByTagName("td")[2];
+
+            var shouldDisplay = false;
+
+            if (encryptedBankNumTd) {
+                if (encryptedBankNumTd.innerHTML.trim().startsWith(filter)) {
+                    shouldDisplay = true;
+                }
+            }
+
+            if (routingNumTd) {
+                if (routingNumTd.innerHTML.startsWith(filter)) {
+                    shouldDisplay = true;
+                }
+            }
+
+            if (percentDepositTd) {
+                if (percentDepositTd.innerHTML.startsWith(filter)) {
+                    shouldDisplay = true;
+                }
+            }
+
+            if (shouldDisplay) {
+                $("#" + tr[i].id).css("display", "table-row");
+            }
+        }
+    } else {
+        /* Show all rows */
+        hideAndDisplayItems(currentPage);
+        /* Show pagination */
+        $(".pagination").css("display", "flex");
     }
 
 }
