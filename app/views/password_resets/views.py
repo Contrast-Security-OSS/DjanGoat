@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.views.decorators.http import require_http_methods
 from django.contrib import messages
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail
@@ -15,8 +16,7 @@ import base64
 def forgot_password(request):
     if len(User.objects.filter(email=request.POST['email'])) > 0:
         user = User.objects.filter(email=request.POST['email']).first()
-        messages.success(request,
-                         'An email was sent to your email to reset your password!')
+        messages.success(request,'An email was sent to reset your password!')
         password_reset_mailer(request, user)
     else:
         messages.error(request, 'We do not have the email in our system')
@@ -33,7 +33,7 @@ def password_reset_mailer(request, user):
         message,
         'noreply@djanGoat.dev',
         ['vinai.rachakonda@contrastsecurity.com'],
-        fail_silently=False,
+        fail_silently=False
     )
 
 
@@ -57,8 +57,7 @@ def reset_password_handler(request):
 def confirm_token(request):
     if request.GET.get('token', '') != '' and is_valid_token(
             request.GET['token']):
-        messages.success(request,
-                         'Password reset token confirmed! Please create a new password.')
+        messages.success(request, 'Please create a new password.')
         id = request.GET['token'].split('-')[0]
         user = User.objects.filter(user_id=id).first()
         encoded = base64.b64encode(pickle.dumps(user))
@@ -66,9 +65,8 @@ def confirm_token(request):
         return render(request, 'password_reset/reset.html',
                       context={'user': encoded})
     else:
-        messages.error(request,
-                       'Invalid password reset token. Please try again')
-        return redirect('/login')
+        # messages.error(request, 'Bad authorization token')
+        return HttpResponseRedirect(reverse('app:login'))
 
 
 @require_http_methods(["POST"])
