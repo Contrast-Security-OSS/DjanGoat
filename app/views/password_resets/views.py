@@ -53,7 +53,7 @@ def reset_password_handler(request):
 
 @require_http_methods(["GET"])
 def confirm_token(request):
-    if 'token' in request.GET.values() and is_valid_token(request.GET('token')):
+    if request.GET.get('token', '') != '' and is_valid_token(request.GET['token']):
         return HttpResponse('Ay you can rest')
     else:
         print(request.GET['token'])
@@ -69,6 +69,7 @@ def is_valid_token(token):
     split = token.split('-')
     if split[0] and split[1]:
         user = User.objects.filter(user_id=split[0]).first()
+        print(user.email)
         email = user.email
         h = MD5.new()
         h.update(email)
