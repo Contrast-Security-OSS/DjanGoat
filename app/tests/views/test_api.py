@@ -30,51 +30,7 @@ class ApiMobileIndexTest(TestCase, RouteTestingWithKwargs):
         }
         self.kwargs = {}
 
-
-class ApiMobileNewTest(TestCase, RouteTestingWithKwargs):
-    # setup for all test cases
-    def setUp(self):
-        """ Class for testing api index view"""
-        self.factory = RequestFactory()
-        self.client = Client()
-        self.route_name = 'app:api_new'
-        self.route = '/api/v1/mobile/new'
-        self.view = api_mobile_views.api_new
-        self.responses = {
-            'exists': 200,
-            'GET': 200,
-            'POST': 405,
-            'PUT': 405,
-            'PATCH': 405,
-            'DELETE': 405,
-            'HEAD': 405,
-            'OPTIONS': 405,
-            'TRACE': 405
-        }
-        self.kwargs = {}
-
-
-class ApiMobileEditTest(TestCase, RouteTestingWithKwargs):
-    # setup for all test cases
-    def setUp(self):
-        """ Class for testing api index view"""
-        self.factory = RequestFactory()
-        self.client = Client()
-        self.route_name = 'app:api_id_edit'
-        self.route = '/api/v1/mobile/5/edit'
-        self.view = api_mobile_views.api_id_edit
-        self.responses = {
-            'exists': 200,
-            'GET': 200,
-            'POST': 405,
-            'PUT': 405,
-            'PATCH': 405,
-            'DELETE': 405,
-            'HEAD': 405,
-            'OPTIONS': 405,
-            'TRACE': 405
-        }
-        self.kwargs = {'id_number': 5}
+    def test_returns_all_objects(self):
 
 
 class ApiMobileIDTest(TestCase, RouteTestingWithKwargs):

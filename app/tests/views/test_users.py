@@ -342,6 +342,7 @@ class UserViewsUpdateAccountFormTests(WebTest):
 
     def test_error_sql_create_user(self):
         self.form.set('first_name', 'z'*256)
+        self.form.set('email', '')
         response = self.form.submit()
         self.assertEqual(response.url, self.url)
         response_message = response._headers['Set-Cookie']
