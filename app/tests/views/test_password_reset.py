@@ -15,10 +15,9 @@ import base64
 password_reset = views.password_reset_views
 
 
-#
-# class PasswordResetPep8Tests(TestCase, Pep8ViewsTests):
-#     def setUp(self):
-#         self.path = 'app/views/password_resets/'
+class PasswordResetPep8Tests(TestCase, Pep8ViewsTests):
+    def setUp(self):
+        self.path = 'app/views/password_resets/'
 
 
 class ForgotPassword(TestCase, RouteTestingWithKwargs):
