@@ -75,7 +75,7 @@ class TestApiMobileId(TestCase):
             updated_at=u_input_update_date
         )
     def test_response_content(self):
-        response = self.client.get('/api/v1/mobile/' + str(self.model.id) + '?class=User', {"class": "user"})
+        response = self.client.get('/api/v1/mobile/' + str(self.model.id) + '?class=User')
         self.assertNotIn('827ccb0eea8a706c4c34a16891f84e7b', response.content)
         self.assertIn('01cfcd4f6b8770febfb40cb906715822', response.content)
 

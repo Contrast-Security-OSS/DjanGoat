@@ -11,7 +11,7 @@ from app.models import Performance, Retirement, Schedule, WorkInfo
 @require_http_methods(["GET"])
 def api_index(request):
     if request.GET.__contains__("class"):
-        classname = request.GET.get("class").title()
+        classname = request.GET.get("class")
         model = eval(classname)
         serialized = serializers.serialize("json", model.objects.all())
         return JsonResponse(json.loads(serialized), safe=False)
@@ -21,9 +21,10 @@ def api_index(request):
 @require_http_methods(["GET"])
 def api_id(request, id_number):
     if request.GET.__contains__("class"):
-        classname = request.GET.get("class").title()
+        classname = request.GET.get("class")
         model = eval(classname)
         serialized = serializers.serialize("json", [model.objects.get(id=id_number)])
         return JsonResponse(json.loads(serialized), safe=False)
     else:
         return HttpResponse('')
+
