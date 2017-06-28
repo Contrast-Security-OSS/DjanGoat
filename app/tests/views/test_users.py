@@ -185,7 +185,7 @@ class UserViewRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
 class UserViewsSignUpUserFormTests(WebTest):
 
     def setUp(self):
-        self.param = {'email': 'ziyang@contrast.com', 'first_name': 'ziyang',
+        self.param = {'email': 'ziyang@example.com', 'first_name': 'ziyang',
                       'last_name': 'wang', 'password': '123456',
                       'confirm': '123456'}
         page = self.app.get('/signup/')
@@ -269,7 +269,7 @@ class UserViewsUpdateAccountFormTests(WebTest):
 
     def setUp(self):
         # First signup and login a user
-        self.param = {'email': 'ziyang@contrast.com', 'first_name': 'ziyang',
+        self.param = {'email': 'ziyang@example.com', 'first_name': 'ziyang',
                       'last_name': 'wang', 'password': 'ziyangw',
                       'confirm': 'ziyangw'}
         signup_page = self.app.get('/signup/')
@@ -352,12 +352,12 @@ class UserViewsUpdateAccountFormTests(WebTest):
 
     def test_update_success(self):
         self.assertEqual(self.user.email, self.param['email'])
-        self.form.set('email_new', 'zw@contrast.com')
+        self.form.set('email_new', 'zw@example.com')
         response = self.form.submit()
         response_message = response._headers['Set-Cookie']
-        updated_user = User.objects.filter(email='zw@contrast.com').first()
+        updated_user = User.objects.filter(email='zw@example.com').first()
         self.assertTrue(updated_user)
-        self.assertEqual(updated_user.email, 'zw@contrast.com')
+        self.assertEqual(updated_user.email, 'zw@example.com')
         self.assertTrue("Successfully Updated" in response_message)
         self.assertEqual(response.url, self.url)
         self.form.set('email_new', '')
@@ -370,7 +370,7 @@ class UserViewsUpdateAccountFormTests(WebTest):
 
         # Send a request by submitting form as a non-admin
         factory = RequestFactory()
-        self.form.set('email_new', 'zw@contrast.com')
+        self.form.set('email_new', 'zw@example.com')
         url = "/users/%s" % self.user.user_id
         fields = self.form.submit_fields(None, index=None, submit_value=None)
         request = factory.post(url, dict(fields))

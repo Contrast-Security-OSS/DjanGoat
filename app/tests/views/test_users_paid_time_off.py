@@ -150,7 +150,7 @@ class UserViewsPTOTests(WebTest):
 
     def setUp(self):
         # First signup and login a user
-        self.param = {'email': 'ziyang@contrast.com', 'first_name': 'ziyang',
+        self.param = {'email': 'ziyang@example.com', 'first_name': 'ziyang',
                       'last_name': 'wang', 'password': 'ziyangw',
                       'confirm': 'ziyangw'}
         signup_page = self.app.get('/signup/')
