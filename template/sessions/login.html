@@ -4,11 +4,12 @@
     {% load static %}
 
     <script type="text/javascript" src="{% static 'javascript/loader.js'%}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sessions/login.css' %}" />
 {% endblock %}
 
 {% block content %}
 
-    <div class="col-md-4 offset-md-5" >
+    <div class="col-md-6 offset-md-4" >
 
         {% if messages %}
             <ul class="messages">
@@ -17,40 +18,55 @@
                 {% endfor %}
             </ul>
         {% endif %}
-
-        <div class="header">
-            <h2>Login</h2>
-            <p>Fill out the form below to login to your control panel.</p>
-        </div>
-
-        <form method="post" action="/sessions/"> {% csrf_token %}
-
-            <div class="form-group">
-                <div class="cols-sm-10">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                        <input type="email" class="form-control" name="email" id="email"  placeholder="Email"/>
-                    </div>
+        <div class="card">
+            <div class="card-block">
+                <div class="header">
+                    <h2>Login</h2>
+                    <p>Fill out the form below to login to your control panel.</p>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="cols-sm-10">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                        <input type="password" class="form-control" name="password" id="password"  placeholder="Password" pattern=".{6,40}" required title="6 to 40 characters"/>
+                <form method="post" action="/sessions/"> {% csrf_token %}
+
+                    <div class="form-group">
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                <input type="email" class="form-control" name="email" id="email"  placeholder="Email"/>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+
+                    <div class="form-group">
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                <input type="password" class="form-control" name="password" id="password"  placeholder="Password" pattern=".{6,40}" required title="6 to 40 characters"/>
+                            </div>
+                        </div>
+                    </div>
 
 
-            <div class="actions">
-                <button onclick="openModal()" class="btn btn-warning btn-large pull-left"> Reset Password</button>
-                <input type="submit" value="Login" id="submit_button" class="btn btn-info btn-large pull-right">
-            </div>
+            <!--<div class="actions">-->
+                <!--<button onclick="openModal()" class="btn btn-warning btn-large pull-left"> Reset Password</button>-->
+                <!--<input type="submit" value="Login" id="submit_button" class="btn btn-info btn-large pull-right">-->
+            <!--</div>-->
 
         </form>
 
+                    <div class="row">
+                        <div class="checkbox col-md">
+                            <label><input type="checkbox" name="remember"> Remember me</label>
+                        </div>
+
+                        <div class="actions col-md">
+                            <button onclick="openModal()" class="btn btn-warning btn-large pull-left"> Reset Password</button>
+                            <input type="submit" value="Login" id="submit_button", class="btn btn-info btn-large pull-right">
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
     </div>
 
     <div id="resetPasswordModal" class="modal bd-example-modal-lg" role="dialog" tabindex="-1"
