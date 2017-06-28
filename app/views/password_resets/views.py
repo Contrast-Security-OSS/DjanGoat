@@ -14,12 +14,15 @@ import base64
 
 @require_http_methods(["POST"])
 def forgot_password(request):
-    if len(User.objects.filter(email=request.POST['email'])) > 0:
+    if len(User.objects.filter(email=request.POST.get('email', ''))) > 0:
         user = User.objects.filter(email=request.POST['email']).first()
-        messages.success(request,'An email was sent to reset your password!')
+        messages.success(request, 'An email was sent to reset your password!')
         password_reset_mailer(request, user)
     else:
-        messages.error(request, 'We do not have the email in our system')
+        try:
+            messages.error(request, 'We do not have the email in our system')
+        except:
+            pass
 
     return redirect('/login')
 
@@ -65,7 +68,11 @@ def confirm_token(request):
         return render(request, 'password_reset/reset.html',
                       context={'user': encoded})
     else:
-        # messages.error(request, 'Bad authorization token')
+        try:
+            messages.error(request, 'Bad token')
+        except:
+            pass
+
         return HttpResponseRedirect(reverse('app:login'))
 
 
@@ -78,6 +85,11 @@ def reset_password(request):
         user.password = request.POST['password']
         user.save()
         messages.success(request, 'Your password has been updated')
+    else:
+        try:
+            messages.error(request, 'Password did not reset')
+        except:
+            pass
 
     return redirect('/login')
 

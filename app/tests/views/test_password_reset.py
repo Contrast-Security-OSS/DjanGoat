@@ -32,7 +32,7 @@ class ForgotPassword(TestCase, RouteTestingWithKwargs):
         self.responses = {
             'exists': 405,
             'GET': 405,
-            'POST': 200,
+            'POST': 302,
             'PUT': 405,
             'PATCH': 405,
             'DELETE': 405,
@@ -119,7 +119,8 @@ class ResetPassword(TestCase, RouteTestingWithKwargs):
                                                               0)))
 
     def test_password_is_updated(self):
-        encoded = base64.b64encode(pickle.dumps(User.objects.get(first_name="resetP")))
+        encoded = base64.b64encode(
+            pickle.dumps(User.objects.get(first_name="resetP")))
         data = {'password': '123456',
                 'password_confirmation': '123456',
                 'user': encoded}
@@ -130,5 +131,5 @@ class ResetPassword(TestCase, RouteTestingWithKwargs):
             'app:password_resets'), data=data)
         hashed_password = hashlib.md5('123456'.encode()).hexdigest()
 
-
-        self.assertEquals(hashed_password, User.objects.get(first_name="resetP").password)
+        self.assertEquals(hashed_password,
+                          User.objects.get(first_name="resetP").password)
