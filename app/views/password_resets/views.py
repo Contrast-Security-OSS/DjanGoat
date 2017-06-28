@@ -14,8 +14,9 @@ import base64
 
 @require_http_methods(["POST"])
 def forgot_password(request):
-    if len(User.objects.filter(email=request.POST.get('email', ''))) > 0:
-        user = User.objects.filter(email=request.POST['email']).first()
+    qset = User.objects.filter(email=request.POST.get('email', ''))
+    if len(qset) > 0:
+        user = qset.first()
         messages.success(request, 'An email was sent to reset your password!')
         password_reset_mailer(request, user)
     else:
