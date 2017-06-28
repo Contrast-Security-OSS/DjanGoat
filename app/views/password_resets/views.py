@@ -71,12 +71,13 @@ def confirm_token(request):
 
 @require_http_methods(["POST"])
 def reset_password(request):
-    encoded_user = request.POST['user']
-    user = pickle.loads(base64.b64decode(encoded_user))
+    if request.POST.get('user', '') != '':
+        encoded_user = request.POST['user']
+        user = pickle.loads(base64.b64decode(encoded_user))
 
-    user.password = request.POST['password']
-    user.save()
-    messages.success(request, 'Your password has been updated')
+        user.password = request.POST['password']
+        user.save()
+        messages.success(request, 'Your password has been updated')
 
     return redirect('/login')
 
