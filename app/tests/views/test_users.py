@@ -1,21 +1,22 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.test import TestCase, RequestFactory, Client
-from app.tests.mixins import RouteTestingWithKwargs, AuthRouteTestingWithKwargs
-from app.tests.mixins import Pep8ViewsTests
-from django_webtest import WebTest
-from django.utils import timezone
+import hashlib
+
 from django.contrib.messages.storage.fallback import FallbackStorage
+from django.test import TestCase, RequestFactory, Client
+from django.utils import timezone
+from django_webtest import WebTest
+
 import app.views as views
 from app.models import User
-import hashlib
+from app.tests.mixins import Pep8ViewsTests
+from app.tests.mixins import RouteTestingWithKwargs, AuthRouteTestingWithKwargs
 
 users = views.users_views
 
 
 class UsersPep8Tests(TestCase, Pep8ViewsTests):
-
     def setUp(self):
         self.path = 'app/views/users/'
 
@@ -183,7 +184,6 @@ class UserViewRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
 
 
 class UserViewsSignUpUserFormTests(WebTest):
-
     def setUp(self):
         self.param = {'email': 'ziyang@contrast.com', 'first_name': 'ziyang',
                       'last_name': 'wang', 'password': '123456',
@@ -211,7 +211,7 @@ class UserViewsSignUpUserFormTests(WebTest):
         self.form.set('confirm', self.param['confirm'])
 
     def test_invalid_password_length_long(self):
-        password_long = '1'*41
+        password_long = '1' * 41
         self.form.set('password', password_long)
         self.form.set('confirm', password_long)
         response = self.form.submit()
@@ -246,7 +246,7 @@ class UserViewsSignUpUserFormTests(WebTest):
         user.delete()
 
     def test_error_sql_create_user(self):
-        self.form.set('first_name', 'z'*256)
+        self.form.set('first_name', 'z' * 256)
         response = self.form.submit()
         self.assertEqual(response.url, '/signup/')
         response_message = response._headers['Set-Cookie']
@@ -264,8 +264,8 @@ class UserViewsSignUpUserFormTests(WebTest):
         self.assertEqual(response.url, '/dashboard/home')
         user.first().delete()
 
-class UserViewsUpdateAccountFormTests(WebTest):
 
+class UserViewsUpdateAccountFormTests(WebTest):
     def setUp(self):
         # First signup and login a user
         self.param = {'email': 'ziyang@contrast.com', 'first_name': 'ziyang',
@@ -302,7 +302,7 @@ class UserViewsUpdateAccountFormTests(WebTest):
         self.form.set('confirm', '')
 
     def test_invalid_password_length_long(self):
-        password_long = '1'*41
+        password_long = '1' * 41
         self.form.set('password', password_long)
         self.form.set('confirm', password_long)
         response = self.form.submit()
@@ -341,7 +341,7 @@ class UserViewsUpdateAccountFormTests(WebTest):
         self.form.set('email', '')
 
     def test_error_sql_create_user(self):
-        self.form.set('first_name', 'z'*256)
+        self.form.set('first_name', 'z' * 256)
         self.form.set('email', '')
         response = self.form.submit()
         self.assertEqual(response.url, self.url)

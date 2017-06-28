@@ -1,12 +1,10 @@
-from django.http import JsonResponse
-from django.http import HttpResponse
-from django.views.decorators.http import require_http_methods
-from django.core import serializers
-
 import json
 
-from app.models import Analytics, KeyManagement, Message, User, PaidTimeOff
-from app.models import Performance, Retirement, Schedule, WorkInfo
+from django.core import serializers
+from django.http import HttpResponse
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+
 
 @require_http_methods(["GET"])
 def api_index(request):
@@ -18,6 +16,7 @@ def api_index(request):
     else:
         return HttpResponse('')
 
+
 @require_http_methods(["GET"])
 def api_id(request, id_number):
     if request.GET.__contains__("class"):
@@ -27,4 +26,3 @@ def api_id(request, id_number):
         return JsonResponse(json.loads(serialized), safe=False)
     else:
         return HttpResponse('')
-

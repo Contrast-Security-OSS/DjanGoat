@@ -1,14 +1,15 @@
 import datetime
+
 import pytz
+from django.http import SimpleCookie
 from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse
 from django_webtest import WebTest
-from django.http import SimpleCookie
-from app.models import User
-from app.views import sessions_views as sessions
-from app.tests.mixins import AuthRouteTestingWithKwargs
-import app.views.admin.views as admin_views
 
+import app.views.admin.views as admin_views
+from app.models import User
+from app.tests.mixins import AuthRouteTestingWithKwargs
+from app.views import sessions_views as sessions
 
 
 class AdminDashboardTest(TestCase, AuthRouteTestingWithKwargs):
@@ -21,7 +22,7 @@ class AdminDashboardTest(TestCase, AuthRouteTestingWithKwargs):
         self.route = '/admin/5/dashboard'
         self.view = admin_views.admin_dashboard
         self.responses = {
-            'exists': 302,
+            'exists': 200,
             'GET': 302,
             'POST': 405,
             'PUT': 405,
@@ -121,7 +122,7 @@ class AdminDeleteUserTest(TestCase, AuthRouteTestingWithKwargs):
 
         self.client.cookies = SimpleCookie({'auth_token': auth_token})
         response = self.client.post(reverse(self.route_name,
-                                 kwargs=self.kwargs))  # simulate the post request
+                                            kwargs=self.kwargs))  # simulate the post request
         self.assertEquals(0, len(User.objects.filter(first_name="VINAITEST")))
 
     def test_not_present_user_does_not_do_anything(self):
@@ -139,7 +140,7 @@ class AdminDeleteUserTest(TestCase, AuthRouteTestingWithKwargs):
 
         self.client.cookies = SimpleCookie({'auth_token': auth_token})
         response = self.client.post(reverse(self.route_name,
-                                 kwargs=self.kwargs))  # simulate the post request
+                                            kwargs=self.kwargs))  # simulate the post request
         self.assertEquals(1, len(User.objects.all()))
 
 
@@ -250,7 +251,7 @@ class AdminAnalyticsUsersTest(TestCase, AuthRouteTestingWithKwargs):
         self.route = '/admin/5/analytics'
         self.view = admin_views.admin_analytics
         self.responses = {
-            'exists': 302,
+            'exists': 200,
             'GET': 302,
             'POST': 405,
             'PUT': 405,

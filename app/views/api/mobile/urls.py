@@ -6,4 +6,3 @@ urlpatterns = [
     url(r'^$', views.api_index, name='api_index'),
     url(r'^(?P<id_number>[0-9]+)$', views.api_id, name='api_id'),
 ]
-

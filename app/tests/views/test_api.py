@@ -1,15 +1,16 @@
 from __future__ import unicode_literals
 
+import datetime
+
+import pytz
 from django.test import TestCase, RequestFactory, Client
 
 import app.views.api.users.views as api_users_views
-from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.models import User
-import pytz
-import datetime
+from app.tests.mixins import AuthRouteTestingWithKwargs
+
 
 class TestApiMobileIndex(TestCase):
-
     def setUp(self):
         self.client = Client()
         input_email = "cat.dog@contrastsecurity.com"
@@ -44,8 +45,8 @@ class TestApiMobileIndex(TestCase):
         self.assertIn('827ccb0eea8a706c4c34a16891f84e7b', response.content)
         self.assertIn('01cfcd4f6b8770febfb40cb906715822', response.content)
 
-class TestApiMobileId(TestCase):
 
+class TestApiMobileId(TestCase):
     def setUp(self):
         self.client = Client()
         input_email = "cat.dog@contrastsecurity.com"
@@ -74,6 +75,7 @@ class TestApiMobileId(TestCase):
             last_name=input_last_name, created_at=u_input_create_date,
             updated_at=u_input_update_date
         )
+
     def test_response_content(self):
         response = self.client.get('/api/v1/mobile/' + str(self.model.id) + '?class=User')
         self.assertNotIn('827ccb0eea8a706c4c34a16891f84e7b', response.content)
