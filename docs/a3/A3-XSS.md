@@ -35,4 +35,4 @@ When you sign up with the new user, the header bar will echo "Welcome" + your co
 
 ### Solution
 
-For this example, simply displaying first_name instead of safe_name would eliminate the attack. If you wanted to render HTML code in literal form, you could use something such as format_html().
+For this example, simply displaying first_name instead of safe_name would eliminate the attack because Django has built in defense against XSS attacks and will autoescape. If you wanted to render HTML code in literal form, you could use something such as format_html().

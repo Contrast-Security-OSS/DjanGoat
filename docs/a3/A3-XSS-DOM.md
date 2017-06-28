@@ -28,4 +28,4 @@ You can replace the script with whatever you want to try.
 
 ### Solution
 
-Make sure to properly escape user input. This can be done by writing a function that replaces common characters in script such as the less than or greater than signs.
+Make sure to properly escape user input before rendering it back on the page. This can be done by writing a simple function that replaces common characters in script such as the less than or greater than signs.
