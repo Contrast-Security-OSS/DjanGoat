@@ -3,6 +3,7 @@
 {% block head %}
     {% load static %}
     <script type="text/javascript" src="{% static 'javascript/loader.js'%}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sessions/login.css' %}" />
 {% endblock %}
 
 {% block content %}
@@ -16,37 +17,46 @@
                 {% endfor %}
             </ul>
         {% endif %}
+        <div class="card">
+            <div class="card-block">
+                <div class="header">
+                    <h2>Login</h2>
+                    <p>Fill out the form below to login to your control panel.</p>
+                </div>
 
-        <div class="header">
-            <h2>Login</h2>
-            <p>Fill out the form below to login to your control panel.</p>
+                <form method="post" action="/sessions/"> {% csrf_token %}
+
+                    <div class="form-group">
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                <input type="email" class="form-control" name="email" id="email"  placeholder="Email"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                <input type="password" class="form-control" name="password" id="password"  placeholder="Password" pattern=".{6,40}" required title="6 to 40 characters"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="checkbox col-md">
+                            <label><input type="checkbox" name="remember"> Remember me</label>
+                        </div>
+
+                        <div class="actions col-md">
+                            <input type="submit" value="Login" id="submit_button", class="btn btn-info btn-large pull-right">
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
         </div>
-
-        <form method="post" action="/sessions/"> {% csrf_token %}
-
-            <div class="form-group">
-                <div class="cols-sm-10">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                        <input type="email" class="form-control" name="email" id="email"  placeholder="Email"/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="cols-sm-10">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                        <input type="password" class="form-control" name="password" id="password"  placeholder="Password" pattern=".{6,40}" required title="6 to 40 characters"/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="actions">
-                <input type="submit" value="Login" id="submit_button", class="btn btn-info btn-large pull-right">
-            </div>
-            
-        </form>
     </div>
 
 {% endblock %}
