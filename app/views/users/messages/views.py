@@ -24,11 +24,13 @@ def user_messages(request, user_id):
     else:
         try:
             cid = int(request.POST['creator_id'])
+            creator = User.objects.get(user_id=cid)
             rid = int(request.POST['receiver_id'])
+            receiver = User.objects.get(user_id=rid)
             msg = request.POST['message']
             red = int(request.POST['read'])
-            now = str(timezone.now())
-            Message.objects.create(creator_id=cid, receiver_id=rid,
+            now = timezone.now()
+            Message.objects.create(creator=creator, receiver=receiver,
                                    message=msg, read=red,
                                    created_at=now, updated_at=now)
             return redirect("/users/" + str(current_user.id) + "/messages")

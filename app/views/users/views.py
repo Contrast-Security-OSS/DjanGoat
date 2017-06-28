@@ -4,7 +4,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
 from app.decorators import user_is_authenticated
 from django.shortcuts import render, redirect
-from django.urls import reverse
 from app.models import User
 from django.contrib import messages
 from django.utils import timezone
@@ -92,7 +91,7 @@ def user_view(request, user_id):
         except:
             return HttpResponse("User " + str(user_id_form) + " NOT FOUND")
         update = dict()
-        err_msg = User.validate_update_form(form, update)
+        err_msg = User.validate_update_form(form, user, update)
         if len(err_msg) > 0:
             messages.add_message(request, messages.INFO, err_msg)
         else:

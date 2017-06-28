@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+    {% load integer_division %}
     <div id="payIndex">
         <h1 id="pageTitle">{{ current_user.first_name }} {{ current_user.last_name }} Pay Summary</h1>
         <div class="row">
@@ -56,27 +57,52 @@
                             </ul>
                         {% endif %}
                         <div class="well">
+                            <form class="form-inline start">
+                                <label for="itemsPerPageSelect">Show</label>
+                                <select class="custom-select" id="itemsPerPageSelect" onchange="populateTable(1)">
+                                    <option>5</option>
+                                    <option>10</option>
+                                    <option>20</option>
+                                    <option>50</option>
+                                </select>
+                                <label class="afterLabel" for="itemsPerPageSelect">entries</label>
+
+
+
+                                <div class="input-group ml-auto">
+                                    <label class="ml-auto" for="searchInput">Search</label>
+                                    <input type="text" onkeyup="searchFunction()" class="form-control" id="searchInput" name="searchInput" placeholder="Search">
+                                </div>
+                            </form>
+
                             <table id="ddTable" class="table table-hover table-bordered">
-                                <tr>
-                                    <th>
-                                        Encrypted Bank Account Number
-                                        <i id="hint" onclick="encryptedBankNum()" class="fa fa-question-circle-o" aria-hidden="true"></i>
-                                    </th>
-                                    <th>Bank Routing Number</th>
-                                    <th>Percentage of deposit</th>
-                                    <th>Action</th>
-                                </tr>
-                                {% for entry in direct_deposits %}
-                                <tr id="entry{{ entry.id }}">
-                                    <td class="accNum"> {{ entry.bank_account_num }}</td>
-                                    <td>{{ entry.bank_routing_num }}</td>
-                                    <td>{{ entry.percent_of_deposit }}</td>
-                                    <td>
-                                        <button data-action="delete" href="/users/{{ current_user.id }}/pay/{{ entry.id }}" class="btn btn-danger">Delete</button>
-                                    </td>
-                                </tr>
-                                {% endfor %}
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Encrypted Bank Account Number
+                                            <i id="hint" onclick="encryptedBankNum()" class="fa fa-question-circle-o" aria-hidden="true"></i>
+                                        </th>
+                                        <th>Bank Routing Number</th>
+                                        <th>Percentage of deposit</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ddTableBody">
+                                    {% for entry in direct_deposits %}
+                                    <tr id="entry{{ entry.id }}">
+                                        <td class="accNum"> {{ entry.bank_account_num }}</td>
+                                        <td>{{ entry.bank_routing_num }}</td>
+                                        <td>{{ entry.percent_of_deposit }}</td>
+                                        <td>
+                                            <button data-action="delete" href="/users/{{ current_user.id }}/pay/{{ entry.id }}" class="btn btn-danger">Delete</button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
                             </table>
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-end"></ul>
+                                </nav>
                         </div>
                     </div>
                 </div>

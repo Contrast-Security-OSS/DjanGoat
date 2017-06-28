@@ -16,7 +16,7 @@ class SensitiveDataExposureApiTest(TestCase):
         self.client = Client()
         self.route_name = 'app:api_users_id'
         self.kwargs = {'id_number': 1}
-        input_email = "vinai.dens@contrastsecurity.com"
+        input_email = "vinai.dens@example.com"
         input_password = "wopeqop"
         input_admin = True
         input_first_name = "Vinai!"
@@ -30,7 +30,7 @@ class SensitiveDataExposureApiTest(TestCase):
             updated_at=u_input_update_date
         )
         self.model = User.objects.create(
-            email="ryan.rachakonda@contrastsecurity.com", password=input_password,
+            email="ryan.rachakonda@example.com", password=input_password,
             is_admin=input_admin, first_name='ryan',
             last_name=input_last_name, created_at=u_input_create_date,
             updated_at=u_input_update_date
@@ -62,7 +62,7 @@ class SensitiveDataExposureApiTest(TestCase):
         response = self.client.get(request,
                                    **{'HTTP_AUTHORIZATION': 'Token token=1-01de24d75cffaa66db205278d1cf900bf087a737'})
         content = json.loads(response.content)[0]['fields']
-        self.assertEquals('vinai.dens@contrastsecurity.com', content['email'])
+        self.assertEquals('vinai.dens@example.com', content['email'])
 
     def test_new_line_gives_too_much_info(self):
         route_name = 'app:api_users_index'
@@ -82,12 +82,12 @@ class SensitiveDataExposureApiTest(TestCase):
         response = self.client.get(request,
                                    **{'HTTP_AUTHORIZATION': 'Token token=1%0A2-050ddd40584978fe9e82840b8b95abb98e4786dc'})
         content = json.loads(response.content)[0]['fields']
-        self.assertEquals('vinai.dens@contrastsecurity.com', content['email'])
+        self.assertEquals('vinai.dens@example.com', content['email'])
 
 class SensitiveDataExposureSSNTest(TestCase):
     def setUp(self):
         # Create User Model
-        input_email = "ryan.dens@contrastsecurity.com"
+        input_email = "ryan.dens@example.com"
         input_password = "12345"
         input_admin = False
         input_first_name = "Ryan"
