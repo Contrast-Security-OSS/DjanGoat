@@ -17,3 +17,5 @@ and Applied Mathematics and Statistics minor.
 [![Ryan Dens LinkedIn](ln.png)](https://www.linkedin.com/in/ryan-dens)
 [![Ryan Dens Github](GitHub-Mark-32px.png)](https://github.com/ryandens)
 
+## Alice Duan
+Alice is a member of Carnegie Mellon University Class of 2019 as a Computer Science major.
