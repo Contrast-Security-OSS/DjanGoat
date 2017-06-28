@@ -28,18 +28,6 @@ function getCookie(name) {
 }
 
 
-function deleteDirectDeposit(deposit_id) {
-    var tableRow = $(this).parents('tr');
-    $.ajax({
-        url: "" + deposit_id,
-        type: 'delete',
-        headers: {'X-CSRFToken': getCookie('csrftoken')},
-        success: function () {
-            $("#entry"+deposit_id).remove();
-        }
-      });
-}
-
 function decryptDirectDeposit() {
     input = $('#decryptAccountInput').val()
 

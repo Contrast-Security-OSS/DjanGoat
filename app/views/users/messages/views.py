@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from django.http import HttpResponse
 from django.contrib import messages
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import render, redirect
@@ -54,6 +55,6 @@ def user_message(request, user_id, message_id):
             })
         else:
             message.delete()
-            return redirect("/users/" + str(current_user.id) + "/messages")
+            return HttpResponse("Success!")
     except Exception as e:
         return redirect("/users/" + str(current_user.id) + "/messages")

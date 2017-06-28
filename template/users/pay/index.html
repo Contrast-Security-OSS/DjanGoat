@@ -4,6 +4,7 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/users/pay/index.css' %}" />
     <script type="text/javascript" src="{% static 'javascript/users/pay/index.js'%}"></script>
+    <script type="text/javascript" src="{% static 'javascript/delete_button.js'%}"></script>
 {% endblock %}
 
 {% block content %}
@@ -93,7 +94,7 @@
                                         <td>{{ entry.bank_routing_num }}</td>
                                         <td>{{ entry.percent_of_deposit }}</td>
                                         <td>
-                                            <a onclick="deleteDirectDeposit({{ entry.id }})" class="delete_button"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                            <button data-action="delete" href="/users/{{ current_user.id }}/pay/{{ entry.id }}" class="btn btn-danger">Delete</button>
                                         </td>
                                     </tr>
                                     {% endfor %}

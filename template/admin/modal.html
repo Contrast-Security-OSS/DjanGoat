@@ -31,7 +31,6 @@
                 <label for="password-confirmation">Password Confirmation</label>
                 <input type="password" name="password_confirmation" class="form-control" id="password-confirmation"
                        placeholder="Enter Password">
-
                 <label for="admin">Is Admin</label>
                 <select class="form-control" id="admin" name="is_admin" s>
                     <option selected>{{user.is_admin}}</option>
@@ -40,10 +39,7 @@
             </fieldset>
         {% endblock%}
         {% block footer %}
-            <button type="button" class="btn btn-danger" onclick="deleteUser({{user.user_id}})"
-                    data-dismiss="modal">
-                Delete
-            </button>
+            <button type="button" data-action="delete" href="/admin/{{user.user_id}}/delete_user/" class="btn btn-danger">Delete</button>
             <button type="button" class="btn btn-primary" id="submit_button" onclick="submitForm({{user.user_id}})">
                 Save
                 changes
@@ -56,5 +52,6 @@
 {% endblock %}
 {% block javascript%}
 <script type="text/javascript" src="{% static 'javascript/admin/validation.js'%}"></script>
+<script type="text/javascript" src="{% static 'javascript/delete_button.js'%}"></script>
 {% endblock %}
 
