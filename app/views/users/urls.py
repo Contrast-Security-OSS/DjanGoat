@@ -17,6 +17,7 @@ urlpatterns = [
         users_views.account_settings, name="user_account_settings"),
     url(r'^(?P<user_id>[0-9]+)$', users_views.user_view, name="user_view"),
     url(r'^(?P<user_id>[0-9]+)/messages/', include(messages.urls)),
+    url(r'^(?P<user_id>[0-9]+)/messages.json', include(messages.urls)),
     url(r'^(?P<user_id>[0-9]+)/benefit_forms/', include(benefit_forms.urls)),
     url(r'^(?P<user_id>[0-9]+)/work_info/', include(work_info.urls)),
     url(r'^(?P<user_id>[0-9]+)/retirement/', include(retirement.urls)),
