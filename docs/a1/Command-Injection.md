@@ -2,8 +2,10 @@
 
 ### Description
 
-This vulnerability can be found at app/models/Benefits/benefits.py
-```python
+An OS command injection attack occurs when an attacker tries to execute system level commands through a vulnerable application.
+
+The vulnerability can be found at app/models/Benefits/benefits.py
+```
 @staticmethod
 def save_data(file, backup=None):
     data_path = os.path.join(settings.MEDIA_ROOT, "data")
@@ -27,6 +29,12 @@ def make_backup(file, data_path, full_file_name):
 ```
 
 The code executes system level command with user uploaded file name in string. A user can upload a file named with system commands to execute a command injection attack.
+
+### Why would someone do this?
+
+When people try to copy a file from source to destination in their own computer, the system command cp may be the most intuitive option.
+
+However, it is not a good practice to interpolate user input string into a system command.
 
 ### Attack
 
@@ -70,3 +78,7 @@ This is one way of doing a command injection:
     ------WebKitFormBoundary0tXzAPCVysul0K4b--
     ```
 7. You should be able to see 'ls' is executed from terminal, and there is a newly created directory named 'hacked' in DjanGoat base directory.
+
+### Solution
+
+Instead of directly using system calls, we can use file modules such as ```shutil``` to help copy the file.
