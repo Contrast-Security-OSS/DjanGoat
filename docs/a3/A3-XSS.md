@@ -3,7 +3,6 @@
 ### Description
 
 This vulnerability occurs when user input is sent to a browser without validation or escaping, thus allowing scripts to be executed in user browsers.
-Many developers use mark_safe to bypass the issue of funny characters displaying.
 The following code was taken from template/layouts/shared/nav_loggedin.html:
 ```
 <li class="nav-item">
@@ -18,6 +17,12 @@ where current_user.safe_name can be found in app/models/User/user.py.
 def safe_name(self):
     return mark_safe(self.first_name)
 ```
+
+### Why would someone do this?
+
+Many developers use mark_safe to bypass the issue of funny characters displaying, and as a workaround for issues with jquery.
+Any situation in which a developer would want to render HTML code in literal form could potentially lead to this vulnerability.
+The fact that safe is in the name of this function, which in fact makes a string unsafe, can be deceiving.
 
 ### Attack
 

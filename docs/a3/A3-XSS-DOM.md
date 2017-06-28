@@ -2,7 +2,7 @@
 
 ### Description
 
-Consider a situation in which the DOM "environment" can be modified, such as which language to display a website in.
+Consider a situation in which the DOM "environment" can be modified.
 
 The following code was taken from template/users/signup.html:
 ```
@@ -19,6 +19,12 @@ The following code was taken from template/users/signup.html:
 </script>
 ```
 It takes user input (params), and renders it back on the page without any output encoding or escaping.
+
+### Why would someone do this?
+
+In this specific example, the vulnerability lies in a half-developed feature in which the language option is parsed from the url.
+Following that, it is easy to imagine many situations in which a developer may want to allow for modification of the DOM environment.
+Such modifications can easily lead to XSS vulnerabilities, as demonstrated in this example.
 
 ### Attack
 
