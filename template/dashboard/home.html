@@ -17,30 +17,32 @@
                 <button type="button" class="btn btn-small"><i class="fa fa-bar-chart" aria-hidden="true"></i></button>
             </div>
         </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="stats col-md">
-                    <div id="chart_div"></div>
-                    <p style="text-align: center">Available PTO</p>
-                </div>
-                <div class="stats col-md">
-                    <div id="chart_div2"></div>
-                    <p style="text-align: center">Sick Days Taken</p>
-                </div>
-                <div class="stats col-md">
-                    <div id="chart_div3"></div>
-                    <p style="text-align: center">Income</p>
-                </div>
-                <div class="stats col-md">
-                    <div id="chart_div4"></div>
-                    <p style="text-align: center">Performance Score</p>
-                </div>
-                <div class="stats col-md">
-                    <div id="chart_div5"></div>
-                    <p style="text-align: center">401k</p>
+        {% if not current_user.is_admin %}
+            <div class="card-body">
+                <div class="row">
+                    <div class="stats col-md">
+                        <div id="chart_div"></div>
+                        <p style="text-align: center">Available PTO</p>
+                    </div>
+                    <div class="stats col-md">
+                        <div id="chart_div2"></div>
+                        <p style="text-align: center">Sick Days Taken</p>
+                    </div>
+                    <div class="stats col-md">
+                        <div id="chart_div3"></div>
+                        <p style="text-align: center">Income</p>
+                    </div>
+                    <div class="stats col-md">
+                        <div id="chart_div4"></div>
+                        <p style="text-align: center">Performance Score</p>
+                    </div>
+                    <div class="stats col-md">
+                        <div id="chart_div5"></div>
+                        <p style="text-align: center">401k</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 
 {% endblock %}
