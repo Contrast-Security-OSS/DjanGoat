@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
 from django.test import TestCase, RequestFactory, Client
 from django.utils import timezone
 from django.contrib.messages.storage.fallback import FallbackStorage

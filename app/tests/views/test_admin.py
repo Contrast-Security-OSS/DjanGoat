@@ -1,15 +1,16 @@
 import datetime
+
 import pytz
+from django.http import SimpleCookie
 from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse
 from django_webtest import WebTest
-from django.http import SimpleCookie
+
 from app.models import User
 from app.views import sessions_views as sessions
 from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.views.utils import simulate_simple_authentication
 import app.views.admin.views as admin_views
-
 
 class AdminDashboardTest(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
