@@ -17,3 +17,8 @@ and Applied Mathematics and Statistics minor.
 [![Ryan Dens LinkedIn](ln.png)](https://www.linkedin.com/in/ryan-dens)
 [![Ryan Dens Github](GitHub-Mark-32px.png)](https://github.com/ryandens)
 
+## Vinai Rachakonda
+Vinai studies Computer Science at the University of Pennsylvania (Class of 2020)
+[![Vinai Rachakonda LinkedIn](ln.png)](https://www.linkedin.com/in/vinaichandra-rachakonda-a41927117/)
+[![Vinai Rachakonda Github](GitHub-Mark-32px.png)](https://github.com/ERHSQuizbowl)
+
