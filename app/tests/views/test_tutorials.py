@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.test import TestCase, RequestFactory, Client
-
 from app.tests.mixins import RouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
-
 import app.views as views
 
 tutorials = views.tutorials_views
