@@ -185,7 +185,7 @@ class UserViewRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
 
 class UserViewsSignUpUserFormTests(WebTest):
     def setUp(self):
-        self.param = {'email': 'ziyang@contrast.com', 'first_name': 'ziyang',
+        self.param = {'email': 'ziyang@example.com', 'first_name': 'ziyang',
                       'last_name': 'wang', 'password': '123456',
                       'confirm': '123456'}
         page = self.app.get('/signup/')
@@ -268,7 +268,7 @@ class UserViewsSignUpUserFormTests(WebTest):
 class UserViewsUpdateAccountFormTests(WebTest):
     def setUp(self):
         # First signup and login a user
-        self.param = {'email': 'ziyang@contrast.com', 'first_name': 'ziyang',
+        self.param = {'email': 'ziyang@example.com', 'first_name': 'ziyang',
                       'last_name': 'wang', 'password': 'ziyangw',
                       'confirm': 'ziyangw'}
         signup_page = self.app.get('/signup/')
@@ -291,37 +291,37 @@ class UserViewsUpdateAccountFormTests(WebTest):
 
     def test_invalid_password_length_short(self):
         password_short = '12345'
-        self.form.set('password', password_short)
+        self.form.set('password_new', password_short)
         self.form.set('confirm', password_short)
         response = self.form.submit()
         self.assertEqual(response.url, self.url)
         response_message = response._headers['Set-Cookie']
         password_short_message = "Password minimum 6 characters"
         self.assertTrue(password_short_message in response_message)
-        self.form.set('password', '')
+        self.form.set('password_new', '')
         self.form.set('confirm', '')
 
     def test_invalid_password_length_long(self):
-        password_long = '1' * 41
-        self.form.set('password', password_long)
+        password_long = '1'*41
+        self.form.set('password_new', password_long)
         self.form.set('confirm', password_long)
         response = self.form.submit()
         self.assertEqual(response.url, self.url)
         response_message = response._headers['Set-Cookie']
         password_long_message = "Password maximum 40 characters"
         self.assertTrue(password_long_message in response_message)
-        self.form.set('password', '')
+        self.form.set('password_new', '')
         self.form.set('confirm', '')
 
     def test_not_matched_password_confirm(self):
-        self.form.set('password', '135790')
+        self.form.set('password_new', '135790')
         self.form.set('confirm', '135780')
         response = self.form.submit()
         self.assertEqual(response.url, self.url)
         response_message = response._headers['Set-Cookie']
         not_matched_message = "Password and Confirm Password does not match"
         self.assertTrue(not_matched_message in response_message)
-        self.form.set('password', '')
+        self.form.set('password_new', '')
         self.form.set('confirm', '')
 
     def test_email_already_exist(self):
@@ -331,18 +331,18 @@ class UserViewsUpdateAccountFormTests(WebTest):
             last_name='wang', created_at=timezone.now(),
             updated_at=timezone.now()
         )
-        self.form.set('email', 'a@b.com')
+        self.form.set('email_new', 'a@b.com')
         response = self.form.submit()
         self.assertEqual(response.url, self.url)
         response_message = response._headers['Set-Cookie']
         email_exist_message = "Email has already been taken"
         self.assertTrue(email_exist_message in response_message)
         user.delete()
-        self.form.set('email', '')
+        self.form.set('email_new', '')
 
     def test_error_sql_create_user(self):
-        self.form.set('first_name', 'z' * 256)
-        self.form.set('email', '')
+        self.form.set('first_name', 'z'*256)
+        self.form.set('email_new', '')
         response = self.form.submit()
         self.assertEqual(response.url, self.url)
         response_message = response._headers['Set-Cookie']
@@ -352,15 +352,15 @@ class UserViewsUpdateAccountFormTests(WebTest):
 
     def test_update_success(self):
         self.assertEqual(self.user.email, self.param['email'])
-        self.form.set('email', 'zw@contrast.com')
+        self.form.set('email_new', 'zw@example.com')
         response = self.form.submit()
         response_message = response._headers['Set-Cookie']
-        updated_user = User.objects.filter(email='zw@contrast.com').first()
+        updated_user = User.objects.filter(email='zw@example.com').first()
         self.assertTrue(updated_user)
-        self.assertEqual(updated_user.email, 'zw@contrast.com')
+        self.assertEqual(updated_user.email, 'zw@example.com')
         self.assertTrue("Successfully Updated" in response_message)
         self.assertEqual(response.url, self.url)
-        self.form.set('email', '')
+        self.form.set('email_new', '')
 
     def test_sql_injection_vulnerability(self):
         # Get a target admin to apply SQL injection
@@ -370,7 +370,7 @@ class UserViewsUpdateAccountFormTests(WebTest):
 
         # Send a request by submitting form as a non-admin
         factory = RequestFactory()
-        self.form.set('email', 'zw@contrast.com')
+        self.form.set('email_new', 'zw@example.com')
         url = "/users/%s" % self.user.user_id
         fields = self.form.submit_fields(None, index=None, submit_value=None)
         request = factory.post(url, dict(fields))
@@ -378,7 +378,7 @@ class UserViewsUpdateAccountFormTests(WebTest):
 
         # Change fields as SQL injection
         request.POST = request.POST.copy()
-        request.POST['password'] = '123456'
+        request.POST['password_new'] = '123456'
         request.POST['confirm'] = '123456'
         request.POST['user_id'] = "%s' OR is_admin = '1" % self.user.user_id
         request.path_info = url

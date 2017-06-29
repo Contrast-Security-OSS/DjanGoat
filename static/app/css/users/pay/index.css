@@ -28,3 +28,11 @@
 #payIndex .delete_button {
     cursor: pointer;
 }
+
+#payIndex label {
+    margin-right: 0.5em;
+}
+
+#payIndex .afterLabel {
+    margin-left: 0.5em;
+}

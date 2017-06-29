@@ -13,7 +13,7 @@ class TestMissingFunctionLevelAccessControl(TestCase):
     # Simulate logging in as a normal user and switching to a different user
     def test_route_post(self):
         # Create user in database
-        input_email = "ryan.dens@contrastsecurity.com"
+        input_email = "ryan.dens@example.com"
         input_password = "12345"
         input_admin = False
         input_first_name = "Ryan"
@@ -28,7 +28,7 @@ class TestMissingFunctionLevelAccessControl(TestCase):
         )
 
         client_response = self.client.post('/sessions/',
-                                          {'email': 'ryan.dens@contrastsecurity.com', 'password': '12345',
+                                          {'email': 'ryan.dens@example.com', 'password': '12345',
                                            'path': '/admin/1/dashboard/'},
                                           follow=True)
         self.assertEqual(client_response.status_code, 200)

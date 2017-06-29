@@ -26,9 +26,9 @@
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                        <input type="email" class="form-control" name="email" id="email"
+                        <input type="email" class="form-control" name="email_new" id="email"
                                placeholder="Email"
-                               value="{{ email }}" />
+                               value="{{ current_user.email }}" />
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                         <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                         <input type="text" class="form-control" name="first_name" id="first_name"
                                placeholder="First Name"
-                               value="{{first_name}}" />
+                               value="{{current_user.first_name}}" />
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                         <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
                         <input type="text" class="form-control" name="last_name" id="last_name"
                                placeholder="Last Name"
-                               value="{{last_name}}" />
+                               value="{{current_user.last_name}}" />
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                        <input type="password" class="form-control" name="password" id="password"
+                        <input type="password" class="form-control" name="password_new" id="password"
                                placeholder="New Password" />
                     </div>
                 </div>

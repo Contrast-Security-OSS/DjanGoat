@@ -10,7 +10,7 @@ import pytz
 class TestCredentialEnumeration(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
-        input_email = "ziyang.wang@contrastsecurity.com"
+        input_email = "ziyang.wang@example.com"
         input_password = "123456"
         input_admin = True
         input_first_name = "Ziyang"
@@ -29,7 +29,7 @@ class TestCredentialEnumeration(TestCase):
         setattr(request, 'session', 'session')
         messages = FallbackStorage(request)
         setattr(request, '_messages', messages)
-        response = sessions.sessions_index(request, email="ziyang.wang@contrastsecurity.com",
+        response = sessions.sessions_index(request, email="ziyang.wang@example.com",
                                            password="1234", path="/dashboard")
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response['message'], "Password incorrect!")
@@ -39,7 +39,7 @@ class TestCredentialEnumeration(TestCase):
         setattr(request, 'session', 'session')
         messages = FallbackStorage(request)
         setattr(request, '_messages', messages)
-        response = sessions.sessions_index(request, email="ziyang.w@contrastsecurity.com",
+        response = sessions.sessions_index(request, email="ziyang.w@example.com",
                                            password="123456", path="/dashboard")
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response['message'], "Email incorrect!")

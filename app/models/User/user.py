@@ -170,25 +170,26 @@ class User(models.Model):
         return err_msg
 
     @staticmethod
-    def validate_update_form(form, update):
+    def validate_update_form(form, user, update):
         err_list = []
-        if form["password"] != form["confirm"]:
+        if form["password_new"] != form["confirm"]:
             err_list.append("Password and Confirm Password does not match")
-        elif len(form["password"]) != 0:
-            if len(form["password"]) < 6:
+        elif len(form["password_new"]) != 0:
+            if len(form["password_new"]) < 6:
                 err_list.append("Password minimum 6 characters")
-            elif len(form["password"]) > 40:
+            elif len(form["password_new"]) > 40:
                 err_list.append("Password maximum 40 characters")
             else:
-                update["password"] = form["password"]
-        if len(form["email"]) > 0:
-            if User.objects.filter(email=form["email"]):
-                err_list.append("Email has already been taken")
+                update["password"] = form["password_new"]
+        if len(form["email_new"]) > 0:
+            if User.objects.filter(email=form["email_new"]):
+                if user.email != form["email_new"]:
+                    err_list.append("Email has already been taken")
             else:
-                update["email"] = form["email"]
-        if len(form["first_name"]) > 0:
+                update["email"] = form["email_new"]
+        if len(form["first_name"]) > 0 and user.first_name != form["first_name"]:
             update["first_name"] = form["first_name"]
-        if len(form["last_name"]) > 0:
+        if len(form["last_name"]) > 0 and user.last_name != form["last_name"]:
             update["last_name"] = form["last_name"]
         err_msg = " and ".join(err_list)
         return err_msg
