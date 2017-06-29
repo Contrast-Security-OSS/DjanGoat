@@ -59,5 +59,8 @@ class WorkInfo(models.Model):
             self.user, self.encrypted_ssn
         )
 
+    def income_to_int(self):
+        return int(self.income[1:].replace(',', ''))
+
     class Meta:
         db_table = "app_work_infos"

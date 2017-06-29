@@ -8,46 +8,50 @@ google.charts.setOnLoadCallback(drawChart);
 // instantiates the pie chart, passes in the data and
 // draws it.
 function drawChart() {
+    var pto_taken = parseInt(document.getElementById('pto_taken').value);
+    var pto_remain = parseInt(document.getElementById('pto_remain').value);
+    var sick_taken = parseInt(document.getElementById('sick_taken').value);
+    var sick_remain = parseInt(document.getElementById('sick_remain').value);
+    var performance = parseInt(document.getElementById('performance').value);
+    var retirement = parseInt(document.getElementById('401k').value);
+    var income = parseInt(document.getElementById('income').value);
 
     // Create the data table.
     var pto_data = new google.visualization.DataTable();
     pto_data.addColumn('string', 'PTO');
     pto_data.addColumn('number', 'num');
     pto_data.addRows([
-      ['PTO taken', 4],
-      ['PTO not taken', 1],
+      ['PTO taken', pto_taken],
+      ['PTO not taken', pto_remain],
     ]);
 
     var sick_days_data = new google.visualization.DataTable();
     sick_days_data.addColumn('string', 'Sick Days');
     sick_days_data.addColumn('number', 'num');
     sick_days_data.addRows([
-      ['Sick Days taken', 3],
-      ['Sick Days not taken', 10],
+      ['Sick Days taken', sick_taken],
+      ['Sick Days not taken', sick_remain],
     ]);
 
     var income_data = new google.visualization.DataTable();
     income_data.addColumn('string', 'Income');
     income_data.addColumn('number', 'num');
     income_data.addRows([
-      ['Income earned', 60000],
-      ['Income not earned', 5000],
+      ['Income earned', income],
     ]);
 
     var performance_data = new google.visualization.DataTable();
     performance_data.addColumn('string', 'Income');
     performance_data.addColumn('number', 'num');
     performance_data.addRows([
-      ['performance points earned', 5],
-      ['performance points not earned', 5],
+      ['performance points earned', performance],
     ]);
 
     var retirement_data = new google.visualization.DataTable();
     retirement_data.addColumn('string', '401k');
     retirement_data.addColumn('number', 'num');
     retirement_data.addRows([
-      ['Amount contributed', 7000],
-      ['Amount not contributed', 1000],
+      ['Amount contributed', retirement],
     ]);
 
     // Set chart options
