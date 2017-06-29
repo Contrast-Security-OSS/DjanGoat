@@ -6,8 +6,8 @@ from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse
 from django_webtest import WebTest
 
-import app.views.admin.views as admin_views
 from app.models import User
+from app.views import sessions_views as sessions
 from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.views.utils import simulate_simple_authentication
 import app.views.admin.views as admin_views
