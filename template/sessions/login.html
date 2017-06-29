@@ -2,18 +2,19 @@
 
 {% block head %}
     {% load static %}
+
     <script type="text/javascript" src="{% static 'javascript/loader.js'%}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/sessions/login.css' %}" />
 {% endblock %}
 
 {% block content %}
 
-    <div class="col-md-4 offset-md-5" >
+    <div class="col-md-6 offset-md-4" >
 
         {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
-                    <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+                    <div {% if message.tags %} class="alert {{ message.tags }}"{% endif %}>{{ message }}</div>
                 {% endfor %}
             </ul>
         {% endif %}
@@ -44,19 +45,70 @@
                         </div>
                     </div>
 
+
                     <div class="row">
                         <div class="checkbox col-md">
                             <label><input type="checkbox" name="remember"> Remember me</label>
                         </div>
 
                         <div class="actions col-md">
-                            <input type="submit" value="Login" id="submit_button", class="btn btn-info btn-large pull-right">
+                            <input type="submit" value="Login" id="submit_button" class="btn btn-info btn-large pull-right">
                         </div>
                     </div>
                     
                 </form>
+                <div class = "col-md-6 offset-md-4">
+                    <button onclick="openModal()" class="btn btn-warning"> Reset Password</button>
+                </div>
             </div>
         </div>
     </div>
+
+    <div id="resetPasswordModal" class="modal bd-example-modal-lg" role="dialog" tabindex="-1"
+         aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"><span
+                        aria-hidden="false">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"> Password
+                        Reset</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="user-update" class="form" method="post"
+                          action="/forgot_password/">
+                        {% csrf_token %}
+
+                        <label for="inputEmail">Email address</label>
+                        <input type="email" name="email"
+                               class="form-control" id="inputEmail"
+                               aria-describedby="emailHelp">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">Close
+                            </button>
+
+                            <div class="actions">
+                                <input type="submit" value="Submit"
+                                       class="btn btn-info btn-large pull-right">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+
+    function openModal() {
+         $("#resetPasswordModal").modal('show');
+     }
+</script>
+
+
 
 {% endblock %}
