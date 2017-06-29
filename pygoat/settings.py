@@ -134,6 +134,9 @@ MESSAGE_TAGS = {
 
 ACCESS_TOKEN_SALT = "S4828341189aefiasd#ASDF"
 
+EMAIL_HOST = 'localhost'
+
+EMAIL_PORT = 25
 
 # local_settings take priority over production settings
 try:

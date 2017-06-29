@@ -10,7 +10,6 @@ schedule = views.schedule_views
 
 
 class SchedulePep8Tests(TestCase, Pep8ViewsTests):
-
     def setUp(self):
         self.path = 'app/views/schedule/'
 
@@ -43,7 +42,8 @@ class ScheduleIndexRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
 
 # Tests checking that that '/schedule/get_pto_schedule' properly handles HttpRequests and routing
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class PTOScheduleIndexRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
+class PTOScheduleIndexRoutingAndHttpTests(TestCase,
+                                          AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -92,6 +92,7 @@ class NewScheduleRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
         self.expected_response_content = 'New schedule'
         AuthRouteTestingWithKwargs.__init__(self)
 
+
 # Tests checking that that '/schedule/:schedule_id/edit' properly handles HttpRequests and routing
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on schedule_id 55
@@ -122,7 +123,8 @@ class EditScheduleRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
 # Tests checking that that '/schedule/:schedule_id' properly handles HttpRequests and routing
 # Accepts GET, PATCH, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on schedule_id 55
-class UserShowRetirementRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
+class UserShowRetirementRoutingAndHttpTests(TestCase,
+                                            AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()

@@ -17,7 +17,8 @@ class DashboardPep8Tests(TestCase, Pep8ViewsTests):
 # Tests checking that that '/dashboard' properly handles HttpRequests when unauthenticated
 # Accepts Both GET and POST requests and refuses all others with an error code 405 (Method not allowed)
 # Redirects GET and POST to error page for cookies not existing
-class DashboardIndexHttpRequestMethodTests(TestCase, AuthRouteTestingWithKwargs):
+class DashboardIndexHttpRequestMethodTests(TestCase,
+                                           AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -43,7 +44,8 @@ class DashboardIndexHttpRequestMethodTests(TestCase, AuthRouteTestingWithKwargs)
 
 # Tests checking that that '/dashboard/home' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class DashboardHomeHttpRequestMethodTests(TestCase, AuthRouteTestingWithKwargs):
+class DashboardHomeHttpRequestMethodTests(TestCase,
+                                          AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -69,7 +71,8 @@ class DashboardHomeHttpRequestMethodTests(TestCase, AuthRouteTestingWithKwargs):
 
 # Tests checking that that '/dashboard/change_graph' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-class DashboardChangeGraphHttpRequestMethodTests(TestCase, AuthRouteTestingWithKwargs):
+class DashboardChangeGraphHttpRequestMethodTests(TestCase,
+                                                 AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -148,7 +151,8 @@ class DashboardNewHttpRequestMethodTests(TestCase, AuthRouteTestingWithKwargs):
 # Tests checking that that '/dashboard/:id/edit' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
-class DashboardEditHttpRequestMethodTests(TestCase, AuthRouteTestingWithKwargs):
+class DashboardEditHttpRequestMethodTests(TestCase,
+                                          AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()
@@ -175,7 +179,8 @@ class DashboardEditHttpRequestMethodTests(TestCase, AuthRouteTestingWithKwargs):
 # Tests checking that that '/dashboard/:id' properly handles HttpRequests
 # Accepts GET, PATCH, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
-class DashboardViewHttpRequestMethodTests(TestCase, AuthRouteTestingWithKwargs):
+class DashboardViewHttpRequestMethodTests(TestCase,
+                                          AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()

@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import hashlib
-
-from django.contrib.messages.storage.fallback import FallbackStorage
 from django.test import TestCase, RequestFactory, Client
 from django.utils import timezone
+from django.contrib.messages.storage.fallback import FallbackStorage
 from django_webtest import WebTest
-
-import app.views as views
-from app.models import User
-from app.tests.mixins import Pep8ViewsTests
 from app.tests.mixins import RouteTestingWithKwargs, AuthRouteTestingWithKwargs
+from app.tests.mixins import Pep8ViewsTests
+from app.models import User
+import app.views as views
+import hashlib
 
 users = views.users_views
 
@@ -130,7 +128,8 @@ class UserEditRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
 # Tests checking that that '/users/:id/account_settings' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
-class UserAccountSettingsRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
+class UserAccountSettingsRoutingAndHttpTests(TestCase,
+                                             AuthRouteTestingWithKwargs):
     # setup for all test cases
 
     def setUp(self):
@@ -302,7 +301,7 @@ class UserViewsUpdateAccountFormTests(WebTest):
         self.form.set('confirm', '')
 
     def test_invalid_password_length_long(self):
-        password_long = '1'*41
+        password_long = '1' * 41
         self.form.set('password_new', password_long)
         self.form.set('confirm', password_long)
         response = self.form.submit()
@@ -341,7 +340,7 @@ class UserViewsUpdateAccountFormTests(WebTest):
         self.form.set('email_new', '')
 
     def test_error_sql_create_user(self):
-        self.form.set('first_name', 'z'*256)
+        self.form.set('first_name', 'z' * 256)
         self.form.set('email_new', '')
         response = self.form.submit()
         self.assertEqual(response.url, self.url)

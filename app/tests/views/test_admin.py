@@ -9,8 +9,8 @@ from django_webtest import WebTest
 import app.views.admin.views as admin_views
 from app.models import User
 from app.tests.mixins import AuthRouteTestingWithKwargs
-from app.views import sessions_views as sessions
-
+from app.views.utils import simulate_simple_authentication
+import app.views.admin.views as admin_views
 
 class AdminDashboardTest(TestCase, AuthRouteTestingWithKwargs):
     # setup for all test cases
@@ -109,36 +109,29 @@ class AdminDeleteUserTest(TestCase, AuthRouteTestingWithKwargs):
             last_name=input_last_name, created_at=u_input_create_date,
             updated_at=u_input_update_date
         )
-        auth_request = self.factory.post('/sessions/')
-        AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
-        auth_response = sessions.sessions_index(auth_request,
-                                                email="ryan.dens@example.com",
-                                                password="12345",
-                                                path='admin/2/delete_user')
-        # Make sure redirect was called (but not followed)
-        self.assertEqual(auth_response.status_code, 302)
-        # Add auth token cookie to request
-        auth_token = auth_response.cookies['auth_token'].value
 
-        self.client.cookies = SimpleCookie({'auth_token': auth_token})
+        simulate_simple_authentication(factory=self.factory,
+                                       client=self.client,
+                                       email="ryan.dens@example.com",
+                                       password="12345",
+                                       path='admin/2/delete_user',
+                                       add_messages_middleware=AuthRouteTestingWithKwargs.add_messages_middleware,
+                                       views=sessions)
+
         response = self.client.delete(reverse(self.route_name,
-                                 kwargs=self.kwargs))  # simulate the post request
+                                              kwargs=self.kwargs))  # simulate the post request
         self.assertEquals(0, len(User.objects.filter(first_name="VINAITEST")))
 
     def test_not_present_user_does_not_do_anything(self):
         self.kwargs = {'selected_id': 5}
-        auth_request = self.factory.post('/sessions/')
-        AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
-        auth_response = sessions.sessions_index(auth_request,
-                                                email="ryan.dens@example.com",
-                                                password="12345",
-                                                path='admin/5/update_user')
-        # Make sure redirect was called (but not followed)
-        self.assertEqual(auth_response.status_code, 302)
-        # Add auth token cookie to request
-        auth_token = auth_response.cookies['auth_token'].value
 
-        self.client.cookies = SimpleCookie({'auth_token': auth_token})
+        simulate_simple_authentication(factory=self.factory,
+                                       client=self.client,
+                                       email="ryan.dens@example.com",
+                                       password="12345",
+                                       path='admin/5/update_user',
+                                       add_messages_middleware=AuthRouteTestingWithKwargs.add_messages_middleware,
+                                       views=sessions)
         response = self.client.post(reverse(self.route_name,
                                             kwargs=self.kwargs))  # simulate the post request
         self.assertEquals(1, len(User.objects.all()))
@@ -193,18 +186,13 @@ class AdminUpdateUserTest(TestCase, AuthRouteTestingWithKwargs):
             updated_at=u_input_update_date
         )
 
-        auth_request = self.factory.post('/sessions/')
-        AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
-        auth_response = sessions.sessions_index(auth_request,
-                                                email="ryan.dens@example.com",
-                                                password="12345",
-                                                path='admin/2/update_user/')
-        # Make sure redirect was called (but not followed)
-        self.assertEqual(auth_response.status_code, 302)
-        # Add auth token cookie to request
-        auth_token = auth_response.cookies['auth_token'].value
-
-        self.client.cookies = SimpleCookie({'auth_token': auth_token})
+        simulate_simple_authentication(factory=self.factory,
+                                       client=self.client,
+                                       email="ryan.dens@example.com",
+                                       password="12345",
+                                       path='admin/2/update_user/',
+                                       add_messages_middleware=AuthRouteTestingWithKwargs.add_messages_middleware,
+                                       views=sessions)
 
         self.kwargs = {'selected_id': 2}
         response = self.client.post(
@@ -269,6 +257,7 @@ class AdminAnalyticsUsersTest(TestCase, AuthRouteTestingWithKwargs):
 class AdminSQLInjectionInterpolationTest(WebTest):
     def setUp(self):
         self.client = Client()
+        self.factory = RequestFactory()
         User.objects.create(
             email="ryan.dens@example.com", password="12345",
             is_admin=True, first_name="Ryan",
@@ -278,19 +267,14 @@ class AdminSQLInjectionInterpolationTest(WebTest):
         )
 
     def test_sql_injection_interpolation(self):
-        self.factory = RequestFactory()
-        auth_request = self.factory.post('/sessions/')
-        AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
-        auth_response = sessions.sessions_index(auth_request,
-                                                email="ryan.dens@example.com",
-                                                password="12345",
-                                                path='http://127.0.0.1:8000/admin/1/analytics/?ip=127.0.0.1&email=&password%20FROM%20app_user%3B%20select%20user_agent=')
-        # Make sure redirect was called (but not followed)
-        self.assertEqual(auth_response.status_code, 302)
-        # Add auth token cookie to request
-        auth_token = auth_response.cookies['auth_token'].value
+        simulate_simple_authentication(factory=self.factory,
+                                       client=self.client,
+                                       email="ryan.dens@example.com",
+                                       password="12345",
+                                       path='http://127.0.0.1:8000/admin/1/analytics/?ip=127.0.0.1&email=&password%20FROM%20app_user%3B%20select%20user_agent=',
+                                       add_messages_middleware=AuthRouteTestingWithKwargs.add_messages_middleware,
+                                       views=sessions)
 
-        self.client.cookies = SimpleCookie({'auth_token': auth_token})
         # The attack string may vary depending on the system used
         url = 'http://127.0.0.1:8000/admin/1/analytics/?ip=127.0.0.1&email=&password%20FROM%20app_user%3B%20select%20user_agent='
         response = self.client.get(url)
