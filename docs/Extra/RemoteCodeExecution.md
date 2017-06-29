@@ -84,7 +84,7 @@ This attach is slightly complicated and requires a decent amount of setup. But i
 >>> import pickle
 >>> import base64
 >>> import subprocess
->>> class GenProcess(obj):
+>>> class GenProcess(object):
         def __reduce__(self):
             return (subprocess.Popen, (('ls',),))
 >>> print base64.b64encode(pickle.dumps(GenProcess()))
