@@ -30,7 +30,35 @@
                         </li>
                     </ul>
                 </li>
-            {% endif %}
+            <a href="/dashboard/home" class="nav-link">
+                <i class="fa fa-archive icon" aria-hidden="true"></i>
+                <br/>Benefit Forms
+            </a>
+            <a href="/dashboard/home" class="nav-link">
+                <i class="fa fa-line-chart icon" aria-hidden="true"></i>
+                <br/>401k Info
+            </a>
+            <a href="/dashboard/home" class="nav-link">
+                <i class="fa fa-heart icon" aria-hidden="true"></i>
+                <br/>PTO
+            </a>
+            <a href="/dashboard/home" class="nav-link">
+                <i class="fa fa-briefcase icon" aria-hidden="true"></i>
+                <br/>Work Info
+            </a>
+            <a href="/dashboard/home" class="nav-link">
+                <i class="fa fa-calendar icon" aria-hidden="true"></i>
+                <br/>Performance
+            </a>
+            <a href="/dashboard/home" class="nav-link">
+                <i class="fa fa-envelope icon" aria-hidden="true"></i>
+                <br/>Messages
+            </a>
+            <a href="/dashboard/home" class="nav-link">
+                <i class="fa fa-money icon" aria-hidden="true"></i>
+                <br/>Pay
+            </a>
+            {%else%}
             <a href="/users/{{ current_user.id }}/benefit_forms" class="nav-link">
                 <i class="fa fa-archive icon" aria-hidden="true"></i>
                 <br/>Benefit Forms
@@ -59,6 +87,7 @@
                 <i class="fa fa-money icon" aria-hidden="true"></i>
                 <br/>Pay
             </a>
+            {% endif %}
         </div>
     </div>
 </div>
