@@ -1,6 +1,5 @@
 from django.test import TestCase, RequestFactory, Client
 from app.models import User
-from app.views import sessions_views as sessions
 import pytz
 import datetime
 

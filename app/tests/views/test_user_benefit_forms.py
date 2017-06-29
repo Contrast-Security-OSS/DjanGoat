@@ -7,6 +7,7 @@ from django.http import SimpleCookie
 from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
 from app.views import sessions_views as sessions
+from app.views.utils import simulate_simple_authentication
 from pygoat.settings import BASE_DIR
 import os
 import app.views as views
@@ -81,41 +82,34 @@ class UploadRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
         self.assertEqual(response.status_code, 200)
 
     def test_can_send_file(self):
-        auth_request = self.factory.post('/sessions/')
-        AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
-        auth_response = sessions.sessions_index(auth_request,
-                                                email="ryan.dens@example.com",
-                                                password="12345",
-                                                path=self.route)
-        # Make sure redirect was called (but not followed)
-        self.assertEqual(auth_response.status_code, 302)
-        # Add auth token cookie to request
-        auth_token = auth_response.cookies['auth_token'].value
+        simulate_simple_authentication(factory=self.factory,
+                                       client=self.client,
+                                       email="ryan.dens@example.com",
+                                       password="12345",
+                                       path=self.route,
+                                       add_messages_middleware=AuthRouteTestingWithKwargs.add_messages_middleware,
+                                       views=sessions)
 
-        self.client.cookies = SimpleCookie({'auth_token': auth_token})
         with open(BASE_DIR + '/public/docs/Dental_n_Stuff.pdf') as fp:
             response = self.client.post(reverse('app:upload_benefit_form'),
-                                        {'myfile': fp, 'backup': False}, follow=True)
+                                        {'myfile': fp, 'backup': False},
+                                        follow=True)
             self.assertContains(response, 'File was successfully uploaded!')
             self.assertTrue(
                 os.path.isfile(BASE_DIR + '/media/data/Dental_n_Stuff.pdf'))
             os.remove(BASE_DIR + '/media/data/Dental_n_Stuff.pdf')  # cleanup
 
     def test_no_upload_returns_error_message(self):
-        auth_request = self.factory.post('/sessions/')
-        AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
-        auth_response = sessions.sessions_index(auth_request,
-                                                email="ryan.dens@example.com",
-                                                password="12345",
-                                                path=self.route)
-        # Make sure redirect was called (but not followed)
-        self.assertEqual(auth_response.status_code, 302)
-        # Add auth token cookie to request
-        auth_token = auth_response.cookies['auth_token'].value
+        simulate_simple_authentication(factory=self.factory,
+                                       client=self.client,
+                                       email="ryan.dens@example.com",
+                                       password="12345",
+                                       path=self.route,
+                                       add_messages_middleware=AuthRouteTestingWithKwargs.add_messages_middleware,
+                                       views=sessions)
 
-        self.client.cookies = SimpleCookie({'auth_token': auth_token})
         response = self.client.post(reverse('app:upload_benefit_form'),
-                                    {'backup': False},follow=True)
+                                    {'backup': False}, follow=True)
         self.assertContains(response,
                             'Something went wrong! Are you sure you selected a file?')
         self.assertFalse(
@@ -150,19 +144,14 @@ class DownloadBenefitFormsRoutingAndHttpTests(TestCase,
         AuthRouteTestingWithKwargs.__init__(self)
 
     def test_dental_n_stuff_download(self):
-        # Create new session
-        auth_request = self.factory.post('/sessions/')
-        AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
-        auth_response = sessions.sessions_index(auth_request,
-                                                email="ryan.dens@example.com",
-                                                password="12345",
-                                                path=self.route)
-        # Make sure redirect was called (but not followed)
-        self.assertEqual(auth_response.status_code, 302)
-        # Add auth token cookie to request
-        auth_token = auth_response.cookies['auth_token'].value
+        simulate_simple_authentication(factory=self.factory,
+                                       client=self.client,
+                                       email="ryan.dens@example.com",
+                                       password="12345",
+                                       path=self.route,
+                                       add_messages_middleware=AuthRouteTestingWithKwargs.add_messages_middleware,
+                                       views=sessions)
 
-        self.client.cookies = SimpleCookie({'auth_token': auth_token})
         response = self.client.get(
             reverse(self.route_name) + '/?name=public/docs/Dental_n_Stuff.pdf',
             follow=True)
@@ -171,19 +160,14 @@ class DownloadBenefitFormsRoutingAndHttpTests(TestCase,
                           % os.path.basename('public/docs/Dental_n_Stuff.pdf'))
 
     def test_health_n_stuff_download(self):
-        # Create new session
-        auth_request = self.factory.post('/sessions/')
-        AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
-        auth_response = sessions.sessions_index(auth_request,
-                                                email="ryan.dens@example.com",
-                                                password="12345",
-                                                path=self.route)
-        # Make sure redirect was called (but not followed)
-        self.assertEqual(auth_response.status_code, 302)
-        # Add auth token cookie to request
-        auth_token = auth_response.cookies['auth_token'].value
+        simulate_simple_authentication(factory=self.factory,
+                                       client=self.client,
+                                       email="ryan.dens@example.com",
+                                       password="12345",
+                                       path=self.route,
+                                       add_messages_middleware=AuthRouteTestingWithKwargs.add_messages_middleware,
+                                       views=sessions)
 
-        self.client.cookies = SimpleCookie({'auth_token': auth_token})
         response = self.client.get(
             reverse(self.route_name) + '/?name=public/docs/Health_n_Stuff.pdf',
             follow=True)
