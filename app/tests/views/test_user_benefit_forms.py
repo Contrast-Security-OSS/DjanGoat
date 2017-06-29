@@ -84,7 +84,7 @@ class UploadRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
         auth_request = self.factory.post('/sessions/')
         AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
         auth_response = sessions.sessions_index(auth_request,
-                                                email="ryan.dens@contrastsecurity.com",
+                                                email="ryan.dens@example.com",
                                                 password="12345",
                                                 path=self.route)
         # Make sure redirect was called (but not followed)
@@ -105,7 +105,7 @@ class UploadRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
         auth_request = self.factory.post('/sessions/')
         AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
         auth_response = sessions.sessions_index(auth_request,
-                                                email="ryan.dens@contrastsecurity.com",
+                                                email="ryan.dens@example.com",
                                                 password="12345",
                                                 path=self.route)
         # Make sure redirect was called (but not followed)
@@ -154,7 +154,7 @@ class DownloadBenefitFormsRoutingAndHttpTests(TestCase,
         auth_request = self.factory.post('/sessions/')
         AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
         auth_response = sessions.sessions_index(auth_request,
-                                                email="ryan.dens@contrastsecurity.com",
+                                                email="ryan.dens@example.com",
                                                 password="12345",
                                                 path=self.route)
         # Make sure redirect was called (but not followed)
@@ -175,7 +175,7 @@ class DownloadBenefitFormsRoutingAndHttpTests(TestCase,
         auth_request = self.factory.post('/sessions/')
         AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
         auth_response = sessions.sessions_index(auth_request,
-                                                email="ryan.dens@contrastsecurity.com",
+                                                email="ryan.dens@example.com",
                                                 password="12345",
                                                 path=self.route)
         # Make sure redirect was called (but not followed)

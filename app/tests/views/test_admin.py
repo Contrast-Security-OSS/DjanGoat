@@ -21,7 +21,7 @@ class AdminDashboardTest(TestCase, AuthRouteTestingWithKwargs):
         self.route = '/admin/5/dashboard'
         self.view = admin_views.admin_dashboard
         self.responses = {
-            'exists': 302,
+            'exists': 200,
             'GET': 302,
             'POST': 405,
             'PUT': 405,
@@ -71,12 +71,12 @@ class AdminDeleteUserTest(TestCase, AuthRouteTestingWithKwargs):
         self.route = '/admin/1/delete_user'
         self.view = admin_views.admin_delete_user
         self.responses = {
-            'exists': 200,
+            'exists': 405,
             'GET': 405,
-            'POST': 200,
+            'POST': 405,
             'PUT': 405,
             'PATCH': 405,
-            'DELETE': 405,
+            'DELETE': 200,
             'HEAD': 405,
             'OPTIONS': 405,
             'TRACE': 405
@@ -92,7 +92,7 @@ class AdminDeleteUserTest(TestCase, AuthRouteTestingWithKwargs):
         self.assertEqual(response.status_code, self.responses['exists'])
 
     def test_can_delete_a_user(self):
-        input_email = "ryan.dens@contrastsecurity.com"
+        input_email = "ryan.dens@example.com"
         input_password = "12345"
         input_admin = True
         input_first_name = "VINAITEST"
@@ -111,7 +111,7 @@ class AdminDeleteUserTest(TestCase, AuthRouteTestingWithKwargs):
         auth_request = self.factory.post('/sessions/')
         AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
         auth_response = sessions.sessions_index(auth_request,
-                                                email="ryan.dens@contrastsecurity.com",
+                                                email="ryan.dens@example.com",
                                                 password="12345",
                                                 path='admin/2/delete_user')
         # Make sure redirect was called (but not followed)
@@ -120,7 +120,7 @@ class AdminDeleteUserTest(TestCase, AuthRouteTestingWithKwargs):
         auth_token = auth_response.cookies['auth_token'].value
 
         self.client.cookies = SimpleCookie({'auth_token': auth_token})
-        response = self.client.post(reverse(self.route_name,
+        response = self.client.delete(reverse(self.route_name,
                                  kwargs=self.kwargs))  # simulate the post request
         self.assertEquals(0, len(User.objects.filter(first_name="VINAITEST")))
 
@@ -129,7 +129,7 @@ class AdminDeleteUserTest(TestCase, AuthRouteTestingWithKwargs):
         auth_request = self.factory.post('/sessions/')
         AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
         auth_response = sessions.sessions_index(auth_request,
-                                                email="ryan.dens@contrastsecurity.com",
+                                                email="ryan.dens@example.com",
                                                 password="12345",
                                                 path='admin/5/update_user')
         # Make sure redirect was called (but not followed)
@@ -175,7 +175,7 @@ class AdminUpdateUserTest(TestCase, AuthRouteTestingWithKwargs):
         self.assertEqual(response.status_code, self.responses['exists'])
 
     def test_simple_update(self):
-        input_email = "ryan.dens@contrastsecurity.com"
+        input_email = "ryan.dens@example.com"
         input_password = "12345"
         input_admin = True
         input_first_name = "VINAIUPDATETEST"
@@ -195,7 +195,7 @@ class AdminUpdateUserTest(TestCase, AuthRouteTestingWithKwargs):
         auth_request = self.factory.post('/sessions/')
         AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
         auth_response = sessions.sessions_index(auth_request,
-                                                email="ryan.dens@contrastsecurity.com",
+                                                email="ryan.dens@example.com",
                                                 password="12345",
                                                 path='admin/2/update_user/')
         # Make sure redirect was called (but not followed)
@@ -250,7 +250,7 @@ class AdminAnalyticsUsersTest(TestCase, AuthRouteTestingWithKwargs):
         self.route = '/admin/5/analytics'
         self.view = admin_views.admin_analytics
         self.responses = {
-            'exists': 302,
+            'exists': 200,
             'GET': 302,
             'POST': 405,
             'PUT': 405,
@@ -269,7 +269,7 @@ class AdminSQLInjectionInterpolationTest(WebTest):
     def setUp(self):
         self.client = Client()
         User.objects.create(
-            email="ryan.dens@contrastsecurity.com", password="12345",
+            email="ryan.dens@example.com", password="12345",
             is_admin=True, first_name="Ryan",
             last_name="Dens",
             created_at=pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0)),
@@ -281,7 +281,7 @@ class AdminSQLInjectionInterpolationTest(WebTest):
         auth_request = self.factory.post('/sessions/')
         AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
         auth_response = sessions.sessions_index(auth_request,
-                                                email="ryan.dens@contrastsecurity.com",
+                                                email="ryan.dens@example.com",
                                                 password="12345",
                                                 path='http://127.0.0.1:8000/admin/1/analytics/?ip=127.0.0.1&email=&password%20FROM%20app_user%3B%20select%20user_agent=')
         # Make sure redirect was called (but not followed)

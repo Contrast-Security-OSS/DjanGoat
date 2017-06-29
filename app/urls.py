@@ -8,7 +8,6 @@ app_name = "app"
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='dashboard/home', permanent=False)),
     url(r'^dashboard/', include(views.dashboard.urls)),
-    url(r'^tutorials/', include(views.tutorials.urls)),
     url(r'^forgot_password/', views.password_reset_views.forgot_password, name='forgot_password'),
     url(r'^password_resets/', include(views.password_resets.urls)),
     url(r'^users/', include(views.users.urls)),

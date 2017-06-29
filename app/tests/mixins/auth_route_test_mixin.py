@@ -16,7 +16,7 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
     bad_auth_message = "Email or password incorrect!"
 
     def __init__(self):
-        input_email = "ryan.dens@contrastsecurity.com"
+        input_email = "ryan.dens@example.com"
         input_password = "12345"
         input_admin = True
         input_first_name = "Ryan"
@@ -154,7 +154,7 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
         # Create new session
         auth_request = self.factory.post('/sessions/')
         AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
-        auth_response = sessions.sessions_index(auth_request, email="ryan.dens@contrastsecurity.com",
+        auth_response = sessions.sessions_index(auth_request, email="ryan.dens@example.com",
                                                 password="1234", path="/dashboard")
 
         # Make sure new session not created
@@ -171,7 +171,7 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
         # Create new session
         auth_request = self.factory.post('/sessions/')
         AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
-        auth_response = sessions.sessions_index(auth_request, email="ryan.den@contrastsecurity.com",
+        auth_response = sessions.sessions_index(auth_request, email="ryan.den@example.com",
                                                        password="12345", path=self.route)
 
         # Make sure new session not created
@@ -189,7 +189,7 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
         # Create new session
         auth_request = self.factory.post('/sessions/')
         AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
-        auth_response = sessions.sessions_index(auth_request, email="ryan.dens@contrastsecurity.com",
+        auth_response = sessions.sessions_index(auth_request, email="ryan.dens@example.com",
                                                    password="12345", path=self.route)
         # Make sure initial redirect was called (but not followed)
         self.assertEqual(auth_response.status_code, 302)
@@ -216,7 +216,7 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
         AuthRouteTestingWithKwargs.add_messages_middleware(auth_request)
 
         auth_response = sessions.sessions_index(
-            auth_request, email="ryan.dens@contrastsecurity.com",
+            auth_request, email="ryan.dens@example.com",
             password="12345", path=self.route
         )
 

@@ -12,11 +12,16 @@
     //document.write("<select style=\"width: 100px;\">");
     //document.write("<OPTION value=1>English</OPTION>");
     //document.write("<OPTION value=2>Spanish</OPTION>");
-      var hashParam = location.hash.split("#")[1];
-      var paramName = hashParam.split('=')[0];
-      var paramValue = decodeURIComponent(hashParam.split('=')[1]);
-      document.write("<OPTION value=3>" + paramValue + "</OPTION>");
+    var hashParam = location.hash.split("#")[1];
+    if (hashParam !== undefined) {
+        var paramName = hashParam.split('=')[0];
+        var paramValue = decodeURIComponent(hashParam.split('=')[1]);
+        if (paramValue != "undefined") {
+            document.write("<OPTION value=3>" + paramValue + "</OPTION>");
+        }
+    }
     //document.write("</select>");
+
 
 </script>
 

@@ -2,12 +2,8 @@
 
 {% block head %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard/home.css' %}" />
     <script type="text/javascript" src="{% static 'javascript/loader.js'%}"></script>
-
-
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript" src="{% static 'javascript/dashboard/home.js'%}"></script>
+    <script type="text/javascript" src="{% static 'javascript/delete_button.js'%}"></script>
 {% endblock %}
 
 {% block content %}
@@ -42,7 +38,7 @@
                                                 <td>{{ message.message }}</td>
                                                 <td>
                                                     <a href="/users/{{ current_user.id }}/messages/{{ message.id }}" class="btn btn-info pull-left">Details</a>
-                                                    <a href="/users/{{ current_user.id }}/messages/{{ message.id }}" class="btn btn-danger pull-left">Delete</a>
+                                                    <button data-action="delete" href="/users/{{ current_user.id }}/messages/{{ message.id }}" class="btn btn-danger">Delete</button>
                                                 </td>
                                             </tr>
                                         {% endfor %}
@@ -116,8 +112,6 @@
             </div>
         </div>
     </div>
-    </body>
-    </html>
 
     <script type="text/javascript">
 
@@ -133,7 +127,8 @@
                         $('#failure').show(500).delay(1500).fadeOut();
                     } else {
                         $('#success').show(500).delay(1500).fadeOut();
-                    }
+                    };
+                    window.location.reload();
                 },
                 error: function(event) {
                     $('#failure').show(500).delay(1500).fadeOut();
@@ -150,4 +145,5 @@
         });
 
     </script>
+
 {% endblock %}
