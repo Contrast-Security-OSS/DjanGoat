@@ -19,3 +19,10 @@ and Applied Mathematics and Statistics minor.
 
 ## Alice Duan
 Alice is a member of Carnegie Mellon University Class of 2019 as a Computer Science major.
+
+## Ziyang Wang
+Ziyang is a member of Carnegie Mellon University Class of 2019 as a Computer Science major 
+and Computational Finance minor. 
+
+[![Ziyang Wang LinkedIn](ln.png)](https://www.linkedin.com/in/ziyang-wang-170aa0143/)
+[![Ziyang Wang Github](GitHub-Mark-32px.png)](https://github.com/ziyangw)

@@ -1,0 +1,73 @@
+{% extends 'layouts/shared/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% block head %}
+
+    {% load static %}
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+
+
+{% endblock %}
+
+
+ <div class="col-md-5 offset-md-5" >
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <div {% if message.tags %} class="alert {{ message.tags }}"{% endif %}>{{ message }}</div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div class="header">
+            <h2>Forgot Password</h2>
+            <p> Please reset your password</p>
+        </div>
+
+        <form id = "resetForm" method="post" action="/password_resets/" > {% csrf_token %}
+
+            <input type="hidden" value={{user}} name="user">
+
+            <div class="form-group">
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                        <input type="password" class="form-control" name="password" id="password"
+                               placeholder="New Password" minlength="5" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                        <input type="password" class="form-control" name="password_confirmation" id="confirm"
+                               placeholder="Confirm Password" minlength="5" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <input type="submit" value="Reset Password" id="submit_button" class="btn btn-info btn-large pull-right">
+            </div>
+
+        </form>
+    </div>
+
+<script>
+
+$( "#resetForm" ).validate({
+  rules: {
+    password: "required",
+    password_confirmation: {
+      equalTo: "#password"
+    }
+  }
+});
+</script>
+{% endblock %}

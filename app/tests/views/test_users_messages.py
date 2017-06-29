@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.test import TestCase, RequestFactory, Client
 from django.utils import timezone
-
 from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
 from app.models import Message
-
 import app.views as views
+
 messages = views.user_messages_views
 
 
 class PasswordResetPep8Tests(TestCase, Pep8ViewsTests):
-
     def setUp(self):
         self.path = 'app/views/users/messages/'
 
@@ -44,7 +41,6 @@ class UserMessagesRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
         }
         self.kwargs = {'user_id': self.mixin_model.id}
         self.expected_response_content = 'Messages for'
-
 
 
 # Tests checking that that '/users/:user_id/messages/:message_id' properly handles HttpRequests and routing
@@ -81,4 +77,3 @@ class UserShowMessageRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
                                      updated_at=now)
         self.kwargs = {'user_id': self.mixin_model.id, 'message_id': msg.id}
         self.expected_response_content = 'Messages for'
-

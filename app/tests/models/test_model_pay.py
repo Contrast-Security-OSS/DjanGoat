@@ -16,7 +16,7 @@ import binascii
 class PayModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
     def setUp(self):
         # Create the user
-        input_email = "ryan.dens@contrastsecurity.com"
+        input_email = "ryan.dens@example.com"
         input_password = "12345"
         input_admin = True
         input_first_name = "Ryan"

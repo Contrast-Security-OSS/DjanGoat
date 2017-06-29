@@ -2,10 +2,9 @@ from __future__ import unicode_literals
 
 from django.test import TestCase, RequestFactory, Client
 from app.tests.mixins import RouteTestingWithKwargs
+from app.models.User.user import User
 import pytz
 import datetime
-from app.models.User.user import User
-
 import app.views as views
 
 sessions = views.sessions_views
@@ -75,7 +74,7 @@ class SessionsIndexTest(TestCase, RouteTestingWithKwargs):
     def test_route_post(self):
 
         # Create user in database
-        input_email = "ryan.dens@contrastsecurity.com"
+        input_email = "ryan.dens@example.com"
         input_password = "12345"
         input_admin = True
         input_first_name = "Ryan"
@@ -90,10 +89,10 @@ class SessionsIndexTest(TestCase, RouteTestingWithKwargs):
         )
 
         factory_request = self.factory.post('/sessions/')
-        factory_response = sessions.sessions_index(factory_request, email="ryan.dens@contrastsecurity.com", password="12345", path="/dashboard")
+        factory_response = sessions.sessions_index(factory_request, email="ryan.dens@example.com", password="12345", path="/dashboard")
         self.assertEqual(factory_response.status_code, 302)
 
-        client_request = self.client.post('/sessions/', {'email': 'ryan.dens@contrastsecurity.com', 'password': '12345',
+        client_request = self.client.post('/sessions/', {'email': 'ryan.dens@example.com', 'password': '12345',
                                                          'path': '/dashboard'}, follow=True)
         self.assertEqual(client_request.status_code, 200)
         self.assertEqual(client_request.content, "dashboard index")
