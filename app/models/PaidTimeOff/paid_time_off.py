@@ -32,7 +32,8 @@ class PaidTimeOff(models.Model):
     pto_earned = models.PositiveIntegerField(
         validators=[MaxValueValidator(MAX_INT_VALUE)]
     )
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey('User', on_delete=models.CASCADE,
+                             related_name='pto')
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
 
