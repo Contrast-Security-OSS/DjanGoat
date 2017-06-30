@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.test import TestCase, RequestFactory, Client
+from django_webtest import WebTest
 from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
-from django.utils import timezone
-from django_webtest import WebTest
+from app.models import User, Schedule
 import app.views as views
-from app.models import User, PaidTimeOff, Schedule
 
 pto = views.pto_views
 
@@ -47,7 +45,7 @@ class UserPTOIndexRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
         self.mixin_model.build_benefits_data()
 
     def test_route_post(self):
-        if(self.responses['POST'] != 200):
+        if (self.responses['POST'] != 200):
             super(AuthRouteTestingWithKwargs, self).test_route_post()
         else:
             self.expected_response_content = 'No form found'
@@ -60,7 +58,6 @@ class UserPTOIndexRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
 
 
 class UserViewsPTOTests(WebTest):
-
     def setUp(self):
         # First signup and login a user
         self.param = {'email': 'ziyang@example.com', 'first_name': 'ziyang',

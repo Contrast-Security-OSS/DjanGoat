@@ -1,20 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.test import TestCase, RequestFactory, Client
-from django.urls import reverse
-
 from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
-
-
 import app.views as views
 
 work_info = views.user_work_info_views
 
 
 class UserWorkInfoPep8Tests(TestCase, Pep8ViewsTests):
-
     def setUp(self):
         self.path = 'app/views/users/work_info/'
 
@@ -44,4 +38,3 @@ class UserWorkInfoRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
         self.expected_response_content = 'Employee Information'
         AuthRouteTestingWithKwargs.__init__(self)
         self.kwargs = {'user_id': self.mixin_model.id}
-
