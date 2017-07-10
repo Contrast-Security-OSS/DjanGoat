@@ -2,20 +2,19 @@
 from __future__ import unicode_literals
 
 from django.test import TestCase, RequestFactory, Client
-from app.tests.mixins import RouteTestingWithKwargs, AuthRouteTestingWithKwargs
-from app.tests.mixins import Pep8ViewsTests
-from django_webtest import WebTest
 from django.utils import timezone
 from django.contrib.messages.storage.fallback import FallbackStorage
-import app.views as views
+from django_webtest import WebTest
+from app.tests.mixins import RouteTestingWithKwargs, AuthRouteTestingWithKwargs
+from app.tests.mixins import Pep8ViewsTests
 from app.models import User
+import app.views as views
 import hashlib
 
 users = views.users_views
 
 
 class UsersPep8Tests(TestCase, Pep8ViewsTests):
-
     def setUp(self):
         self.path = 'app/views/users/'
 
@@ -36,32 +35,6 @@ class UsersIndexRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
             'exists': 200,
             'GET': 200,
             'POST': 200,
-            'PUT': 405,
-            'PATCH': 405,
-            'DELETE': 405,
-            'HEAD': 405,
-            'OPTIONS': 405,
-            'TRACE': 405
-        }
-        self.kwargs = {}
-
-
-# Tests checking that that '/users/new' properly handles HttpRequests
-# Accepts GET requests and refuses all others with an error code 405
-# (Method not allowed)
-class UsersNewRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
-    # setup for all test cases
-
-    def setUp(self):
-        self.factory = RequestFactory()
-        self.client = Client()
-        self.route_name = 'app:users_new'
-        self.route = '/users/new'
-        self.view = users.new_user
-        self.responses = {
-            'exists': 200,
-            'GET': 200,
-            'POST': 405,
             'PUT': 405,
             'PATCH': 405,
             'DELETE': 405,
@@ -98,38 +71,11 @@ class UserSignupRoutingAndHttpTests(TestCase, RouteTestingWithKwargs):
         self.kwargs = {}
 
 
-# Tests checking that that '/users/:id/edit' properly handles HttpRequests
-# Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-# Tested on id #55
-class UserEditRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
-    # setup for all test cases
-
-    def setUp(self):
-        self.factory = RequestFactory()
-        self.client = Client()
-        self.route_name = 'app:user_edit'
-        self.route = '/users/55/edit'
-        self.view = users.edit_user
-        self.responses = {
-            'exists': 200,
-            'GET': 200,
-            'POST': 405,
-            'PUT': 405,
-            'PATCH': 405,
-            'DELETE': 405,
-            'HEAD': 405,
-            'OPTIONS': 405,
-            'TRACE': 405
-        }
-        self.kwargs = {'user_id': 55}
-        self.expected_response_content = 'Edit user 55'
-        AuthRouteTestingWithKwargs.__init__(self)
-
-
 # Tests checking that that '/users/:id/account_settings' properly handles HttpRequests
 # Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
-class UserAccountSettingsRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
+class UserAccountSettingsRoutingAndHttpTests(TestCase,
+                                             AuthRouteTestingWithKwargs):
     # setup for all test cases
 
     def setUp(self):
@@ -183,7 +129,6 @@ class UserViewRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
 
 
 class UserViewsSignUpUserFormTests(WebTest):
-
     def setUp(self):
         self.param = {'email': 'ziyang@example.com', 'first_name': 'ziyang',
                       'last_name': 'wang', 'password': '123456',
@@ -211,7 +156,7 @@ class UserViewsSignUpUserFormTests(WebTest):
         self.form.set('confirm', self.param['confirm'])
 
     def test_invalid_password_length_long(self):
-        password_long = '1'*41
+        password_long = '1' * 41
         self.form.set('password', password_long)
         self.form.set('confirm', password_long)
         response = self.form.submit()
@@ -246,7 +191,7 @@ class UserViewsSignUpUserFormTests(WebTest):
         user.delete()
 
     def test_error_sql_create_user(self):
-        self.form.set('first_name', 'z'*256)
+        self.form.set('first_name', 'z' * 256)
         response = self.form.submit()
         self.assertEqual(response.url, '/signup/')
         response_message = response._headers['Set-Cookie']
@@ -266,7 +211,6 @@ class UserViewsSignUpUserFormTests(WebTest):
 
 
 class UserViewsUpdateAccountFormTests(WebTest):
-
     def setUp(self):
         # First signup and login a user
         self.param = {'email': 'ziyang@example.com', 'first_name': 'ziyang',
@@ -284,11 +228,12 @@ class UserViewsUpdateAccountFormTests(WebTest):
         self.cookie = cookies[0].split('=')[1]
         self.user = User.objects.filter(email=self.param['email']).first()
         # Setting up for update account setting test
-        self.url = '/users/%s/account_settings' % self.user.user_id
+        self.url = '/users/%s/account_settings' % self.user.id
         update_page = self.app.get(self.url)
         self.assertEqual(len(update_page.forms), 1)
         update_form = update_page.forms[0]
         self.form = update_form
+        self.form.set('user_id', self.user.user_id)
 
     def test_invalid_password_length_short(self):
         password_short = '12345'
@@ -303,7 +248,7 @@ class UserViewsUpdateAccountFormTests(WebTest):
         self.form.set('confirm', '')
 
     def test_invalid_password_length_long(self):
-        password_long = '1'*41
+        password_long = '1' * 41
         self.form.set('password_new', password_long)
         self.form.set('confirm', password_long)
         response = self.form.submit()
@@ -342,7 +287,7 @@ class UserViewsUpdateAccountFormTests(WebTest):
         self.form.set('email_new', '')
 
     def test_error_sql_create_user(self):
-        self.form.set('first_name', 'z'*256)
+        self.form.set('first_name', 'z' * 256)
         self.form.set('email_new', '')
         response = self.form.submit()
         self.assertEqual(response.url, self.url)
