@@ -100,3 +100,6 @@ chmod +x build.sh
 
 ## Tutorial ##
 Tutorial information on the various vulnerabilities in this application are [here](docs/home.md).
+
+## Acknowledgements ##
+The development [team](docs/acknowledgements.md).
