@@ -1,22 +1,31 @@
 from django.http import JsonResponse
+from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
+from django.core import serializers
 
+import json
 
-@require_http_methods(["GET", "POST"])
+from app.models import Analytics, KeyManagement, Message, User, PaidTimeOff
+from app.models import Performance, Retirement, Schedule, WorkInfo
+
+@require_http_methods(["GET"])
 def api_index(request):
-    return JsonResponse({'foo': 'index'})
+    if "class" in request.GET:
+        classname = request.GET.get("class")
+        model = eval(classname)
+        serialized = serializers.serialize("json", model.objects.all())
+        return JsonResponse(json.loads(serialized), safe=False)
+    else:
+        return HttpResponse('')
 
 
 @require_http_methods(["GET"])
-def api_new(request):
-    return JsonResponse({'foo': 'new api'})
-
-
-@require_http_methods(["GET"])
-def api_id_edit(request, id_number):
-    return JsonResponse({'edit': id_number})
-
-
-@require_http_methods(["GET", "PUT", "PATCH", "DELETE"])
 def api_id(request, id_number):
-    return JsonResponse({'id': id_number})
+    if "class" in request.GET:
+        classname = request.GET.get("class")
+        model = eval(classname)
+        serialized = serializers.serialize("json", [model.objects.get(id=id_number)])
+        return JsonResponse(json.loads(serialized), safe=False)
+    else:
+        return HttpResponse('')
+

@@ -1,4 +1,3 @@
-
 from django.test import TestCase, RequestFactory, Client
 from django.http import SimpleCookie
 from app.models import User, WorkInfo
@@ -10,7 +9,7 @@ class InsecureDirectObjectReferenceTest(TestCase):
 
     def setUp(self):
         # Create User Model
-        input_email = "ryan.dens@contrastsecurity.com"
+        input_email = "ryan.dens@example.com"
         input_password = "12345"
         input_admin = False
         input_first_name = "Ryan"

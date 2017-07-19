@@ -1,10 +1,5 @@
-
 from django.test import TestCase, RequestFactory, Client
 from django_webtest import WebTest
-from app.models import User
-import pytz
-import datetime
-import json
 
 
 class CrossSiteScriptingTest(WebTest):

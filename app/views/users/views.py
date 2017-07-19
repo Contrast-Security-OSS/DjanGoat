@@ -44,19 +44,8 @@ def index(request):
 
 
 @require_http_methods(["GET"])
-def new_user(request):
-    return HttpResponse("New user")
-
-
-@require_http_methods(["GET"])
 def signup(request):
     return render(request, "users/signup.html")
-
-
-@require_http_methods(["GET"])
-@user_is_authenticated
-def edit_user(request, user_id):
-    return HttpResponse("Edit user " + str(user_id))
 
 
 @require_http_methods(["GET"])
@@ -91,7 +80,7 @@ def user_view(request, user_id):
         except:
             return HttpResponse("User " + str(user_id_form) + " NOT FOUND")
         update = dict()
-        err_msg = User.validate_update_form(form, update)
+        err_msg = User.validate_update_form(form, user, update)
         if len(err_msg) > 0:
             messages.add_message(request, messages.INFO, err_msg)
         else:

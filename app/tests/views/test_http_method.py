@@ -1,9 +1,4 @@
-
-
 from django.test import TestCase, RequestFactory, Client
-
-from app.tests.mixins import RouteTestingWithKwargs
-
 import app.views as v
 
 
@@ -27,5 +22,3 @@ class HttpMethodTests(TestCase):
             'TRACE': 200
         }
         self.kwargs = {}
-
-

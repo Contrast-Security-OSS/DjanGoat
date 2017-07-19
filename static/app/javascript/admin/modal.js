@@ -45,19 +45,3 @@ function submitForm(user_id) {
         }
     });
 }
-
-function deleteUser(user_id) {
-    var csrftoken = getCookie('csrftoken');
-    $.ajax({
-        url: "/admin/" + user_id + "/delete_user/",
-        type: "POST",
-        headers: {csrfmiddlewaretoken: csrftoken},
-        success: function(response) {
-            $('#success').show(500).delay(1500).fadeOut();
-            loadTable()
-        },
-        error: function(event) {
-            $('#failure').show(500).delay(1500).fadeOut();
-        }
-    });
-}

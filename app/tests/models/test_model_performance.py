@@ -14,7 +14,7 @@ class PerformanceModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
     def setUp(self):
 
         # Create the user
-        input_email = "ryan.dens@contrastsecurity.com"
+        input_email = "ryan.dens@example.com"
         input_password = "12345"
         input_admin = True
         input_first_name = "Ryan"
@@ -32,11 +32,11 @@ class PerformanceModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         )
 
         # Create the Reviewer
-        input_email_reviewer = "ryan.dens@contrastsecurity.com"
+        input_email_reviewer = "ziyang.wang@example.com"
         input_password_reviewer = "12345"
         input_admin_reviewer = True
-        input_first_name_reviewer = "Contrast"
-        input_last_name_reviewer = "Security"
+        input_first_name_reviewer = "Ziyang"
+        input_last_name_reviewer = "Wang"
         u_input_create_date_reviewer = pytz.utc.localize(
             datetime.datetime(2017, 4, 1, 0, 0))
         u_input_update_date_reviewer = pytz.utc.localize(
@@ -81,6 +81,6 @@ class PerformanceModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         reviewer = User.objects.get(user_id=self.model.reviewer.user_id)
         performance_first = Performance.objects.get(reviewer=reviewer)
         self.assertEqual(performance_first.reviewer_name(),
-                         "Contrast Security")
+                         "Ziyang Wang")
         reviewer.delete()
         self.assertEqual(performance_first.reviewer_name(), None)

@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-
 from django.test import TestCase, RequestFactory, Client
 from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
@@ -36,5 +34,3 @@ class UserPerformanceIndexRoutingTests(TestCase, AuthRouteTestingWithKwargs):
         self.kwargs = {'user_id': 10}
         self.expected_response_content = 'Performance History Visualization'
         AuthRouteTestingWithKwargs.__init__(self)
-
-

@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
-
-# Django imports
 from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse
 from django.utils import timezone
 from django.http import SimpleCookie
-# App imports
 from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
 from app.models import Pay, KeyManagement
 import app.views as views
-# Other imports
 from Crypto import Random
 import binascii
 

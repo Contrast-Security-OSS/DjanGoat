@@ -8,6 +8,7 @@ from app.models.Analytics.analytics import Analytics
 from app.views import utils
 from app.decorators import user_is_authenticated
 
+
 @require_http_methods(["GET"])
 @user_is_authenticated
 def admin_dashboard(request, selected_id):
@@ -34,7 +35,7 @@ def admin_get_user(request, selected_id):
                   {'user': user, 'other_admin_val': other_is_admin_val})
 
 
-@require_http_methods(["POST"])
+@require_http_methods(["DELETE"])
 @user_is_authenticated
 def admin_delete_user(request, selected_id):
     success = True

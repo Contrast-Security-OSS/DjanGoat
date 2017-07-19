@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
-
-
 from django.test import TestCase, RequestFactory, Client
+from django_webtest import WebTest
 from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
-from django.utils import timezone
-from django_webtest import WebTest
+from app.models import User, Schedule
 import app.views as views
-from app.models import User, PaidTimeOff, Schedule
 
 pto = views.pto_views
 
@@ -47,7 +44,7 @@ class UserPTOIndexRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
         self.mixin_model.build_benefits_data()
 
     def test_route_post(self):
-        if(self.responses['POST'] != 200):
+        if (self.responses['POST'] != 200):
             super(AuthRouteTestingWithKwargs, self).test_route_post()
         else:
             self.expected_response_content = 'No form found'
@@ -59,98 +56,10 @@ class UserPTOIndexRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
             self.bad_email_test(request)
 
 
-class PTONewRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
-    """
-    Tests checking that that '/users/:user_id/retirement/new' properly handles HttpRequests and routing
-    Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-    Tested on id #55
-    """
-
-    def setUp(self):
-        self.factory = RequestFactory()
-        self.client = Client()
-        self.route_name = 'app:pto_new'
-        self.route = '/users/55/retirement/new'
-        self.view = pto.new
-        self.responses = {
-            'exists': 200,
-            'GET': 200,
-            'POST': 405,
-            'PUT': 405,
-            'PATCH': 405,
-            'DELETE': 405,
-            'HEAD': 405,
-            'OPTIONS': 405,
-            'TRACE': 405
-        }
-        self.kwargs = {'user_id': 55}
-        self.expected_response_content = 'You made a new pto for user 55'
-        AuthRouteTestingWithKwargs.__init__(self)
-
-
-class PTOEditRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
-    """
-    Tests checking that that '/users/:user_id/retirement/:retirement_id/edit' properly handles HttpRequests and routing
-    Accepts GET requests and refuses all others with an error code 405 (Method not allowed)
-    Tested on user_id 55 and retirement_id 22
-    """
-
-    def setUp(self):
-        self.factory = RequestFactory()
-        self.client = Client()
-        self.route_name = 'app:pto_edit'
-        self.route = 'users/55/paid_time_off/22/edit'
-        self.view = pto.edit
-        self.responses = {
-            'exists': 200,
-            'GET': 200,
-            'POST': 405,
-            'PUT': 405,
-            'PATCH': 405,
-            'DELETE': 405,
-            'HEAD': 405,
-            'OPTIONS': 405,
-            'TRACE': 405
-        }
-        self.kwargs = {'user_id': 55, 'id': 22}
-        self.expected_response_content = 'Edit PTO for user 55 with id 22'
-        AuthRouteTestingWithKwargs.__init__(self)
-
-
-class UserShowRetirementRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
-    """
-    Tests checking that that '/users/:user_id/retirement/:retirement_id' properly handles HttpRequests and routing
-    Accepts GET, PATCH, PUT, and DELETE requests and refuses all others with an error code 405 (Method not allowed)
-    Tested on user_id 55 and retirement_id 22
-    """
-
-    def setUp(self):
-        self.factory = RequestFactory()
-        self.client = Client()
-        self.route_name = 'app:pto_id'
-        self.route = 'users/55/paid_time_off/22/'
-        self.view = pto.pto_id
-        self.responses = {
-            'exists': 200,
-            'GET': 200,
-            'POST': 405,
-            'PUT': 200,
-            'PATCH': 200,
-            'DELETE': 200,
-            'HEAD': 405,
-            'OPTIONS': 405,
-            'TRACE': 405
-        }
-        self.kwargs = {'user_id': 55, 'id': 22}
-        self.expected_response_content = 'Show, update, or destroy PTO for user 55 with id 22'
-        AuthRouteTestingWithKwargs.__init__(self)
-
-
 class UserViewsPTOTests(WebTest):
-
     def setUp(self):
         # First signup and login a user
-        self.param = {'email': 'ziyang@contrast.com', 'first_name': 'ziyang',
+        self.param = {'email': 'ziyang@example.com', 'first_name': 'ziyang',
                       'last_name': 'wang', 'password': 'ziyangw',
                       'confirm': 'ziyangw'}
         signup_page = self.app.get('/signup/')

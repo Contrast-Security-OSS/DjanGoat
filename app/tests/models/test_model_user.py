@@ -25,7 +25,7 @@ class UserModelTests(TestCase, ModelCrudTests):
         # Path to file of model
         self.path = "app/models/User/user.py"
         # Create the user
-        input_email = "ryan.dens@contrastsecurity.com"
+        input_email = "ryan.dens@example.com"
         input_password = "12345"
         input_admin = True
         input_first_name = "Ryan"
@@ -50,16 +50,16 @@ class UserModelTests(TestCase, ModelCrudTests):
 
     def test_user_authenticate(self):
         with self.assertRaises(Exception) as incorrectPassword:
-            User.authenticate("ryan.dens@contrastsecurity.com", "1234")
+            User.authenticate("ryan.dens@example.com", "1234")
         self.assertTrue("Incorrect Password!" in incorrectPassword.exception)
 
         # User should not be found in database
         with self.assertRaises(User.DoesNotExist):
-            User.authenticate("ryand.ens@contrastsecurity.com", "12345")
+            User.authenticate("ryand.ens@example.com", "12345")
 
         # Correct email with corresponding password
         self.assertEqual(self.model.pk,
-                         User.authenticate("ryan.dens@contrastsecurity.com",
+                         User.authenticate("ryan.dens@example.com",
                                            "12345").pk)
 
     def test_build_benefits_data(self):

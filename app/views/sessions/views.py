@@ -43,7 +43,12 @@ def sessions_index(request, email=None, password=None, path='/dashboard/home'):
         try:
             response = HttpResponseRedirect(path)
             user = User.authenticate(email, password)
-            response.set_cookie("auth_token", user.auth_token)
+            if 'remember' in request.POST:
+                year_in_sec = 365 * 24 * 60 * 60
+                response.set_cookie("auth_token", user.auth_token,
+                                    max_age=year_in_sec)
+            else:
+                response.set_cookie("auth_token", user.auth_token)
             return response
         except User.DoesNotExist:
             message = "Email incorrect!"
@@ -60,18 +65,3 @@ def sessions_index(request, email=None, password=None, path='/dashboard/home'):
 
     else:
         return HttpResponse("Sessions Index")
-
-
-@require_http_methods(["GET"])
-def new_sessions(request):
-    return HttpResponse("You're creating a new session!")
-
-
-@require_http_methods(["GET"])
-def edit_session(request, id_number):
-    return HttpResponse('User ' + str(id_number) + ' edited a session')
-
-
-@require_http_methods(["GET", "PATCH", "PUT", "DELETE"])
-def session_id(request, id_number):
-    return HttpResponse(str(id_number) + ' is at a session')

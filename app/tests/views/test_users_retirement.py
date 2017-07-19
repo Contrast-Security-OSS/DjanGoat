@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-
 from django.test import TestCase, RequestFactory, Client
 from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
@@ -10,7 +8,6 @@ retirement = views.user_retirement_views
 
 
 class PasswordResetPep8Tests(TestCase, Pep8ViewsTests):
-
     def setUp(self):
         self.path = 'app/views/users/retirement/'
 
@@ -18,7 +15,8 @@ class PasswordResetPep8Tests(TestCase, Pep8ViewsTests):
 # Tests checking that that '/users/:user_id/retirement' properly handles HttpRequests and routing
 # Accepts GET and POST requests and refuses all others with an error code 405 (Method not allowed)
 # Tested on id #55
-class UserRetirementIndexRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
+class UserRetirementIndexRoutingAndHttpTests(TestCase,
+                                             AuthRouteTestingWithKwargs):
     # setup for all test cases
     def setUp(self):
         self.factory = RequestFactory()

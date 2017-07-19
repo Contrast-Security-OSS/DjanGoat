@@ -12,7 +12,7 @@ class MessageModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
 
     def setUp(self):
         # Create the sender
-        input_email = "ryan.dens@contrastsecurity.com"
+        input_email = "ryan.dens@example.com"
         input_password = "12345"
         input_admin = True
         input_first_name = "Ryan"
@@ -26,11 +26,11 @@ class MessageModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         )
 
         # Create the receiver
-        input_email_receiver = "galen.palmer@contrastsecurity.com"
+        input_email_receiver = "galen.palmer@example.com"
         input_password_receiver = "12345"
         input_admin_receiver = True
-        input_first_name_receiver = "Contrast"
-        input_last_name_receiver = "Security"
+        input_first_name_receiver = "Galen"
+        input_last_name_receiver = "Palmer"
 
         receiver = User.objects.create(
             email=input_email_receiver, password=input_password_receiver,
