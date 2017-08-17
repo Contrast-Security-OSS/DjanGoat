@@ -1,6 +1,6 @@
 # DjanGoat #
 
-DjanGoat is a vulnerable Django Application based in large part off the [RailsGoat](https://github.com/OWASP/railsgoat) project. The application purports to be an internal employee portal for MetaCorp, Inc but includes vulnerabilities from the [OWASP Top 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) and is intended to be used as an educational tool for developers and security professionals.
+DjanGoat is a vulnerable Django Application based in large part off the [RailsGoat](https://github.com/OWASP/railsgoat) project. The application purports to be an internal employee portal for MetaCorp, Inc but includes vulnerabilities from the [OWASP Top 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) and is intended to be used as an educational tool for developers and security professionals. 
 
 ## Installation
 
@@ -8,20 +8,15 @@ On a mac, first install python.
 
 ### How do I get set up? ###
 
-First, install python and pip. On a mac the easiest solution is to use [Homebrew](https://brew.sh/).
+Requirements:
 
-```
-    brew install python
-```
-
-
-Next, install virtual-env
-```
-    pip install virtualenv
-```
+ - Python 2.7
+ - Pip
+ - mysql 
 
 Begin by creating a virtual-env
 ```
+    pip install virtualenv
     virtualenv env
     source env/bin/activate
 ```
@@ -32,8 +27,6 @@ Then install using pip
 ```
 
 ### DB-Setup ###
-
-Now we need to setup our database
 
 1. Make sure you have mysql installed and run the following to
 setup the database
@@ -47,8 +40,7 @@ setup the database
     quit
 ```
 
-2. Go to production_settings.py in the inner pygoat folder and fill out the given information
-   for your database.
+2. Go to pygoat/production_settings.py and fill out the given information for your database.
 
 3. Migrate the models and associated database data
 
@@ -86,16 +78,8 @@ To run tests, simply run:
 ### Linting ###
 
 To run the `pylint` before running on Jenkins, run:
-
 ```
 pylint app pygoat
-```
-
-### Docker ###
-For Docker when you're testing locally make sure you give executable
-permissions to build.sh by running
-```
-chmod +x build.sh
 ```
 
 ## Tutorial ##
