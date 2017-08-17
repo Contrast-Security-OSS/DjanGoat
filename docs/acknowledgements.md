@@ -10,6 +10,10 @@ projects, for all their hard work.
 We would especially like to thank Galen Palmer and Justin Leo for overseeing us throughout
 the project. 
 
+![Team Picture](team.jpg)
+Left to right: Alice Duan, Vinai Rachakonda, Justin Leo, Galen Palmer, Ryan Den, Ziyang Wang
+
+
 ## Ryan Dens
 Ryan is a member of Johns Hopkins University Class of 2019 as a Computer Science major 
 and Applied Mathematics and Statistics minor. 
