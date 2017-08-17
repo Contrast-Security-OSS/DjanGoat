@@ -19,6 +19,8 @@ and Applied Mathematics and Statistics minor.
 
 ## Alice Duan
 Alice is a member of Carnegie Mellon University Class of 2019 as a Computer Science major.
+[![Alice Duan LinkedIn](ln.png)](https://www.linkedin.com/in/alice-duan-ab8496146/)
+[![Alice Duan Github](GitHub-Mark-32px.png)](https://github.com/alice-duan)
 
 ## Vinai Rachakonda
 Vinai studies Computer Science at the University of Pennsylvania (Class of 2020)
