@@ -11,7 +11,7 @@ We would especially like to thank Galen Palmer and Justin Leo for overseeing us 
 the project. 
 
 ![Team Picture](team.jpg)
-Left to right: Alice Duan, Vinai Rachakonda, Justin Leo, Galen Palmer, Ryan Den, Ziyang Wang
+Left to right: Alice Duan, Vinai Rachakonda, Justin Leo, Galen Palmer, Ryan Dens, Ziyang Wang
 
 
 ## Ryan Dens
