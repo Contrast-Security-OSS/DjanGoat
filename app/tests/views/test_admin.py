@@ -271,12 +271,12 @@ class AdminSQLInjectionInterpolationTest(WebTest):
                                        client=self.client,
                                        email="ryan.dens@example.com",
                                        password="12345",
-                                       path='http://127.0.0.1:8000/admin/1/analytics/?ip=127.0.0.1&email=&password%20FROM%20app_user%3B%20select%20user_agent=',
+                                       path='http://127.0.0.1:8000/admin/1/analytics/?ip=127.0.0.1&email=&password%20FROM%20app_user%20union%20select%20user_agent=',
                                        add_messages_middleware=AuthRouteTestingWithKwargs.add_messages_middleware,
                                        views=sessions)
 
         # The attack string may vary depending on the system used
-        url = 'http://127.0.0.1:8000/admin/1/analytics/?ip=127.0.0.1&email=&password%20FROM%20app_user%3B%20select%20user_agent='
+        url = 'http://127.0.0.1:8000/admin/1/analytics/?ip=127.0.0.1&email=&password%20,id%20FROM%20app_user%20union%20select%20user_agent,%20user_agent,%20id='
         response = self.client.get(url)
         self.assertTrue('email' in response.content)
         self.assertTrue('password' in response.content)
