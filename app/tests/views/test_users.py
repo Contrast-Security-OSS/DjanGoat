@@ -286,14 +286,14 @@ class UserViewsUpdateAccountFormTests(WebTest):
         user.delete()
         self.form.set('email_new', '')
 
-    def test_error_sql_create_user(self):
+    def test_error_psql_create_user(self):
         self.form.set('first_name', 'z' * 256)
         self.form.set('email_new', '')
         response = self.form.submit()
         self.assertEqual(response.url, self.url)
         response_message = response._headers['Set-Cookie']
-        sql_message = "Data too long for column 'first_name'"
-        self.assertTrue(sql_message in response_message)
+        psql_message = "value too long for type character varying(255)"
+        self.assertTrue(psql_message in response_message)
         self.form.set('first_name', '')
 
     def test_update_success(self):
