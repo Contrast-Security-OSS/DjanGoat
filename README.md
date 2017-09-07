@@ -34,30 +34,43 @@ Then install using pip
 ### DB-Setup ###
 
 Now we need to setup our database
-
-1. Make sure you have mysql installed and run the following to
-setup the database
+1. Install [PostgreSQL](https://www.postgresql.org/download/). 
+Please note the host and port number during installation so they can 
+be set in your production_settings.py file. To make sure PostgreSQL is 
+setup properly follow these steps:
+   
+   a) Run `pg_config` in terminal.
+    
+   b) If you get a not found error, run `sudo find / -name pg_config`. 
+   There should be a path of the form 'Library/PostgreSQL/9.5/bin/pg_profile'
+   
+   c) Add the path, minus the '/pg_profile' to .bash_profile in your home directory
+   `export PATH=/Library/PostgreSQL/9.5/bin:$PATH`. Make sure to replace this with your appropriate path
+   
+   d) Restart terminal, then run `pg_config` again to make sure it is properly working
+   
+2. Setup the database
 
 ```
-    mysql -u root -p
-    CREATE DATABASE `db_name`;
-    CREATE USER 'username'@'localhost' IDENTIFIED BY 'your_password';
-    GRANT ALL PRIVILEGES ON `db_name`.* TO 'username'@'localhost';
-    FLUSH PRIVILEGES;
-    quit
+    $ psql -U postgres
+    postgres=# CREATE DATABASE djangoat;
+    postgres=# \c djangoat
+    djangoat=# CREATE USER your_username WITH BY 'your_password';
+    djangoat=# GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO your_username;
+    djangoat=# \q
 ```
 
-2. Go to production_settings.py in the inner pygoat folder and fill out the given information
-   for your database.
+3. Go to production_settings.py in the inner pygoat folder and fill out the given information
+   for your database. Make sure that host and port number are filled out, as they are not required for mysql
 
-3. Migrate the models and associated database data
+4. Migrate the models and associated database data
 
 ```
     python manage.py makemigrations
     python manage.py migrate
 ```
 
-4. To set up seed data you can run:
+5. To set up seed data you can run:
 
 ```
     python manage.py seed
@@ -65,12 +78,6 @@ setup the database
 
 For developers create a local_settings.py file in the pygoat folder
 that mocks production_setting.py.
-
-If Django does not recognize MySQL after the setup above, try install mysql-python and migrate again
-
-```
-    pip install mysql-python
-```
 
 Finally run on localhost:8000
 ```

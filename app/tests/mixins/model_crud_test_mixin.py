@@ -21,7 +21,11 @@ class ModelCrudTests(object):
         for attribute in self.attributes:
             db_value = getattr(self._get_from_db(self.model), attribute)
             local_value = getattr(self.model, attribute)
-            self.assertEqual(db_value, local_value)
+            try:
+                self.assertEqual(db_value, local_value)
+            except AssertionError:
+                # Override because sometimes returns a read-only buffer that needs to be a string
+                self.assertEqual(str(db_value), local_value)
 
     def test_update_model(self):
         """
