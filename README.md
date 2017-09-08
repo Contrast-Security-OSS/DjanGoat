@@ -34,6 +34,12 @@ Then install using pip
 ### DB-Setup ###
 
 Now we need to setup our database
+If you want to use a MySQL database, continue following this README. 
+If you want to setup DjanGoat with a PostgreSQL database, checkout the PostgreSQL branch with the following command:
+```
+$ git checkout postgresql-database
+```
+The PostgreSQL branch has modified documentation and tests.
 
 1. Make sure you have mysql installed and run the following to
 setup the database
