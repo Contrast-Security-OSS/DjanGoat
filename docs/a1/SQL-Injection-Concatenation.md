@@ -1,4 +1,4 @@
-# A1: SQL Injection Concatentation
+# A1: SQL Injection Concatenation
 
 ### Description
 
