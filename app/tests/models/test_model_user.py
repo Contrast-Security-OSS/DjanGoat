@@ -80,7 +80,7 @@ class UserModelTests(TestCase, ModelCrudTests):
                          self.model, "Benefit not in database")
         self.assertEqual(Performance.objects.filter(user=self.model).first().user,
                          self.model, "Benefit not in database")
-        user = User.objects.order_by("-user_id").first()
+        User.objects.order_by("-user_id").first()
 
     def test_user_signals_assign_id(self):
         # User is the only user in the db, so its id should be 1
