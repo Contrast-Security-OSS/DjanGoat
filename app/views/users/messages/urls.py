@@ -1,5 +1,5 @@
 from django.conf.urls import url
-import views as messages_views
+import app.views.users.messages.views as messages_views
 
 
 urlpatterns = [

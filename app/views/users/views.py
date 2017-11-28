@@ -7,7 +7,6 @@ from django.shortcuts import render, redirect
 from app.models import User
 from django.contrib import messages
 from django.utils import timezone
-from django.conf import settings
 from app.views import utils
 
 

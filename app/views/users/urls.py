@@ -1,12 +1,12 @@
 from django.conf.urls import url, include
-import views as users_views
-import messages.views
-import benefit_forms.views
-import retirement.views
-import pay.views
-import work_info.views
-import paid_time_off.views
-import performance.views
+import app.views.users.views as users_views
+import app.views.users.messages.views as messages
+import app.views.users.benefit_forms.views as benefit_forms
+import app.views.users.retirement.views as retirement
+import app.views.users.pay.views as pay
+import app.views.users.work_info.views as work_info
+import app.views.users.paid_time_off.views as paid_time_off
+import app.views.users.performance.views as performance
 
 urlpatterns = [
     url(r'^$', users_views.index, name='users_index'),

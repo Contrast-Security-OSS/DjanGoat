@@ -1,5 +1,5 @@
 from django.conf.urls import url
-import views as benefit_forms_views
+import app.views.users.benefit_forms.views as benefit_forms_views
 
 
 urlpatterns = [
