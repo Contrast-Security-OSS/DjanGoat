@@ -5,6 +5,10 @@ from django.core import serializers
 
 import json
 
+
+#Pylint says these are unused by they ARE used during api_index() (specifically, eval(classname))
+from app.models import User
+
 @require_http_methods(["GET"])
 def api_index(request):
     if "class" in request.GET:

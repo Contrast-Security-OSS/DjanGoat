@@ -1,5 +1,5 @@
 from django.conf.urls import url
-import app.views.users.paid_time_off.views as views
+from app.views.users.paid_time_off import views as views
 
 
 urlpatterns = [

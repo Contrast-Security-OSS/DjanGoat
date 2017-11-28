@@ -1,5 +1,5 @@
 from django.conf.urls import url
-import views as performance_views
+from app.views.users.performance import views as performance_views
 
 urlpatterns = [
     url(r'^$', performance_views.user_performance_index,
