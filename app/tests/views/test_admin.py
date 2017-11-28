@@ -1,7 +1,6 @@
 import datetime
 
 import pytz
-from django.http import SimpleCookie
 from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse
 from django_webtest import WebTest
@@ -118,8 +117,7 @@ class AdminDeleteUserTest(TestCase, AuthRouteTestingWithKwargs):
                                        add_messages_middleware=AuthRouteTestingWithKwargs.add_messages_middleware,
                                        views=sessions)
 
-        response = self.client.delete(reverse(self.route_name,
-                                              kwargs=self.kwargs))  # simulate the post request
+        self.client.delete(reverse(self.route_name,kwargs=self.kwargs))  # simulate the post request
         self.assertEquals(0, len(User.objects.filter(first_name="VINAITEST")))
 
     def test_not_present_user_does_not_do_anything(self):
@@ -132,7 +130,7 @@ class AdminDeleteUserTest(TestCase, AuthRouteTestingWithKwargs):
                                        path='admin/5/update_user',
                                        add_messages_middleware=AuthRouteTestingWithKwargs.add_messages_middleware,
                                        views=sessions)
-        response = self.client.post(reverse(self.route_name,
+        self.client.post(reverse(self.route_name,
                                             kwargs=self.kwargs))  # simulate the post request
         self.assertEquals(1, len(User.objects.all()))
 
@@ -195,7 +193,7 @@ class AdminUpdateUserTest(TestCase, AuthRouteTestingWithKwargs):
                                        views=sessions)
 
         self.kwargs = {'selected_id': 2}
-        response = self.client.post(
+        self.client.post(
             reverse(self.route_name, kwargs=self.kwargs),
             data={'password': 'ds', 'email': 'yo@email.com',
                   'password_confirmation': 'ds', 'first_name': 'Vinai'})
