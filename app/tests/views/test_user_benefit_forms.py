@@ -3,7 +3,6 @@
 from __future__ import unicode_literals
 from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse
-from django.http import SimpleCookie
 from app.tests.mixins import AuthRouteTestingWithKwargs
 from app.tests.mixins import Pep8ViewsTests
 from app.views import sessions_views as sessions
