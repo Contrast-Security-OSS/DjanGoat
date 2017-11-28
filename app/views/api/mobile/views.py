@@ -5,9 +5,6 @@ from django.core import serializers
 
 import json
 
-from app.models import Analytics, KeyManagement, Message, User, PaidTimeOff
-from app.models import Performance, Retirement, Schedule, WorkInfo
-
 @require_http_methods(["GET"])
 def api_index(request):
     if "class" in request.GET:

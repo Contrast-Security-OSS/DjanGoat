@@ -87,9 +87,6 @@ def admin_get_all_users(request, selected_id):
 def admin_analytics(request, selected_id):
     current_user = utils.current_user(request)
     data = request.GET.dict().copy()
-    show_user_agent = False
-    show_ip_address = False
-    show_referrer = False
     col = []
     for key in data:
         if key != 'ip':
