@@ -5,7 +5,6 @@ from django.views.decorators.http import require_http_methods
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from app.models.User.user import User
-from django.contrib.messages import get_messages
 
 
 @require_http_methods(["GET"])
