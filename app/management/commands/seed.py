@@ -5,7 +5,7 @@ import pytz
 from Crypto import Random
 from django.core.management.base import BaseCommand
 
-from app.models import *
+from app.models import User, PaidTimeOff, Retirement, Schedule, KeyManagement, WorkInfo, Performance, Message
 
 users = [
     {
