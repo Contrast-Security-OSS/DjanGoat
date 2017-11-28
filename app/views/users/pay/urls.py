@@ -1,5 +1,5 @@
 from django.conf.urls import url
-import views
+import app.views.users.pay.views as views
 
 urlpatterns = [
     url(r'^$', views.user_pay_index, name='pay_index'),
