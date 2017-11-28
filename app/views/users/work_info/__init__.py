@@ -1,1 +1,1 @@
-import urls
+import app.views.users.work_info.urls

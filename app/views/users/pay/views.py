@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
-from django.contrib import messages
 from django.shortcuts import render
 
 from django.utils import timezone
@@ -49,7 +48,7 @@ def decrypt_bank_acct_num(request, user_id):
         response['success'] = True
         response.content = decrypted_account_num
         return response
-    except Pay.DoesNotExist as e:
+    except Pay.DoesNotExist:
         response['success'] = False
         return response
 

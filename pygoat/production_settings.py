@@ -1,7 +1,7 @@
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'INSERT_DB_NAME',
+        'NAME': '',
         'USER': '',
         'PASSWORD': '',
         'HOST': '',  # can leave blank (sets to default)

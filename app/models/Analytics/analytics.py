@@ -3,9 +3,7 @@ from __future__ import unicode_literals
 
 from django.utils.encoding import python_2_unicode_compatible
 from django.db import models, connection
-from app.models import User
 import re
-import json
 
 
 @python_2_unicode_compatible
@@ -43,14 +41,14 @@ class Analytics(models.Model):
                 cols = ['ip_address', 'referrer', 'user_agent',
                         'created_at', 'updated_at']
             else:
-                    cols = re.search('SELECT (.+?) FROM', cmd).group(1)
-                    cols = cols.split(', ')
+                cols = re.search('SELECT (.+?) FROM', cmd).group(1)
+                cols = cols.split(', ')
             num_cols = len(cols)
-            formated = dict()
+            formatted = dict()
             for i in range(num_cols):
-                formated[cols[i]] = [item[i] for item in raw]
-            return formated
-        except Exception as e:
+                formatted[cols[i]] = [item[i] for item in raw]
+            return formatted
+        except:
             return dict()
 
     @classmethod
@@ -61,8 +59,8 @@ class Analytics(models.Model):
         with connection.cursor() as cursor:
             cursor.execute(cmd)
             raw = cursor.fetchall()
-        formated = Analytics.format_raw_sql(cmd, raw, col)
-        return formated
+        formatted = Analytics.format_raw_sql(cmd, raw, col)
+        return formatted
 
     # defined in railsgoat but not used, expects valid column name
     @classmethod

@@ -5,8 +5,9 @@ from django.core import serializers
 
 import json
 
-from app.models import Analytics, KeyManagement, Message, User, PaidTimeOff
-from app.models import Performance, Retirement, Schedule, WorkInfo
+
+#Pylint says these are unused by they ARE used during api_index() (specifically, eval(classname))
+from app.models import User
 
 @require_http_methods(["GET"])
 def api_index(request):

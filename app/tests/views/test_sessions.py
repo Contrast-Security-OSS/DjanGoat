@@ -81,7 +81,7 @@ class SessionsIndexTest(TestCase, RouteTestingWithKwargs):
         input_last_name = "Dens"
         u_input_create_date = pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0))
         u_input_update_date = pytz.utc.localize(datetime.datetime(2017, 6, 3, 0, 0))
-        model = User.objects.create(
+        User.objects.create(
             email=input_email, password=input_password,
             is_admin=input_admin, first_name=input_first_name,
             last_name=input_last_name, created_at=u_input_create_date,

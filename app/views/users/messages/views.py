@@ -56,5 +56,5 @@ def user_message(request, user_id, message_id):
         else:
             message.delete()
             return HttpResponse("Success!")
-    except Exception as e:
+    except Exception:
         return redirect("/users/" + str(current_user.id) + "/messages")

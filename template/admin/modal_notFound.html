@@ -1,0 +1,21 @@
+{% extends 'layouts/shared/modal.html' %}
+
+{% block premodal %}
+{% load static %}
+<div class="modal-dialog" role="document">
+    <form id="user-update" class="form" method="patch">
+        { % crsf_token % }
+        {% endblock %}
+        {% block title %}
+            Account Settings
+        {% endblock %}
+        {% block body %}
+            <fieldset class="form-group">
+            <h1> User not found! </h1>
+            </fieldset>
+        {% endblock%}
+        {% block postmodal %}
+        </div>
+    </form>
+</div>
+{% endblock %}
