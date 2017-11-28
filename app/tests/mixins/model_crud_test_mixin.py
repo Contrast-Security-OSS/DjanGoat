@@ -53,7 +53,7 @@ class ModelCrudTests(object):
         """Test to ensure Model is deleted when its parent is deleted.
         """
         if self.parent is not None:
-            response = self.parent.delete()
+            self.parent.delete()
 
             self.assertIsNone(self._get_from_db(self.parent), "Parent not deleted from the database")
             self.assertIsNone(self._get_from_db(self.model), "Model not deleted from database with cascade")
