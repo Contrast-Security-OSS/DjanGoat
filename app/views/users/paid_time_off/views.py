@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import render, redirect
-from app.models import User, PaidTimeOff, Schedule
+from app.models import PaidTimeOff, Schedule
 from django.utils import timezone
 from django.contrib import messages
 from app.decorators import user_is_authenticated
@@ -46,7 +46,7 @@ def index_post(request, user_id, user, pto):
         try:
             date_begin = Schedule.reformat(form['date_begin'])
             date_end = Schedule.reformat(form['date_end'])
-            schedule = Schedule.objects.create(
+            Schedule.objects.create(
                 user=user, pto=pto, date_begin=date_begin,
                 date_end=date_end, event_name=form['event_name'],
                 event_type='PTO', event_desc=form['event_description'],

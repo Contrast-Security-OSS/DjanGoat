@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from django.views.decorators.http import require_http_methods
 from django.contrib import messages
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail

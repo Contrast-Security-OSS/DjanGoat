@@ -1,5 +1,5 @@
 from django.conf.urls import url
-import views as retirement_views
+from app.views.users.retirement import views as retirement_views
 
 urlpatterns = [
     url(r'^$', retirement_views.user_retirement_index,

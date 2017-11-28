@@ -1,5 +1,5 @@
 from django.conf.urls import url
-import views as work_info_views
+from app.views.users.work_info import views as work_info_views
 
 
 urlpatterns = [

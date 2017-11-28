@@ -331,7 +331,7 @@ class UserViewsUpdateAccountFormTests(WebTest):
         setattr(request, 'session', 'session')
         messages = FallbackStorage(request)
         setattr(request, '_messages', messages)
-        response = users.user_view(request, user_id=admin.user_id)
+        users.user_view(request, user_id=admin.user_id)
 
         # Test that admin's password has changed
         new_admin = User.objects.filter(user_id=admin.user_id).first()

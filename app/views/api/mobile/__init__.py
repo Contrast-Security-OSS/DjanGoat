@@ -1,1 +1,1 @@
-import urls
+import app.views.api.mobile.urls

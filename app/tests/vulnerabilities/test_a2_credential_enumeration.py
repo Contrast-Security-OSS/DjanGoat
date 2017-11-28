@@ -1,6 +1,6 @@
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.test import TestCase, RequestFactory
-from app.views import sessions_views as sessions, users_views
+from app.views import sessions_views as sessions
 from app.models.User.user import User
 import datetime
 import pytz

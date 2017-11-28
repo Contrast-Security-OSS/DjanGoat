@@ -19,12 +19,11 @@ def admin_dashboard(request, selected_id):
 @require_http_methods(["GET"])
 @user_is_authenticated
 def admin_get_user(request, selected_id):
-    success = True
     user = None
     try:
         user = User.objects.get(user_id=int(selected_id))
     except User.DoesNotExist:
-        success = False
+        return render(request, 'admin/modal_notFound.html')
 
     if user is None:
         other_is_admin_val = False
@@ -87,9 +86,6 @@ def admin_get_all_users(request, selected_id):
 def admin_analytics(request, selected_id):
     current_user = utils.current_user(request)
     data = request.GET.dict().copy()
-    show_user_agent = False
-    show_ip_address = False
-    show_referrer = False
     col = []
     for key in data:
         if key != 'ip':

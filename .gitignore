@@ -17,6 +17,7 @@ tests/coverage_html/
 tests/.coverage
 build/
 tests/report/
+pygoat/production_settings
 
 
 # Exclude virtualenv files at project base

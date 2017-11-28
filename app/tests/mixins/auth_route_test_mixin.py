@@ -1,5 +1,5 @@
 from app.tests.mixins.route_test_mixin import RouteTestingWithKwargs
-from app.views import sessions_views as sessions, users_views
+from app.views import sessions_views as sessions
 from app.models.User.user import User
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.urls import reverse
