@@ -1,6 +1,6 @@
 import pytz
 import datetime
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import render
 from app.models.User.user import User
@@ -19,7 +19,6 @@ def admin_dashboard(request, selected_id):
 @require_http_methods(["GET"])
 @user_is_authenticated
 def admin_get_user(request, selected_id):
-    global user
     user = None
     try:
         user = User.objects.get(user_id=int(selected_id))
