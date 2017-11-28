@@ -1,1 +1,1 @@
-import urls
+import app.views.dashboard.urls
