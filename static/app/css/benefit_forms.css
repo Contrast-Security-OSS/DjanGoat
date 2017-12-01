@@ -11,6 +11,10 @@
     background-color:#e8e8e8
 }
 
+.check_label {
+    margin-left: 35px;
+}
+
 .fa.fa-file-pdf-o.fa-3x {
     color: blue
 }
