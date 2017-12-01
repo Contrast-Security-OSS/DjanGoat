@@ -1,15 +1,15 @@
 from __future__ import unicode_literals
+
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
+from django.template.loader import get_template
+from django.utils import timezone
 # Django imports
 from django.views.decorators.http import require_http_methods
-from django.http import HttpResponse, HttpResponseRedirect
-from django.template.loader import get_template
-from django.shortcuts import render
 
-from django.utils import timezone
-
-# App imports
-from app.models.Pay.pay import Pay
 from app.decorators import user_is_authenticated
+# App imports
+from app.models.pay import Pay
 from app.views import utils
 
 

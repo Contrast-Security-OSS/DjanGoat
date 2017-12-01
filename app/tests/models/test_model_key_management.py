@@ -46,4 +46,4 @@ class KeyManagementModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         self.model_update_input = "iv2"
 
         # Path for pep8 tests
-        self.path = "app/models/KeyManagement/key_management.py"
+        self.path = "app/models/key_management.py"

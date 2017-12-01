@@ -2,8 +2,9 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from app.models.User.user import User
 from django.utils import safestring
+
+from app.models.user import User
 
 
 class Message(models.Model):

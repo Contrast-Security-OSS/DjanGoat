@@ -1,10 +1,11 @@
 from __future__ import unicode_literals
 
-from django.http import HttpResponse, HttpResponseRedirect
-from django.views.decorators.http import require_http_methods
-from django.shortcuts import redirect, render
 from django.contrib import messages
-from app.models.User.user import User
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect, render
+from django.views.decorators.http import require_http_methods
+
+from app.models.user import User
 
 
 @require_http_methods(["GET"])

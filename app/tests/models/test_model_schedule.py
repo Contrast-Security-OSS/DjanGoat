@@ -56,4 +56,4 @@ class ScheduleModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         self.model_update_input = "102544"
 
         # Path to file for pep8 tests
-        self.path = "app/models/Schedule/schedule.py"
+        self.path = "app/models/schedule.py"

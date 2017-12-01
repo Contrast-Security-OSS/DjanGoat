@@ -51,4 +51,4 @@ class RetirementModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         self.model_update_input = "102544"
 
         # Path for pep8 tests
-        self.path = "app/models/Retirement/retirement.py"
+        self.path = "app/models/retirement.py"

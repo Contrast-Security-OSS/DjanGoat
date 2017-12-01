@@ -75,7 +75,7 @@ class PerformanceModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         self.model_update_input = 10
 
         # Path for pep8 tests
-        self.path = "app/models/Performance/performance.py"
+        self.path = "app/models/performance.py"
 
     def test_reviewer_name(self):
         reviewer = User.objects.get(user_id=self.model.reviewer.user_id)

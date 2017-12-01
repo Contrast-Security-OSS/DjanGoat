@@ -1,11 +1,13 @@
 from __future__ import unicode_literals
 
-from django.test import TestCase, RequestFactory, Client
-from app.tests.mixins import RouteTestingWithKwargs
-from app.models.User.user import User
-import pytz
 import datetime
+
+import pytz
+from django.test import TestCase, RequestFactory, Client
+
 import app.views as views
+from app.models.user import User
+from app.tests.mixins import RouteTestingWithKwargs
 
 sessions = views.sessions_views
 

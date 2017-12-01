@@ -1,6 +1,7 @@
-from app.models.KeyManagement.key_management import KeyManagement
-from django.conf import settings
 from Crypto.Cipher import AES
+from django.conf import settings
+
+from app.models.key_management import KeyManagement
 
 
 class Encryption():

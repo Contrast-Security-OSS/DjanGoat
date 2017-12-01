@@ -15,7 +15,7 @@ class BenefitsModelTests(TestCase, Pep8ModelTests, ModelCrudTests):
 
     def setUp(self):
         # Path to file of model
-        self.path = "app/models/Benefits/benefits.py"
+        self.path = "app/models/benefits.py"
         self.created_at = pytz.utc.localize(
             datetime.datetime(2017, 6, 3, 0, 0))
         self.updated_at = pytz.utc.localize(

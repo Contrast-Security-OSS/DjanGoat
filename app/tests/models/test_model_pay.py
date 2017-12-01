@@ -64,4 +64,4 @@ class PayModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         self.model_update_input = "123454321"
 
         # Path for pep8 tests
-        self.path = "app/models/Pay/pay.py"
+        self.path = "app/models/pay.py"

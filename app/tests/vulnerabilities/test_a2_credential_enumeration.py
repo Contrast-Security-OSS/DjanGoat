@@ -1,9 +1,11 @@
+import datetime
+
+import pytz
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.test import TestCase, RequestFactory
+
+from app.models.user import User
 from app.views import sessions_views as sessions
-from app.models.User.user import User
-import datetime
-import pytz
 
 
 class TestCredentialEnumeration(TestCase):
