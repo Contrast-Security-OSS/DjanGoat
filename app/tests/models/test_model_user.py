@@ -23,7 +23,7 @@ class UserModelTests(TestCase, ModelCrudTests):
         for user in User.objects.all():
             print(str(user) + "id: " + str(user.user_id) + "\n")
         # Path to file of model
-        self.path = "app/models/User/user.py"
+        self.path = "app/models/user.py"
         # Create the user
         input_email = "ryan.dens@example.com"
         input_password = "12345"

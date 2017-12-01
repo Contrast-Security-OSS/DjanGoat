@@ -70,7 +70,7 @@ class WorkInfoModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         self.model_update_input = "102544"
 
         # File path for pep8 tests
-        self.path = "app/models/WorkInfo/work_info.py"
+        self.path = "app/models/work_info.py"
 
     def test_encrypt_decrypt(self):
         self.model.encrypt_ssn()

@@ -9,12 +9,12 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.safestring import mark_safe
 
-from app.models.PaidTimeOff.paid_time_off import PaidTimeOff
-from app.models.Performance.performance import Performance
-from app.models.Retirement.retirement import Retirement
-from app.models.Schedule.schedule import Schedule
-from app.models.WorkInfo.work_info import WorkInfo
-from . import user_data
+from app.models import user_data
+from app.models.paid_time_off import PaidTimeOff
+from app.models.performance import Performance
+from app.models.retirement import Retirement
+from app.models.schedule import Schedule
+from app.models.work_info import WorkInfo
 
 
 @python_2_unicode_compatible

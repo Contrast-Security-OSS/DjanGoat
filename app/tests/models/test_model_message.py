@@ -52,4 +52,4 @@ class MessageModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         self.model_update_input = "Goodby"
 
         # Path for pep8 tests
-        self.path = "app/models/Message/message.py"
+        self.path = "app/models/message.py"

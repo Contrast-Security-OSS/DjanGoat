@@ -1,10 +1,12 @@
-from app.tests.mixins.route_test_mixin import RouteTestingWithKwargs
-from app.views import sessions_views as sessions
-from app.models.User.user import User
+import datetime
+
+import pytz
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.urls import reverse
-import datetime
-import pytz
+
+from app.models.user import User
+from app.tests.mixins.route_test_mixin import RouteTestingWithKwargs
+from app.views import sessions_views as sessions
 
 
 # Mixin for testing the creation of routes

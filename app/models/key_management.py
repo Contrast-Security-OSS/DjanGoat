@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from app.models import WorkInfo
 
 
 @python_2_unicode_compatible
@@ -22,6 +21,7 @@ class KeyManagement(models.Model):
     updated_at = models.DateTimeField()
 
     def work_info(self):
+        from app.models.work_info import WorkInfo
         return WorkInfo.object.get(self.user)
 
     class Meta:

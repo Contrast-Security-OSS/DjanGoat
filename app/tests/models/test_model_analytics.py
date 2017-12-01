@@ -12,7 +12,7 @@ class AnalyticsModelTests(TestCase, Pep8ModelTests, ModelCrudTests):
 
     def setUp(self):
         # Path to file of model
-        self.path = "app/models/Analytics/analytics.py"
+        self.path = "app/models/analytics.py"
         self.ip_address = "127.94.0.2"
         self.referrer = "Vinai"
         self.user_agent = "user agent"

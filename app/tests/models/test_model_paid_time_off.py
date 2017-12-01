@@ -59,7 +59,7 @@ class UserModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
         self.model_update_input = 5
 
         # Path for pep8 tests
-        self.path = "app/models/PaidTimeOff/paid_time_off.py"
+        self.path = "app/models/paid_time_off.py"
 
     def test_sick_days_remaining(self):
         pto = PaidTimeOff.objects.get(user=self.parent)
