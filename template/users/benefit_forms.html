@@ -88,7 +88,9 @@
                                 <label class="btn btn-primary">
                                     <button id = "mySubmitButton" type="submit"></button>
                                     Upload</label>
-                                <input type="hidden" name="backup" value="False">
+                                <label class="check_label btn btn-warning" for="checkbox_id">Backup?
+                                <input type="checkbox" onclick="toggleBackupValue()" id="checkbox_id" name="backup" value="False">
+                                 </label>
                             </form>
                         </div>
                     </div>
@@ -97,5 +99,16 @@
         </div>
     </div>
 </div>
-
+<script>
+         function toggleBackupValue() {
+             var checkbox = document.getElementById('checkbox_id')
+             if(checkbox) {
+                 var flag = checkbox.value;
+                 if(flag == "true")
+                     checkbox.value = "false";
+                 else
+                    checkbox.value = "true";
+             }
+         }
+     </script>
 {% endblock %}
