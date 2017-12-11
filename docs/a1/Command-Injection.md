@@ -38,6 +38,7 @@ However, it is not a good practice to interpolate user input string into a syste
 
 ### Attack
 
+#### Intercepting Proxy Method
 This is one way of doing a command injection:
 1. Set up an intercepting proxy
 2. Create a file named "; ls; mkdir hacked; cp"
@@ -78,6 +79,15 @@ This is one way of doing a command injection:
     ------WebKitFormBoundary0tXzAPCVysul0K4b--
     ```
 7. You should be able to see 'ls' is executed from terminal, and there is a newly created directory named 'hacked' in DjanGoat base directory.
+
+
+ #### Bypass Intercepting Proxy Method
+ 1. Create a file named "; ls; mkdir hacked; cp"
+ 2. Login and navigate to benefit forms page
+ 3. Upload the file "; ls; mkdir hacked; cp" 
+ 4. Check 'Backup?' checkbox
+ 5. Press Upload Button
+ 6. You should see there is a newly created directory named 'hacked' in DjanGoat base directory. 
 
 ### Solution
 
