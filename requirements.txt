@@ -1,4 +1,4 @@
-astroid==1.5.3
+astroid==1.6.1
 backports.functools-lru-cache==1.4
 configparser==3.5.0
 Django==1.11.1
