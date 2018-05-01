@@ -13,7 +13,7 @@ pep8==1.7.0
 pycrypto==2.6.1
 pylint==1.7.1
 pylint-django==0.7.2
-pytz==2017.2
+pytz==2018.4
 singledispatch==3.4.0.3
 six==1.10.0
 virtualenv==15.1.0
