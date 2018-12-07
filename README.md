@@ -1,4 +1,5 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/contrast-security-oss/djangoat/badge)](https://www.codefactor.io/repository/github/contrast-security-oss/djangoat)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/Contrast-Security-OSS/DjanGoat.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Contrast-Security-OSS/DjanGoat/alerts/)
 
 # DjanGoat #
 
