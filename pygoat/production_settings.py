@@ -7,5 +7,8 @@ if not connection_string:
     print('NO CONNECTION STRINGGGGG')
 
 DATABASES = {
-    'default': dj_database_url.parse(connection_string, conn_max_age=600)
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
+    }
 }
