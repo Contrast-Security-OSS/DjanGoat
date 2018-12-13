@@ -19,4 +19,6 @@ six==1.10.0
 virtualenv==15.1.0
 wrapt==1.10.10
 django-webtest==1.9.2
+dj-database-url
 -e git+https://github.com/rodrigoamaral/django-fullcalendar.git#egg=django-fullcalendar
+
