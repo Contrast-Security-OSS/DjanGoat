@@ -18,7 +18,7 @@ Requirements:
 
  - Python 2.7
  - Pip
- - mysql 
+ - mysql (optional)
 
 Begin by creating a virtual-env
 ```
@@ -34,7 +34,11 @@ Then install using pip
 
 ### DB-Setup ###
 
-Now we need to setup our database
+#### SQLite:
+   
+   Djangoat uses a SQLite database by default.
+
+#### MySQL & PostgreSQL
 If you want to use a MySQL database, continue following this README. 
 If you want to setup DjanGoat with a PostgreSQL database, checkout the PostgreSQL branch with the following command:
 ```
