@@ -257,8 +257,10 @@ class AdminSQLInjectionInterpolationTest(WebTest):
         self.client = Client()
         self.factory = RequestFactory()
         User.objects.create(
-            email="ryan.dens@example.com", password="12345",
-            is_admin=True, first_name="Ryan",
+            email="ryan.dens@example.com",
+            password="12345",
+            is_admin=True,
+            first_name="Ryan",
             last_name="Dens",
             created_at=pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0)),
             updated_at=pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0))
@@ -274,7 +276,7 @@ class AdminSQLInjectionInterpolationTest(WebTest):
                                        views=sessions)
 
         # The attack string may vary depending on the system used
-        url = 'http://127.0.0.1:8000/admin/1/analytics/?ip=127.0.0.1&email=&password%20FROM%20app_user%3B%20select%20user_agent='
+        url = 'http://127.0.0.1:8000/admin/1/analytics/?ip=127.0.0.1&email=&email%2C%20password%20FROM%20app_user%3B--'
         response = self.client.get(url)
         self.assertTrue('email' in response.content)
         self.assertTrue('password' in response.content)

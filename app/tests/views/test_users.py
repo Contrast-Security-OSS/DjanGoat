@@ -190,15 +190,6 @@ class UserViewsSignUpUserFormTests(WebTest):
         self.assertTrue(email_exist_message in response_message)
         user.delete()
 
-    def test_error_sql_create_user(self):
-        self.form.set('first_name', 'z' * 256)
-        response = self.form.submit()
-        self.assertEqual(response.url, '/signup/')
-        response_message = response._headers['Set-Cookie']
-        sql_message = "Data too long for column 'first_name'"
-        self.assertTrue(sql_message in response_message)
-        self.form.set('first_name', self.param['first_name'])
-
     def test_redirect_and_login_on_signup_success(self):
         response = self.form.submit()
         response_message = response._headers['Set-Cookie']
@@ -285,16 +276,6 @@ class UserViewsUpdateAccountFormTests(WebTest):
         self.assertTrue(email_exist_message in response_message)
         user.delete()
         self.form.set('email_new', '')
-
-    def test_error_sql_create_user(self):
-        self.form.set('first_name', 'z' * 256)
-        self.form.set('email_new', '')
-        response = self.form.submit()
-        self.assertEqual(response.url, self.url)
-        response_message = response._headers['Set-Cookie']
-        sql_message = "Data too long for column 'first_name'"
-        self.assertTrue(sql_message in response_message)
-        self.form.set('first_name', '')
 
     def test_update_success(self):
         self.assertEqual(self.user.email, self.param['email'])
