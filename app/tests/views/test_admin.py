@@ -257,10 +257,8 @@ class AdminSQLInjectionInterpolationTest(WebTest):
         self.client = Client()
         self.factory = RequestFactory()
         User.objects.create(
-            email="ryan.dens@example.com",
-            password="12345",
-            is_admin=True,
-            first_name="Ryan",
+            email="ryan.dens@example.com", password="12345",
+            is_admin=True, first_name="Ryan",
             last_name="Dens",
             created_at=pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0)),
             updated_at=pytz.utc.localize(datetime.datetime(2017, 6, 1, 0, 0))
