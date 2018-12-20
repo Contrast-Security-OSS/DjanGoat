@@ -27,7 +27,7 @@ def index(request, user_id):
         return HttpResponse("Invalid HTTP method")
 
 
-def index_get(request, user_id, user, pto):
+def index_get(request, user_id, user, pto):  # pylint: disable=unused-argument
     schedules = Schedule.to_calendar((Schedule.objects.filter(pto=pto)))
     context = pto.__dict__
     context.update({"schedules": schedules, "current_user": user})

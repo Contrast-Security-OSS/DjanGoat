@@ -28,7 +28,7 @@ def forgot_password(request):
     return redirect('/login')
 
 
-def password_reset_mailer(request, user):
+def password_reset_mailer(request, user):  # pylint: disable=unused-argument
     token = generate_token(user.user_id, user.email)
     message = 'Use this link: ' + 'localhost:8000' + reverse(
         'app:password_resets') + '?token=' + token

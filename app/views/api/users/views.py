@@ -28,7 +28,7 @@ def api_index(request):
 
 
 @require_http_methods(["GET"])
-def api(request, id_number):
+def api(request, id_number):  # pylint: disable=unused-argument
     if check_if_valid_token(request):
         token = urlparse.unquote(request.META['HTTP_AUTHORIZATION'])
         user_id = extrapolate_user(token)

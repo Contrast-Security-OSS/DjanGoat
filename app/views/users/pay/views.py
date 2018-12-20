@@ -31,7 +31,7 @@ def update_dd_info(request, user_id):
 
 @require_http_methods(["POST"])
 @user_is_authenticated
-def decrypt_bank_acct_num(request, user_id):
+def decrypt_bank_acct_num(request, user_id):  # pylint: disable=unused-argument
     form = request.POST
     if not form:
         return HttpResponse("No form")
@@ -54,7 +54,7 @@ def decrypt_bank_acct_num(request, user_id):
 
 @require_http_methods(["GET", "POST"])
 @user_is_authenticated
-def user_pay_index(request, user_id):
+def user_pay_index(request, user_id):  # pylint: disable=unused-argument
     user = utils.current_user(request)
     if user is not None:
         direct_deposits = Pay.objects.filter(user=user)

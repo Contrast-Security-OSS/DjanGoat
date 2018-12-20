@@ -13,7 +13,7 @@ def login(request):
 
 
 @require_http_methods(["GET"])
-def logout(request):
+def logout(request):  # pylint: disable=unused-argument
     response = redirect("/login")
     response.delete_cookie('auth_token')
     return response

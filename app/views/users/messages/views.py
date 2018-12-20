@@ -13,7 +13,7 @@ from app.views import utils
 
 @require_http_methods(["GET", "POST"])
 @user_is_authenticated
-def user_messages(request, user_id):
+def user_messages(request, user_id):  # pylint: disable=unused-argument
     current_user = utils.current_user(request)
 
     if request.method == "GET":
@@ -42,9 +42,10 @@ def user_messages(request, user_id):
             })
 
 
+# W0613 = unused-argument
 @require_http_methods(["GET", "DELETE"])
 @user_is_authenticated
-def user_message(request, user_id, message_id):
+def user_message(request, user_id, message_id):  # pylint: disable=W0613
     current_user = utils.current_user(request)
     try:
         message = Message.objects.get(pk=message_id)

@@ -8,9 +8,10 @@ from app.decorators import user_is_authenticated
 from app.views import utils
 
 
+# W0613 = unused argument
 @require_http_methods(['GET', 'POST'])
 @user_is_authenticated
-def user_performance_index(request, user_id):
+def user_performance_index(request, user_id):  # pylint: disable=W0613
     current_user = utils.current_user(request)
     performance = current_user.u_id
     t = get_template('users/performance/index.html')

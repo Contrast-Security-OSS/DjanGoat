@@ -11,7 +11,7 @@ from app.decorators import user_is_authenticated
 
 @require_http_methods(["GET"])
 @user_is_authenticated
-def admin_dashboard(request, selected_id):
+def admin_dashboard(request, selected_id):  # pylint: disable=unused-argument
     current_user = utils.current_user(request)
     return render(request, 'admin/dashboard.html', {'current_user': current_user})
 
@@ -36,7 +36,7 @@ def admin_get_user(request, selected_id):
 
 @require_http_methods(["DELETE"])
 @user_is_authenticated
-def admin_delete_user(request, selected_id):
+def admin_delete_user(request, selected_id):  # pylint: disable=unused-argument
     success = True
     try:
         user = User.objects.get(user_id=int(selected_id))
@@ -73,7 +73,7 @@ def admin_update_user(request, selected_id):
 
 @require_http_methods(["GET"])
 @user_is_authenticated
-def admin_get_all_users(request, selected_id):
+def admin_get_all_users(request, selected_id):  # pylint: disable=unused-argument
     users = User.objects.all()
     # render appropriately
     users2 = ['dsds', 'f', 'f', 'f']
@@ -83,7 +83,7 @@ def admin_get_all_users(request, selected_id):
 
 @require_http_methods(["GET"])
 @user_is_authenticated
-def admin_analytics(request, selected_id):
+def admin_analytics(request, selected_id):  # pylint: disable=unused-argument
     current_user = utils.current_user(request)
     data = request.GET.dict().copy()
     col = []

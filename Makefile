@@ -1,4 +1,4 @@
-.PHONY: install, lint, test, travis
+.PHONY: install run lint test travis
 deafult: install
 
 install:
@@ -14,4 +14,4 @@ lint:
 test:
 	python manage.py test app
 
-travis: intsall lint test
+travis: lint test

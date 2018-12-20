@@ -13,7 +13,7 @@ import os
 
 @require_http_methods(["GET", "POST"])
 @user_is_authenticated
-def user_benefit_forms(request, user_id):
+def user_benefit_forms(request, user_id):  # pylint: disable=unused-argument
     user = utils.current_user(request)
     return render(request, 'users/benefit_forms.html',
                   context={'current_user': user})
