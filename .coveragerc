@@ -1,0 +1,13 @@
+[run]
+include =
+	app/*
+	pygoat/*
+omit =
+	app/tests/*
+
+[report]
+include =
+	app/*
+	pygoat/*
+omit =
+	app/tests/*
