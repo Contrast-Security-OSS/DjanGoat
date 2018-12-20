@@ -6,11 +6,10 @@ env:
 install:
   - make install
 before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
+  - ci/travis_before_script.sh
 script:
-  - make travis
+  - make lint
+  - make test
   - coverage xml
 after_script:
-  - ./cc-test-reporter after-build --coverage-input-type coverage.py --exit-code $TRAVIS_TEST_RESULT
+  - ci/travis_after_script.sh
