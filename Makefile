@@ -12,6 +12,7 @@ lint:
 	pylint app pygoat
 
 test:
-	python manage.py test app
+	coverage run manage.py test app
+	coverage report
 
 travis: lint test
