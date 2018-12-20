@@ -2,7 +2,5 @@ language: python
 python: 2.7
 install:
   - make install
-# before_script:
-#   - TODO
 script:
   - make travis
