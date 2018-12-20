@@ -13,7 +13,7 @@ DjanGoat is a vulnerable Django Application based in large part off the [RailsGo
 
 On a mac, first install python.
 
-### How do I get set up?
+### Initial Setup
 
 Requirements:
 
