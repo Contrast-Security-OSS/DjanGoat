@@ -1,10 +1,11 @@
+[![Build Status](https://travis-ci.org/Contrast-Security-OSS/DjanGoat.svg?branch=master)](https://travis-ci.org/Contrast-Security-OSS/DjanGoat)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6116741df83d465d975c94e42d3f3163)](https://app.codacy.com/app/SteveFeldman/DjanGoat?utm_source=github.com&utm_medium=referral&utm_content=Contrast-Security-OSS/DjanGoat&utm_campaign=Badge_Grade_Settings)
 [![CodeFactor](https://www.codefactor.io/repository/github/contrast-security-oss/djangoat/badge)](https://www.codefactor.io/repository/github/contrast-security-oss/djangoat)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/Contrast-Security-OSS/DjanGoat.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Contrast-Security-OSS/DjanGoat/alerts/)
 <a href="https://codeclimate.com/github/Contrast-Security-OSS/DjanGoat/maintainability"><img src="https://api.codeclimate.com/v1/badges/12031df53865b695f317/maintainability" /></a>
 [![codebeat badge](https://codebeat.co/badges/cced60a6-7204-44a6-94df-68ae676b719d)](https://codebeat.co/projects/github-com-contrast-security-oss-djangoat-master)
 
-# DjanGoat #
+# DjanGoat
 
 DjanGoat is a vulnerable Django Application based in large part off the [RailsGoat](https://github.com/OWASP/railsgoat) project. The application purports to be an internal employee portal for MetaCorp, Inc but includes vulnerabilities from the [OWASP Top 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) and is intended to be used as an educational tool for developers and security professionals. 
 
@@ -12,7 +13,7 @@ DjanGoat is a vulnerable Django Application based in large part off the [RailsGo
 
 On a mac, first install python.
 
-### How do I get set up? ###
+### How do I get set up?
 
 Requirements:
 
@@ -32,7 +33,7 @@ Then install using pip
     pip install -r requirements.txt
 ```
 
-### DB-Setup ###
+### DB-Setup
 
 #### SQLite:
    
@@ -87,21 +88,21 @@ Finally run on localhost:8000
     python manage.py runserver
 ```
 
-### Testing ###
+### Testing
 To run tests, simply run:
 ```
     python manage.py test app
 ```
 
-### Linting ###
+### Linting
 
 To run the `pylint` before running on Jenkins, run:
 ```
 pylint app pygoat
 ```
 
-## Tutorial ##
+## Tutorial
 Tutorial information on the various vulnerabilities in this application are [here](docs/home.md).
 
-## Acknowledgements ##
+## Acknowledgements
 The development [team](docs/acknowledgements.md).

@@ -7,7 +7,7 @@
 *.pot
 *.py[co]
 .tox/
-db.sqlite
+db.sqlite3
 __pycache__
 MANIFEST
 dist/

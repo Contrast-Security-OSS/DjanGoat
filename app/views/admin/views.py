@@ -13,7 +13,7 @@ from app.decorators import user_is_authenticated
 @user_is_authenticated
 def admin_dashboard(request, selected_id):
     current_user = utils.current_user(request)
-    return render(request, 'admin/dashboard.html', { 'current_user': current_user})
+    return render(request, 'admin/dashboard.html', {'current_user': current_user})
 
 
 @require_http_methods(["GET"])

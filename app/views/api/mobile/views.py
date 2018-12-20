@@ -7,7 +7,7 @@ import json
 
 
 #Pylint says these are unused by they ARE used during api_index() (specifically, eval(classname))
-from app.models import User
+from app.models import User  # pylint: disable=unused-import
 
 @require_http_methods(["GET"])
 def api_index(request):

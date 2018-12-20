@@ -6,7 +6,7 @@ from app.models import User, Pay
 
 
 @receiver(pre_save, sender=User)
-def create_user_values(sender, instance, *args, **kwargs):
+def create_user_values(sender, instance, *args, **kwargs):  # pylint: disable=unused-argument
     if instance.pk is None:
         instance.generate_token()
         instance.assign_user_id()
@@ -14,6 +14,6 @@ def create_user_values(sender, instance, *args, **kwargs):
 
 
 @receiver(pre_save, sender=Pay)
-def encrypt(sender, instance, *args, **kwargs):
+def encrypt(sender, instance, *args, **kwargs):  # pylint: disable=unused-argument
     if instance.pk is None:
         instance.encrypt_bank_num()

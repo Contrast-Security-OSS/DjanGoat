@@ -38,7 +38,7 @@ def download(request):
 @require_http_methods(["POST"])
 @user_is_authenticated
 def upload(request):
-    id = utils.current_user(request).user_id
+    user_id = utils.current_user(request).user_id
     if 'myfile' in request.FILES:
         Benefits.save_data(request.FILES['myfile'], request.POST['backup'])
         messages.success(request, 'File was successfully uploaded!')
@@ -47,4 +47,4 @@ def upload(request):
             request, 'Something went wrong! Are you sure you selected a file?')
 
     return HttpResponseRedirect(reverse('app:user_benefit_forms',
-                                        kwargs={'user_id': id}))
+                                        kwargs={'user_id': user_id}))

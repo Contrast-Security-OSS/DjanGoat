@@ -48,17 +48,17 @@ def check_if_valid_token(request):
         split_token = token.split('=')[1]
         regex_groups = regex.search(split_token)
         if regex_groups.group(1):
-            id = regex_groups.group(1)
+            group_id = regex_groups.group(1)
         else:
             return False
         if regex_groups.group(2):
-            hash = regex_groups.group(2)
+            group_hash = regex_groups.group(2)
         else:
             return False
 
     sha = SHA.new()
-    sha.update(ACCESS_TOKEN_SALT + ":" + str(id))
-    return hash == sha.hexdigest()
+    sha.update(ACCESS_TOKEN_SALT + ":" + str(group_id))
+    return group_hash == sha.hexdigest()
 
 
 def extrapolate_user(token):

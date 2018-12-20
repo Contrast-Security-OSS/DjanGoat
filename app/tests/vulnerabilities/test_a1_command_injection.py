@@ -21,10 +21,10 @@ class CommandInjectionTest(TestCase):
         create_new_file = open(new_file_path, "w+")
         create_new_file.close()
         # Send POST request
-        file = open(new_file_path, "rb")
+        new_file = open(new_file_path, "rb")
         request = self.factory.post(
-            route, {'enctype': enctype, 'file': file})
-        file.close()
+            route, {'enctype': enctype, 'file': new_file})
+        new_file.close()
         # Testing saved file exists and hacked file exists
         uploaded_file = request.FILES['file']
         data_path = os.path.join(settings.MEDIA_ROOT, "data")

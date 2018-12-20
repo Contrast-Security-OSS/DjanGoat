@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 # Django imports
 from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse, HttpResponseRedirect
-from django.template.loader import get_template
 from django.shortcuts import render
 
 from django.utils import timezone
@@ -56,7 +55,6 @@ def decrypt_bank_acct_num(request, user_id):
 @require_http_methods(["GET", "POST"])
 @user_is_authenticated
 def user_pay_index(request, user_id):
-    template = get_template('users/pay/index.html')
     user = utils.current_user(request)
     if user is not None:
         direct_deposits = Pay.objects.filter(user=user)
@@ -69,10 +67,10 @@ def user_pay_index(request, user_id):
 
 @require_http_methods(["DELETE"])
 @user_is_authenticated
-def user_pay(request, user_id, id):
+def user_pay(request, user_id, pay_id):
     if request.method == "DELETE":
-        Pay.objects.get(id=id).delete()
+        Pay.objects.get(id=pay_id).delete()
         return HttpResponse("Success!")
 
     return HttpResponse("Pay for user " +
-                        str(user_id) + " for pay with id " + str(id))
+                        str(user_id) + " for pay with id " + str(pay_id))
