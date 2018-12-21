@@ -9,6 +9,7 @@ before_script:
   - ci/travis_before_script.sh
 script:
   - make lint
+  - python manage.py migrate
   - python manage.py seed
   - make test
   - coverage xml

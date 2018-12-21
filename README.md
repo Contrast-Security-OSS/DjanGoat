@@ -39,7 +39,7 @@ Then install using pip
    
 Djangoat uses a SQLite database by default. To deploy the server locally with a SQLite database, use:
 ```
-	make run
+    make run
 ```
 
 This will initialize and migrate a new (gitignored) SQLite database `db.sqlite3` in the root project directory. It will then run the server locally.
@@ -93,7 +93,7 @@ Finally run on localhost:8000
 
 If you want to setup DjanGoat with a PostgreSQL database, checkout the PostgreSQL branch with the following command:
 ```
-	$ git checkout postgresql-database
+    $ git checkout postgresql-database
 ```
 The PostgreSQL branch has modified documentation and tests.
 
@@ -108,7 +108,7 @@ To run tests, simply run:
 
 To run `pylint` using the provided `.pylintrc` configuration file:
 ```
-	make lint
+    make lint
 ```
 
 ## Tutorial
