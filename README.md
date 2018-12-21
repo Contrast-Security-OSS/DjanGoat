@@ -35,17 +35,18 @@ Then install using pip
 
 ### DB-Setup
 
-#### SQLite:
+#### SQLite
    
-   Djangoat uses a SQLite database by default.
+Djangoat uses a SQLite database by default. To deploy the server locally with a SQLite database, use:
+```
+make run
+```
 
-#### MySQL & PostgreSQL
-If you want to use a MySQL database, continue following this README. 
-If you want to setup DjanGoat with a PostgreSQL database, checkout the PostgreSQL branch with the following command:
-```
-$ git checkout postgresql-database
-```
-The PostgreSQL branch has modified documentation and tests.
+This will initialize and migrate a new (gitignored) SQLite database `db.sqlite3` in the root project directory. It will then run the server locally.
+
+At any point after the database has been migrated, it can be seeded with `python manage.py seed`.
+
+#### MySQL
 
 1. Make sure you have mysql installed and run the following to
 setup the database
@@ -77,7 +78,7 @@ setup the database
 For developers create a local_settings.py file in the pygoat folder
 that mocks production_setting.py.
 
-If Django does not recognize MySQL after the setup above, try install mysql-python and migrate again
+If Django does not recognize MySQL after the setup above, try installing mysql-python and migrate again
 
 ```
     pip install mysql-python
@@ -88,17 +89,26 @@ Finally run on localhost:8000
     python manage.py runserver
 ```
 
+#### PostgreSQL
+
+If you want to setup DjanGoat with a PostgreSQL database, checkout the PostgreSQL branch with the following command:
+```
+$ git checkout postgresql-database
+```
+The PostgreSQL branch has modified documentation and tests.
+
 ### Testing
 To run tests, simply run:
 ```
-    python manage.py test app
+    make test
 ```
+
 
 ### Linting
 
-To run the `pylint` before running on Jenkins, run:
+To run `pylint` using the provided `.pylintrc` configuration file:
 ```
-pylint app pygoat
+	make lint
 ```
 
 ## Tutorial
