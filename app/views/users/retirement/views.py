@@ -8,7 +8,7 @@ from app.decorators import user_is_authenticated
 
 @require_http_methods(["GET", "POST"])
 @user_is_authenticated
-def user_retirement_index(request, user_id):
+def user_retirement_index(request, user_id):  # pylint: disable=unused-argument
     current_user = utils.current_user(request)
     retirement_info = current_user.retirements.first()
     context = {'retirement': retirement_info,

@@ -1,10 +1,11 @@
+[![Build Status](https://travis-ci.org/Contrast-Security-OSS/DjanGoat.svg?branch=master)](https://travis-ci.org/Contrast-Security-OSS/DjanGoat)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6116741df83d465d975c94e42d3f3163)](https://app.codacy.com/app/SteveFeldman/DjanGoat?utm_source=github.com&utm_medium=referral&utm_content=Contrast-Security-OSS/DjanGoat&utm_campaign=Badge_Grade_Settings)
 [![CodeFactor](https://www.codefactor.io/repository/github/contrast-security-oss/djangoat/badge)](https://www.codefactor.io/repository/github/contrast-security-oss/djangoat)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/Contrast-Security-OSS/DjanGoat.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Contrast-Security-OSS/DjanGoat/alerts/)
 <a href="https://codeclimate.com/github/Contrast-Security-OSS/DjanGoat/maintainability"><img src="https://api.codeclimate.com/v1/badges/12031df53865b695f317/maintainability" /></a>
 [![codebeat badge](https://codebeat.co/badges/cced60a6-7204-44a6-94df-68ae676b719d)](https://codebeat.co/projects/github-com-contrast-security-oss-djangoat-master)
 
-# DjanGoat #
+# DjanGoat
 
 DjanGoat is a vulnerable Django Application based in large part off the [RailsGoat](https://github.com/OWASP/railsgoat) project. The application purports to be an internal employee portal for MetaCorp, Inc but includes vulnerabilities from the [OWASP Top 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) and is intended to be used as an educational tool for developers and security professionals. 
 
@@ -12,7 +13,7 @@ DjanGoat is a vulnerable Django Application based in large part off the [RailsGo
 
 On a mac, first install python.
 
-### How do I get set up? ###
+### Initial Setup
 
 Requirements:
 
@@ -29,22 +30,23 @@ Begin by creating a virtual-env
 
 Then install using pip
 ```
-    pip install -r requirements.txt
+    make install
 ```
 
-### DB-Setup ###
+### DB-Setup
 
-#### SQLite:
+#### SQLite
    
-   Djangoat uses a SQLite database by default.
+Djangoat uses a SQLite database by default. To deploy the server locally with a SQLite database, use:
+```
+    make run
+```
 
-#### MySQL & PostgreSQL
-If you want to use a MySQL database, continue following this README. 
-If you want to setup DjanGoat with a PostgreSQL database, checkout the PostgreSQL branch with the following command:
-```
-$ git checkout postgresql-database
-```
-The PostgreSQL branch has modified documentation and tests.
+This will initialize and migrate a new (gitignored) SQLite database `db.sqlite3` in the root project directory. It will then run the server locally.
+
+At any point after the database has been migrated, it can be seeded with `python manage.py seed`.
+
+#### MySQL
 
 1. Make sure you have mysql installed and run the following to
 setup the database
@@ -76,7 +78,7 @@ setup the database
 For developers create a local_settings.py file in the pygoat folder
 that mocks production_setting.py.
 
-If Django does not recognize MySQL after the setup above, try install mysql-python and migrate again
+If Django does not recognize MySQL after the setup above, try installing mysql-python and migrate again
 
 ```
     pip install mysql-python
@@ -87,21 +89,30 @@ Finally run on localhost:8000
     python manage.py runserver
 ```
 
-### Testing ###
+#### PostgreSQL
+
+If you want to setup DjanGoat with a PostgreSQL database, checkout the PostgreSQL branch with the following command:
+```
+    $ git checkout postgresql-database
+```
+The PostgreSQL branch has modified documentation and tests.
+
+### Testing
 To run tests, simply run:
 ```
-    python manage.py test app
+    make test
 ```
 
-### Linting ###
 
-To run the `pylint` before running on Jenkins, run:
+### Linting
+
+To run `pylint` using the provided `.pylintrc` configuration file:
 ```
-pylint app pygoat
+    make lint
 ```
 
-## Tutorial ##
+## Tutorial
 Tutorial information on the various vulnerabilities in this application are [here](docs/home.md).
 
-## Acknowledgements ##
+## Acknowledgements
 The development [team](docs/acknowledgements.md).

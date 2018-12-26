@@ -35,11 +35,11 @@ class BenefitsModelTests(TestCase, Pep8ModelTests, ModelCrudTests):
         # Upload file
         route = "/upload"
         enctype = "multipart/form-data"
-        origin_file = "app/__init__.py"
-        file = open(origin_file, "rb")
+        origin_file_name = "app/__init__.py"
+        origin_file = open(origin_file_name, "rb")
         request = self.factory.post(
-            route, {'enctype': enctype, 'file': file})
-        file.close()
+            route, {'enctype': enctype, 'file': origin_file})
+        origin_file.close()
         uploaded_file = request.FILES['file']
 
         data_path = os.path.join(settings.MEDIA_ROOT, "data")
@@ -50,7 +50,7 @@ class BenefitsModelTests(TestCase, Pep8ModelTests, ModelCrudTests):
         # Testing save_data
         Benefits.save_data(uploaded_file)
         self.assertEqual(os.path.isfile(full_file_name), True)
-        self.assertEqual(filecmp.cmp(origin_file, full_file_name), True)
+        self.assertEqual(filecmp.cmp(origin_file_name, full_file_name), True)
         os.remove(full_file_name)
         # Testing make_backup
         bak_file_path = Benefits.save_data(uploaded_file, backup="true")

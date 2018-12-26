@@ -210,7 +210,7 @@ class UserShowPayRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
                                       user=self.mixin_model,
                                       created_at=timezone.now(),
                                       updated_at=timezone.now())
-        self.kwargs = {'user_id': 55, 'id': self.pay.id}
+        self.kwargs = {'user_id': 55, 'pay_id': self.pay.id}
         self.expected_response_content = 'Success!'
 
     def test_route_exists(self):

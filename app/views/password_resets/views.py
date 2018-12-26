@@ -28,7 +28,7 @@ def forgot_password(request):
     return redirect('/login')
 
 
-def password_reset_mailer(request, user):
+def password_reset_mailer(request, user):  # pylint: disable=unused-argument
     token = generate_token(user.user_id, user.email)
     message = 'Use this link: ' + 'localhost:8000' + reverse(
         'app:password_resets') + '?token=' + token
@@ -41,10 +41,10 @@ def password_reset_mailer(request, user):
     )
 
 
-def generate_token(id, email):
+def generate_token(user_id, email):
     h = MD5.new()
     h.update(email)
-    return str(id) + '-' + str(h.hexdigest())
+    return str(user_id) + '-' + str(h.hexdigest())
 
 
 # Handler that depending on request type delegated to confirm_token
@@ -62,8 +62,8 @@ def confirm_token(request):
     if request.GET.get('token', '') != '' and is_valid_token(
             request.GET['token']):
         messages.success(request, 'Please create a new password.')
-        id = request.GET['token'].split('-')[0]
-        user = User.objects.filter(user_id=id).first()
+        user_id = request.GET['token'].split('-')[0]
+        user = User.objects.filter(user_id=user_id).first()
         encoded = base64.b64encode(pickle.dumps(user))
 
         return render(request, 'password_reset/reset.html',

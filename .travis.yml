@@ -1,0 +1,18 @@
+language: python
+python: 2.7
+env:
+  global:
+    # `travis encrypt CC_TEST_REPORTER_ID`
+    - secure: m/J2svpY3pmxA5orGnMJcP5I++m83VfMgpZChi+tXWuq+BjdYzumoiFNi/yKzCM2cQFTnM+IDIXjUCWAmRd1k1R88ykmJnJQf8f4RcPJL9fJ34FjnofR7/tEATy6CIEpJO4FTp2fO9NKuVaI6rBEWSemXxD3Cuv3YlLUqysOZmIn2aa6igEUQR6keGDoJdNvwYjVhOJwtmaBsGT44b8i6aYgn4DohcuBwlxuY/FotX8eZGyZpon/d4Z9q9TagrsCSnJ130OZqIFIWv+Y+4AU+m9ACI0f9LAYVjhqsixEul82Kz3r+dwEnx1fmPvf57I2/Ycw+QVpp2BXe/jtUnf3fdFJjlhhwbvRvxulGHg8xPxOSn5Ar4UOdi0qJY8H7edofKDdpLpinqrB8GzbBny1QWS98jJjqKfL96u9WCgR4Clyv+e24ZKpFu3tydy4mg7TDY68MAygFWXHQoWVn+7ko5c9aM9nrnhlpEOYziDCFBaHGIJYSMEqTomJUSurdNvfol3qi3MusT4sioPWFdgsNJmecHgMkcePy+ZR0G5dci1mOlBTjIH+QT1hkuF+2z1whDL702tspx+bn+Qfh3/4qQat6x+m8jSX4l/QoM6hQUMsoPio93HlOfRYg/n5h+JmOBIYvHmBY5V/oZ6ub4yD5mIGhyi9hUD4IzhkpEK6f8U=
+install:
+  - make install
+before_script:
+  - ci/travis_before_script.sh
+script:
+  - make lint
+  - python manage.py migrate
+  - python manage.py seed
+  - make test
+  - coverage xml
+after_script:
+  - ci/travis_after_script.sh

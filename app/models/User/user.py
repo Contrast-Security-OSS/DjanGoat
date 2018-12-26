@@ -41,14 +41,14 @@ class User(models.Model):
         index = random.randint(0, 3)
 
         # Tuple of form ("employee_contrib", "employer_contrib", "total")
-        retirement = Retirement.objects.create(
+        Retirement.objects.create(
             employee_contrib=user_data.retirement_data[index][0],
             employer_contrib=user_data.retirement_data[index][1],
             total=user_data.retirement_data[index][2], user=self,
             created_at=user_data.date_one, updated_at=user_data.date_three)
 
         # ("sick_days_taken", "sick_days_earned", "pto_taken", "pto_earned")
-        pto = PaidTimeOff.objects.create(
+        PaidTimeOff.objects.create(
             sick_days_taken=user_data.pto_data[index][0],
             sick_days_earned=user_data.pto_data[index][1],
             pto_taken=user_data.pto_data[index][2],
@@ -58,7 +58,7 @@ class User(models.Model):
         )
 
         # ("event_type", "event_desc", "event_name")
-        schedule = Schedule.objects.create(
+        Schedule.objects.create(
             date_begin=user_data.date_three,
             date_end=user_data.date_four,
             event_type=user_data.schedule_data[index][0],
@@ -69,7 +69,7 @@ class User(models.Model):
         )
 
         # ("income", "bonuses", years_worked, "SSN", "DoB")
-        work_info = WorkInfo.objects.create(
+        WorkInfo.objects.create(
             income=user_data.work_info_data[index][0],
             bonuses=user_data.work_info_data[index][1],
             years_worked=user_data.work_info_data[index][2],
@@ -92,7 +92,7 @@ class User(models.Model):
         )
 
         # ("reviewer", "comments", date_submitted, score)
-        performance = Performance.objects.create(
+        Performance.objects.create(
             reviewer=reviewer,
             comments=user_data.performance_data[index][0],
             date_submitted=user_data.performance_data[index][1],

@@ -24,19 +24,21 @@ class Benefits(models.Model):
     class Meta:
         db_table = "app_benefits"
 
-    # file expects to be a UploadedFile object from request.FILES in Django
+    # uploaded_file expects to be a UploadedFile object from request.FILES
+    # in Django
     # this way of saving data leaves intended vulnerability
     @staticmethod
-    def save_data(file, backup=None):
+    def save_data(uploaded_file, backup=None):
         data_path = os.path.join(settings.MEDIA_ROOT, "data")
-        full_file_name = os.path.join(data_path, file.name)
+        full_file_name = os.path.join(data_path, uploaded_file.name)
         # the uploaded file is read at once, as duplicated in railsgoat
         # use file.chunk() in a loop can prevent overwhelming system memory
-        content = ContentFile(file.read())
+        content = ContentFile(uploaded_file.read())
         default_storage.save(full_file_name, content)
         # using string "true" is intended to duplicate railsgoat's behavior
         if backup == "true":
-            return Benefits.make_backup(file, data_path, full_file_name)
+            return Benefits.make_backup(uploaded_file, data_path,
+                                        full_file_name)
 
     def silence_streams(func):
         def wrapper(*args, **kwargs):
@@ -62,10 +64,11 @@ class Benefits(models.Model):
 
     @staticmethod
     @silence_streams
-    def make_backup(file, data_path, full_file_name):
+    def make_backup(orig_file, data_path, full_file_name):
         if os.path.isfile(full_file_name):
             epoch_time = int(time.time())
-            bak_file_path = "%s/bak%d_%s" % (data_path, epoch_time, file.name)
+            bak_file_path = "%s/bak%d_%s" % (data_path, epoch_time,
+                                             orig_file.name)
             # intended vulnerability for command injection
             os.system("cp %s %s" % (full_file_name, bak_file_path))
             return bak_file_path
