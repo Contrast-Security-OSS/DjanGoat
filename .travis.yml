@@ -2,8 +2,11 @@ language: python
 python: 2.7
 env:
   global:
+    # uses RSA encryption for sensitive values. See https://docs.travis-ci.com/user/encryption-keys/
     # `travis encrypt CC_TEST_REPORTER_ID`
     - secure: m/J2svpY3pmxA5orGnMJcP5I++m83VfMgpZChi+tXWuq+BjdYzumoiFNi/yKzCM2cQFTnM+IDIXjUCWAmRd1k1R88ykmJnJQf8f4RcPJL9fJ34FjnofR7/tEATy6CIEpJO4FTp2fO9NKuVaI6rBEWSemXxD3Cuv3YlLUqysOZmIn2aa6igEUQR6keGDoJdNvwYjVhOJwtmaBsGT44b8i6aYgn4DohcuBwlxuY/FotX8eZGyZpon/d4Z9q9TagrsCSnJ130OZqIFIWv+Y+4AU+m9ACI0f9LAYVjhqsixEul82Kz3r+dwEnx1fmPvf57I2/Ycw+QVpp2BXe/jtUnf3fdFJjlhhwbvRvxulGHg8xPxOSn5Ar4UOdi0qJY8H7edofKDdpLpinqrB8GzbBny1QWS98jJjqKfL96u9WCgR4Clyv+e24ZKpFu3tydy4mg7TDY68MAygFWXHQoWVn+7ko5c9aM9nrnhlpEOYziDCFBaHGIJYSMEqTomJUSurdNvfol3qi3MusT4sioPWFdgsNJmecHgMkcePy+ZR0G5dci1mOlBTjIH+QT1hkuF+2z1whDL702tspx+bn+Qfh3/4qQat6x+m8jSX4l/QoM6hQUMsoPio93HlOfRYg/n5h+JmOBIYvHmBY5V/oZ6ub4yD5mIGhyi9hUD4IzhkpEK6f8U=
+    # `travis encrypt CODACY_PROJECT_TOKEN`
+    - secure: bD3h4kzTvS7Lc/t+oP4c2gYkrWv8tyteWSVKI9GkFWxJMFmI4Gd9yeaX1y5HfUMCJASM4zPGTnAvQCkxBRX9Y60b6Q5oFd6zlG/Y/2yNKG6+k0WQeQzm5K1/xFMt3gplSiXz1aW0OjyucdnRWiFBYP++pWCVx88dlKV/28zeoVEreCnMVPFAFCdIdW1BeKh9p+gTpNcCx93lGj++hAzb2KKxl0bw+hW+SgrmLyupmGq3nuRLNGYAm0UT4S6pGbKs/RyDS9bNPGXSGXXSIPx0VI6KNw6zj2ptcAMMTePhImHk9/SdIRUqAi+9Iy8fRBr1Iw/981tnqYiLmgjV9fO7GgR3Fhw7rAIx3NBJxcyTPO9Jaqm3QAFv9q21XP/sDRkF7QyWG6GAtTiZqtoCSYTqCC+ugvSkLgVMd7pJ/4Wz8ViampbkvHn3vZCNKKvi4kFJTzbIbbi7jaFmdmXHjuwH8VNhHEjgqqBumyt1K/acxJEjYe5uqoounNYkCTkJiBCEvbnst+/X9/gjiB8ibJZU5WoGe7xevziXA9SdI7tyxYQnUbwbKb+Y8zMCGvX0418eH5tNnAoNV4JTCQyM5EqpZUaetkzCIpC2OO0sqHFEk63VNwiE++A3M3HjDFZXIz2yLTV3rJE0w2pxGXTtMXoZkfUaB1TFtsS1bGOllBq7eDM=
 install:
   - make install
 before_script:
