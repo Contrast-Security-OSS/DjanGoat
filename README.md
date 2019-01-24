@@ -6,6 +6,13 @@ DjanGoat is a vulnerable Django Application based in large part off the [RailsGo
 
 On a mac, first install python.
 
+### Quickstart
+
+```
+    make
+```
+When it's running, click [here!](http://127.0.0.1:8000/) Emails sent by the app will print to the console controlling the process.
+
 ### Initial Setup
 
 Requirements:
@@ -23,7 +30,7 @@ To set it all up and activate your virtualenv:
 
 To run the server:
 ```
-    make install
+    make run
 ```
 
 When it's running, click [here!](http://127.0.0.1:8000/)
@@ -39,7 +46,7 @@ If something went wrong and you want to start fresh:
 
 ### Email
 
-If you did something in the app that would lead you to expect it to send email, you will find the full contents of that email output to the console controlling the server process.
+Emails sent by the app will print to the console controlling the process, both headers and body.
 
 ### Linting
 

@@ -1,5 +1,5 @@
 .PHONY: install run lint test clean
-deafult: install
+deafult: clean install run
 
 install:
 	(\
@@ -21,6 +21,7 @@ run:
 clean:
 	rm -f db.sqlite3
 	rm -rf env/
+	rm -rf src/
 
 lint:
 	(\
