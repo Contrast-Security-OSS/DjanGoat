@@ -137,3 +137,4 @@ ACCESS_TOKEN_SALT = "S4828341189aefiasd#ASDF"
 EMAIL_HOST = 'localhost'
 
 EMAIL_PORT = 25
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

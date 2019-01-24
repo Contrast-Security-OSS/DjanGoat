@@ -1,15 +1,6 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/68d040c745134192b362def6a0e45899)](https://app.codacy.com/app/SteveFeldman/DjanGoat?utm_source=github.com&utm_medium=referral&utm_content=Contrast-Security-OSS/DjanGoat&utm_campaign=Badge_Grade_Settings)
-[![Build Status](https://travis-ci.org/Contrast-Security-OSS/DjanGoat.svg?branch=master)](https://travis-ci.org/Contrast-Security-OSS/DjanGoat)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/b21dc2f22dd945a09d7d34a0cdaa5c4d)](https://www.codacy.com/app/SteveFeldman/DjanGoat?utm_source=github.com&utm_medium=referral&utm_content=Contrast-Security-OSS/DjanGoat&utm_campaign=Badge_Coverage)
-[![CodeFactor](https://www.codefactor.io/repository/github/contrast-security-oss/djangoat/badge)](https://www.codefactor.io/repository/github/contrast-security-oss/djangoat)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/Contrast-Security-OSS/DjanGoat.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Contrast-Security-OSS/DjanGoat/alerts/)
-<a href="https://codeclimate.com/github/Contrast-Security-OSS/DjanGoat/maintainability"><img src="https://api.codeclimate.com/v1/badges/12031df53865b695f317/maintainability" /></a>
-<a href="https://codeclimate.com/github/Contrast-Security-OSS/DjanGoat/test_coverage"><img src="https://api.codeclimate.com/v1/badges/12031df53865b695f317/test_coverage" /></a>
-[![codebeat badge](https://codebeat.co/badges/cced60a6-7204-44a6-94df-68ae676b719d)](https://codebeat.co/projects/github-com-contrast-security-oss-djangoat-master)
-
 # DjanGoat
 
-DjanGoat is a vulnerable Django Application based in large part off the [RailsGoat](https://github.com/OWASP/railsgoat) project. The application purports to be an internal employee portal for MetaCorp, Inc but includes vulnerabilities from the [OWASP Top 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) and is intended to be used as an educational tool for developers and security professionals. 
+DjanGoat is a vulnerable Django Application based in large part off the [RailsGoat](https://github.com/OWASP/railsgoat) project. The application purports to be an internal employee portal for MetaCorp, Inc but includes vulnerabilities from the [OWASP Top 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) and is intended to be used as an educational tool for developers and security professionals.
 
 ## Installation
 
@@ -21,90 +12,31 @@ Requirements:
 
  - Python 2.7
  - Pip
- - mysql (optional)
 
-Begin by creating a virtual-env
+Begin by creating a virtualenv:
 ```
     pip install virtualenv
-    virtualenv env
+    virtualenv env --python=python2.7
     source env/bin/activate
 ```
 
-Then install using pip
+To install, create the database, and populate the database:
 ```
     make install
 ```
 
-### DB-Setup
+### Running
 
-#### SQLite
-   
-Djangoat uses a SQLite database by default. To deploy the server locally with a SQLite database, use:
+To run the server:
 ```
-    make run
+    make install
 ```
 
-This will initialize and migrate a new (gitignored) SQLite database `db.sqlite3` in the root project directory. It will then run the server locally.
+When it's running, click [here!](http://127.0.0.1:8000/)
 
-At any point after the database has been migrated, it can be seeded with `python manage.py seed`.
+### Email
 
-#### MySQL
-
-1. Make sure you have mysql installed and run the following to
-setup the database
-
-```
-    mysql -u root -p
-    CREATE DATABASE `db_name`;
-    CREATE USER 'username'@'localhost' IDENTIFIED BY 'your_password';
-    GRANT ALL PRIVILEGES ON `db_name`.* TO 'username'@'localhost';
-    FLUSH PRIVILEGES;
-    quit
-```
-
-2. Go to pygoat/production_settings.py and fill out the given information for your database.
-
-3. Migrate the models and associated database data
-
-```
-    python manage.py makemigrations
-    python manage.py migrate
-```
-
-4. To set up seed data you can run:
-
-```
-    python manage.py seed
-```
-
-For developers create a local_settings.py file in the pygoat folder
-that mocks production_setting.py.
-
-If Django does not recognize MySQL after the setup above, try installing mysql-python and migrate again
-
-```
-    pip install mysql-python
-```
-
-Finally run on localhost:8000
-```
-    python manage.py runserver
-```
-
-#### PostgreSQL
-
-If you want to setup DjanGoat with a PostgreSQL database, checkout the PostgreSQL branch with the following command:
-```
-    $ git checkout postgresql-database
-```
-The PostgreSQL branch has modified documentation and tests.
-
-### Testing
-To run tests, simply run:
-```
-    make test
-```
-
+If you did something in the app that would lead you to expect it to send email, you will find the full contents of that email output to the console controlling the server process.
 
 ### Linting
 
