@@ -13,16 +13,10 @@ Requirements:
  - Python 2.7
  - Pip
 
-Begin by creating a virtualenv:
-```
-    pip install virtualenv
-    virtualenv env --python=python2.7
-    source env/bin/activate
-```
-
-To install, create the database, and populate the database:
+To set it all up and activate your virtualenv:
 ```
     make install
+    source env/bin/activate
 ```
 
 ### Running
@@ -33,6 +27,15 @@ To run the server:
 ```
 
 When it's running, click [here!](http://127.0.0.1:8000/)
+
+### Resetting
+
+If something went wrong and you want to start fresh:
+```
+    make clean
+    make install
+    make run
+```
 
 ### Email
 
