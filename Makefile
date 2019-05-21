@@ -3,7 +3,7 @@ deafult: clean install run
 
 install:
 	(\
-		pip install virtualenv; \
+		pip install --user virtualenv; \
 		virtualenv env --python=python2.7; \
 		source env/bin/activate; \
 		pip install -r requirements.txt; \
