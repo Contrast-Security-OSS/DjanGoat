@@ -13,6 +13,13 @@ On a mac, first install python.
 ```
 When it's running, click [here!](http://127.0.0.1:8000/) Emails sent by the app will print to the console controlling the process.
 
+If you get an error about not having pip, do this:
+
+```
+    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+    sudo python get-pip.py
+```
+
 ### Initial Setup
 
 Requirements:
