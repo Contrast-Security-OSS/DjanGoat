@@ -21,7 +21,11 @@ class ModelCrudTests(object):
         for attribute in self.attributes:
             db_value = getattr(self._get_from_db(self.model), attribute)
             local_value = getattr(self.model, attribute)
-            self.assertEqual(str(db_value), str(local_value))
+            if isinstance(db_value, bytes):
+                db_value = db_value.decode()
+            if isinstance(local_value, bytes):
+                local_value = local_value.decode()
+            self.assertEqual(db_value, local_value)
 
     def test_update_model(self):
         """
