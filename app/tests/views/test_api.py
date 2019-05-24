@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 
 import datetime
 
@@ -42,8 +42,8 @@ class TestApiMobileIndex(TestCase):
 
     def test_response_content(self):
         response = self.client.get('/api/v1/mobile/?class=User')
-        self.assertIn('827ccb0eea8a706c4c34a16891f84e7b', response.content)
-        self.assertIn('01cfcd4f6b8770febfb40cb906715822', response.content)
+        self.assertIn('827ccb0eea8a706c4c34a16891f84e7b', str(response.content))
+        self.assertIn('01cfcd4f6b8770febfb40cb906715822', str(response.content))
 
 
 class TestApiMobileId(TestCase):
@@ -78,8 +78,8 @@ class TestApiMobileId(TestCase):
 
     def test_response_content(self):
         response = self.client.get('/api/v1/mobile/' + str(self.model.id) + '?class=User')
-        self.assertNotIn('827ccb0eea8a706c4c34a16891f84e7b', response.content)
-        self.assertIn('01cfcd4f6b8770febfb40cb906715822', response.content)
+        self.assertNotIn('827ccb0eea8a706c4c34a16891f84e7b', str(response.content))
+        self.assertIn('01cfcd4f6b8770febfb40cb906715822', str(response.content))
 
 
 class ApiUsersIndexTest(TestCase, AuthRouteTestingWithKwargs):

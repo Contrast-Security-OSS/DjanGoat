@@ -99,8 +99,8 @@ def admin_analytics(request, selected_id):  # pylint: disable=unused-argument
     else:
         analytics = Analytics.objects_in_list()
     cols = [key for key in analytics]
-    values = analytics.values()
-    num_data = range(len(values[0]))
+    values = list(analytics.values())
+    num_data = list(range(len(values[0])))
     return render(request, 'admin/analytics.html',
                   {'current_user': current_user,
                    'cols': cols,

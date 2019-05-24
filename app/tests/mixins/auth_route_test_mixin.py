@@ -165,7 +165,7 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
         with self.assertRaises(KeyError) as error:
             request.COOKIES['auth_token'] = auth_response.cookies['auth_token'].value
 
-        self.assertTrue('auth_token' in error.exception)
+        self.assertTrue('auth_token' in str(error.exception))
 
     def bad_email_test(self, request):
         # Create new session
@@ -182,7 +182,7 @@ class AuthRouteTestingWithKwargs(RouteTestingWithKwargs):
         with self.assertRaises(KeyError) as error:
             request.COOKIES['auth_token'] = auth_response.cookies['auth_token'].value
 
-        self.assertTrue('auth_token' in error.exception)
+        self.assertTrue('auth_token' in str(error.exception))
 
     # Test authentication decorator with an old token stored in the user's cookies
     def old_auth_test(self, request):

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 # Django imports
 from django.test import TestCase
 from django.utils import timezone

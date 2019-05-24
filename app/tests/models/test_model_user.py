@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 from django.test import TestCase
 import datetime
@@ -21,7 +21,7 @@ class UserModelTests(TestCase, ModelCrudTests):
 
     def setUp(self):
         for user in User.objects.all():
-            print(str(user) + "id: " + str(user.user_id) + "\n")
+            print((str(user) + "id: " + str(user.user_id) + "\n"))
         # Path to file of model
         self.path = "app/models/User/user.py"
         # Create the user
@@ -51,7 +51,7 @@ class UserModelTests(TestCase, ModelCrudTests):
     def test_user_authenticate(self):
         with self.assertRaises(Exception) as incorrectPassword:
             User.authenticate("ryan.dens@example.com", "1234")
-        self.assertTrue("Incorrect Password!" in incorrectPassword.exception)
+        self.assertTrue("Incorrect Password!" in str(incorrectPassword.exception))
 
         # User should not be found in database
         with self.assertRaises(User.DoesNotExist):

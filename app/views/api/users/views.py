@@ -5,14 +5,14 @@ from app.models import User
 from pygoat.settings import ACCESS_TOKEN_SALT
 from Crypto.Hash import SHA
 import re
-import urlparse
+import urllib.parse
 
 
 @require_http_methods(["GET"])
 def api_index(request):
     if check_if_valid_token(request):
         try:
-            token = urlparse.unquote(request.META['HTTP_AUTHORIZATION'])
+            token = urllib.parse.unquote(request.META['HTTP_AUTHORIZATION'])
             user_id = extrapolate_user(token)
             user = User.objects.get(user_id=user_id)
             if user.is_admin:
@@ -30,7 +30,7 @@ def api_index(request):
 @require_http_methods(["GET"])
 def api(request, id_number):  # pylint: disable=unused-argument
     if check_if_valid_token(request):
-        token = urlparse.unquote(request.META['HTTP_AUTHORIZATION'])
+        token = urllib.parse.unquote(request.META['HTTP_AUTHORIZATION'])
         user_id = extrapolate_user(token)
         data = serializers.serialize("json", User.objects.filter(user_id=user_id))
         return HttpResponse(data, content_type='application/json')
@@ -43,7 +43,7 @@ def check_if_valid_token(request):
     if 'HTTP_AUTHORIZATION' not in request.META:
         return False
     else:
-        token = urlparse.unquote(request.META['HTTP_AUTHORIZATION'])
+        token = urllib.parse.unquote(request.META['HTTP_AUTHORIZATION'])
         regex = re.compile("(.*?)-(.*)")
         split_token = token.split('=')[1]
         regex_groups = regex.search(split_token)
@@ -57,7 +57,7 @@ def check_if_valid_token(request):
             return False
 
     sha = SHA.new()
-    sha.update(ACCESS_TOKEN_SALT + ":" + str(group_id))
+    sha.update((ACCESS_TOKEN_SALT + ":" + str(group_id)).encode())
     return group_hash == sha.hexdigest()
 
 

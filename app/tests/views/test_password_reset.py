@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 from django.test import TestCase, RequestFactory, Client
 from django.shortcuts import reverse
 from app.tests.mixins import RouteTestingWithKwargs
@@ -82,7 +82,7 @@ class ConfirmTokens(TestCase, RouteTestingWithKwargs):
     def test_invalid_token_redirects_to_login(self):
         response = self.client.get(reverse(
             'app:password_resets') + '?token=1-cb440f309ad5be39a03b7e7c0bd4d6')
-        self.assertEquals(302, response.status_code)
+        self.assertEqual(302, response.status_code)
 
 
 class ResetPassword(TestCase, RouteTestingWithKwargs):
@@ -119,7 +119,8 @@ class ResetPassword(TestCase, RouteTestingWithKwargs):
 
     def test_password_is_updated(self):
         encoded = base64.b64encode(
-            pickle.dumps(User.objects.get(first_name="resetP")))
+            pickle.dumps(User.objects.get(first_name="resetP"))).decode()
+        # import pdb; pdb.set_trace()
         data = {'password': '123456',
                 'password_confirmation': '123456',
                 'user': encoded}
@@ -130,5 +131,5 @@ class ResetPassword(TestCase, RouteTestingWithKwargs):
             'app:password_resets'), data=data)
         hashed_password = hashlib.md5('123456'.encode()).hexdigest()
 
-        self.assertEquals(hashed_password,
+        self.assertEqual(hashed_password,
                           User.objects.get(first_name="resetP").password)

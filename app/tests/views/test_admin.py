@@ -118,7 +118,7 @@ class AdminDeleteUserTest(TestCase, AuthRouteTestingWithKwargs):
                                        views=sessions)
 
         self.client.delete(reverse(self.route_name,kwargs=self.kwargs))  # simulate the post request
-        self.assertEquals(0, len(User.objects.filter(first_name="VINAITEST")))
+        self.assertEqual(0, len(User.objects.filter(first_name="VINAITEST")))
 
     def test_not_present_user_does_not_do_anything(self):
         self.kwargs = {'selected_id': 5}
@@ -132,7 +132,7 @@ class AdminDeleteUserTest(TestCase, AuthRouteTestingWithKwargs):
                                        views=sessions)
         self.client.post(reverse(self.route_name,
                                             kwargs=self.kwargs))  # simulate the post request
-        self.assertEquals(1, len(User.objects.all()))
+        self.assertEqual(1, len(User.objects.all()))
 
 
 class AdminUpdateUserTest(TestCase, AuthRouteTestingWithKwargs):
@@ -197,9 +197,9 @@ class AdminUpdateUserTest(TestCase, AuthRouteTestingWithKwargs):
             reverse(self.route_name, kwargs=self.kwargs),
             data={'password': 'ds', 'email': 'yo@email.com',
                   'password_confirmation': 'ds', 'first_name': 'Vinai'})
-        self.assertEquals(2, len(User.objects.all()))
-        self.assertEquals("yo@email.com", User.objects.get(user_id=2).email)
-        self.assertEquals("Vinai", User.objects.get(user_id=2).first_name)
+        self.assertEqual(2, len(User.objects.all()))
+        self.assertEqual("yo@email.com", User.objects.get(user_id=2).email)
+        self.assertEqual("Vinai", User.objects.get(user_id=2).first_name)
 
 
 class AdminGetAllUsersTest(TestCase, AuthRouteTestingWithKwargs):
@@ -276,5 +276,5 @@ class AdminSQLInjectionInterpolationTest(WebTest):
         # The attack string may vary depending on the system used
         url = 'http://127.0.0.1:8000/admin/1/analytics/?ip=127.0.0.1&email=&email%2C%20password%20FROM%20app_user%3B--'
         response = self.client.get(url)
-        self.assertTrue('email' in response.content)
-        self.assertTrue('password' in response.content)
+        self.assertTrue('email' in str(response.content))
+        self.assertTrue('password' in str(response.content))

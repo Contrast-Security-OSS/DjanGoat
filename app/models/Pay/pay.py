@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 # Django Imports
 from django.core.validators import MaxValueValidator

@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse
 from django.http import SimpleCookie
@@ -51,7 +51,7 @@ class SensitiveDataExposureApiTest(TestCase):
         request = reverse(self.route_name, kwargs=self.kwargs)
         response = self.client.get(request,
                                    **{'HTTP_AUTHORIZATION': 'Token token=1-fjfsasdja03'})
-        self.assertEquals(401, response.status_code)
+        self.assertEqual(401, response.status_code)
 
     def test_non_admin_gets_id_response(self):
         self.kwargs = {'id_number': 5}
@@ -62,7 +62,7 @@ class SensitiveDataExposureApiTest(TestCase):
         response = self.client.get(request,
                                    **{'HTTP_AUTHORIZATION': 'Token token=1-01de24d75cffaa66db205278d1cf900bf087a737'})
         content = json.loads(response.content)[0]['fields']
-        self.assertEquals('vinai.dens@example.com', content['email'])
+        self.assertEqual('vinai.dens@example.com', content['email'])
 
     def test_new_line_gives_too_much_info(self):
         route_name = 'app:api_users_index'
@@ -82,7 +82,7 @@ class SensitiveDataExposureApiTest(TestCase):
         response = self.client.get(request,
                                    **{'HTTP_AUTHORIZATION': 'Token token=1%0A2-050ddd40584978fe9e82840b8b95abb98e4786dc'})
         content = json.loads(response.content)[0]['fields']
-        self.assertEquals('vinai.dens@example.com', content['email'])
+        self.assertEqual('vinai.dens@example.com', content['email'])
 
 class SensitiveDataExposureSSNTest(TestCase):
     def setUp(self):

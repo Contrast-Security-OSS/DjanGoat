@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 from django.test import TestCase
 import datetime
@@ -74,7 +74,7 @@ class WorkInfoModelTests(TestCase, ModelCrudTests, Pep8ModelTests):
 
     def test_encrypt_decrypt(self):
         self.model.encrypt_ssn()
-        self.assertEquals("111-22-3333", self.model.decrypt_ssn())
+        self.assertEqual("111-22-3333", self.model.decrypt_ssn().decode())
 
     # Override
     def test_delete_user_and_pto(self):

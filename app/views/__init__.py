@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 
 from app.views.api.mobile import views as api_mobile_views
 from app.views.api.users import views as api_users_views

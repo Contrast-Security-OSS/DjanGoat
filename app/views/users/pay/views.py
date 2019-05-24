@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 # Django imports
 from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse, HttpResponseRedirect
@@ -36,7 +36,7 @@ def decrypt_bank_acct_num(request, user_id):  # pylint: disable=unused-argument
     if not form:
         return HttpResponse("No form")
 
-    account_num = request.POST['account_number']
+    account_num = request.POST['account_number'].decode()
     curr_user = utils.current_user(request)
     response = HttpResponse()
     try:

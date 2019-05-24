@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 
 from django.views.decorators.http import require_http_methods
 from django.contrib import messages
@@ -43,7 +43,7 @@ def password_reset_mailer(request, user):  # pylint: disable=unused-argument
 
 def generate_token(user_id, email):
     h = MD5.new()
-    h.update(email)
+    h.update(email.encode())
     return str(user_id) + '-' + str(h.hexdigest())
 
 
@@ -80,6 +80,7 @@ def confirm_token(request):
 @require_http_methods(["POST"])
 def reset_password(request):
     if request.POST.get('user', '') != '':
+        # import pdb; pdb.set_trace()
         encoded_user = request.POST['user']
         user = pickle.loads(base64.b64decode(encoded_user))
         user.password = request.POST['password']
@@ -100,7 +101,7 @@ def is_valid_token(token):
         user = User.objects.filter(user_id=split[0]).first()
         email = user.email
         h = MD5.new()
-        h.update(email)
+        h.update(email.encode())
         return split[1] == h.hexdigest()
     else:
         return False
