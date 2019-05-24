@@ -89,7 +89,7 @@ class UploadRoutingAndHttpTests(TestCase, AuthRouteTestingWithKwargs):
                                        add_messages_middleware=AuthRouteTestingWithKwargs.add_messages_middleware,
                                        views=sessions)
 
-        with open(BASE_DIR + '/public/docs/Dental_n_Stuff.pdf') as fp:
+        with open(BASE_DIR + '/public/docs/Dental_n_Stuff.pdf', 'r+b') as fp:
             response = self.client.post(reverse('app:upload_benefit_form'),
                                         {'myfile': fp, 'backup': False},
                                         follow=True)

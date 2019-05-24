@@ -95,4 +95,4 @@ class SessionsIndexTest(TestCase, RouteTestingWithKwargs):
         client_request = self.client.post('/sessions/', {'email': 'ryan.dens@example.com', 'password': '12345',
                                                          'path': '/dashboard/home'}, follow=True)
         self.assertEqual(client_request.status_code, 200)
-        self.assertTrue("Current Statistics" in client_request.content)
+        self.assertTrue("Current Statistics" in str(client_request.content))

@@ -36,7 +36,7 @@ def decrypt_bank_acct_num(request, user_id):  # pylint: disable=unused-argument
     if not form:
         return HttpResponse("No form")
 
-    account_num = request.POST['account_number'].decode()
+    account_num = request.POST['account_number'].encode()
     curr_user = utils.current_user(request)
     response = HttpResponse()
     try:
