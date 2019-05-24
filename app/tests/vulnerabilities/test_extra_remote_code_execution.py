@@ -21,7 +21,7 @@ class TestRemoteCodeExecution(TestCase):
         encoded = base64.b64encode(pickle.dumps(GenProcess()))
         data = {'password': '123456',
                 'password_confirmation': '123456',
-                'user': encoded}
+                'user': encoded.decode()}
         try:
             self.client.post(reverse('app:password_resets'), data=data)
         except:

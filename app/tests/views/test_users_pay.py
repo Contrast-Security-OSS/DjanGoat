@@ -164,7 +164,7 @@ class UserPayDecryptBankInfo(TestCase, AuthRouteTestingWithKwargs):
                                  created_at=timezone.now(),
                                  updated_at=timezone.now())
 
-        form_args = {"account_number": pay.bank_account_num}
+        form_args = {"account_number": pay.bank_account_num.decode()}
         response = self.client.post(reverse(self.route_name, kwargs=self.kwargs), form_args, follow=True)
         self.assertEqual(response.status_code, self.responses['POST'])
         self.assertEqual(response.content, "12345")
