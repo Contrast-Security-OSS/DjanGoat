@@ -4,7 +4,7 @@ deafult: clean install run
 install:
 	(\
 		pip install virtualenv; \
-		virtualenv env --python=python2.7; \
+		virtualenv env --python=python3.7.3; \
 		source env/bin/activate; \
 		pip install -r requirements.txt; \
 		python manage.py migrate; \
