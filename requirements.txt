@@ -17,7 +17,7 @@ pytz==2017.2
 singledispatch==3.4.0.3
 six==1.10.0
 virtualenv==15.1.0
-wrapt==1.10.10
+wrapt==1.11.2
 django-webtest==1.9.2
 coverage==4.5.2
 -e git+https://github.com/rodrigoamaral/django-fullcalendar.git#egg=django-fullcalendar
