@@ -12,7 +12,7 @@ mccabe==0.6.1
 pep8==1.7.0
 pycrypto==2.6.1
 pylint==1.9.3
-pylint-django==0.10.0
+pylint-django==2.0.13
 pytz==2017.2
 singledispatch==3.4.0.3
 six==1.10.0
