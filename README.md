@@ -6,6 +6,7 @@
 <a href="https://codeclimate.com/github/Contrast-Security-OSS/DjanGoat/maintainability"><img src="https://api.codeclimate.com/v1/badges/12031df53865b695f317/maintainability" /></a>
 <a href="https://codeclimate.com/github/Contrast-Security-OSS/DjanGoat/test_coverage"><img src="https://api.codeclimate.com/v1/badges/12031df53865b695f317/test_coverage" /></a>
 [![codebeat badge](https://codebeat.co/badges/cced60a6-7204-44a6-94df-68ae676b719d)](https://codebeat.co/projects/github-com-contrast-security-oss-djangoat-master)
+[![DeepSource](https://static.deepsource.io/deepsource-badge-light-mini.svg)](https://deepsource.io/gh/Contrast-Security-OSS/DjanGoat/?ref=repository-badge)
 
 # DjanGoat
 
