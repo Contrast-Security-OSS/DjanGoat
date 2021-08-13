@@ -24,6 +24,13 @@ Requirements:
  - Pip
  - mysql (optional)
 
+Installing python2 and pip
+```bash
+    sudo apt-get install python2 python2-dev
+    curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
+    sudo python2 get-pip.py
+```
+
 Begin by creating a virtual-env
 ```
     pip install virtualenv
