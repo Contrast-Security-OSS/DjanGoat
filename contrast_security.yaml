@@ -1,0 +1,14 @@
+api:
+  url: https://eval.contrastsecurity.com/Contrast/
+  service_key:
+  api_key:
+  user_name:
+
+  agent:
+    logger:
+      path: /tmp/contrast_agent.log
+      level: INFO
+
+    security_logger:
+      path: /tmp/security.log
+      level: INFO
