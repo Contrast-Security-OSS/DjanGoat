@@ -2,7 +2,7 @@ astroid==1.5.3
 backports.functools-lru-cache==1.4
 configparser==3.5.0
 Django==1.11.1
-django-bootstrap4==0.0.1
+django-bootstrap4==1.1.1
 django-jenkins==0.110.0
 enum34==1.1.6
 isort==4.2.15
