@@ -99,6 +99,31 @@ If you want to setup DjanGoat with a PostgreSQL database, checkout the PostgreSQ
     $ git checkout postgresql-database
 ```
 The PostgreSQL branch has modified documentation and tests.
+### Docker
+To run DjanGoat in Docker use the following command to build
+```
+    $ docker build -t djangoat .
+```
+To run execute the following
+```
+    $ docker run -p8000:8000 djangoat
+```
+The Web ui will then be accessible via
+http://localhost:8000
+
+**username** : admin@metacorp.com
+**password** : admin1234
+#### Docker and Contrast
+To enable Contrast Protect.  first edit contrast_security.yaml with your agent credentials.
+Then build the Docker image using Dockerfile-Contrast.
+```
+    $ docker build -f Dockerfile-Contrast -t djangoat-contrast .
+```
+To run execute the following
+```
+    $ docker run -p8000:8000 djangoat-contrast
+```
+
 
 ### Testing
 To run tests, simply run:
