@@ -1,0 +1,48 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      dev-dependencies:
+          applies-to: version-updates
+          patterns:
+              - '*'
+          dependency-type: development
+      production-dependencies:
+          applies-to: version-updates
+          patterns:
+              - '*'
+          dependency-type: production
+    cooldown:
+      default-days: 7
+      include:
+          - '*'
+      exclude:
+          - react
+
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: daily
+    groups:
+      dev-dependencies:
+          applies-to: version-updates
+          patterns:
+              - '*'
+          dependency-type: development
+      production-dependencies:
+          applies-to: version-updates
+          patterns:
+              - '*'
+          dependency-type: production
+    cooldown:
+      default-days: 7
+      semver-major-days: 30
+      semver-minor-days: 14
+      semver-patch-days: 5
+      include:
+          - '*'
+      exclude:
+          - react
